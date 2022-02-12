@@ -1,0 +1,421 @@
+asm_test::atomic_memcpy_load_align1::acquire:
+ push    {r4, r5, r11, lr}
+ sub     sp, sp, #32
+ add     r2, r1, #3
+ bic     r12, r2, #3
+ sub     lr, r12, r1
+ cmp     lr, #33
+ blo     .LBB0_2
+ ldrb    r2, [r1]
+ strb    r2, [sp]
+ ldrb    r2, [r1, #1]
+ strb    r2, [sp, #1]
+ ldrb    r2, [r1, #2]
+ strb    r2, [sp, #2]
+ ldrb    r2, [r1, #3]
+ strb    r2, [sp, #3]
+ ldrb    r2, [r1, #4]
+ strb    r2, [sp, #4]
+ ldrb    r2, [r1, #5]
+ strb    r2, [sp, #5]
+ ldrb    r2, [r1, #6]
+ strb    r2, [sp, #6]
+ ldrb    r2, [r1, #7]
+ strb    r2, [sp, #7]
+ ldrb    r2, [r1, #8]
+ strb    r2, [sp, #8]
+ ldrb    r2, [r1, #9]
+ strb    r2, [sp, #9]
+ ldrb    r2, [r1, #10]
+ strb    r2, [sp, #10]
+ ldrb    r2, [r1, #11]
+ strb    r2, [sp, #11]
+ ldrb    r2, [r1, #12]
+ strb    r2, [sp, #12]
+ ldrb    r2, [r1, #13]
+ strb    r2, [sp, #13]
+ ldrb    r2, [r1, #14]
+ strb    r2, [sp, #14]
+ ldrb    r2, [r1, #15]
+ strb    r2, [sp, #15]
+ ldrb    r2, [r1, #16]
+ strb    r2, [sp, #16]
+ ldrb    r2, [r1, #17]
+ strb    r2, [sp, #17]
+ ldrb    r2, [r1, #18]
+ strb    r2, [sp, #18]
+ ldrb    r2, [r1, #19]
+ strb    r2, [sp, #19]
+ ldrb    r2, [r1, #20]
+ strb    r2, [sp, #20]
+ ldrb    r2, [r1, #21]
+ strb    r2, [sp, #21]
+ ldrb    r2, [r1, #22]
+ strb    r2, [sp, #22]
+ ldrb    r2, [r1, #23]
+ strb    r2, [sp, #23]
+ ldrb    r2, [r1, #24]
+ strb    r2, [sp, #24]
+ ldrb    r2, [r1, #25]
+ strb    r2, [sp, #25]
+ ldrb    r2, [r1, #26]
+ strb    r2, [sp, #26]
+ ldrb    r2, [r1, #27]
+ strb    r2, [sp, #27]
+ ldrb    r2, [r1, #28]
+ strb    r2, [sp, #28]
+ ldrb    r2, [r1, #29]
+ strb    r2, [sp, #29]
+ ldrb    r2, [r1, #30]
+ strb    r2, [sp, #30]
+ ldrb    r1, [r1, #31]
+ strb    r1, [sp, #31]
+ b       .LBB0_13
+.LBB0_2:
+ cmp     lr, #0
+ beq     .LBB0_7
+ sub     r2, r1, r12
+ mov     r3, sp
+ mov     r4, r1
+.LBB0_4:
+ ldrb    r5, [r4]
+ adds    r2, r2, #1
+ strb    r5, [r3], #1
+ add     r4, r4, #1
+ blo     .LBB0_4
+ sub     r2, r1, r12
+ add     r2, r2, #32
+ cmp     r2, #4
+ bhs     .LBB0_8
+ cmp     r2, #0
+ bne     .LBB0_11
+ b       .LBB0_13
+.LBB0_7:
+ mov     r2, #32
+.LBB0_8:
+ sub     r3, r1, r12
+ mov     r12, sp
+.LBB0_9:
+ ldr     r5, [r1, -r3]
+ sub     lr, r12, r3
+ sub     r2, r2, #4
+ strb    r5, [r12, -r3]
+ sub     r3, r3, #4
+ cmp     r2, #3
+ lsr     r4, r5, #24
+ strb    r4, [lr, #3]
+ lsr     r4, r5, #16
+ strb    r4, [lr, #2]
+ lsr     r4, r5, #8
+ strb    r4, [lr, #1]
+ bhi     .LBB0_9
+ rsb     lr, r3, #0
+ cmp     r2, #0
+ beq     .LBB0_13
+.LBB0_11:
+ mov     r3, sp
+ add     r1, r1, lr
+ add     r3, r3, lr
+.LBB0_12:
+ ldrb    r5, [r1]
+ subs    r2, r2, #1
+ strb    r5, [r3], #1
+ add     r1, r1, #1
+ bne     .LBB0_12
+.LBB0_13:
+ mov     r1, sp
+ mov     r2, #32
+ bl      memcpy
+ bl      __sync_synchronize
+ add     sp, sp, #32
+ pop     {r4, r5, r11, pc}
+.LBB2_2:
+ cmp     r0, #0
+ beq     .LBB2_6
+ sub     r3, r7, r1
+ mov     r4, r7
+.LBB2_4:
+ ldrb    r6, [r2], #1
+ adds    r3, r3, #1
+ strb    r6, [r4]
+ add     r4, r4, #1
+ blo     .LBB2_4
+ sub     r2, r7, r1
+ add     r6, r2, #32
+ cmp     r6, #4
+ blo     .LBB2_9
+.LBB2_6:
+ sub     r0, r7, r1
+ add     r1, sp, #32
+.LBB2_7:
+ sub     r3, r1, r0
+ ldrb    r2, [r1, -r0]
+ sub     r6, r6, #4
+ ldrb    r5, [r3, #1]
+ cmp     r6, #3
+ ldrb    r4, [r3, #2]
+ ldrb    r3, [r3, #3]
+ orr     r2, r2, r5, lsl, #8
+ orr     r3, r4, r3, lsl, #8
+ orr     r2, r2, r3, lsl, #16
+ str     r2, [r7, -r0]
+ sub     r0, r0, #4
+ bhi     .LBB2_7
+ rsb     r0, r0, #0
+.LBB2_9:
+ cmp     r6, #0
+ beq     .LBB2_12
+ add     r1, sp, #32
+ add     r1, r1, r0
+ add     r0, r7, r0
+.LBB2_11:
+ ldrb    r2, [r1], #1
+ subs    r6, r6, #1
+ strb    r2, [r0]
+ add     r0, r0, #1
+ bne     .LBB2_11
+.LBB2_12:
+ add     sp, sp, #64
+ pop     {r4, r5, r6, r7, r8, pc}
+.LBB4_2:
+ ldr     r2, [r1]
+ str     r2, [sp]
+ ldr     r2, [r1, #4]
+ str     r2, [sp, #4]
+ ldr     r2, [r1, #8]
+ str     r2, [sp, #8]
+ ldr     r2, [r1, #12]
+ str     r2, [sp, #12]
+ ldr     r2, [r1, #16]
+ str     r2, [sp, #16]
+ ldr     r2, [r1, #20]
+ str     r2, [sp, #20]
+ ldr     r2, [r1, #24]
+ str     r2, [sp, #24]
+ ldr     r1, [r1, #28]
+ str     r1, [sp, #28]
+.LBB4_3:
+ mov     r1, sp
+ mov     r2, #32
+ bl      memcpy
+ bl      __sync_synchronize
+ add     sp, sp, #32
+ pop     {r11, pc}
+.LBB6_2:
+ ldr     r0, [sp, #32]
+ str     r0, [r6]
+ ldr     r0, [sp, #36]
+ str     r0, [r6, #4]
+ ldr     r0, [sp, #40]
+ str     r0, [r6, #8]
+ ldr     r0, [sp, #44]
+ str     r0, [r6, #12]
+ ldr     r0, [sp, #48]
+ str     r0, [r6, #16]
+ ldr     r0, [sp, #52]
+ str     r0, [r6, #20]
+ ldr     r0, [sp, #56]
+ str     r0, [r6, #24]
+ ldr     r0, [sp, #60]
+ str     r0, [r6, #28]
+ add     sp, sp, #64
+ pop     {r4, r5, r6, pc}
+asm_test::atomic_memcpy_load_align1::read_volatile_acquire_fence:
+ push    {r4, r5, r6, r7, r8, r9, r10, r11, lr}
+ sub     sp, sp, #76
+ ldrb    r2, [r1]
+ str     r2, [sp, #72]
+ ldrb    r2, [r1, #1]
+ str     r2, [sp, #68]
+ ldrb    r2, [r1, #2]
+ str     r2, [sp, #64]
+ ldrb    r2, [r1, #3]
+ str     r2, [sp, #60]
+ ldrb    r2, [r1, #4]
+ str     r2, [sp, #56]
+ ldrb    r2, [r1, #5]
+ str     r2, [sp, #52]
+ ldrb    r2, [r1, #6]
+ str     r2, [sp, #48]
+ ldrb    r2, [r1, #7]
+ str     r2, [sp, #44]
+ ldrb    r2, [r1, #8]
+ str     r2, [sp, #40]
+ ldrb    r2, [r1, #9]
+ str     r2, [sp, #36]
+ ldrb    r2, [r1, #10]
+ str     r2, [sp, #32]
+ ldrb    r2, [r1, #11]
+ str     r2, [sp, #28]
+ ldrb    r2, [r1, #12]
+ str     r2, [sp, #24]
+ ldrb    r2, [r1, #13]
+ str     r2, [sp, #20]
+ ldrb    r2, [r1, #14]
+ str     r2, [sp, #16]
+ ldrb    r2, [r1, #15]
+ str     r2, [sp, #12]
+ ldrb    r2, [r1, #16]
+ str     r2, [sp, #8]
+ ldrb    r2, [r1, #17]
+ str     r2, [sp, #4]
+ ldrb    r2, [r1, #18]
+ str     r2, [sp]
+ ldrb    r11, [r1, #19]
+ ldrb    r10, [r1, #20]
+ ldrb    r9, [r1, #21]
+ ldrb    r8, [r1, #22]
+ ldrb    r7, [r1, #23]
+ ldrb    r6, [r1, #24]
+ ldrb    r5, [r1, #25]
+ ldrb    r4, [r1, #26]
+ ldrb    lr, [r1, #27]
+ ldrb    r12, [r1, #28]
+ ldrb    r3, [r1, #29]
+ ldrb    r2, [r1, #30]
+ ldrb    r1, [r1, #31]
+ strb    r1, [r0, #31]
+ ldr     r1, [sp]
+ strb    r1, [r0, #18]
+ ldr     r1, [sp, #4]
+ strb    r1, [r0, #17]
+ ldr     r1, [sp, #8]
+ strb    r1, [r0, #16]
+ ldr     r1, [sp, #12]
+ strb    r1, [r0, #15]
+ ldr     r1, [sp, #16]
+ strb    r1, [r0, #14]
+ ldr     r1, [sp, #20]
+ strb    r1, [r0, #13]
+ ldr     r1, [sp, #24]
+ strb    r1, [r0, #12]
+ ldr     r1, [sp, #28]
+ strb    r1, [r0, #11]
+ ldr     r1, [sp, #32]
+ strb    r1, [r0, #10]
+ ldr     r1, [sp, #36]
+ strb    r1, [r0, #9]
+ ldr     r1, [sp, #40]
+ strb    r1, [r0, #8]
+ ldr     r1, [sp, #44]
+ strb    r1, [r0, #7]
+ ldr     r1, [sp, #48]
+ strb    r1, [r0, #6]
+ ldr     r1, [sp, #52]
+ strb    r1, [r0, #5]
+ ldr     r1, [sp, #56]
+ strb    r1, [r0, #4]
+ ldr     r1, [sp, #60]
+ strb    r1, [r0, #3]
+ ldr     r1, [sp, #64]
+ strb    r1, [r0, #2]
+ ldr     r1, [sp, #68]
+ strb    r1, [r0, #1]
+ ldr     r1, [sp, #72]
+ strb    r2, [r0, #30]
+ strb    r3, [r0, #29]
+ strb    r12, [r0, #28]
+ strb    lr, [r0, #27]
+ strb    r4, [r0, #26]
+ strb    r5, [r0, #25]
+ strb    r6, [r0, #24]
+ strb    r7, [r0, #23]
+ strb    r8, [r0, #22]
+ strb    r9, [r0, #21]
+ strb    r10, [r0, #20]
+ strb    r11, [r0, #19]
+ strb    r1, [r0]
+ bl      __sync_synchronize
+ add     sp, sp, #76
+ pop     {r4, r5, r6, r7, r8, r9, r10, r11, pc}
+.LBB2_2:
+ cmp     r0, #0
+ beq     .LBB2_6
+ sub     r3, r7, r1
+ mov     r4, r7
+.LBB2_4:
+ ldrb    r6, [r2], #1
+ adds    r3, r3, #1
+ strb    r6, [r4]
+ add     r4, r4, #1
+ blo     .LBB2_4
+ sub     r2, r7, r1
+ add     r6, r2, #32
+ cmp     r6, #4
+ blo     .LBB2_9
+.LBB2_6:
+ sub     r0, r7, r1
+ add     r1, sp, #32
+.LBB2_7:
+ sub     r3, r1, r0
+ ldrb    r2, [r1, -r0]
+ sub     r6, r6, #4
+ ldrb    r5, [r3, #1]
+ cmp     r6, #3
+ ldrb    r4, [r3, #2]
+ ldrb    r3, [r3, #3]
+ orr     r2, r2, r5, lsl, #8
+ orr     r3, r4, r3, lsl, #8
+ orr     r2, r2, r3, lsl, #16
+ str     r2, [r7, -r0]
+ sub     r0, r0, #4
+ bhi     .LBB2_7
+ rsb     r0, r0, #0
+.LBB2_9:
+ cmp     r6, #0
+ beq     .LBB2_12
+ add     r1, sp, #32
+ add     r1, r1, r0
+ add     r0, r7, r0
+.LBB2_11:
+ ldrb    r2, [r1], #1
+ subs    r6, r6, #1
+ strb    r2, [r0]
+ add     r0, r0, #1
+ bne     .LBB2_11
+.LBB2_12:
+ add     sp, sp, #64
+ pop     {r4, r5, r6, r7, r8, pc}
+.LBB4_2:
+ ldr     r2, [r1]
+ str     r2, [sp]
+ ldr     r2, [r1, #4]
+ str     r2, [sp, #4]
+ ldr     r2, [r1, #8]
+ str     r2, [sp, #8]
+ ldr     r2, [r1, #12]
+ str     r2, [sp, #12]
+ ldr     r2, [r1, #16]
+ str     r2, [sp, #16]
+ ldr     r2, [r1, #20]
+ str     r2, [sp, #20]
+ ldr     r2, [r1, #24]
+ str     r2, [sp, #24]
+ ldr     r1, [r1, #28]
+ str     r1, [sp, #28]
+.LBB4_3:
+ mov     r1, sp
+ mov     r2, #32
+ bl      memcpy
+ bl      __sync_synchronize
+ add     sp, sp, #32
+ pop     {r11, pc}
+.LBB6_2:
+ ldr     r0, [sp, #32]
+ str     r0, [r6]
+ ldr     r0, [sp, #36]
+ str     r0, [r6, #4]
+ ldr     r0, [sp, #40]
+ str     r0, [r6, #8]
+ ldr     r0, [sp, #44]
+ str     r0, [r6, #12]
+ ldr     r0, [sp, #48]
+ str     r0, [r6, #16]
+ ldr     r0, [sp, #52]
+ str     r0, [r6, #20]
+ ldr     r0, [sp, #56]
+ str     r0, [r6, #24]
+ ldr     r0, [sp, #60]
+ str     r0, [r6, #28]
+ add     sp, sp, #64
+ pop     {r4, r5, r6, pc}

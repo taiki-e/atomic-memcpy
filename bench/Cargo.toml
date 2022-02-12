@@ -1,0 +1,19 @@
+[package]
+name = "bench"
+version = "0.0.0"
+edition = "2018"
+publish = false
+
+[features]
+no-panic = ["atomic-memcpy/no-panic"]
+
+[dependencies]
+atomic-memcpy = { path = "..", features = ["inline-always"] }
+
+[dev-dependencies]
+criterion = { default-features = false, git = "https://github.com/taiki-e/criterion.rs.git", rev = "94d7b8b" } # https://github.com/bheisler/criterion.rs/pull/496 + patches to reduce deps more
+crossbeam-utils = "0.8"
+
+[[bench]]
+name = "atomic_memcpy"
+harness = false

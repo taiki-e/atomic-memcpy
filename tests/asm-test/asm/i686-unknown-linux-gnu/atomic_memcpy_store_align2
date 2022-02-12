@@ -1,0 +1,85 @@
+asm_test::atomic_memcpy_store_align2::release:
+ sub     esp, 64
+ mov     ecx, dword, ptr, [esp, +, 72]
+ mov     eax, dword, ptr, [esp, +, 68]
+ movsd   xmm1, qword, ptr, [ecx, +, 16]
+ movsd   xmm0, qword, ptr, [ecx, +, 24]
+ movsd   xmm3, qword, ptr, [ecx]
+ test    al, 3
+ movsd   qword, ptr, [esp, +, 48], xmm1
+ movsd   xmm1, qword, ptr, [ecx, +, 8]
+ movsd   qword, ptr, [esp, +, 56], xmm0
+ movsd   qword, ptr, [esp, +, 32], xmm3
+ movsd   qword, ptr, [esp, +, 40], xmm1
+ #MEMBARRIER
+ movsd   xmm2, qword, ptr, [esp, +, 56]
+ movsd   xmm1, qword, ptr, [esp, +, 48]
+ movsd   qword, ptr, [esp, +, 24], xmm2
+ movsd   qword, ptr, [esp, +, 16], xmm1
+ movsd   xmm2, qword, ptr, [esp, +, 32]
+ movsd   xmm1, qword, ptr, [esp, +, 40]
+ movsd   qword, ptr, [esp, +, 8], xmm1
+ movsd   qword, ptr, [esp], xmm2
+ je      .LBB6_1
+ movzx   ecx, word, ptr, [esp]
+ mov     word, ptr, [eax], cx
+ mov     ecx, dword, ptr, [esp, +, 2]
+ mov     dword, ptr, [eax, +, 2], ecx
+ mov     ecx, dword, ptr, [esp, +, 6]
+ mov     dword, ptr, [eax, +, 6], ecx
+ mov     ecx, dword, ptr, [esp, +, 10]
+ mov     dword, ptr, [eax, +, 10], ecx
+ mov     ecx, dword, ptr, [esp, +, 14]
+ mov     dword, ptr, [eax, +, 14], ecx
+ mov     ecx, dword, ptr, [esp, +, 18]
+ mov     dword, ptr, [eax, +, 18], ecx
+ mov     ecx, dword, ptr, [esp, +, 22]
+ mov     dword, ptr, [eax, +, 22], ecx
+ mov     ecx, dword, ptr, [esp, +, 26]
+ mov     dword, ptr, [eax, +, 26], ecx
+ movzx   ecx, word, ptr, [esp, +, 30]
+ mov     word, ptr, [eax, +, 30], cx
+ add     esp, 64
+ ret
+.LBB6_1:
+ mov     ecx, dword, ptr, [esp]
+ mov     dword, ptr, [eax], ecx
+ mov     ecx, dword, ptr, [esp, +, 4]
+ mov     dword, ptr, [eax, +, 4], ecx
+ mov     ecx, dword, ptr, [esp, +, 8]
+ mov     dword, ptr, [eax, +, 8], ecx
+ mov     ecx, dword, ptr, [esp, +, 12]
+ mov     dword, ptr, [eax, +, 12], ecx
+ mov     ecx, dword, ptr, [esp, +, 16]
+ mov     dword, ptr, [eax, +, 16], ecx
+ mov     ecx, dword, ptr, [esp, +, 20]
+ mov     dword, ptr, [eax, +, 20], ecx
+ mov     ecx, dword, ptr, [esp, +, 24]
+ mov     dword, ptr, [eax, +, 24], ecx
+ mov     ecx, dword, ptr, [esp, +, 28]
+ mov     dword, ptr, [eax, +, 28], ecx
+ add     esp, 64
+ ret
+asm_test::atomic_memcpy_store_align2::write_volatile_release_fence:
+ sub     esp, 32
+ mov     ecx, dword, ptr, [esp, +, 40]
+ #MEMBARRIER
+ mov     eax, dword, ptr, [esp, +, 36]
+ movsd   xmm0, qword, ptr, [ecx, +, 24]
+ movsd   xmm1, qword, ptr, [ecx, +, 8]
+ movsd   qword, ptr, [esp, +, 24], xmm0
+ movsd   xmm0, qword, ptr, [ecx, +, 16]
+ movsd   qword, ptr, [esp, +, 8], xmm1
+ movsd   qword, ptr, [esp, +, 16], xmm0
+ movsd   xmm0, qword, ptr, [ecx]
+ movsd   qword, ptr, [esp], xmm0
+ movsd   xmm0, qword, ptr, [esp, +, 24]
+ movsd   qword, ptr, [eax, +, 24], xmm0
+ movsd   xmm0, qword, ptr, [esp, +, 16]
+ movsd   qword, ptr, [eax, +, 16], xmm0
+ movsd   xmm0, qword, ptr, [esp, +, 8]
+ movsd   qword, ptr, [eax, +, 8], xmm0
+ movsd   xmm0, qword, ptr, [esp]
+ movsd   qword, ptr, [eax], xmm0
+ add     esp, 32
+ ret

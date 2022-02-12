@@ -1,0 +1,117 @@
+asm_test::atomic_memcpy_store_align2::release:
+ sub     esp, 64
+ mov     eax, dword, ptr, [esp, +, 68]
+ mov     ecx, dword, ptr, [esp, +, 72]
+ mov     edx, dword, ptr, [ecx, +, 28]
+ mov     dword, ptr, [esp, +, 60], edx
+ mov     edx, dword, ptr, [ecx, +, 24]
+ mov     dword, ptr, [esp, +, 56], edx
+ mov     edx, dword, ptr, [ecx, +, 20]
+ mov     dword, ptr, [esp, +, 52], edx
+ mov     edx, dword, ptr, [ecx, +, 16]
+ mov     dword, ptr, [esp, +, 48], edx
+ mov     edx, dword, ptr, [ecx, +, 12]
+ mov     dword, ptr, [esp, +, 44], edx
+ mov     edx, dword, ptr, [ecx, +, 8]
+ mov     dword, ptr, [esp, +, 40], edx
+ mov     edx, dword, ptr, [ecx]
+ mov     ecx, dword, ptr, [ecx, +, 4]
+ mov     dword, ptr, [esp, +, 36], ecx
+ mov     dword, ptr, [esp, +, 32], edx
+ #MEMBARRIER
+ mov     ecx, dword, ptr, [esp, +, 60]
+ mov     dword, ptr, [esp, +, 28], ecx
+ mov     ecx, dword, ptr, [esp, +, 56]
+ mov     dword, ptr, [esp, +, 24], ecx
+ mov     ecx, dword, ptr, [esp, +, 52]
+ mov     dword, ptr, [esp, +, 20], ecx
+ mov     ecx, dword, ptr, [esp, +, 48]
+ mov     dword, ptr, [esp, +, 16], ecx
+ mov     ecx, dword, ptr, [esp, +, 44]
+ mov     dword, ptr, [esp, +, 12], ecx
+ mov     ecx, dword, ptr, [esp, +, 40]
+ mov     dword, ptr, [esp, +, 8], ecx
+ mov     ecx, dword, ptr, [esp, +, 32]
+ mov     edx, dword, ptr, [esp, +, 36]
+ mov     dword, ptr, [esp, +, 4], edx
+ mov     dword, ptr, [esp], ecx
+ test    al, 3
+ je      .LBB6_1
+ movzx   ecx, word, ptr, [esp]
+ mov     word, ptr, [eax], cx
+ mov     ecx, dword, ptr, [esp, +, 2]
+ mov     dword, ptr, [eax, +, 2], ecx
+ mov     ecx, dword, ptr, [esp, +, 6]
+ mov     dword, ptr, [eax, +, 6], ecx
+ mov     ecx, dword, ptr, [esp, +, 10]
+ mov     dword, ptr, [eax, +, 10], ecx
+ mov     ecx, dword, ptr, [esp, +, 14]
+ mov     dword, ptr, [eax, +, 14], ecx
+ mov     ecx, dword, ptr, [esp, +, 18]
+ mov     dword, ptr, [eax, +, 18], ecx
+ mov     ecx, dword, ptr, [esp, +, 22]
+ mov     dword, ptr, [eax, +, 22], ecx
+ mov     ecx, dword, ptr, [esp, +, 26]
+ mov     dword, ptr, [eax, +, 26], ecx
+ movzx   ecx, word, ptr, [esp, +, 30]
+ mov     word, ptr, [eax, +, 30], cx
+ add     esp, 64
+ ret
+.LBB6_1:
+ mov     ecx, dword, ptr, [esp]
+ mov     dword, ptr, [eax], ecx
+ mov     ecx, dword, ptr, [esp, +, 4]
+ mov     dword, ptr, [eax, +, 4], ecx
+ mov     ecx, dword, ptr, [esp, +, 8]
+ mov     dword, ptr, [eax, +, 8], ecx
+ mov     ecx, dword, ptr, [esp, +, 12]
+ mov     dword, ptr, [eax, +, 12], ecx
+ mov     ecx, dword, ptr, [esp, +, 16]
+ mov     dword, ptr, [eax, +, 16], ecx
+ mov     ecx, dword, ptr, [esp, +, 20]
+ mov     dword, ptr, [eax, +, 20], ecx
+ mov     ecx, dword, ptr, [esp, +, 24]
+ mov     dword, ptr, [eax, +, 24], ecx
+ mov     ecx, dword, ptr, [esp, +, 28]
+ mov     dword, ptr, [eax, +, 28], ecx
+ add     esp, 64
+ ret
+asm_test::atomic_memcpy_store_align2::write_volatile_release_fence:
+ sub     esp, 32
+ mov     eax, dword, ptr, [esp, +, 36]
+ mov     ecx, dword, ptr, [esp, +, 40]
+ #MEMBARRIER
+ mov     edx, dword, ptr, [ecx, +, 28]
+ mov     dword, ptr, [esp, +, 28], edx
+ mov     edx, dword, ptr, [ecx, +, 24]
+ mov     dword, ptr, [esp, +, 24], edx
+ mov     edx, dword, ptr, [ecx, +, 20]
+ mov     dword, ptr, [esp, +, 20], edx
+ mov     edx, dword, ptr, [ecx, +, 16]
+ mov     dword, ptr, [esp, +, 16], edx
+ mov     edx, dword, ptr, [ecx, +, 12]
+ mov     dword, ptr, [esp, +, 12], edx
+ mov     edx, dword, ptr, [ecx, +, 8]
+ mov     dword, ptr, [esp, +, 8], edx
+ mov     edx, dword, ptr, [ecx]
+ mov     ecx, dword, ptr, [ecx, +, 4]
+ mov     dword, ptr, [esp, +, 4], ecx
+ mov     dword, ptr, [esp], edx
+ mov     ecx, dword, ptr, [esp, +, 28]
+ mov     dword, ptr, [eax, +, 28], ecx
+ mov     ecx, dword, ptr, [esp, +, 24]
+ mov     dword, ptr, [eax, +, 24], ecx
+ mov     ecx, dword, ptr, [esp, +, 20]
+ mov     dword, ptr, [eax, +, 20], ecx
+ mov     ecx, dword, ptr, [esp, +, 16]
+ mov     dword, ptr, [eax, +, 16], ecx
+ mov     ecx, dword, ptr, [esp, +, 12]
+ mov     dword, ptr, [eax, +, 12], ecx
+ mov     ecx, dword, ptr, [esp, +, 8]
+ mov     dword, ptr, [eax, +, 8], ecx
+ mov     ecx, dword, ptr, [esp, +, 4]
+ mov     dword, ptr, [eax, +, 4], ecx
+ mov     ecx, dword, ptr, [esp]
+ mov     dword, ptr, [eax], ecx
+ add     esp, 32
+ ret

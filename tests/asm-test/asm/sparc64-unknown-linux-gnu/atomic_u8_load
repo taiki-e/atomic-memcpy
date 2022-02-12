@@ -1,0 +1,36 @@
+asm_test::atomic_u8_load::unordered:
+ retl
+ ldub    [%o0], %o0
+asm_test::atomic_u8_load::relaxed:
+ retl
+ ldub    [%o0], %o0
+asm_test::atomic_u8_load::unordered_acquire_fence:
+ ldub    [%o0], %o0
+ membar  #LoadLoad, |, #StoreLoad, |, #LoadStore, |, #StoreStore
+ retl
+ nop
+asm_test::atomic_u8_load::relaxed_acquire_fence:
+ ldub    [%o0], %o0
+ membar  #LoadLoad, |, #StoreLoad, |, #LoadStore, |, #StoreStore
+ retl
+ nop
+asm_test::atomic_u8_load::acquire:
+ ldub    [%o0], %o0
+ membar  #LoadLoad, |, #StoreLoad, |, #LoadStore, |, #StoreStore
+ retl
+ nop
+asm_test::atomic_u8_load::unordered_seq_cst_fence:
+ ldub    [%o0], %o0
+ membar  #LoadLoad, |, #StoreLoad, |, #LoadStore, |, #StoreStore
+ retl
+ nop
+asm_test::atomic_u8_load::relaxed_seq_cst_fence:
+ ldub    [%o0], %o0
+ membar  #LoadLoad, |, #StoreLoad, |, #LoadStore, |, #StoreStore
+ retl
+ nop
+asm_test::atomic_u8_load::seq_cst:
+ ldub    [%o0], %o0
+ membar  #LoadLoad, |, #StoreLoad, |, #LoadStore, |, #StoreStore
+ retl
+ nop

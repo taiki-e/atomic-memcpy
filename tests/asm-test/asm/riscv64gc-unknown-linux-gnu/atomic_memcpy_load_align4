@@ -1,0 +1,104 @@
+asm_test::atomic_memcpy_load_align4::acquire:
+ addi    sp, sp, -80
+ sd      ra, 72(sp)
+ andi    a2, a1, 7
+ beqz    a2, .LBB8_2
+ lw      a2, 0(a1)
+ sw      a2, 8(sp)
+ ld      a2, 4(a1)
+ sw      a2, 12(sp)
+ srli    a2, a2, 32
+ sw      a2, 16(sp)
+ ld      a2, 12(a1)
+ sw      a2, 20(sp)
+ srli    a2, a2, 32
+ sw      a2, 24(sp)
+ ld      a2, 20(a1)
+ sw      a2, 28(sp)
+ srli    a2, a2, 32
+ sw      a2, 32(sp)
+ ld      a2, 28(a1)
+ sw      a2, 36(sp)
+ srli    a2, a2, 32
+ sw      a2, 40(sp)
+ ld      a2, 36(a1)
+ sw      a2, 44(sp)
+ srli    a2, a2, 32
+ sw      a2, 48(sp)
+ ld      a2, 44(a1)
+ sw      a2, 52(sp)
+ srli    a2, a2, 32
+ sw      a2, 56(sp)
+ ld      a2, 52(a1)
+ sw      a2, 60(sp)
+ srli    a2, a2, 32
+ sw      a2, 64(sp)
+ lw      a1, 60(a1)
+ sw      a1, 68(sp)
+ j       .LBB8_3
+.LBB8_2:
+ ld      a2, 0(a1)
+ sd      a2, 8(sp)
+ ld      a2, 8(a1)
+ sd      a2, 16(sp)
+ ld      a2, 16(a1)
+ sd      a2, 24(sp)
+ ld      a2, 24(a1)
+ sd      a2, 32(sp)
+ ld      a2, 32(a1)
+ sd      a2, 40(sp)
+ ld      a2, 40(a1)
+ sd      a2, 48(sp)
+ ld      a2, 48(a1)
+ sd      a2, 56(sp)
+ ld      a1, 56(a1)
+ sd      a1, 64(sp)
+.LBB8_3:
+ addi    a1, sp, 8
+ addi    a2, zero, 64
+ call    memcpy@plt
+ fence   r, rw
+ ld      ra, 72(sp)
+ addi    sp, sp, 80
+ ret
+asm_test::atomic_memcpy_load_align4::read_volatile_acquire_fence:
+ addi    sp, sp, -16
+ sd      s0, 8(sp)
+ sd      s1, 0(sp)
+ lw      a6, 60(a1)
+ lw      a7, 56(a1)
+ lw      t0, 52(a1)
+ lw      t1, 48(a1)
+ lw      t2, 44(a1)
+ lw      t3, 40(a1)
+ lw      t4, 36(a1)
+ lw      t5, 32(a1)
+ lw      t6, 28(a1)
+ lw      a3, 24(a1)
+ lw      a4, 20(a1)
+ lw      a5, 16(a1)
+ lw      a2, 12(a1)
+ lw      s0, 8(a1)
+ lw      s1, 4(a1)
+ lw      a1, 0(a1)
+ sw      a1, 0(a0)
+ sw      s1, 4(a0)
+ sw      s0, 8(a0)
+ sw      a2, 12(a0)
+ sw      a5, 16(a0)
+ sw      a4, 20(a0)
+ sw      a3, 24(a0)
+ sw      t6, 28(a0)
+ sw      t5, 32(a0)
+ sw      t4, 36(a0)
+ sw      t3, 40(a0)
+ sw      t2, 44(a0)
+ sw      t1, 48(a0)
+ sw      t0, 52(a0)
+ sw      a7, 56(a0)
+ sw      a6, 60(a0)
+ fence   r, rw
+ ld      s1, 0(sp)
+ ld      s0, 8(sp)
+ addi    sp, sp, 16
+ ret

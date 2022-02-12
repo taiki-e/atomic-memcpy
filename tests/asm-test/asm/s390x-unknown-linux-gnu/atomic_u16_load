@@ -1,0 +1,28 @@
+asm_test::atomic_u16_load::unordered:
+ lh      %r2, 0(%r2)
+ br      %r14
+asm_test::atomic_u16_load::relaxed:
+ lh      %r2, 0(%r2)
+ br      %r14
+asm_test::atomic_u16_load::unordered_acquire_fence:
+ lh      %r2, 0(%r2)
+ #MEMBARRIER
+ br      %r14
+asm_test::atomic_u16_load::relaxed_acquire_fence:
+ lh      %r2, 0(%r2)
+ #MEMBARRIER
+ br      %r14
+asm_test::atomic_u16_load::acquire:
+ lh      %r2, 0(%r2)
+ br      %r14
+asm_test::atomic_u16_load::unordered_seq_cst_fence:
+ lh      %r2, 0(%r2)
+ bcr     15, %r0
+ br      %r14
+asm_test::atomic_u16_load::relaxed_seq_cst_fence:
+ lh      %r2, 0(%r2)
+ bcr     15, %r0
+ br      %r14
+asm_test::atomic_u16_load::seq_cst:
+ lh      %r2, 0(%r2)
+ br      %r14

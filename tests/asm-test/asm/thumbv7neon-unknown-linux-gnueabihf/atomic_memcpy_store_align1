@@ -1,0 +1,228 @@
+asm_test::atomic_memcpy_store_align1::release:
+ push    {r4, r5, r7, lr}
+ sub     sp, #64
+ vld1.8  {d16, d17}, [r1]!
+ add.w   lr, sp, #32
+ vld1.8  {d18, d19}, [r1]
+ mov     r1, sp
+ mov     r2, r1
+ vst1.64 {d16, d17}, [r2]!
+ vst1.64 {d18, d19}, [r2]
+ dmb     ish
+ vld1.64 {d16, d17}, [r1]
+ mov     r1, lr
+ vld1.64 {d18, d19}, [r2]
+ vst1.64 {d16, d17}, [r1]!
+ vst1.64 {d18, d19}, [r1]
+ adds    r1, r0, #3
+ bic     r1, r1, #3
+ subs    r2, r1, r0
+ cmp     r2, #33
+ blo     .LBB2_2
+ ldrb.w  r1, [sp, #32]
+ strb    r1, [r0]
+ ldrb.w  r1, [sp, #33]
+ strb    r1, [r0, #1]
+ ldrb.w  r1, [sp, #34]
+ strb    r1, [r0, #2]
+ ldrb.w  r1, [sp, #35]
+ strb    r1, [r0, #3]
+ ldrb.w  r1, [sp, #36]
+ strb    r1, [r0, #4]
+ ldrb.w  r1, [sp, #37]
+ strb    r1, [r0, #5]
+ ldrb.w  r1, [sp, #38]
+ strb    r1, [r0, #6]
+ ldrb.w  r1, [sp, #39]
+ strb    r1, [r0, #7]
+ ldrb.w  r1, [sp, #40]
+ strb    r1, [r0, #8]
+ ldrb.w  r1, [sp, #41]
+ strb    r1, [r0, #9]
+ ldrb.w  r1, [sp, #42]
+ strb    r1, [r0, #10]
+ ldrb.w  r1, [sp, #43]
+ strb    r1, [r0, #11]
+ ldrb.w  r1, [sp, #44]
+ strb    r1, [r0, #12]
+ ldrb.w  r1, [sp, #45]
+ strb    r1, [r0, #13]
+ ldrb.w  r1, [sp, #46]
+ strb    r1, [r0, #14]
+ ldrb.w  r1, [sp, #47]
+ strb    r1, [r0, #15]
+ ldrb.w  r1, [sp, #48]
+ strb    r1, [r0, #16]
+ ldrb.w  r1, [sp, #49]
+ strb    r1, [r0, #17]
+ ldrb.w  r1, [sp, #50]
+ strb    r1, [r0, #18]
+ ldrb.w  r1, [sp, #51]
+ strb    r1, [r0, #19]
+ ldrb.w  r1, [sp, #52]
+ strb    r1, [r0, #20]
+ ldrb.w  r1, [sp, #53]
+ strb    r1, [r0, #21]
+ ldrb.w  r1, [sp, #54]
+ strb    r1, [r0, #22]
+ ldrb.w  r1, [sp, #55]
+ strb    r1, [r0, #23]
+ ldrb.w  r1, [sp, #56]
+ strb    r1, [r0, #24]
+ ldrb.w  r1, [sp, #57]
+ strb    r1, [r0, #25]
+ ldrb.w  r1, [sp, #58]
+ strb    r1, [r0, #26]
+ ldrb.w  r1, [sp, #59]
+ strb    r1, [r0, #27]
+ ldrb.w  r1, [sp, #60]
+ strb    r1, [r0, #28]
+ ldrb.w  r1, [sp, #61]
+ strb    r1, [r0, #29]
+ ldrb.w  r1, [sp, #62]
+ strb    r1, [r0, #30]
+ ldrb.w  r1, [sp, #63]
+ strb    r1, [r0, #31]
+ add     sp, #64
+ pop     {r4, r5, r7, pc}
+.LBB2_2:
+ cbz     r2, .LBB2_6
+ sub.w   r12, r0, r1
+ add     r3, sp, #32
+ mov     r4, r0
+ mov     r1, r12
+.LBB2_4:
+ ldrb    r5, [r3], #1
+ adds    r1, #1
+ strb    r5, [r4], #1
+ blo     .LBB2_4
+ add.w   r3, r12, #32
+ cmp     r3, #4
+ bhs     .LBB2_7
+ b       .LBB2_8
+.LBB2_6:
+ movs    r3, #32
+.LBB2_7:
+ ldr.w   r1, [lr, r2]
+ subs    r3, #4
+ cmp     r3, #3
+ str     r1, [r0, r2]
+ add.w   r2, r2, #4
+ bhi     .LBB2_7
+.LBB2_8:
+ cbz     r3, .LBB2_11
+ add.w   r1, lr, r2
+ add     r0, r2
+.LBB2_10:
+ ldrb    r2, [r1], #1
+ subs    r3, #1
+ strb    r2, [r0], #1
+ bne     .LBB2_10
+.LBB2_11:
+ add     sp, #64
+ pop     {r4, r5, r7, pc}
+.LBB4_2:
+ ldr     r2, [r1]
+ str     r2, [sp]
+ ldr     r2, [r1, #4]
+ str     r2, [sp, #4]
+ ldr     r2, [r1, #8]
+ str     r2, [sp, #8]
+ ldr     r2, [r1, #12]
+ str     r2, [sp, #12]
+ ldr     r2, [r1, #16]
+ str     r2, [sp, #16]
+ ldr     r2, [r1, #20]
+ str     r2, [sp, #20]
+ ldr     r2, [r1, #24]
+ str     r2, [sp, #24]
+ ldr     r1, [r1, #28]
+ str     r1, [sp, #28]
+.LBB4_3:
+ mov     r1, sp
+ vld1.16 {d16, d17}, [r1]!
+ vld1.64 {d18, d19}, [r1]
+ vst1.16 {d16, d17}, [r0]!
+ vst1.16 {d18, d19}, [r0]
+ dmb     ish
+ add     sp, #32
+ bx      lr
+.LBB6_2:
+ ldr     r1, [sp, #32]
+ str     r1, [r0]
+ ldr     r1, [sp, #36]
+ str     r1, [r0, #4]
+ ldr     r1, [sp, #40]
+ str     r1, [r0, #8]
+ ldr     r1, [sp, #44]
+ str     r1, [r0, #12]
+ ldr     r1, [sp, #48]
+ str     r1, [r0, #16]
+ ldr     r1, [sp, #52]
+ str     r1, [r0, #20]
+ ldr     r1, [sp, #56]
+ str     r1, [r0, #24]
+ ldr     r1, [sp, #60]
+ str     r1, [r0, #28]
+ add     sp, #64
+ bx      lr
+asm_test::atomic_memcpy_store_align1::write_volatile_release_fence:
+ sub     sp, #32
+ dmb     ish
+ vld1.8  {d16, d17}, [r1]!
+ vld1.8  {d18, d19}, [r1]
+ mov     r1, sp
+ vst1.64 {d16, d17}, [r1]
+ vld1.64 {d16, d17}, [r1]!
+ vst1.64 {d18, d19}, [r1]
+ vst1.8  {d16, d17}, [r0]
+ adds    r0, #16
+ vld1.64 {d16, d17}, [r1]
+ vst1.8  {d16, d17}, [r0]
+ add     sp, #32
+ bx      lr
+.LBB4_2:
+ ldr     r2, [r1]
+ str     r2, [sp]
+ ldr     r2, [r1, #4]
+ str     r2, [sp, #4]
+ ldr     r2, [r1, #8]
+ str     r2, [sp, #8]
+ ldr     r2, [r1, #12]
+ str     r2, [sp, #12]
+ ldr     r2, [r1, #16]
+ str     r2, [sp, #16]
+ ldr     r2, [r1, #20]
+ str     r2, [sp, #20]
+ ldr     r2, [r1, #24]
+ str     r2, [sp, #24]
+ ldr     r1, [r1, #28]
+ str     r1, [sp, #28]
+.LBB4_3:
+ mov     r1, sp
+ vld1.16 {d16, d17}, [r1]!
+ vld1.64 {d18, d19}, [r1]
+ vst1.16 {d16, d17}, [r0]!
+ vst1.16 {d18, d19}, [r0]
+ dmb     ish
+ add     sp, #32
+ bx      lr
+.LBB6_2:
+ ldr     r1, [sp, #32]
+ str     r1, [r0]
+ ldr     r1, [sp, #36]
+ str     r1, [r0, #4]
+ ldr     r1, [sp, #40]
+ str     r1, [r0, #8]
+ ldr     r1, [sp, #44]
+ str     r1, [r0, #12]
+ ldr     r1, [sp, #48]
+ str     r1, [r0, #16]
+ ldr     r1, [sp, #52]
+ str     r1, [r0, #20]
+ ldr     r1, [sp, #56]
+ str     r1, [r0, #24]
+ ldr     r1, [sp, #60]
+ str     r1, [r0, #28]
+ add     sp, #64
+ bx      lr

@@ -1,0 +1,40 @@
+asm_test::atomic_memcpy_load_align16::acquire:
+ mov     rax, rdi
+ mov     r8, qword, ptr, [rsi, +, 56]
+ mov     r9, qword, ptr, [rsi, +, 48]
+ mov     r10, qword, ptr, [rsi, +, 40]
+ mov     r11, qword, ptr, [rsi, +, 32]
+ mov     rdx, qword, ptr, [rsi, +, 24]
+ mov     rdi, qword, ptr, [rsi, +, 16]
+ mov     rcx, qword, ptr, [rsi, +, 8]
+ mov     rsi, qword, ptr, [rsi]
+ mov     qword, ptr, [rax], rsi
+ mov     qword, ptr, [rax, +, 8], rcx
+ mov     qword, ptr, [rax, +, 16], rdi
+ mov     qword, ptr, [rax, +, 24], rdx
+ mov     qword, ptr, [rax, +, 32], r11
+ mov     qword, ptr, [rax, +, 40], r10
+ mov     qword, ptr, [rax, +, 48], r9
+ mov     qword, ptr, [rax, +, 56], r8
+ #MEMBARRIER
+ ret
+asm_test::atomic_memcpy_load_align16::read_volatile_acquire_fence:
+ mov     rax, rdi
+ mov     r8, qword, ptr, [rsi, +, 56]
+ mov     r9, qword, ptr, [rsi, +, 48]
+ mov     r10, qword, ptr, [rsi, +, 40]
+ mov     r11, qword, ptr, [rsi, +, 32]
+ mov     rdx, qword, ptr, [rsi, +, 24]
+ mov     rdi, qword, ptr, [rsi, +, 16]
+ mov     rcx, qword, ptr, [rsi]
+ mov     rsi, qword, ptr, [rsi, +, 8]
+ mov     qword, ptr, [rax], rcx
+ mov     qword, ptr, [rax, +, 8], rsi
+ mov     qword, ptr, [rax, +, 16], rdi
+ mov     qword, ptr, [rax, +, 24], rdx
+ mov     qword, ptr, [rax, +, 32], r11
+ mov     qword, ptr, [rax, +, 40], r10
+ mov     qword, ptr, [rax, +, 48], r9
+ mov     qword, ptr, [rax, +, 56], r8
+ #MEMBARRIER
+ ret

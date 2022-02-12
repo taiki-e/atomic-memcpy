@@ -1,0 +1,38 @@
+asm_test::atomic_memcpy_load_align16::acquire:
+ lwz     5, 0(4)
+ lwz     6, 4(4)
+ lwz     7, 8(4)
+ lwz     8, 12(4)
+ lwz     9, 16(4)
+ lwz     10, 20(4)
+ lwz     11, 24(4)
+ lwz     4, 28(4)
+ stw     5, 0(3)
+ stw     6, 4(3)
+ stw     7, 8(3)
+ stw     8, 12(3)
+ stw     9, 16(3)
+ stw     10, 20(3)
+ stw     11, 24(3)
+ stw     4, 28(3)
+ lwsync
+ blr
+asm_test::atomic_memcpy_load_align16::read_volatile_acquire_fence:
+ lwz     5, 24(4)
+ lwz     6, 28(4)
+ lwz     7, 16(4)
+ lwz     8, 20(4)
+ lwz     9, 8(4)
+ lwz     10, 12(4)
+ lwz     11, 0(4)
+ lwz     4, 4(4)
+ stw     11, 0(3)
+ stw     4, 4(3)
+ stw     10, 12(3)
+ stw     9, 8(3)
+ stw     8, 20(3)
+ stw     7, 16(3)
+ stw     6, 28(3)
+ stw     5, 24(3)
+ lwsync
+ blr

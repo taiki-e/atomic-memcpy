@@ -1,0 +1,262 @@
+asm_test::atomic_memcpy_load_align2::acquire:
+.Lfunc_begin4:
+ addi    5, 4, 7
+ rldicr  8, 5, 0, 60
+ sub     5, 8, 4
+ cmpldi  5, 65
+ blt     0, .LBB4_2
+ lhz     5, 0(4)
+ sth     5, -64(1)
+ lhz     5, 2(4)
+ sth     5, -62(1)
+ lhz     5, 4(4)
+ sth     5, -60(1)
+ lhz     5, 6(4)
+ sth     5, -58(1)
+ lhz     5, 8(4)
+ sth     5, -56(1)
+ lhz     5, 10(4)
+ sth     5, -54(1)
+ lhz     5, 12(4)
+ sth     5, -52(1)
+ lhz     5, 14(4)
+ sth     5, -50(1)
+ lhz     5, 16(4)
+ sth     5, -48(1)
+ lhz     5, 18(4)
+ sth     5, -46(1)
+ lhz     5, 20(4)
+ sth     5, -44(1)
+ lhz     5, 22(4)
+ sth     5, -42(1)
+ lhz     5, 24(4)
+ sth     5, -40(1)
+ lhz     5, 26(4)
+ sth     5, -38(1)
+ lhz     5, 28(4)
+ sth     5, -36(1)
+ lhz     5, 30(4)
+ sth     5, -34(1)
+ lhz     5, 32(4)
+ sth     5, -32(1)
+ lhz     5, 34(4)
+ sth     5, -30(1)
+ lhz     5, 36(4)
+ sth     5, -28(1)
+ lhz     5, 38(4)
+ sth     5, -26(1)
+ lhz     5, 40(4)
+ sth     5, -24(1)
+ lhz     5, 42(4)
+ sth     5, -22(1)
+ lhz     5, 44(4)
+ sth     5, -20(1)
+ lhz     5, 46(4)
+ sth     5, -18(1)
+ lhz     5, 48(4)
+ sth     5, -16(1)
+ lhz     5, 50(4)
+ sth     5, -14(1)
+ lhz     5, 52(4)
+ sth     5, -12(1)
+ lhz     5, 54(4)
+ sth     5, -10(1)
+ lhz     5, 56(4)
+ sth     5, -8(1)
+ lhz     5, 58(4)
+ sth     5, -6(1)
+ lhz     5, 60(4)
+ sth     5, -4(1)
+ lhz     4, 62(4)
+ sth     4, -2(1)
+ b       .LBB4_14
+.LBB4_2:
+ cmpldi  5, 0
+ addi    6, 1, -64
+ beq     0, .LBB4_6
+ addi    7, 4, -1
+ addi    9, 6, -1
+ mtctr   5
+.LBB4_4:
+ lbz     10, 1(7)
+ addi    7, 7, 1
+ stbu    10, 1(9)
+ bdnz    .LBB4_4
+ sub     7, 4, 8
+ addi    7, 7, 64
+ cmpldi  7, 8
+ bge     0, .LBB4_7
+ b       .LBB4_11
+.LBB4_6:
+ li      7, 64
+.LBB4_7:
+ addi    9, 7, -8
+ li      11, 7
+ cmpldi  9, 7
+ sub     10, 8, 4
+ bc      12, 0, .LBB4_9
+ ori     9, 11, 0
+ b       .LBB4_9
+.LBB4_9:
+ not     9, 9
+ add     8, 8, 6
+ add     9, 9, 7
+ add     10, 10, 4
+ sub     11, 8, 4
+ rldicl  9, 9, 61, 3
+ addi    8, 10, -8
+ addi    10, 9, 1
+ addi    9, 11, -8
+ mtctr   10
+.LBB4_10:
+ ld      10, 8(8)
+ addi    11, 9, 8
+ addi    8, 8, 8
+ addi    7, 7, -8
+ addi    5, 5, 8
+ std     10, 8(9)
+ mr      9, 11
+ bdnz    .LBB4_10
+.LBB4_11:
+ cmpldi  7, 0
+ beq     0, .LBB4_14
+ addi    5, 5, -1
+ add     4, 4, 5
+ add     5, 6, 5
+ mtctr   7
+.LBB4_13:
+ lbz     6, 1(4)
+ addi    4, 4, 1
+ stbu    6, 1(5)
+ bdnz    .LBB4_13
+.LBB4_14:
+ ld      4, -8(1)
+ std     4, 56(3)
+ ld      4, -16(1)
+ std     4, 48(3)
+ ld      4, -24(1)
+ std     4, 40(3)
+ ld      4, -32(1)
+ std     4, 32(3)
+ ld      4, -40(1)
+ std     4, 24(3)
+ ld      4, -48(1)
+ std     4, 16(3)
+ ld      4, -56(1)
+ std     4, 8(3)
+ ld      4, -64(1)
+ std     4, 0(3)
+ lwsync
+ blr
+asm_test::atomic_memcpy_load_align2::read_volatile_acquire_fence:
+.Lfunc_begin5:
+ std     14, -144(1)
+ std     15, -136(1)
+ std     16, -128(1)
+ std     17, -120(1)
+ std     18, -112(1)
+ std     19, -104(1)
+ std     20, -96(1)
+ std     21, -88(1)
+ std     22, -80(1)
+ std     23, -72(1)
+ std     24, -64(1)
+ std     25, -56(1)
+ std     26, -48(1)
+ std     27, -40(1)
+ std     28, -32(1)
+ std     29, -24(1)
+ std     30, -16(1)
+ std     31, -8(1)
+ std     2, -152(1)
+ lhz     5, 62(4)
+ stw     5, -156(1)
+ lhz     5, 60(4)
+ stw     5, -160(1)
+ lhz     5, 58(4)
+ stw     5, -164(1)
+ lhz     8, 56(4)
+ lhz     9, 54(4)
+ lhz     10, 52(4)
+ lhz     11, 50(4)
+ lhz     12, 48(4)
+ lhz     0, 46(4)
+ lhz     30, 44(4)
+ lhz     29, 42(4)
+ lhz     28, 40(4)
+ lhz     27, 38(4)
+ lhz     26, 36(4)
+ lhz     25, 34(4)
+ lhz     24, 32(4)
+ lhz     23, 30(4)
+ lhz     22, 28(4)
+ lhz     21, 26(4)
+ lhz     20, 24(4)
+ lhz     19, 22(4)
+ lhz     18, 20(4)
+ lhz     17, 18(4)
+ lhz     16, 16(4)
+ lhz     15, 14(4)
+ lhz     14, 12(4)
+ lhz     31, 10(4)
+ lhz     2, 8(4)
+ lhz     7, 6(4)
+ lhz     6, 4(4)
+ lhz     5, 2(4)
+ lhz     4, 0(4)
+ sth     4, 0(3)
+ lwz     4, -164(1)
+ sth     4, 58(3)
+ lwz     4, -160(1)
+ sth     4, 60(3)
+ lwz     4, -156(1)
+ sth     5, 2(3)
+ sth     6, 4(3)
+ sth     7, 6(3)
+ sth     2, 8(3)
+ sth     31, 10(3)
+ sth     14, 12(3)
+ sth     15, 14(3)
+ sth     16, 16(3)
+ sth     17, 18(3)
+ sth     18, 20(3)
+ sth     19, 22(3)
+ sth     20, 24(3)
+ sth     21, 26(3)
+ sth     22, 28(3)
+ sth     23, 30(3)
+ sth     24, 32(3)
+ sth     25, 34(3)
+ sth     26, 36(3)
+ sth     27, 38(3)
+ sth     28, 40(3)
+ sth     29, 42(3)
+ sth     30, 44(3)
+ sth     0, 46(3)
+ sth     12, 48(3)
+ sth     11, 50(3)
+ sth     10, 52(3)
+ sth     9, 54(3)
+ sth     8, 56(3)
+ sth     4, 62(3)
+ lwsync
+ ld      2, -152(1)
+ ld      31, -8(1)
+ ld      30, -16(1)
+ ld      29, -24(1)
+ ld      28, -32(1)
+ ld      27, -40(1)
+ ld      26, -48(1)
+ ld      25, -56(1)
+ ld      24, -64(1)
+ ld      23, -72(1)
+ ld      22, -80(1)
+ ld      21, -88(1)
+ ld      20, -96(1)
+ ld      19, -104(1)
+ ld      18, -112(1)
+ ld      17, -120(1)
+ ld      16, -128(1)
+ ld      15, -136(1)
+ ld      14, -144(1)
+ blr

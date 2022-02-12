@@ -1,0 +1,516 @@
+asm_test::atomic_memcpy_load_align1::acquire:
+ push    rbx
+ sub     rsp, 64
+ mov     rax, rdi
+ lea     r8, [rsi, +, 7]
+ and     r8, -8
+ mov     rbx, r8
+ sub     rbx, rsi
+ cmp     rbx, 65
+ jb      .LBB0_2
+ mov     cl, byte, ptr, [rsi]
+ mov     byte, ptr, [rsp], cl
+ mov     cl, byte, ptr, [rsi, +, 1]
+ mov     byte, ptr, [rsp, +, 1], cl
+ mov     cl, byte, ptr, [rsi, +, 2]
+ mov     byte, ptr, [rsp, +, 2], cl
+ mov     cl, byte, ptr, [rsi, +, 3]
+ mov     byte, ptr, [rsp, +, 3], cl
+ mov     cl, byte, ptr, [rsi, +, 4]
+ mov     byte, ptr, [rsp, +, 4], cl
+ mov     cl, byte, ptr, [rsi, +, 5]
+ mov     byte, ptr, [rsp, +, 5], cl
+ mov     cl, byte, ptr, [rsi, +, 6]
+ mov     byte, ptr, [rsp, +, 6], cl
+ mov     cl, byte, ptr, [rsi, +, 7]
+ mov     byte, ptr, [rsp, +, 7], cl
+ mov     cl, byte, ptr, [rsi, +, 8]
+ mov     byte, ptr, [rsp, +, 8], cl
+ mov     cl, byte, ptr, [rsi, +, 9]
+ mov     byte, ptr, [rsp, +, 9], cl
+ mov     cl, byte, ptr, [rsi, +, 10]
+ mov     byte, ptr, [rsp, +, 10], cl
+ mov     cl, byte, ptr, [rsi, +, 11]
+ mov     byte, ptr, [rsp, +, 11], cl
+ mov     cl, byte, ptr, [rsi, +, 12]
+ mov     byte, ptr, [rsp, +, 12], cl
+ mov     cl, byte, ptr, [rsi, +, 13]
+ mov     byte, ptr, [rsp, +, 13], cl
+ mov     cl, byte, ptr, [rsi, +, 14]
+ mov     byte, ptr, [rsp, +, 14], cl
+ mov     cl, byte, ptr, [rsi, +, 15]
+ mov     byte, ptr, [rsp, +, 15], cl
+ mov     cl, byte, ptr, [rsi, +, 16]
+ mov     byte, ptr, [rsp, +, 16], cl
+ mov     cl, byte, ptr, [rsi, +, 17]
+ mov     byte, ptr, [rsp, +, 17], cl
+ mov     cl, byte, ptr, [rsi, +, 18]
+ mov     byte, ptr, [rsp, +, 18], cl
+ mov     cl, byte, ptr, [rsi, +, 19]
+ mov     byte, ptr, [rsp, +, 19], cl
+ mov     cl, byte, ptr, [rsi, +, 20]
+ mov     byte, ptr, [rsp, +, 20], cl
+ mov     cl, byte, ptr, [rsi, +, 21]
+ mov     byte, ptr, [rsp, +, 21], cl
+ mov     cl, byte, ptr, [rsi, +, 22]
+ mov     byte, ptr, [rsp, +, 22], cl
+ mov     cl, byte, ptr, [rsi, +, 23]
+ mov     byte, ptr, [rsp, +, 23], cl
+ mov     cl, byte, ptr, [rsi, +, 24]
+ mov     byte, ptr, [rsp, +, 24], cl
+ mov     cl, byte, ptr, [rsi, +, 25]
+ mov     byte, ptr, [rsp, +, 25], cl
+ mov     cl, byte, ptr, [rsi, +, 26]
+ mov     byte, ptr, [rsp, +, 26], cl
+ mov     cl, byte, ptr, [rsi, +, 27]
+ mov     byte, ptr, [rsp, +, 27], cl
+ mov     cl, byte, ptr, [rsi, +, 28]
+ mov     byte, ptr, [rsp, +, 28], cl
+ mov     cl, byte, ptr, [rsi, +, 29]
+ mov     byte, ptr, [rsp, +, 29], cl
+ mov     cl, byte, ptr, [rsi, +, 30]
+ mov     byte, ptr, [rsp, +, 30], cl
+ mov     cl, byte, ptr, [rsi, +, 31]
+ mov     byte, ptr, [rsp, +, 31], cl
+ mov     cl, byte, ptr, [rsi, +, 32]
+ mov     byte, ptr, [rsp, +, 32], cl
+ mov     cl, byte, ptr, [rsi, +, 33]
+ mov     byte, ptr, [rsp, +, 33], cl
+ mov     cl, byte, ptr, [rsi, +, 34]
+ mov     byte, ptr, [rsp, +, 34], cl
+ mov     cl, byte, ptr, [rsi, +, 35]
+ mov     byte, ptr, [rsp, +, 35], cl
+ mov     cl, byte, ptr, [rsi, +, 36]
+ mov     byte, ptr, [rsp, +, 36], cl
+ mov     cl, byte, ptr, [rsi, +, 37]
+ mov     byte, ptr, [rsp, +, 37], cl
+ mov     cl, byte, ptr, [rsi, +, 38]
+ mov     byte, ptr, [rsp, +, 38], cl
+ mov     cl, byte, ptr, [rsi, +, 39]
+ mov     byte, ptr, [rsp, +, 39], cl
+ mov     cl, byte, ptr, [rsi, +, 40]
+ mov     byte, ptr, [rsp, +, 40], cl
+ mov     cl, byte, ptr, [rsi, +, 41]
+ mov     byte, ptr, [rsp, +, 41], cl
+ mov     cl, byte, ptr, [rsi, +, 42]
+ mov     byte, ptr, [rsp, +, 42], cl
+ mov     cl, byte, ptr, [rsi, +, 43]
+ mov     byte, ptr, [rsp, +, 43], cl
+ mov     cl, byte, ptr, [rsi, +, 44]
+ mov     byte, ptr, [rsp, +, 44], cl
+ mov     cl, byte, ptr, [rsi, +, 45]
+ mov     byte, ptr, [rsp, +, 45], cl
+ mov     cl, byte, ptr, [rsi, +, 46]
+ mov     byte, ptr, [rsp, +, 46], cl
+ mov     cl, byte, ptr, [rsi, +, 47]
+ mov     byte, ptr, [rsp, +, 47], cl
+ mov     cl, byte, ptr, [rsi, +, 48]
+ mov     byte, ptr, [rsp, +, 48], cl
+ mov     cl, byte, ptr, [rsi, +, 49]
+ mov     byte, ptr, [rsp, +, 49], cl
+ mov     cl, byte, ptr, [rsi, +, 50]
+ mov     byte, ptr, [rsp, +, 50], cl
+ mov     cl, byte, ptr, [rsi, +, 51]
+ mov     byte, ptr, [rsp, +, 51], cl
+ mov     cl, byte, ptr, [rsi, +, 52]
+ mov     byte, ptr, [rsp, +, 52], cl
+ mov     cl, byte, ptr, [rsi, +, 53]
+ mov     byte, ptr, [rsp, +, 53], cl
+ mov     cl, byte, ptr, [rsi, +, 54]
+ mov     byte, ptr, [rsp, +, 54], cl
+ mov     cl, byte, ptr, [rsi, +, 55]
+ mov     byte, ptr, [rsp, +, 55], cl
+ mov     cl, byte, ptr, [rsi, +, 56]
+ mov     byte, ptr, [rsp, +, 56], cl
+ mov     cl, byte, ptr, [rsi, +, 57]
+ mov     byte, ptr, [rsp, +, 57], cl
+ mov     cl, byte, ptr, [rsi, +, 58]
+ mov     byte, ptr, [rsp, +, 58], cl
+ mov     cl, byte, ptr, [rsi, +, 59]
+ mov     byte, ptr, [rsp, +, 59], cl
+ mov     cl, byte, ptr, [rsi, +, 60]
+ mov     byte, ptr, [rsp, +, 60], cl
+ mov     cl, byte, ptr, [rsi, +, 61]
+ mov     byte, ptr, [rsp, +, 61], cl
+ mov     cl, byte, ptr, [rsi, +, 62]
+ mov     byte, ptr, [rsp, +, 62], cl
+ mov     cl, byte, ptr, [rsi, +, 63]
+ mov     byte, ptr, [rsp, +, 63], cl
+ movups  xmm0, xmmword, ptr, [rsp]
+ movups  xmm1, xmmword, ptr, [rsp, +, 16]
+ movups  xmm2, xmmword, ptr, [rsp, +, 32]
+ movups  xmmword, ptr, [rax, +, 32], xmm2
+ movups  xmmword, ptr, [rax, +, 16], xmm1
+ movups  xmmword, ptr, [rax], xmm0
+ mov     rcx, qword, ptr, [rsp, +, 48]
+ mov     qword, ptr, [rax, +, 48], rcx
+ mov     cl, byte, ptr, [rsp, +, 56]
+ mov     byte, ptr, [rax, +, 56], cl
+ mov     cl, byte, ptr, [rsp, +, 57]
+ mov     byte, ptr, [rax, +, 57], cl
+ mov     cl, byte, ptr, [rsp, +, 58]
+ mov     byte, ptr, [rax, +, 58], cl
+ mov     cl, byte, ptr, [rsp, +, 59]
+ mov     byte, ptr, [rax, +, 59], cl
+ mov     cl, byte, ptr, [rsp, +, 60]
+ mov     byte, ptr, [rax, +, 60], cl
+ mov     cl, byte, ptr, [rsp, +, 61]
+ mov     byte, ptr, [rax, +, 61], cl
+ mov     cl, byte, ptr, [rsp, +, 62]
+ mov     byte, ptr, [rax, +, 62], cl
+ mov     cl, byte, ptr, [rsp, +, 63]
+ mov     byte, ptr, [rax, +, 63], cl
+ #MEMBARRIER
+ add     rsp, 64
+ pop     rbx
+ ret
+.LBB0_2:
+ test    rbx, rbx
+ je      .LBB0_3
+ mov     rdx, rsi
+ not     rdx
+ add     rdx, r8
+ mov     r9d, ebx
+ and     r9d, 3
+ cmp     rdx, 3
+ jae     .LBB0_6
+ xor     r11d, r11d
+ jmp     .LBB0_8
+.LBB0_3:
+ mov     edx, 64
+ jmp     .LBB0_12
+.LBB0_6:
+ mov     r10, rbx
+ and     r10, -4
+ xor     edi, edi
+.LBB0_7:
+ movzx   edx, byte, ptr, [rsi, +, rdi]
+ mov     byte, ptr, [rsp, +, rdi], dl
+ movzx   edx, byte, ptr, [rsi, +, rdi, +, 1]
+ mov     byte, ptr, [rsp, +, rdi, +, 1], dl
+ movzx   edx, byte, ptr, [rsi, +, rdi, +, 2]
+ mov     byte, ptr, [rsp, +, rdi, +, 2], dl
+ lea     r11, [rdi, +, 4]
+ movzx   edx, byte, ptr, [rsi, +, rdi, +, 3]
+ mov     byte, ptr, [rsp, +, rdi, +, 3], dl
+ mov     rdi, r11
+ cmp     r10, r11
+ jne     .LBB0_7
+.LBB0_8:
+ test    r9, r9
+ je      .LBB0_11
+ lea     r10, [rsp, +, r11]
+ add     r11, rsi
+ xor     edi, edi
+.LBB0_10:
+ movzx   edx, byte, ptr, [r11, +, rdi]
+ mov     byte, ptr, [r10, +, rdi], dl
+ add     rdi, 1
+ cmp     r9, rdi
+ jne     .LBB0_10
+.LBB0_11:
+ mov     rdx, rsi
+ sub     rdx, r8
+ add     rdx, 64
+ cmp     rdx, 8
+ jb      .LBB0_13
+.LBB0_12:
+ mov     rdi, qword, ptr, [rsi, +, rbx]
+ mov     qword, ptr, [rsp, +, rbx], rdi
+ add     rdx, -8
+ add     rbx, 8
+ cmp     rdx, 7
+ ja      .LBB0_12
+.LBB0_13:
+ test    rdx, rdx
+ je      .LBB0_20
+ lea     r8, [rdx, -, 1]
+ mov     edi, edx
+ and     edi, 3
+ cmp     r8, 3
+ jb      .LBB0_17
+ and     rdx, -4
+ neg     rdx
+.LBB0_16:
+ movzx   ecx, byte, ptr, [rsi, +, rbx]
+ mov     byte, ptr, [rsp, +, rbx], cl
+ movzx   ecx, byte, ptr, [rsi, +, rbx, +, 1]
+ mov     byte, ptr, [rsp, +, rbx, +, 1], cl
+ movzx   ecx, byte, ptr, [rsi, +, rbx, +, 2]
+ mov     byte, ptr, [rsp, +, rbx, +, 2], cl
+ movzx   ecx, byte, ptr, [rsi, +, rbx, +, 3]
+ mov     byte, ptr, [rsp, +, rbx, +, 3], cl
+ add     rbx, 4
+ add     rdx, 4
+ jne     .LBB0_16
+.LBB0_17:
+ test    rdi, rdi
+ je      .LBB0_20
+ lea     rdx, [rsp, +, rbx]
+ add     rsi, rbx
+ xor     ecx, ecx
+.LBB0_19:
+ movzx   ebx, byte, ptr, [rsi, +, rcx]
+ mov     byte, ptr, [rdx, +, rcx], bl
+ add     rcx, 1
+ cmp     rdi, rcx
+ jne     .LBB0_19
+.LBB0_20:
+ movups  xmm0, xmmword, ptr, [rsp]
+ movups  xmm1, xmmword, ptr, [rsp, +, 16]
+ movups  xmm2, xmmword, ptr, [rsp, +, 32]
+ movups  xmm3, xmmword, ptr, [rsp, +, 48]
+ movups  xmmword, ptr, [rax, +, 48], xmm3
+ movups  xmmword, ptr, [rax, +, 32], xmm2
+ movups  xmmword, ptr, [rax, +, 16], xmm1
+ movups  xmmword, ptr, [rax], xmm0
+ #MEMBARRIER
+ add     rsp, 64
+ pop     rbx
+ ret
+asm_test::atomic_memcpy_load_align1::read_volatile_acquire_fence:
+ push    rbp
+ push    r15
+ push    r14
+ push    r13
+ push    r12
+ push    rbx
+ sub     rsp, 50
+ mov     rax, rdi
+ mov     cl, byte, ptr, [rsi, +, 63]
+ mov     byte, ptr, [rsp, +, 49], cl
+ mov     cl, byte, ptr, [rsi, +, 62]
+ mov     byte, ptr, [rsp, +, 48], cl
+ mov     cl, byte, ptr, [rsi, +, 61]
+ mov     byte, ptr, [rsp, +, 47], cl
+ mov     cl, byte, ptr, [rsi, +, 60]
+ mov     byte, ptr, [rsp, +, 46], cl
+ mov     cl, byte, ptr, [rsi, +, 59]
+ mov     byte, ptr, [rsp, +, 45], cl
+ mov     cl, byte, ptr, [rsi, +, 58]
+ mov     byte, ptr, [rsp, +, 44], cl
+ mov     cl, byte, ptr, [rsi, +, 57]
+ mov     byte, ptr, [rsp, +, 43], cl
+ mov     cl, byte, ptr, [rsi, +, 56]
+ mov     byte, ptr, [rsp, +, 42], cl
+ mov     cl, byte, ptr, [rsi, +, 55]
+ mov     byte, ptr, [rsp, +, 41], cl
+ mov     cl, byte, ptr, [rsi, +, 54]
+ mov     byte, ptr, [rsp, +, 40], cl
+ mov     cl, byte, ptr, [rsi, +, 53]
+ mov     byte, ptr, [rsp, +, 39], cl
+ mov     cl, byte, ptr, [rsi, +, 52]
+ mov     byte, ptr, [rsp, +, 38], cl
+ mov     cl, byte, ptr, [rsi, +, 51]
+ mov     byte, ptr, [rsp, +, 37], cl
+ mov     cl, byte, ptr, [rsi, +, 50]
+ mov     byte, ptr, [rsp, +, 36], cl
+ mov     cl, byte, ptr, [rsi, +, 49]
+ mov     byte, ptr, [rsp, +, 35], cl
+ mov     cl, byte, ptr, [rsi, +, 48]
+ mov     byte, ptr, [rsp, +, 34], cl
+ mov     cl, byte, ptr, [rsi, +, 47]
+ mov     byte, ptr, [rsp, +, 33], cl
+ mov     cl, byte, ptr, [rsi, +, 46]
+ mov     byte, ptr, [rsp, +, 32], cl
+ mov     cl, byte, ptr, [rsi, +, 45]
+ mov     byte, ptr, [rsp, +, 31], cl
+ mov     cl, byte, ptr, [rsi, +, 44]
+ mov     byte, ptr, [rsp, +, 30], cl
+ mov     cl, byte, ptr, [rsi, +, 43]
+ mov     byte, ptr, [rsp, +, 29], cl
+ mov     cl, byte, ptr, [rsi, +, 42]
+ mov     byte, ptr, [rsp, +, 28], cl
+ mov     cl, byte, ptr, [rsi, +, 41]
+ mov     byte, ptr, [rsp, +, 27], cl
+ mov     cl, byte, ptr, [rsi, +, 40]
+ mov     byte, ptr, [rsp, +, 26], cl
+ mov     cl, byte, ptr, [rsi, +, 39]
+ mov     byte, ptr, [rsp, +, 25], cl
+ mov     cl, byte, ptr, [rsi, +, 38]
+ mov     byte, ptr, [rsp, +, 24], cl
+ mov     cl, byte, ptr, [rsi, +, 37]
+ mov     byte, ptr, [rsp, +, 23], cl
+ mov     cl, byte, ptr, [rsi, +, 36]
+ mov     byte, ptr, [rsp, +, 22], cl
+ mov     cl, byte, ptr, [rsi, +, 35]
+ mov     byte, ptr, [rsp, +, 21], cl
+ mov     cl, byte, ptr, [rsi, +, 34]
+ mov     byte, ptr, [rsp, +, 20], cl
+ mov     cl, byte, ptr, [rsi, +, 33]
+ mov     byte, ptr, [rsp, +, 19], cl
+ mov     cl, byte, ptr, [rsi, +, 32]
+ mov     byte, ptr, [rsp, +, 18], cl
+ mov     cl, byte, ptr, [rsi, +, 31]
+ mov     byte, ptr, [rsp, +, 17], cl
+ mov     cl, byte, ptr, [rsi, +, 30]
+ mov     byte, ptr, [rsp, +, 16], cl
+ mov     cl, byte, ptr, [rsi, +, 29]
+ mov     byte, ptr, [rsp, +, 15], cl
+ mov     cl, byte, ptr, [rsi, +, 28]
+ mov     byte, ptr, [rsp, +, 14], cl
+ mov     cl, byte, ptr, [rsi, +, 27]
+ mov     byte, ptr, [rsp, +, 13], cl
+ mov     cl, byte, ptr, [rsi, +, 26]
+ mov     byte, ptr, [rsp, +, 12], cl
+ mov     cl, byte, ptr, [rsi, +, 25]
+ mov     byte, ptr, [rsp, +, 11], cl
+ mov     cl, byte, ptr, [rsi, +, 24]
+ mov     byte, ptr, [rsp, +, 10], cl
+ mov     cl, byte, ptr, [rsi, +, 23]
+ mov     byte, ptr, [rsp, +, 9], cl
+ mov     cl, byte, ptr, [rsi, +, 22]
+ mov     byte, ptr, [rsp, +, 8], cl
+ mov     cl, byte, ptr, [rsi, +, 21]
+ mov     byte, ptr, [rsp, +, 7], cl
+ mov     cl, byte, ptr, [rsi, +, 20]
+ mov     byte, ptr, [rsp, +, 6], cl
+ mov     cl, byte, ptr, [rsi, +, 19]
+ mov     byte, ptr, [rsp, +, 5], cl
+ mov     cl, byte, ptr, [rsi, +, 18]
+ mov     byte, ptr, [rsp, +, 4], cl
+ mov     cl, byte, ptr, [rsi, +, 17]
+ mov     byte, ptr, [rsp, +, 3], cl
+ mov     cl, byte, ptr, [rsi, +, 16]
+ mov     byte, ptr, [rsp, +, 2], cl
+ mov     cl, byte, ptr, [rsi, +, 15]
+ mov     byte, ptr, [rsp, +, 1], cl
+ mov     cl, byte, ptr, [rsi, +, 14]
+ mov     byte, ptr, [rsp], cl
+ mov     r13b, byte, ptr, [rsi, +, 13]
+ mov     r12b, byte, ptr, [rsi, +, 12]
+ mov     r15b, byte, ptr, [rsi, +, 11]
+ mov     r14b, byte, ptr, [rsi, +, 10]
+ mov     bpl, byte, ptr, [rsi, +, 9]
+ mov     bl, byte, ptr, [rsi, +, 8]
+ mov     r11b, byte, ptr, [rsi, +, 7]
+ mov     r10b, byte, ptr, [rsi, +, 6]
+ mov     r9b, byte, ptr, [rsi, +, 5]
+ mov     r8b, byte, ptr, [rsi, +, 4]
+ mov     dil, byte, ptr, [rsi, +, 3]
+ mov     dl, byte, ptr, [rsi, +, 2]
+ mov     cl, byte, ptr, [rsi]
+ mov     sil, byte, ptr, [rsi, +, 1]
+ mov     byte, ptr, [rax], cl
+ mov     byte, ptr, [rax, +, 1], sil
+ mov     byte, ptr, [rax, +, 2], dl
+ mov     byte, ptr, [rax, +, 3], dil
+ mov     byte, ptr, [rax, +, 4], r8b
+ mov     byte, ptr, [rax, +, 5], r9b
+ mov     byte, ptr, [rax, +, 6], r10b
+ mov     byte, ptr, [rax, +, 7], r11b
+ mov     byte, ptr, [rax, +, 8], bl
+ mov     byte, ptr, [rax, +, 9], bpl
+ mov     byte, ptr, [rax, +, 10], r14b
+ mov     byte, ptr, [rax, +, 11], r15b
+ mov     byte, ptr, [rax, +, 12], r12b
+ mov     byte, ptr, [rax, +, 13], r13b
+ mov     cl, byte, ptr, [rsp]
+ mov     byte, ptr, [rax, +, 14], cl
+ mov     cl, byte, ptr, [rsp, +, 1]
+ mov     byte, ptr, [rax, +, 15], cl
+ mov     cl, byte, ptr, [rsp, +, 2]
+ mov     byte, ptr, [rax, +, 16], cl
+ mov     cl, byte, ptr, [rsp, +, 3]
+ mov     byte, ptr, [rax, +, 17], cl
+ mov     cl, byte, ptr, [rsp, +, 4]
+ mov     byte, ptr, [rax, +, 18], cl
+ mov     cl, byte, ptr, [rsp, +, 5]
+ mov     byte, ptr, [rax, +, 19], cl
+ mov     cl, byte, ptr, [rsp, +, 6]
+ mov     byte, ptr, [rax, +, 20], cl
+ mov     cl, byte, ptr, [rsp, +, 7]
+ mov     byte, ptr, [rax, +, 21], cl
+ mov     cl, byte, ptr, [rsp, +, 8]
+ mov     byte, ptr, [rax, +, 22], cl
+ mov     cl, byte, ptr, [rsp, +, 9]
+ mov     byte, ptr, [rax, +, 23], cl
+ mov     cl, byte, ptr, [rsp, +, 10]
+ mov     byte, ptr, [rax, +, 24], cl
+ mov     cl, byte, ptr, [rsp, +, 11]
+ mov     byte, ptr, [rax, +, 25], cl
+ mov     cl, byte, ptr, [rsp, +, 12]
+ mov     byte, ptr, [rax, +, 26], cl
+ mov     cl, byte, ptr, [rsp, +, 13]
+ mov     byte, ptr, [rax, +, 27], cl
+ mov     cl, byte, ptr, [rsp, +, 14]
+ mov     byte, ptr, [rax, +, 28], cl
+ mov     cl, byte, ptr, [rsp, +, 15]
+ mov     byte, ptr, [rax, +, 29], cl
+ mov     cl, byte, ptr, [rsp, +, 16]
+ mov     byte, ptr, [rax, +, 30], cl
+ mov     cl, byte, ptr, [rsp, +, 17]
+ mov     byte, ptr, [rax, +, 31], cl
+ mov     cl, byte, ptr, [rsp, +, 18]
+ mov     byte, ptr, [rax, +, 32], cl
+ mov     cl, byte, ptr, [rsp, +, 19]
+ mov     byte, ptr, [rax, +, 33], cl
+ mov     cl, byte, ptr, [rsp, +, 20]
+ mov     byte, ptr, [rax, +, 34], cl
+ mov     cl, byte, ptr, [rsp, +, 21]
+ mov     byte, ptr, [rax, +, 35], cl
+ mov     cl, byte, ptr, [rsp, +, 22]
+ mov     byte, ptr, [rax, +, 36], cl
+ mov     cl, byte, ptr, [rsp, +, 23]
+ mov     byte, ptr, [rax, +, 37], cl
+ mov     cl, byte, ptr, [rsp, +, 24]
+ mov     byte, ptr, [rax, +, 38], cl
+ mov     cl, byte, ptr, [rsp, +, 25]
+ mov     byte, ptr, [rax, +, 39], cl
+ mov     cl, byte, ptr, [rsp, +, 26]
+ mov     byte, ptr, [rax, +, 40], cl
+ mov     cl, byte, ptr, [rsp, +, 27]
+ mov     byte, ptr, [rax, +, 41], cl
+ mov     cl, byte, ptr, [rsp, +, 28]
+ mov     byte, ptr, [rax, +, 42], cl
+ mov     cl, byte, ptr, [rsp, +, 29]
+ mov     byte, ptr, [rax, +, 43], cl
+ mov     cl, byte, ptr, [rsp, +, 30]
+ mov     byte, ptr, [rax, +, 44], cl
+ mov     cl, byte, ptr, [rsp, +, 31]
+ mov     byte, ptr, [rax, +, 45], cl
+ mov     cl, byte, ptr, [rsp, +, 32]
+ mov     byte, ptr, [rax, +, 46], cl
+ mov     cl, byte, ptr, [rsp, +, 33]
+ mov     byte, ptr, [rax, +, 47], cl
+ mov     cl, byte, ptr, [rsp, +, 34]
+ mov     byte, ptr, [rax, +, 48], cl
+ mov     cl, byte, ptr, [rsp, +, 35]
+ mov     byte, ptr, [rax, +, 49], cl
+ mov     cl, byte, ptr, [rsp, +, 36]
+ mov     byte, ptr, [rax, +, 50], cl
+ mov     cl, byte, ptr, [rsp, +, 37]
+ mov     byte, ptr, [rax, +, 51], cl
+ mov     cl, byte, ptr, [rsp, +, 38]
+ mov     byte, ptr, [rax, +, 52], cl
+ mov     cl, byte, ptr, [rsp, +, 39]
+ mov     byte, ptr, [rax, +, 53], cl
+ mov     cl, byte, ptr, [rsp, +, 40]
+ mov     byte, ptr, [rax, +, 54], cl
+ mov     cl, byte, ptr, [rsp, +, 41]
+ mov     byte, ptr, [rax, +, 55], cl
+ mov     cl, byte, ptr, [rsp, +, 42]
+ mov     byte, ptr, [rax, +, 56], cl
+ mov     cl, byte, ptr, [rsp, +, 43]
+ mov     byte, ptr, [rax, +, 57], cl
+ mov     cl, byte, ptr, [rsp, +, 44]
+ mov     byte, ptr, [rax, +, 58], cl
+ mov     cl, byte, ptr, [rsp, +, 45]
+ mov     byte, ptr, [rax, +, 59], cl
+ mov     cl, byte, ptr, [rsp, +, 46]
+ mov     byte, ptr, [rax, +, 60], cl
+ mov     cl, byte, ptr, [rsp, +, 47]
+ mov     byte, ptr, [rax, +, 61], cl
+ mov     cl, byte, ptr, [rsp, +, 48]
+ mov     byte, ptr, [rax, +, 62], cl
+ mov     cl, byte, ptr, [rsp, +, 49]
+ mov     byte, ptr, [rax, +, 63], cl
+ #MEMBARRIER
+ add     rsp, 50
+ pop     rbx
+ pop     r12
+ pop     r13
+ pop     r14
+ pop     r15
+ pop     rbp
+ ret

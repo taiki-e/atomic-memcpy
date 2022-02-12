@@ -1,0 +1,38 @@
+asm_test::atomic_memcpy_load_align8::acquire:
+ ld      a6, 56(a1)
+ ld      a7, 48(a1)
+ ld      t0, 40(a1)
+ ld      a5, 32(a1)
+ ld      a2, 24(a1)
+ ld      a3, 16(a1)
+ ld      a4, 8(a1)
+ ld      a1, 0(a1)
+ sd      a1, 0(a0)
+ sd      a4, 8(a0)
+ sd      a3, 16(a0)
+ sd      a2, 24(a0)
+ sd      a5, 32(a0)
+ sd      t0, 40(a0)
+ sd      a7, 48(a0)
+ sd      a6, 56(a0)
+ fence   r, rw
+ ret
+asm_test::atomic_memcpy_load_align8::read_volatile_acquire_fence:
+ ld      a6, 56(a1)
+ ld      a7, 48(a1)
+ ld      t0, 40(a1)
+ ld      a5, 32(a1)
+ ld      a2, 24(a1)
+ ld      a3, 16(a1)
+ ld      a4, 8(a1)
+ ld      a1, 0(a1)
+ sd      a1, 0(a0)
+ sd      a4, 8(a0)
+ sd      a3, 16(a0)
+ sd      a2, 24(a0)
+ sd      a5, 32(a0)
+ sd      t0, 40(a0)
+ sd      a7, 48(a0)
+ sd      a6, 56(a0)
+ fence   r, rw
+ ret

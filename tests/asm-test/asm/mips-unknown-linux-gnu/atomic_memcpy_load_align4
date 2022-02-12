@@ -1,0 +1,44 @@
+asm_test::atomic_memcpy_load_align4::acquire:
+ lw      $1, 0($5)
+ lw      $2, 4($5)
+ lw      $3, 8($5)
+ lw      $6, 12($5)
+ lw      $7, 16($5)
+ lw      $8, 20($5)
+ lw      $9, 24($5)
+ lw      $5, 28($5)
+ sw      $5, 28($4)
+ sw      $9, 24($4)
+ sw      $8, 20($4)
+ sw      $7, 16($4)
+ sw      $6, 12($4)
+ sw      $3, 8($4)
+ sw      $2, 4($4)
+ move    $2, $4
+ sw      $1, 0($4)
+ sync
+ jr      $ra
+ nop
+$func_end8:
+asm_test::atomic_memcpy_load_align4::read_volatile_acquire_fence:
+ lw      $1, 0($5)
+ lw      $2, 4($5)
+ lw      $3, 8($5)
+ lw      $6, 12($5)
+ lw      $7, 16($5)
+ lw      $8, 20($5)
+ lw      $9, 24($5)
+ lw      $5, 28($5)
+ sw      $5, 28($4)
+ sw      $9, 24($4)
+ sw      $8, 20($4)
+ sw      $7, 16($4)
+ sw      $6, 12($4)
+ sw      $3, 8($4)
+ sw      $2, 4($4)
+ move    $2, $4
+ sw      $1, 0($4)
+ sync
+ jr      $ra
+ nop
+$func_end9:

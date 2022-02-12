@@ -1,0 +1,46 @@
+asm_test::atomic_u32_load::unordered:
+ lw      $2, 0($4)
+ jr      $ra
+ nop
+$func_end28:
+asm_test::atomic_u32_load::relaxed:
+ lw      $2, 0($4)
+ jr      $ra
+ nop
+$func_end29:
+asm_test::atomic_u32_load::unordered_acquire_fence:
+ lw      $2, 0($4)
+ sync
+ jr      $ra
+ nop
+$func_end30:
+asm_test::atomic_u32_load::relaxed_acquire_fence:
+ lw      $2, 0($4)
+ sync
+ jr      $ra
+ nop
+$func_end31:
+asm_test::atomic_u32_load::acquire:
+ lw      $2, 0($4)
+ sync
+ jr      $ra
+ nop
+$func_end32:
+asm_test::atomic_u32_load::unordered_seq_cst_fence:
+ lw      $2, 0($4)
+ sync
+ jr      $ra
+ nop
+$func_end33:
+asm_test::atomic_u32_load::relaxed_seq_cst_fence:
+ lw      $2, 0($4)
+ sync
+ jr      $ra
+ nop
+$func_end34:
+asm_test::atomic_u32_load::seq_cst:
+ lw      $2, 0($4)
+ sync
+ jr      $ra
+ nop
+$func_end35:

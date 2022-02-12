@@ -1,0 +1,71 @@
+asm_test::atomic_memcpy_load_align4::acquire:
+ sub     sp, sp, #64
+ tst     x0, #0x7
+ b.eq    .LBB8_2
+ ldr     w9, [x0]
+ str     w9, [sp]
+ ldur    x9, [x0, #4]
+ stur    x9, [sp, #4]
+ ldur    x9, [x0, #12]
+ stur    x9, [sp, #12]
+ ldur    x9, [x0, #20]
+ stur    x9, [sp, #20]
+ ldur    x9, [x0, #28]
+ stur    x9, [sp, #28]
+ ldur    x9, [x0, #36]
+ stur    x9, [sp, #36]
+ ldur    x9, [x0, #44]
+ stur    x9, [sp, #44]
+ ldur    x9, [x0, #52]
+ stur    x9, [sp, #52]
+ ldr     w9, [x0, #60]
+ str     w9, [sp, #60]
+ b       .LBB8_3
+.LBB8_2:
+ ldr     x10, [x0]
+ ldr     x9, [x0, #8]
+ stp     x10, x9, [sp]
+ ldr     x10, [x0, #16]
+ ldr     x9, [x0, #24]
+ stp     x10, x9, [sp, #16]
+ ldr     x10, [x0, #32]
+ ldr     x9, [x0, #40]
+ stp     x10, x9, [sp, #32]
+ ldr     x10, [x0, #48]
+ ldr     x9, [x0, #56]
+ stp     x10, x9, [sp, #48]
+.LBB8_3:
+ ldp     q0, q1, [sp]
+ ldp     q2, q3, [sp, #32]
+ stp     q0, q1, [x8]
+ stp     q2, q3, [x8, #32]
+ dmb     ishld
+ add     sp, sp, #64
+ ret
+asm_test::atomic_memcpy_load_align4::read_volatile_acquire_fence:
+ ldr     w9, [x0, #60]
+ ldr     w10, [x0, #56]
+ ldr     w11, [x0, #52]
+ ldr     w12, [x0, #48]
+ ldr     w13, [x0, #44]
+ ldr     w14, [x0, #40]
+ ldr     w15, [x0, #36]
+ ldr     w16, [x0, #32]
+ ldr     w17, [x0, #28]
+ ldr     w18, [x0, #24]
+ ldr     w1, [x0, #20]
+ ldr     w2, [x0, #16]
+ ldr     w3, [x0, #12]
+ ldr     w4, [x0, #8]
+ ldr     w5, [x0, #4]
+ ldr     w0, [x0]
+ stp     w2, w1, [x8, #16]
+ stp     w4, w3, [x8, #8]
+ stp     w18, w17, [x8, #24]
+ stp     w0, w5, [x8]
+ stp     w16, w15, [x8, #32]
+ stp     w14, w13, [x8, #40]
+ stp     w12, w11, [x8, #48]
+ stp     w10, w9, [x8, #56]
+ dmb     ishld
+ ret

@@ -1,0 +1,58 @@
+asm_test::atomic_memcpy_store_align4::release:
+ lw      $1, 0($5)
+ lw      $2, 4($5)
+ lw      $3, 8($5)
+ lw      $6, 12($5)
+ lw      $7, 16($5)
+ lw      $8, 20($5)
+ lw      $9, 24($5)
+ lw      $5, 28($5)
+ sync
+ sw      $5, 28($4)
+ sw      $9, 24($4)
+ sw      $8, 20($4)
+ sw      $7, 16($4)
+ sw      $6, 12($4)
+ sw      $3, 8($4)
+ sw      $2, 4($4)
+ jr      $ra
+ sw      $1, 0($4)
+$func_end10:
+asm_test::atomic_memcpy_store_align4::write_volatile_release_fence:
+ addiu   $sp, $sp, -32
+ sync
+ lw      $1, 12($5)
+ lw      $2, 8($5)
+ lw      $3, 16($5)
+ lw      $6, 4($5)
+ sw      $2, 8($sp)
+ sw      $1, 12($sp)
+ lw      $1, 28($5)
+ lw      $2, 24($5)
+ sw      $3, 16($sp)
+ lw      $3, 0($5)
+ lw      $5, 20($5)
+ sw      $6, 4($sp)
+ sw      $5, 20($sp)
+ sw      $2, 24($sp)
+ sw      $1, 28($sp)
+ sw      $3, 0($sp)
+ lw      $1, 8($sp)
+ lw      $2, 12($sp)
+ lw      $3, 16($sp)
+ lw      $5, 20($sp)
+ lw      $6, 24($sp)
+ lw      $7, 28($sp)
+ sw      $7, 28($4)
+ sw      $6, 24($4)
+ sw      $5, 20($4)
+ sw      $3, 16($4)
+ sw      $2, 12($4)
+ sw      $1, 8($4)
+ lw      $1, 4($sp)
+ sw      $1, 4($4)
+ lw      $1, 0($sp)
+ sw      $1, 0($4)
+ jr      $ra
+ addiu   $sp, $sp, 32
+$func_end11:

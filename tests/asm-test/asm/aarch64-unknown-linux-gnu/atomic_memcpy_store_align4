@@ -1,0 +1,68 @@
+asm_test::atomic_memcpy_store_align4::release:
+ ldp     q0, q1, [x1]
+ ldp     q2, q3, [x1, #32]
+ stp     q0, q1, [sp, #-128]!
+ stp     q2, q3, [sp, #32]
+ dmb     ish
+ ldp     q0, q1, [sp]
+ ldp     q2, q3, [sp, #32]
+ tst     x0, #0x7
+ stp     q0, q1, [sp, #64]
+ stp     q2, q3, [sp, #96]
+ b.eq    .LBB10_2
+ ldr     w8, [sp, #64]
+ str     w8, [x0]
+ ldur    x8, [sp, #68]
+ stur    x8, [x0, #4]
+ ldur    x8, [sp, #76]
+ stur    x8, [x0, #12]
+ ldur    x8, [sp, #84]
+ stur    x8, [x0, #20]
+ ldur    x8, [sp, #92]
+ stur    x8, [x0, #28]
+ ldur    x8, [sp, #100]
+ stur    x8, [x0, #36]
+ ldur    x8, [sp, #108]
+ stur    x8, [x0, #44]
+ ldur    x8, [sp, #116]
+ stur    x8, [x0, #52]
+ ldr     w8, [sp, #124]
+ str     w8, [x0, #60]
+ add     sp, sp, #128
+ ret
+.LBB10_2:
+ ldr     x8, [sp, #64]
+ str     x8, [x0]
+ ldr     x8, [sp, #72]
+ str     x8, [x0, #8]
+ ldr     x8, [sp, #80]
+ str     x8, [x0, #16]
+ ldr     x8, [sp, #88]
+ str     x8, [x0, #24]
+ ldr     x8, [sp, #96]
+ str     x8, [x0, #32]
+ ldr     x8, [sp, #104]
+ str     x8, [x0, #40]
+ ldr     x8, [sp, #112]
+ str     x8, [x0, #48]
+ ldr     x8, [sp, #120]
+ str     x8, [x0, #56]
+ add     sp, sp, #128
+ ret
+asm_test::atomic_memcpy_store_align4::write_volatile_release_fence:
+ sub     sp, sp, #64
+ dmb     ish
+ ldp     q0, q1, [x1, #32]
+ ldp     q3, q2, [x1]
+ stp     q0, q1, [sp, #32]
+ stp     q3, q2, [sp]
+ ldr     q0, [sp, #16]
+ ldr     q1, [sp, #32]
+ ldr     q2, [sp, #48]
+ ldr     q3, [sp]
+ str     q3, [x0]
+ str     q2, [x0, #48]
+ str     q1, [x0, #32]
+ str     q0, [x0, #16]
+ add     sp, sp, #64
+ ret

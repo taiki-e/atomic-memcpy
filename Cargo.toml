@@ -1,0 +1,36 @@
+[package]
+name = "atomic-memcpy"
+version = "0.1.0"
+edition = "2018"
+rust-version = "1.36"
+license = "Apache-2.0 OR MIT"
+repository = "https://github.com/taiki-e/atomic-memcpy"
+keywords = ["atomic"]
+categories = ["concurrency", "no-std"]
+description = """
+Byte-wise atomic memcpy.
+"""
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
+
+[workspace]
+members = [
+    "bench",
+    "tests/asm-test",
+    "tests/no-std",
+]
+
+[features]
+# Use #[inline(always)] instead of #[inline].
+inline-always = []
+
+[dependencies]
+# Unstable feature flag to test that this crate's functions don't become panic
+# *unless the user passes an invalid ordering*.
+#
+# Note: this will not work unless you build tests or binaries with release mode.
+no-panic = { version = "0.1", optional = true }
+
+[dev-dependencies]
+target-spec = "1"

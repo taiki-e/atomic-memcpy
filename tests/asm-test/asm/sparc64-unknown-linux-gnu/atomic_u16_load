@@ -1,0 +1,36 @@
+asm_test::atomic_u16_load::unordered:
+ retl
+ lduh    [%o0], %o0
+asm_test::atomic_u16_load::relaxed:
+ retl
+ lduh    [%o0], %o0
+asm_test::atomic_u16_load::unordered_acquire_fence:
+ lduh    [%o0], %o0
+ membar  #LoadLoad, |, #StoreLoad, |, #LoadStore, |, #StoreStore
+ retl
+ nop
+asm_test::atomic_u16_load::relaxed_acquire_fence:
+ lduh    [%o0], %o0
+ membar  #LoadLoad, |, #StoreLoad, |, #LoadStore, |, #StoreStore
+ retl
+ nop
+asm_test::atomic_u16_load::acquire:
+ lduh    [%o0], %o0
+ membar  #LoadLoad, |, #StoreLoad, |, #LoadStore, |, #StoreStore
+ retl
+ nop
+asm_test::atomic_u16_load::unordered_seq_cst_fence:
+ lduh    [%o0], %o0
+ membar  #LoadLoad, |, #StoreLoad, |, #LoadStore, |, #StoreStore
+ retl
+ nop
+asm_test::atomic_u16_load::relaxed_seq_cst_fence:
+ lduh    [%o0], %o0
+ membar  #LoadLoad, |, #StoreLoad, |, #LoadStore, |, #StoreStore
+ retl
+ nop
+asm_test::atomic_u16_load::seq_cst:
+ lduh    [%o0], %o0
+ membar  #LoadLoad, |, #StoreLoad, |, #LoadStore, |, #StoreStore
+ retl
+ nop

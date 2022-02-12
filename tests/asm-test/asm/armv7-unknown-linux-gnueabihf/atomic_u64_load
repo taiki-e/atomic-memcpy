@@ -1,0 +1,38 @@
+asm_test::atomic_u64_load::unordered:
+ ldrexd  r0, r1, [r0]
+ clrex
+ bx      lr
+asm_test::atomic_u64_load::relaxed:
+ ldrexd  r0, r1, [r0]
+ clrex
+ bx      lr
+asm_test::atomic_u64_load::unordered_acquire_fence:
+ ldrexd  r0, r1, [r0]
+ clrex
+ dmb     ish
+ bx      lr
+asm_test::atomic_u64_load::relaxed_acquire_fence:
+ ldrexd  r0, r1, [r0]
+ clrex
+ dmb     ish
+ bx      lr
+asm_test::atomic_u64_load::acquire:
+ ldrexd  r0, r1, [r0]
+ clrex
+ dmb     ish
+ bx      lr
+asm_test::atomic_u64_load::unordered_seq_cst_fence:
+ ldrexd  r0, r1, [r0]
+ clrex
+ dmb     ish
+ bx      lr
+asm_test::atomic_u64_load::relaxed_seq_cst_fence:
+ ldrexd  r0, r1, [r0]
+ clrex
+ dmb     ish
+ bx      lr
+asm_test::atomic_u64_load::seq_cst:
+ ldrexd  r0, r1, [r0]
+ clrex
+ dmb     ish
+ bx      lr

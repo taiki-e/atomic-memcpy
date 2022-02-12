@@ -1,0 +1,76 @@
+asm_test::atomic_u128_load::seq_cst:
+ push    rbx
+ xor     eax, eax
+ xor     edx, edx
+ xor     ecx, ecx
+ xor     ebx, ebx
+ lock    cmpxchg16b, xmmword, ptr, [edi]
+ pop     rbx
+ ret
+asm_test::atomic_u128_load::relaxed_seq_cst_fence:
+ push    rbx
+ xor     eax, eax
+ xor     edx, edx
+ xor     ecx, ecx
+ xor     ebx, ebx
+ lock    cmpxchg16b, xmmword, ptr, [edi]
+ mfence
+ pop     rbx
+ ret
+asm_test::atomic_u128_load::unordered_seq_cst_fence:
+ push    rbx
+ xor     eax, eax
+ xor     edx, edx
+ xor     ecx, ecx
+ xor     ebx, ebx
+ lock    cmpxchg16b, xmmword, ptr, [edi]
+ mfence
+ pop     rbx
+ ret
+asm_test::atomic_u128_load::acquire:
+ push    rbx
+ xor     eax, eax
+ xor     edx, edx
+ xor     ecx, ecx
+ xor     ebx, ebx
+ lock    cmpxchg16b, xmmword, ptr, [edi]
+ pop     rbx
+ ret
+asm_test::atomic_u128_load::relaxed_acquire_fence:
+ push    rbx
+ xor     eax, eax
+ xor     edx, edx
+ xor     ecx, ecx
+ xor     ebx, ebx
+ lock    cmpxchg16b, xmmword, ptr, [edi]
+ #MEMBARRIER
+ pop     rbx
+ ret
+asm_test::atomic_u128_load::unordered_acquire_fence:
+ push    rbx
+ xor     eax, eax
+ xor     edx, edx
+ xor     ecx, ecx
+ xor     ebx, ebx
+ lock    cmpxchg16b, xmmword, ptr, [edi]
+ #MEMBARRIER
+ pop     rbx
+ ret
+asm_test::atomic_u128_load::relaxed:
+ push    rbx
+ xor     eax, eax
+ xor     edx, edx
+ xor     ecx, ecx
+ xor     ebx, ebx
+ lock    cmpxchg16b, xmmword, ptr, [edi]
+ pop     rbx
+ ret
+asm_test::atomic_u128_load::unordered:
+ push    rbx
+ xor     eax, eax
+ xor     edx, edx
+ xor     ecx, ecx
+ xor     ebx, ebx
+ lock    cmpxchg16b, xmmword, ptr, [edi]
+ pop     rbx
+ ret

@@ -1,0 +1,137 @@
+asm_test::atomic_memcpy_load_align2::acquire:
+ push    {r11, lr}
+ sub     sp, sp, #32
+ tst     r1, #3
+ beq     .LBB4_2
+ ldrh    r2, [r1]
+ strh    r2, [sp]
+ ldr     r2, [r1, #2]
+ strh    r2, [sp, #2]
+ lsr     r2, r2, #16
+ strh    r2, [sp, #4]
+ ldr     r2, [r1, #6]
+ strh    r2, [sp, #6]
+ lsr     r2, r2, #16
+ strh    r2, [sp, #8]
+ ldr     r2, [r1, #10]
+ strh    r2, [sp, #10]
+ lsr     r2, r2, #16
+ strh    r2, [sp, #12]
+ ldr     r2, [r1, #14]
+ strh    r2, [sp, #14]
+ lsr     r2, r2, #16
+ strh    r2, [sp, #16]
+ ldr     r2, [r1, #18]
+ strh    r2, [sp, #18]
+ lsr     r2, r2, #16
+ strh    r2, [sp, #20]
+ ldr     r2, [r1, #22]
+ strh    r2, [sp, #22]
+ lsr     r2, r2, #16
+ strh    r2, [sp, #24]
+ ldr     r2, [r1, #26]
+ strh    r2, [sp, #26]
+ lsr     r2, r2, #16
+ strh    r2, [sp, #28]
+ ldrh    r1, [r1, #30]
+ strh    r1, [sp, #30]
+ b       .LBB4_3
+.LBB4_2:
+ ldr     r2, [r1]
+ str     r2, [sp]
+ ldr     r2, [r1, #4]
+ str     r2, [sp, #4]
+ ldr     r2, [r1, #8]
+ str     r2, [sp, #8]
+ ldr     r2, [r1, #12]
+ str     r2, [sp, #12]
+ ldr     r2, [r1, #16]
+ str     r2, [sp, #16]
+ ldr     r2, [r1, #20]
+ str     r2, [sp, #20]
+ ldr     r2, [r1, #24]
+ str     r2, [sp, #24]
+ ldr     r1, [r1, #28]
+ str     r1, [sp, #28]
+.LBB4_3:
+ mov     r1, sp
+ mov     r2, #32
+ bl      memcpy
+ mov     r0, #0
+ mcr     p15, #0, r0, c7, c10, #5
+ add     sp, sp, #32
+ pop     {r11, pc}
+.LBB6_2:
+ ldr     r0, [sp, #32]
+ str     r0, [r6]
+ ldr     r0, [sp, #36]
+ str     r0, [r6, #4]
+ ldr     r0, [sp, #40]
+ str     r0, [r6, #8]
+ ldr     r0, [sp, #44]
+ str     r0, [r6, #12]
+ ldr     r0, [sp, #48]
+ str     r0, [r6, #16]
+ ldr     r0, [sp, #52]
+ str     r0, [r6, #20]
+ ldr     r0, [sp, #56]
+ str     r0, [r6, #24]
+ ldr     r0, [sp, #60]
+ str     r0, [r6, #28]
+ add     sp, sp, #64
+ pop     {r4, r5, r6, pc}
+asm_test::atomic_memcpy_load_align2::read_volatile_acquire_fence:
+ ldrh    r2, [r1, #30]
+ strh    r2, [r0, #30]
+ ldrh    r2, [r1, #28]
+ strh    r2, [r0, #28]
+ ldrh    r2, [r1, #26]
+ strh    r2, [r0, #26]
+ ldrh    r2, [r1, #24]
+ strh    r2, [r0, #24]
+ ldrh    r2, [r1, #22]
+ strh    r2, [r0, #22]
+ ldrh    r2, [r1, #20]
+ strh    r2, [r0, #20]
+ ldrh    r2, [r1, #18]
+ strh    r2, [r0, #18]
+ ldrh    r2, [r1, #16]
+ strh    r2, [r0, #16]
+ ldrh    r2, [r1, #14]
+ strh    r2, [r0, #14]
+ ldrh    r2, [r1, #12]
+ strh    r2, [r0, #12]
+ ldrh    r2, [r1, #10]
+ strh    r2, [r0, #10]
+ ldrh    r2, [r1, #8]
+ strh    r2, [r0, #8]
+ ldrh    r2, [r1, #6]
+ strh    r2, [r0, #6]
+ ldrh    r2, [r1, #4]
+ strh    r2, [r0, #4]
+ ldrh    r2, [r1, #2]
+ strh    r2, [r0, #2]
+ ldrh    r1, [r1]
+ strh    r1, [r0]
+ mov     r0, #0
+ mcr     p15, #0, r0, c7, c10, #5
+ bx      lr
+.LBB6_2:
+ ldr     r0, [sp, #32]
+ str     r0, [r6]
+ ldr     r0, [sp, #36]
+ str     r0, [r6, #4]
+ ldr     r0, [sp, #40]
+ str     r0, [r6, #8]
+ ldr     r0, [sp, #44]
+ str     r0, [r6, #12]
+ ldr     r0, [sp, #48]
+ str     r0, [r6, #16]
+ ldr     r0, [sp, #52]
+ str     r0, [r6, #20]
+ ldr     r0, [sp, #56]
+ str     r0, [r6, #24]
+ ldr     r0, [sp, #60]
+ str     r0, [r6, #28]
+ add     sp, sp, #64
+ pop     {r4, r5, r6, pc}

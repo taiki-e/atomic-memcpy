@@ -1,0 +1,127 @@
+asm_test::atomic_memcpy_load_align2::acquire:
+ sub     esp, 32
+ mov     rax, rdi
+ test    sil, 3
+ je      .LBB4_1
+ movzx   ecx, word, ptr, [esi]
+ mov     word, ptr, [esp], cx
+ mov     ecx, dword, ptr, [esi, +, 2]
+ mov     dword, ptr, [esp, +, 2], ecx
+ mov     ecx, dword, ptr, [esi, +, 6]
+ mov     dword, ptr, [esp, +, 6], ecx
+ mov     ecx, dword, ptr, [esi, +, 10]
+ mov     dword, ptr, [esp, +, 10], ecx
+ mov     ecx, dword, ptr, [esi, +, 14]
+ mov     dword, ptr, [esp, +, 14], ecx
+ mov     ecx, dword, ptr, [esi, +, 18]
+ mov     dword, ptr, [esp, +, 18], ecx
+ mov     ecx, dword, ptr, [esi, +, 22]
+ mov     dword, ptr, [esp, +, 22], ecx
+ mov     ecx, dword, ptr, [esi, +, 26]
+ mov     dword, ptr, [esp, +, 26], ecx
+ movzx   ecx, word, ptr, [esi, +, 30]
+ mov     word, ptr, [esp, +, 30], cx
+ jmp     .LBB4_3
+.LBB4_1:
+ mov     ecx, dword, ptr, [esi]
+ mov     dword, ptr, [esp], ecx
+ mov     ecx, dword, ptr, [esi, +, 4]
+ mov     dword, ptr, [esp, +, 4], ecx
+ mov     ecx, dword, ptr, [esi, +, 8]
+ mov     dword, ptr, [esp, +, 8], ecx
+ mov     ecx, dword, ptr, [esi, +, 12]
+ mov     dword, ptr, [esp, +, 12], ecx
+ mov     ecx, dword, ptr, [esi, +, 16]
+ mov     dword, ptr, [esp, +, 16], ecx
+ mov     ecx, dword, ptr, [esi, +, 20]
+ mov     dword, ptr, [esp, +, 20], ecx
+ mov     ecx, dword, ptr, [esi, +, 24]
+ mov     dword, ptr, [esp, +, 24], ecx
+ mov     ecx, dword, ptr, [esi, +, 28]
+ mov     dword, ptr, [esp, +, 28], ecx
+.LBB4_3:
+ movzx   r11d, word, ptr, [esp]
+ mov     edx, dword, ptr, [esp, +, 2]
+ movzx   esi, word, ptr, [esp, +, 6]
+ movzx   edi, word, ptr, [esp, +, 8]
+ movzx   r8d, word, ptr, [esp, +, 10]
+ movzx   r9d, word, ptr, [esp, +, 12]
+ movzx   r10d, word, ptr, [esp, +, 14]
+ mov     ecx, dword, ptr, [esp, +, 16]
+ mov     dword, ptr, [eax, +, 16], ecx
+ movzx   ecx, word, ptr, [esp, +, 20]
+ mov     word, ptr, [eax, +, 20], cx
+ movzx   ecx, word, ptr, [esp, +, 22]
+ mov     word, ptr, [eax, +, 22], cx
+ movzx   ecx, word, ptr, [esp, +, 24]
+ mov     word, ptr, [eax, +, 24], cx
+ movzx   ecx, word, ptr, [esp, +, 26]
+ mov     word, ptr, [eax, +, 26], cx
+ movzx   ecx, word, ptr, [esp, +, 28]
+ mov     word, ptr, [eax, +, 28], cx
+ movzx   ecx, word, ptr, [esp, +, 30]
+ mov     word, ptr, [eax, +, 30], cx
+ mov     word, ptr, [eax], r11w
+ mov     dword, ptr, [eax, +, 2], edx
+ mov     word, ptr, [eax, +, 6], si
+ mov     word, ptr, [eax, +, 8], di
+ mov     word, ptr, [eax, +, 10], r8w
+ mov     word, ptr, [eax, +, 12], r9w
+ mov     word, ptr, [eax, +, 14], r10w
+ #MEMBARRIER
+ add     esp, 32
+ ret
+asm_test::atomic_memcpy_load_align2::read_volatile_acquire_fence:
+ push    rbp
+ push    r15
+ push    r14
+ push    r13
+ push    r12
+ push    rbx
+ sub     esp, 4
+ mov     rax, rdi
+ movzx   ecx, word, ptr, [esi, +, 30]
+ mov     word, ptr, [esp, +, 2], cx
+ movzx   ecx, word, ptr, [esi, +, 28]
+ mov     word, ptr, [esp], cx
+ movzx   r10d, word, ptr, [esi, +, 26]
+ movzx   r11d, word, ptr, [esi, +, 24]
+ movzx   r14d, word, ptr, [esi, +, 22]
+ movzx   r15d, word, ptr, [esi, +, 20]
+ movzx   r12d, word, ptr, [esi, +, 18]
+ movzx   r13d, word, ptr, [esi, +, 16]
+ movzx   ebp, word, ptr, [esi, +, 14]
+ movzx   r9d, word, ptr, [esi, +, 12]
+ movzx   r8d, word, ptr, [esi, +, 10]
+ movzx   edi, word, ptr, [esi, +, 8]
+ movzx   ebx, word, ptr, [esi, +, 6]
+ movzx   edx, word, ptr, [esi, +, 4]
+ movzx   ecx, word, ptr, [esi]
+ movzx   esi, word, ptr, [esi, +, 2]
+ mov     word, ptr, [eax], cx
+ mov     word, ptr, [eax, +, 2], si
+ mov     word, ptr, [eax, +, 4], dx
+ mov     word, ptr, [eax, +, 6], bx
+ mov     word, ptr, [eax, +, 8], di
+ mov     word, ptr, [eax, +, 10], r8w
+ mov     word, ptr, [eax, +, 12], r9w
+ mov     word, ptr, [eax, +, 14], bp
+ mov     word, ptr, [eax, +, 16], r13w
+ mov     word, ptr, [eax, +, 18], r12w
+ mov     word, ptr, [eax, +, 20], r15w
+ mov     word, ptr, [eax, +, 22], r14w
+ mov     word, ptr, [eax, +, 24], r11w
+ mov     word, ptr, [eax, +, 26], r10w
+ movzx   ecx, word, ptr, [esp]
+ mov     word, ptr, [eax, +, 28], cx
+ movzx   ecx, word, ptr, [esp, +, 2]
+ mov     word, ptr, [eax, +, 30], cx
+ #MEMBARRIER
+ add     esp, 4
+ pop     rbx
+ pop     r12
+ pop     r13
+ pop     r14
+ pop     r15
+ pop     rbp
+ ret

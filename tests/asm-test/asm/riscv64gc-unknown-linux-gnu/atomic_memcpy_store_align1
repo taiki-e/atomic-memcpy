@@ -1,0 +1,481 @@
+asm_test::atomic_memcpy_store_align1::release:
+ addi    sp, sp, -128
+ lbu     a2, 57(a1)
+ lbu     a3, 56(a1)
+ lbu     a4, 59(a1)
+ lbu     a5, 58(a1)
+ slli    a2, a2, 8
+ or      a2, a2, a3
+ slli    a3, a4, 8
+ or      a3, a3, a5
+ slli    a3, a3, 16
+ or      a6, a3, a2
+ lbu     a3, 61(a1)
+ lbu     a4, 60(a1)
+ lbu     a5, 63(a1)
+ lbu     a2, 62(a1)
+ slli    a3, a3, 8
+ or      a3, a3, a4
+ slli    a4, a5, 8
+ or      a2, a2, a4
+ slli    a2, a2, 16
+ or      a2, a2, a3
+ slli    a2, a2, 32
+ or      a2, a2, a6
+ sd      a2, 56(sp)
+ lbu     a2, 49(a1)
+ lbu     a3, 48(a1)
+ lbu     a4, 51(a1)
+ lbu     a5, 50(a1)
+ slli    a2, a2, 8
+ or      a2, a2, a3
+ slli    a3, a4, 8
+ or      a3, a3, a5
+ slli    a3, a3, 16
+ or      a6, a3, a2
+ lbu     a3, 53(a1)
+ lbu     a4, 52(a1)
+ lbu     a5, 55(a1)
+ lbu     a2, 54(a1)
+ slli    a3, a3, 8
+ or      a3, a3, a4
+ slli    a4, a5, 8
+ or      a2, a2, a4
+ slli    a2, a2, 16
+ or      a2, a2, a3
+ slli    a2, a2, 32
+ or      a2, a2, a6
+ sd      a2, 48(sp)
+ lbu     a2, 41(a1)
+ lbu     a3, 40(a1)
+ lbu     a4, 43(a1)
+ lbu     a5, 42(a1)
+ slli    a2, a2, 8
+ or      a2, a2, a3
+ slli    a3, a4, 8
+ or      a3, a3, a5
+ slli    a3, a3, 16
+ or      a6, a3, a2
+ lbu     a3, 45(a1)
+ lbu     a4, 44(a1)
+ lbu     a5, 47(a1)
+ lbu     a2, 46(a1)
+ slli    a3, a3, 8
+ or      a3, a3, a4
+ slli    a4, a5, 8
+ or      a2, a2, a4
+ slli    a2, a2, 16
+ or      a2, a2, a3
+ slli    a2, a2, 32
+ or      a2, a2, a6
+ sd      a2, 40(sp)
+ lbu     a2, 33(a1)
+ lbu     a3, 32(a1)
+ lbu     a4, 35(a1)
+ lbu     a5, 34(a1)
+ slli    a2, a2, 8
+ or      a2, a2, a3
+ slli    a3, a4, 8
+ or      a3, a3, a5
+ slli    a3, a3, 16
+ or      a6, a3, a2
+ lbu     a3, 37(a1)
+ lbu     a4, 36(a1)
+ lbu     a5, 39(a1)
+ lbu     a2, 38(a1)
+ slli    a3, a3, 8
+ or      a3, a3, a4
+ slli    a4, a5, 8
+ or      a2, a2, a4
+ slli    a2, a2, 16
+ or      a2, a2, a3
+ slli    a2, a2, 32
+ or      a2, a2, a6
+ sd      a2, 32(sp)
+ lbu     a2, 25(a1)
+ lbu     a3, 24(a1)
+ lbu     a4, 27(a1)
+ lbu     a5, 26(a1)
+ slli    a2, a2, 8
+ or      a2, a2, a3
+ slli    a3, a4, 8
+ or      a3, a3, a5
+ slli    a3, a3, 16
+ or      a6, a3, a2
+ lbu     a3, 29(a1)
+ lbu     a4, 28(a1)
+ lbu     a5, 31(a1)
+ lbu     a2, 30(a1)
+ slli    a3, a3, 8
+ or      a3, a3, a4
+ slli    a4, a5, 8
+ or      a2, a2, a4
+ slli    a2, a2, 16
+ or      a2, a2, a3
+ slli    a2, a2, 32
+ or      a2, a2, a6
+ sd      a2, 24(sp)
+ lbu     a2, 17(a1)
+ lbu     a3, 16(a1)
+ lbu     a4, 19(a1)
+ lbu     a5, 18(a1)
+ slli    a2, a2, 8
+ or      a2, a2, a3
+ slli    a3, a4, 8
+ or      a3, a3, a5
+ slli    a3, a3, 16
+ or      a6, a3, a2
+ lbu     a3, 21(a1)
+ lbu     a4, 20(a1)
+ lbu     a5, 23(a1)
+ lbu     a2, 22(a1)
+ slli    a3, a3, 8
+ or      a3, a3, a4
+ slli    a4, a5, 8
+ or      a2, a2, a4
+ slli    a2, a2, 16
+ or      a2, a2, a3
+ slli    a2, a2, 32
+ or      a2, a2, a6
+ sd      a2, 16(sp)
+ lbu     a2, 9(a1)
+ lbu     a3, 8(a1)
+ lbu     a4, 11(a1)
+ lbu     a5, 10(a1)
+ slli    a2, a2, 8
+ or      a2, a2, a3
+ slli    a3, a4, 8
+ or      a3, a3, a5
+ slli    a3, a3, 16
+ or      a6, a3, a2
+ lbu     a3, 13(a1)
+ lbu     a4, 12(a1)
+ lbu     a5, 15(a1)
+ lbu     a2, 14(a1)
+ slli    a3, a3, 8
+ or      a3, a3, a4
+ slli    a4, a5, 8
+ or      a2, a2, a4
+ slli    a2, a2, 16
+ or      a2, a2, a3
+ slli    a2, a2, 32
+ or      a2, a2, a6
+ sd      a2, 8(sp)
+ lbu     a2, 1(a1)
+ lbu     a3, 0(a1)
+ lbu     a4, 3(a1)
+ lbu     a5, 2(a1)
+ slli    a2, a2, 8
+ or      a2, a2, a3
+ slli    a3, a4, 8
+ or      a3, a3, a5
+ slli    a3, a3, 16
+ or      a2, a2, a3
+ lbu     a3, 5(a1)
+ lbu     a4, 4(a1)
+ lbu     a5, 7(a1)
+ lbu     a1, 6(a1)
+ slli    a3, a3, 8
+ or      a3, a3, a4
+ slli    a4, a5, 8
+ or      a1, a1, a4
+ slli    a1, a1, 16
+ or      a1, a1, a3
+ slli    a1, a1, 32
+ or      a1, a1, a2
+ sd      a1, 0(sp)
+ fence   rw, w
+ ld      a1, 56(sp)
+ ld      a2, 48(sp)
+ ld      a3, 40(sp)
+ sd      a1, 120(sp)
+ sd      a2, 112(sp)
+ sd      a3, 104(sp)
+ ld      a1, 32(sp)
+ ld      a2, 24(sp)
+ ld      a3, 16(sp)
+ ld      a4, 8(sp)
+ sd      a1, 96(sp)
+ sd      a2, 88(sp)
+ sd      a3, 80(sp)
+ sd      a4, 72(sp)
+ ld      a3, 0(sp)
+ addi    a1, a0, 7
+ andi    a6, a1, -8
+ sub     t2, a6, a0
+ addi    a4, zero, 65
+ sd      a3, 64(sp)
+ bltu    t2, a4, .LBB2_3
+ mv      a3, zero
+ addi    a1, sp, 64
+ addi    a2, zero, 64
+.LBB2_2:
+ add     a4, a1, a3
+ lb      a4, 0(a4)
+ addi    a5, a3, 1
+ add     a3, a3, a0
+ sb      a4, 0(a3)
+ mv      a3, a5
+ bne     a5, a2, .LBB2_2
+ j       .LBB2_13
+.LBB2_3:
+ beqz    t2, .LBB2_7
+ sub     a4, a0, a6
+ addi    a3, sp, 64
+ mv      a5, a0
+.LBB2_5:
+ lb      a7, 0(a3)
+ mv      a2, a4
+ sb      a7, 0(a5)
+ addi    a5, a5, 1
+ addi    a4, a4, 1
+ addi    a3, a3, 1
+ bgeu    a4, a2, .LBB2_5
+ sub     a2, a0, a6
+ addi    a2, a2, 64
+ addi    a3, zero, 8
+ bgeu    a2, a3, .LBB2_8
+ j       .LBB2_10
+.LBB2_7:
+ addi    a2, zero, 64
+.LBB2_8:
+ addi    a6, sp, 64
+ addi    a7, zero, 7
+.LBB2_9:
+ add     a5, a6, t2
+ lbu     t0, 1(a5)
+ lbu     t1, 0(a5)
+ lbu     a3, 3(a5)
+ lbu     a4, 2(a5)
+ slli    a1, t0, 8
+ or      a1, a1, t1
+ slli    a3, a3, 8
+ or      a3, a3, a4
+ slli    a3, a3, 16
+ or      t0, a3, a1
+ lbu     a3, 5(a5)
+ lbu     a4, 4(a5)
+ lbu     a1, 7(a5)
+ lbu     a5, 6(a5)
+ slli    a3, a3, 8
+ or      a3, a3, a4
+ slli    a1, a1, 8
+ or      a1, a1, a5
+ slli    a1, a1, 16
+ or      a1, a1, a3
+ slli    a1, a1, 32
+ or      a1, a1, t0
+ add     a3, a0, t2
+ sd      a1, 0(a3)
+ addi    a2, a2, -8
+ addi    t2, t2, 8
+ bltu    a7, a2, .LBB2_9
+.LBB2_10:
+ beqz    a2, .LBB2_13
+ add     a0, a0, t2
+ addi    a1, sp, 64
+ add     a1, a1, t2
+.LBB2_12:
+ lb      a3, 0(a1)
+ sb      a3, 0(a0)
+ addi    a0, a0, 1
+ addi    a2, a2, -1
+ addi    a1, a1, 1
+ bnez    a2, .LBB2_12
+.LBB2_13:
+ addi    sp, sp, 128
+ ret
+asm_test::atomic_memcpy_store_align1::write_volatile_release_fence:
+ addi    sp, sp, -80
+ sd      ra, 72(sp)
+ fence   rw, w
+ lbu     a2, 57(a1)
+ lbu     a3, 56(a1)
+ lbu     a4, 59(a1)
+ lbu     a5, 58(a1)
+ slli    a2, a2, 8
+ or      a2, a2, a3
+ slli    a3, a4, 8
+ or      a3, a3, a5
+ slli    a3, a3, 16
+ or      a6, a3, a2
+ lbu     a3, 61(a1)
+ lbu     a4, 60(a1)
+ lbu     a5, 63(a1)
+ lbu     a2, 62(a1)
+ slli    a3, a3, 8
+ or      a3, a3, a4
+ slli    a4, a5, 8
+ or      a2, a2, a4
+ slli    a2, a2, 16
+ or      a2, a2, a3
+ slli    a2, a2, 32
+ or      a2, a2, a6
+ sd      a2, 64(sp)
+ lbu     a2, 49(a1)
+ lbu     a3, 48(a1)
+ lbu     a4, 51(a1)
+ lbu     a5, 50(a1)
+ slli    a2, a2, 8
+ or      a2, a2, a3
+ slli    a3, a4, 8
+ or      a3, a3, a5
+ slli    a3, a3, 16
+ or      a6, a3, a2
+ lbu     a3, 53(a1)
+ lbu     a4, 52(a1)
+ lbu     a5, 55(a1)
+ lbu     a2, 54(a1)
+ slli    a3, a3, 8
+ or      a3, a3, a4
+ slli    a4, a5, 8
+ or      a2, a2, a4
+ slli    a2, a2, 16
+ or      a2, a2, a3
+ slli    a2, a2, 32
+ or      a2, a2, a6
+ sd      a2, 56(sp)
+ lbu     a2, 41(a1)
+ lbu     a3, 40(a1)
+ lbu     a4, 43(a1)
+ lbu     a5, 42(a1)
+ slli    a2, a2, 8
+ or      a2, a2, a3
+ slli    a3, a4, 8
+ or      a3, a3, a5
+ slli    a3, a3, 16
+ or      a6, a3, a2
+ lbu     a3, 45(a1)
+ lbu     a4, 44(a1)
+ lbu     a5, 47(a1)
+ lbu     a2, 46(a1)
+ slli    a3, a3, 8
+ or      a3, a3, a4
+ slli    a4, a5, 8
+ or      a2, a2, a4
+ slli    a2, a2, 16
+ or      a2, a2, a3
+ slli    a2, a2, 32
+ or      a2, a2, a6
+ sd      a2, 48(sp)
+ lbu     a2, 33(a1)
+ lbu     a3, 32(a1)
+ lbu     a4, 35(a1)
+ lbu     a5, 34(a1)
+ slli    a2, a2, 8
+ or      a2, a2, a3
+ slli    a3, a4, 8
+ or      a3, a3, a5
+ slli    a3, a3, 16
+ or      a6, a3, a2
+ lbu     a3, 37(a1)
+ lbu     a4, 36(a1)
+ lbu     a5, 39(a1)
+ lbu     a2, 38(a1)
+ slli    a3, a3, 8
+ or      a3, a3, a4
+ slli    a4, a5, 8
+ or      a2, a2, a4
+ slli    a2, a2, 16
+ or      a2, a2, a3
+ slli    a2, a2, 32
+ or      a2, a2, a6
+ sd      a2, 40(sp)
+ lbu     a2, 25(a1)
+ lbu     a3, 24(a1)
+ lbu     a4, 27(a1)
+ lbu     a5, 26(a1)
+ slli    a2, a2, 8
+ or      a2, a2, a3
+ slli    a3, a4, 8
+ or      a3, a3, a5
+ slli    a3, a3, 16
+ or      a6, a3, a2
+ lbu     a3, 29(a1)
+ lbu     a4, 28(a1)
+ lbu     a5, 31(a1)
+ lbu     a2, 30(a1)
+ slli    a3, a3, 8
+ or      a3, a3, a4
+ slli    a4, a5, 8
+ or      a2, a2, a4
+ slli    a2, a2, 16
+ or      a2, a2, a3
+ slli    a2, a2, 32
+ or      a2, a2, a6
+ sd      a2, 32(sp)
+ lbu     a2, 17(a1)
+ lbu     a3, 16(a1)
+ lbu     a4, 19(a1)
+ lbu     a5, 18(a1)
+ slli    a2, a2, 8
+ or      a2, a2, a3
+ slli    a3, a4, 8
+ or      a3, a3, a5
+ slli    a3, a3, 16
+ or      a6, a3, a2
+ lbu     a3, 21(a1)
+ lbu     a4, 20(a1)
+ lbu     a5, 23(a1)
+ lbu     a2, 22(a1)
+ slli    a3, a3, 8
+ or      a3, a3, a4
+ slli    a4, a5, 8
+ or      a2, a2, a4
+ slli    a2, a2, 16
+ or      a2, a2, a3
+ slli    a2, a2, 32
+ or      a2, a2, a6
+ sd      a2, 24(sp)
+ lbu     a2, 9(a1)
+ lbu     a3, 8(a1)
+ lbu     a4, 11(a1)
+ lbu     a5, 10(a1)
+ slli    a2, a2, 8
+ or      a2, a2, a3
+ slli    a3, a4, 8
+ or      a3, a3, a5
+ slli    a3, a3, 16
+ or      a6, a3, a2
+ lbu     a3, 13(a1)
+ lbu     a4, 12(a1)
+ lbu     a5, 15(a1)
+ lbu     a2, 14(a1)
+ slli    a3, a3, 8
+ or      a3, a3, a4
+ slli    a4, a5, 8
+ or      a2, a2, a4
+ slli    a2, a2, 16
+ or      a2, a2, a3
+ slli    a2, a2, 32
+ or      a2, a2, a6
+ sd      a2, 16(sp)
+ lbu     a2, 1(a1)
+ lbu     a3, 0(a1)
+ lbu     a4, 3(a1)
+ lbu     a5, 2(a1)
+ slli    a2, a2, 8
+ or      a2, a2, a3
+ slli    a3, a4, 8
+ or      a3, a3, a5
+ slli    a3, a3, 16
+ or      a2, a2, a3
+ lbu     a3, 5(a1)
+ lbu     a4, 4(a1)
+ lbu     a5, 7(a1)
+ lbu     a1, 6(a1)
+ slli    a3, a3, 8
+ or      a3, a3, a4
+ slli    a4, a5, 8
+ or      a1, a1, a4
+ slli    a1, a1, 16
+ or      a1, a1, a3
+ slli    a1, a1, 32
+ or      a1, a1, a2
+ sd      a1, 8(sp)
+ addi    a1, sp, 8
+ addi    a2, zero, 64
+ call    memcpy@plt
+ ld      ra, 72(sp)
+ addi    sp, sp, 80
+ ret

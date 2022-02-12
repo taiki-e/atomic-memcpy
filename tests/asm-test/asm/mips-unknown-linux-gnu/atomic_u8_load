@@ -1,0 +1,46 @@
+asm_test::atomic_u8_load::unordered:
+ lb      $2, 0($4)
+ jr      $ra
+ nop
+$func_end4:
+asm_test::atomic_u8_load::relaxed:
+ lb      $2, 0($4)
+ jr      $ra
+ nop
+$func_end5:
+asm_test::atomic_u8_load::unordered_acquire_fence:
+ lb      $2, 0($4)
+ sync
+ jr      $ra
+ nop
+$func_end6:
+asm_test::atomic_u8_load::relaxed_acquire_fence:
+ lb      $2, 0($4)
+ sync
+ jr      $ra
+ nop
+$func_end7:
+asm_test::atomic_u8_load::acquire:
+ lb      $2, 0($4)
+ sync
+ jr      $ra
+ nop
+$func_end8:
+asm_test::atomic_u8_load::unordered_seq_cst_fence:
+ lb      $2, 0($4)
+ sync
+ jr      $ra
+ nop
+$func_end9:
+asm_test::atomic_u8_load::relaxed_seq_cst_fence:
+ lb      $2, 0($4)
+ sync
+ jr      $ra
+ nop
+$func_end10:
+asm_test::atomic_u8_load::seq_cst:
+ lb      $2, 0($4)
+ sync
+ jr      $ra
+ nop
+$func_end11:

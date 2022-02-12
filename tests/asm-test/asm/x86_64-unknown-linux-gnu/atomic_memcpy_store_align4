@@ -1,0 +1,81 @@
+asm_test::atomic_memcpy_store_align4::release:
+ sub     rsp, 136
+ movups  xmm0, xmmword, ptr, [rsi]
+ movups  xmm1, xmmword, ptr, [rsi, +, 16]
+ movups  xmm2, xmmword, ptr, [rsi, +, 32]
+ movups  xmm3, xmmword, ptr, [rsi, +, 48]
+ movaps  xmmword, ptr, [rsp, +, 112], xmm3
+ movaps  xmmword, ptr, [rsp, +, 96], xmm2
+ movaps  xmmword, ptr, [rsp, +, 80], xmm1
+ movaps  xmmword, ptr, [rsp, +, 64], xmm0
+ #MEMBARRIER
+ movaps  xmm0, xmmword, ptr, [rsp, +, 64]
+ movaps  xmm1, xmmword, ptr, [rsp, +, 80]
+ movaps  xmm2, xmmword, ptr, [rsp, +, 96]
+ movaps  xmm3, xmmword, ptr, [rsp, +, 112]
+ movaps  xmmword, ptr, [rsp, +, 48], xmm3
+ movaps  xmmword, ptr, [rsp, +, 32], xmm2
+ movaps  xmmword, ptr, [rsp, +, 16], xmm1
+ movaps  xmmword, ptr, [rsp], xmm0
+ test    dil, 7
+ je      .LBB10_1
+ mov     eax, dword, ptr, [rsp]
+ mov     dword, ptr, [rdi], eax
+ mov     rax, qword, ptr, [rsp, +, 4]
+ mov     qword, ptr, [rdi, +, 4], rax
+ mov     rax, qword, ptr, [rsp, +, 12]
+ mov     qword, ptr, [rdi, +, 12], rax
+ mov     rax, qword, ptr, [rsp, +, 20]
+ mov     qword, ptr, [rdi, +, 20], rax
+ mov     rax, qword, ptr, [rsp, +, 28]
+ mov     qword, ptr, [rdi, +, 28], rax
+ mov     rax, qword, ptr, [rsp, +, 36]
+ mov     qword, ptr, [rdi, +, 36], rax
+ mov     rax, qword, ptr, [rsp, +, 44]
+ mov     qword, ptr, [rdi, +, 44], rax
+ mov     rax, qword, ptr, [rsp, +, 52]
+ mov     qword, ptr, [rdi, +, 52], rax
+ mov     eax, dword, ptr, [rsp, +, 60]
+ mov     dword, ptr, [rdi, +, 60], eax
+ add     rsp, 136
+ ret
+.LBB10_1:
+ mov     rax, qword, ptr, [rsp]
+ mov     qword, ptr, [rdi], rax
+ mov     rax, qword, ptr, [rsp, +, 8]
+ mov     qword, ptr, [rdi, +, 8], rax
+ mov     rax, qword, ptr, [rsp, +, 16]
+ mov     qword, ptr, [rdi, +, 16], rax
+ mov     rax, qword, ptr, [rsp, +, 24]
+ mov     qword, ptr, [rdi, +, 24], rax
+ mov     rax, qword, ptr, [rsp, +, 32]
+ mov     qword, ptr, [rdi, +, 32], rax
+ mov     rax, qword, ptr, [rsp, +, 40]
+ mov     qword, ptr, [rdi, +, 40], rax
+ mov     rax, qword, ptr, [rsp, +, 48]
+ mov     qword, ptr, [rdi, +, 48], rax
+ mov     rax, qword, ptr, [rsp, +, 56]
+ mov     qword, ptr, [rdi, +, 56], rax
+ add     rsp, 136
+ ret
+asm_test::atomic_memcpy_store_align4::write_volatile_release_fence:
+ sub     rsp, 72
+ #MEMBARRIER
+ movups  xmm0, xmmword, ptr, [rsi]
+ movups  xmm1, xmmword, ptr, [rsi, +, 16]
+ movups  xmm2, xmmword, ptr, [rsi, +, 32]
+ movups  xmm3, xmmword, ptr, [rsi, +, 48]
+ movaps  xmmword, ptr, [rsp, +, 48], xmm3
+ movaps  xmmword, ptr, [rsp, +, 32], xmm2
+ movaps  xmmword, ptr, [rsp, +, 16], xmm1
+ movaps  xmmword, ptr, [rsp], xmm0
+ movaps  xmm0, xmmword, ptr, [rsp, +, 48]
+ movups  xmmword, ptr, [rdi, +, 48], xmm0
+ movaps  xmm0, xmmword, ptr, [rsp, +, 32]
+ movups  xmmword, ptr, [rdi, +, 32], xmm0
+ movaps  xmm0, xmmword, ptr, [rsp, +, 16]
+ movups  xmmword, ptr, [rdi, +, 16], xmm0
+ movaps  xmm0, xmmword, ptr, [rsp]
+ movups  xmmword, ptr, [rdi], xmm0
+ add     rsp, 72
+ ret

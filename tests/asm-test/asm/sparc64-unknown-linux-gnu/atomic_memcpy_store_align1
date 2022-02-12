@@ -1,0 +1,627 @@
+asm_test::atomic_memcpy_store_align1::release:
+ add     %sp, -256, %sp
+ ldub    [%o1+62], %o2
+ ldub    [%o1+63], %o3
+ ldub    [%o1+60], %o4
+ ldub    [%o1+61], %o5
+ sllx    %o2, 8, %o2
+ or      %o2, %o3, %o2
+ sllx    %o4, 8, %o3
+ or      %o3, %o5, %o3
+ sllx    %o3, 16, %o3
+ or      %o3, %o2, %o2
+ ldub    [%o1+58], %o3
+ ldub    [%o1+59], %o4
+ ldub    [%o1+56], %o5
+ ldub    [%o1+57], %g2
+ sllx    %o3, 8, %o3
+ or      %o3, %o4, %o3
+ sllx    %o5, 8, %o4
+ or      %o4, %g2, %o4
+ sllx    %o4, 16, %o4
+ or      %o4, %o3, %o3
+ sllx    %o3, 32, %o3
+ or      %o3, %o2, %o2
+ stx     %o2, [%sp+2231]
+ ldub    [%o1+54], %o2
+ ldub    [%o1+55], %o3
+ ldub    [%o1+52], %o4
+ ldub    [%o1+53], %o5
+ sllx    %o2, 8, %o2
+ or      %o2, %o3, %o2
+ sllx    %o4, 8, %o3
+ or      %o3, %o5, %o3
+ sllx    %o3, 16, %o3
+ or      %o3, %o2, %o2
+ ldub    [%o1+50], %o3
+ ldub    [%o1+51], %o4
+ ldub    [%o1+48], %o5
+ ldub    [%o1+49], %g2
+ sllx    %o3, 8, %o3
+ or      %o3, %o4, %o3
+ sllx    %o5, 8, %o4
+ or      %o4, %g2, %o4
+ sllx    %o4, 16, %o4
+ or      %o4, %o3, %o3
+ sllx    %o3, 32, %o3
+ or      %o3, %o2, %o2
+ stx     %o2, [%sp+2223]
+ ldub    [%o1+46], %o2
+ ldub    [%o1+47], %o3
+ ldub    [%o1+44], %o4
+ ldub    [%o1+45], %o5
+ sllx    %o2, 8, %o2
+ or      %o2, %o3, %o2
+ sllx    %o4, 8, %o3
+ or      %o3, %o5, %o3
+ sllx    %o3, 16, %o3
+ or      %o3, %o2, %o2
+ ldub    [%o1+42], %o3
+ ldub    [%o1+43], %o4
+ ldub    [%o1+40], %o5
+ ldub    [%o1+41], %g2
+ sllx    %o3, 8, %o3
+ or      %o3, %o4, %o3
+ sllx    %o5, 8, %o4
+ or      %o4, %g2, %o4
+ sllx    %o4, 16, %o4
+ or      %o4, %o3, %o3
+ sllx    %o3, 32, %o3
+ or      %o3, %o2, %o2
+ stx     %o2, [%sp+2215]
+ ldub    [%o1+38], %o2
+ ldub    [%o1+39], %o3
+ ldub    [%o1+36], %o4
+ ldub    [%o1+37], %o5
+ sllx    %o2, 8, %o2
+ or      %o2, %o3, %o2
+ sllx    %o4, 8, %o3
+ or      %o3, %o5, %o3
+ sllx    %o3, 16, %o3
+ or      %o3, %o2, %o2
+ ldub    [%o1+34], %o3
+ ldub    [%o1+35], %o4
+ ldub    [%o1+32], %o5
+ ldub    [%o1+33], %g2
+ sllx    %o3, 8, %o3
+ or      %o3, %o4, %o3
+ sllx    %o5, 8, %o4
+ or      %o4, %g2, %o4
+ sllx    %o4, 16, %o4
+ or      %o4, %o3, %o3
+ sllx    %o3, 32, %o3
+ or      %o3, %o2, %o2
+ stx     %o2, [%sp+2207]
+ ldub    [%o1+30], %o2
+ ldub    [%o1+31], %o3
+ ldub    [%o1+28], %o4
+ ldub    [%o1+29], %o5
+ sllx    %o2, 8, %o2
+ or      %o2, %o3, %o2
+ sllx    %o4, 8, %o3
+ or      %o3, %o5, %o3
+ sllx    %o3, 16, %o3
+ or      %o3, %o2, %o2
+ ldub    [%o1+26], %o3
+ ldub    [%o1+27], %o4
+ ldub    [%o1+24], %o5
+ ldub    [%o1+25], %g2
+ sllx    %o3, 8, %o3
+ or      %o3, %o4, %o3
+ sllx    %o5, 8, %o4
+ or      %o4, %g2, %o4
+ sllx    %o4, 16, %o4
+ or      %o4, %o3, %o3
+ sllx    %o3, 32, %o3
+ or      %o3, %o2, %o2
+ stx     %o2, [%sp+2199]
+ ldub    [%o1+22], %o2
+ ldub    [%o1+23], %o3
+ ldub    [%o1+20], %o4
+ ldub    [%o1+21], %o5
+ sllx    %o2, 8, %o2
+ or      %o2, %o3, %o2
+ sllx    %o4, 8, %o3
+ or      %o3, %o5, %o3
+ sllx    %o3, 16, %o3
+ or      %o3, %o2, %o2
+ ldub    [%o1+18], %o3
+ ldub    [%o1+19], %o4
+ ldub    [%o1+16], %o5
+ ldub    [%o1+17], %g2
+ sllx    %o3, 8, %o3
+ or      %o3, %o4, %o3
+ sllx    %o5, 8, %o4
+ or      %o4, %g2, %o4
+ sllx    %o4, 16, %o4
+ or      %o4, %o3, %o3
+ sllx    %o3, 32, %o3
+ or      %o3, %o2, %o2
+ stx     %o2, [%sp+2191]
+ ldub    [%o1+14], %o2
+ ldub    [%o1+15], %o3
+ ldub    [%o1+12], %o4
+ ldub    [%o1+13], %o5
+ sllx    %o2, 8, %o2
+ or      %o2, %o3, %o2
+ sllx    %o4, 8, %o3
+ or      %o3, %o5, %o3
+ sllx    %o3, 16, %o3
+ or      %o3, %o2, %o2
+ ldub    [%o1+10], %o3
+ ldub    [%o1+11], %o4
+ ldub    [%o1+8], %o5
+ ldub    [%o1+9], %g2
+ sllx    %o3, 8, %o3
+ or      %o3, %o4, %o3
+ sllx    %o5, 8, %o4
+ or      %o4, %g2, %o4
+ sllx    %o4, 16, %o4
+ or      %o4, %o3, %o3
+ sllx    %o3, 32, %o3
+ or      %o3, %o2, %o2
+ stx     %o2, [%sp+2183]
+ ldub    [%o1+6], %o2
+ ldub    [%o1+7], %o3
+ ldub    [%o1+4], %o4
+ ldub    [%o1+5], %o5
+ sllx    %o2, 8, %o2
+ or      %o2, %o3, %o2
+ sllx    %o4, 8, %o3
+ or      %o3, %o5, %o3
+ sllx    %o3, 16, %o3
+ or      %o3, %o2, %o2
+ ldub    [%o1+2], %o3
+ ldub    [%o1+3], %o4
+ ldub    [%o1], %o5
+ ldub    [%o1+1], %o1
+ sllx    %o3, 8, %o3
+ or      %o3, %o4, %o3
+ sllx    %o5, 8, %o4
+ or      %o4, %o1, %o1
+ sllx    %o1, 16, %o1
+ or      %o1, %o3, %o1
+ sllx    %o1, 32, %o1
+ or      %o1, %o2, %o1
+ stx     %o1, [%sp+2175]
+ membar  #LoadLoad, |, #StoreLoad, |, #LoadStore, |, #StoreStore
+ ldx     [%sp+2231], %o1
+ ldx     [%sp+2223], %o2
+ ldx     [%sp+2215], %o3
+ stx     %o1, [%sp+2295]
+ stx     %o2, [%sp+2287]
+ stx     %o3, [%sp+2279]
+ ldx     [%sp+2207], %o1
+ ldx     [%sp+2199], %o2
+ ldx     [%sp+2191], %o3
+ ldx     [%sp+2183], %o4
+ stx     %o1, [%sp+2271]
+ stx     %o2, [%sp+2263]
+ stx     %o3, [%sp+2255]
+ stx     %o4, [%sp+2247]
+ ldx     [%sp+2175], %o2
+ add     %o0, 7, %o1
+ and     %o1, -8, %o3
+ sub     %o3, %o0, %o1
+ cmp     %o1, 65
+ bcs     %xcc, .LBB2_1
+ stx     %o2, [%sp+2239]
+ ba      .LBB2_10
+ nop
+.LBB2_10:
+ ldub    [%sp+2239], %o1
+ stb     %o1, [%o0]
+ add     %sp, 2239, %o1
+ or      %o1, 1, %o2
+ ldub    [%o2], %o2
+ stb     %o2, [%o0+1]
+ or      %o1, 2, %o2
+ ldub    [%o2], %o2
+ stb     %o2, [%o0+2]
+ or      %o1, 3, %o2
+ ldub    [%o2], %o2
+ stb     %o2, [%o0+3]
+ or      %o1, 4, %o2
+ ldub    [%o2], %o2
+ stb     %o2, [%o0+4]
+ or      %o1, 5, %o2
+ ldub    [%o2], %o2
+ stb     %o2, [%o0+5]
+ or      %o1, 6, %o2
+ ldub    [%o2], %o2
+ stb     %o2, [%o0+6]
+ or      %o1, 7, %o1
+ ldub    [%o1], %o1
+ stb     %o1, [%o0+7]
+ ldub    [%sp+2247], %o1
+ stb     %o1, [%o0+8]
+ ldub    [%sp+2248], %o1
+ stb     %o1, [%o0+9]
+ ldub    [%sp+2249], %o1
+ stb     %o1, [%o0+10]
+ ldub    [%sp+2250], %o1
+ stb     %o1, [%o0+11]
+ ldub    [%sp+2251], %o1
+ stb     %o1, [%o0+12]
+ ldub    [%sp+2252], %o1
+ stb     %o1, [%o0+13]
+ ldub    [%sp+2253], %o1
+ stb     %o1, [%o0+14]
+ ldub    [%sp+2254], %o1
+ stb     %o1, [%o0+15]
+ ldub    [%sp+2255], %o1
+ stb     %o1, [%o0+16]
+ ldub    [%sp+2256], %o1
+ stb     %o1, [%o0+17]
+ ldub    [%sp+2257], %o1
+ stb     %o1, [%o0+18]
+ ldub    [%sp+2258], %o1
+ stb     %o1, [%o0+19]
+ ldub    [%sp+2259], %o1
+ stb     %o1, [%o0+20]
+ ldub    [%sp+2260], %o1
+ stb     %o1, [%o0+21]
+ ldub    [%sp+2261], %o1
+ stb     %o1, [%o0+22]
+ ldub    [%sp+2262], %o1
+ stb     %o1, [%o0+23]
+ ldub    [%sp+2263], %o1
+ stb     %o1, [%o0+24]
+ ldub    [%sp+2264], %o1
+ stb     %o1, [%o0+25]
+ ldub    [%sp+2265], %o1
+ stb     %o1, [%o0+26]
+ ldub    [%sp+2266], %o1
+ stb     %o1, [%o0+27]
+ ldub    [%sp+2267], %o1
+ stb     %o1, [%o0+28]
+ ldub    [%sp+2268], %o1
+ stb     %o1, [%o0+29]
+ ldub    [%sp+2269], %o1
+ stb     %o1, [%o0+30]
+ ldub    [%sp+2270], %o1
+ stb     %o1, [%o0+31]
+ ldub    [%sp+2271], %o1
+ stb     %o1, [%o0+32]
+ ldub    [%sp+2272], %o1
+ stb     %o1, [%o0+33]
+ ldub    [%sp+2273], %o1
+ stb     %o1, [%o0+34]
+ ldub    [%sp+2274], %o1
+ stb     %o1, [%o0+35]
+ ldub    [%sp+2275], %o1
+ stb     %o1, [%o0+36]
+ ldub    [%sp+2276], %o1
+ stb     %o1, [%o0+37]
+ ldub    [%sp+2277], %o1
+ stb     %o1, [%o0+38]
+ ldub    [%sp+2278], %o1
+ stb     %o1, [%o0+39]
+ ldub    [%sp+2279], %o1
+ stb     %o1, [%o0+40]
+ ldub    [%sp+2280], %o1
+ stb     %o1, [%o0+41]
+ ldub    [%sp+2281], %o1
+ stb     %o1, [%o0+42]
+ ldub    [%sp+2282], %o1
+ stb     %o1, [%o0+43]
+ ldub    [%sp+2283], %o1
+ stb     %o1, [%o0+44]
+ ldub    [%sp+2284], %o1
+ stb     %o1, [%o0+45]
+ ldub    [%sp+2285], %o1
+ stb     %o1, [%o0+46]
+ ldub    [%sp+2286], %o1
+ stb     %o1, [%o0+47]
+ ldub    [%sp+2287], %o1
+ stb     %o1, [%o0+48]
+ ldub    [%sp+2288], %o1
+ stb     %o1, [%o0+49]
+ ldub    [%sp+2289], %o1
+ stb     %o1, [%o0+50]
+ ldub    [%sp+2290], %o1
+ stb     %o1, [%o0+51]
+ ldub    [%sp+2291], %o1
+ stb     %o1, [%o0+52]
+ ldub    [%sp+2292], %o1
+ stb     %o1, [%o0+53]
+ ldub    [%sp+2293], %o1
+ stb     %o1, [%o0+54]
+ ldub    [%sp+2294], %o1
+ stb     %o1, [%o0+55]
+ ldub    [%sp+2295], %o1
+ stb     %o1, [%o0+56]
+ ldub    [%sp+2296], %o1
+ stb     %o1, [%o0+57]
+ ldub    [%sp+2297], %o1
+ stb     %o1, [%o0+58]
+ ldub    [%sp+2298], %o1
+ stb     %o1, [%o0+59]
+ ldub    [%sp+2299], %o1
+ stb     %o1, [%o0+60]
+ ldub    [%sp+2300], %o1
+ stb     %o1, [%o0+61]
+ ldub    [%sp+2301], %o1
+ stb     %o1, [%o0+62]
+ ldub    [%sp+2302], %o1
+ ba      .LBB2_11
+ stb     %o1, [%o0+63]
+.LBB2_1:
+ cmp     %o1, 0
+ be      %xcc, .LBB2_5
+ mov     64, %o2
+ ba      .LBB2_2
+ nop
+.LBB2_2:
+ add     %sp, 2239, %o2
+ sub     %o0, %o3, %o5
+ mov     %g0, %o4
+ mov     %o0, %g2
+.LBB2_3:
+ ldub    [%o2], %g3
+ stb     %g3, [%g2]
+ add     %g2, 1, %g2
+ add     %o5, 1, %g3
+ cmp     %g3, %o5
+ mov     %o4, %o5
+ movcs   %xcc, 1, %o5
+ cmp     %o5, 1
+ add     %o2, 1, %o2
+ bne     .LBB2_3
+ mov     %g3, %o5
+ sub     %o0, %o3, %o2
+ add     %o2, 64, %o2
+ cmp     %o2, 8
+ bcs     %xcc, .LBB2_7
+ nop
+ ba      .LBB2_5
+ nop
+.LBB2_5:
+ add     %sp, 2239, %o3
+.LBB2_6:
+ add     %o3, %o1, %o4
+ ldub    [%o4+6], %o5
+ ldub    [%o4+7], %g2
+ ldub    [%o4+4], %g3
+ ldub    [%o4+5], %g4
+ sllx    %o5, 8, %o5
+ or      %o5, %g2, %o5
+ sllx    %g3, 8, %g2
+ or      %g2, %g4, %g2
+ sllx    %g2, 16, %g2
+ or      %g2, %o5, %o5
+ ldub    [%o4+2], %g2
+ ldub    [%o4+3], %g3
+ ldub    [%o3+%o1], %g4
+ ldub    [%o4+1], %o4
+ sllx    %g2, 8, %g2
+ or      %g2, %g3, %g2
+ sllx    %g4, 8, %g3
+ or      %g3, %o4, %o4
+ sllx    %o4, 16, %o4
+ or      %o4, %g2, %o4
+ sllx    %o4, 32, %o4
+ or      %o4, %o5, %o4
+ stx     %o4, [%o0+%o1]
+ add     %o2, -8, %o2
+ cmp     %o2, 7
+ bgu     %xcc, .LBB2_6
+ add     %o1, 8, %o1
+ ba      .LBB2_7
+ nop
+.LBB2_7:
+ cmp     %o2, 0
+ be      %xcc, .LBB2_11
+ nop
+ ba      .LBB2_8
+ nop
+.LBB2_8:
+ add     %o0, %o1, %o0
+ add     %sp, 2239, %o3
+ add     %o3, %o1, %o1
+.LBB2_9:
+ ldub    [%o1], %o3
+ stb     %o3, [%o0]
+ add     %o0, 1, %o0
+ add     %o2, -1, %o2
+ cmp     %o2, 0
+ be      %xcc, .LBB2_11
+ add     %o1, 1, %o1
+ ba      .LBB2_9
+ nop
+.LBB2_11:
+ retl
+ add     %sp, 256, %sp
+asm_test::atomic_memcpy_store_align1::write_volatile_release_fence:
+ save    %sp, -240, %sp
+ membar  #LoadLoad, |, #StoreLoad, |, #LoadStore, |, #StoreStore
+ ldub    [%i1+62], %i2
+ ldub    [%i1+63], %i3
+ ldub    [%i1+60], %i4
+ ldub    [%i1+61], %i5
+ sllx    %i2, 8, %i2
+ or      %i2, %i3, %i2
+ sllx    %i4, 8, %i3
+ or      %i3, %i5, %i3
+ sllx    %i3, 16, %i3
+ or      %i3, %i2, %i2
+ ldub    [%i1+58], %i3
+ ldub    [%i1+59], %i4
+ ldub    [%i1+56], %i5
+ ldub    [%i1+57], %g2
+ sllx    %i3, 8, %i3
+ or      %i3, %i4, %i3
+ sllx    %i5, 8, %i4
+ or      %i4, %g2, %i4
+ sllx    %i4, 16, %i4
+ or      %i4, %i3, %i3
+ sllx    %i3, 32, %i3
+ or      %i3, %i2, %i2
+ stx     %i2, [%fp+2039]
+ ldub    [%i1+54], %i2
+ ldub    [%i1+55], %i3
+ ldub    [%i1+52], %i4
+ ldub    [%i1+53], %i5
+ sllx    %i2, 8, %i2
+ or      %i2, %i3, %i2
+ sllx    %i4, 8, %i3
+ or      %i3, %i5, %i3
+ sllx    %i3, 16, %i3
+ or      %i3, %i2, %i2
+ ldub    [%i1+50], %i3
+ ldub    [%i1+51], %i4
+ ldub    [%i1+48], %i5
+ ldub    [%i1+49], %g2
+ sllx    %i3, 8, %i3
+ or      %i3, %i4, %i3
+ sllx    %i5, 8, %i4
+ or      %i4, %g2, %i4
+ sllx    %i4, 16, %i4
+ or      %i4, %i3, %i3
+ sllx    %i3, 32, %i3
+ or      %i3, %i2, %i2
+ stx     %i2, [%fp+2031]
+ ldub    [%i1+46], %i2
+ ldub    [%i1+47], %i3
+ ldub    [%i1+44], %i4
+ ldub    [%i1+45], %i5
+ sllx    %i2, 8, %i2
+ or      %i2, %i3, %i2
+ sllx    %i4, 8, %i3
+ or      %i3, %i5, %i3
+ sllx    %i3, 16, %i3
+ or      %i3, %i2, %i2
+ ldub    [%i1+42], %i3
+ ldub    [%i1+43], %i4
+ ldub    [%i1+40], %i5
+ ldub    [%i1+41], %g2
+ sllx    %i3, 8, %i3
+ or      %i3, %i4, %i3
+ sllx    %i5, 8, %i4
+ or      %i4, %g2, %i4
+ sllx    %i4, 16, %i4
+ or      %i4, %i3, %i3
+ sllx    %i3, 32, %i3
+ or      %i3, %i2, %i2
+ stx     %i2, [%fp+2023]
+ ldub    [%i1+38], %i2
+ ldub    [%i1+39], %i3
+ ldub    [%i1+36], %i4
+ ldub    [%i1+37], %i5
+ sllx    %i2, 8, %i2
+ or      %i2, %i3, %i2
+ sllx    %i4, 8, %i3
+ or      %i3, %i5, %i3
+ sllx    %i3, 16, %i3
+ or      %i3, %i2, %i2
+ ldub    [%i1+34], %i3
+ ldub    [%i1+35], %i4
+ ldub    [%i1+32], %i5
+ ldub    [%i1+33], %g2
+ sllx    %i3, 8, %i3
+ or      %i3, %i4, %i3
+ sllx    %i5, 8, %i4
+ or      %i4, %g2, %i4
+ sllx    %i4, 16, %i4
+ or      %i4, %i3, %i3
+ sllx    %i3, 32, %i3
+ or      %i3, %i2, %i2
+ stx     %i2, [%fp+2015]
+ ldub    [%i1+30], %i2
+ ldub    [%i1+31], %i3
+ ldub    [%i1+28], %i4
+ ldub    [%i1+29], %i5
+ sllx    %i2, 8, %i2
+ or      %i2, %i3, %i2
+ sllx    %i4, 8, %i3
+ or      %i3, %i5, %i3
+ sllx    %i3, 16, %i3
+ or      %i3, %i2, %i2
+ ldub    [%i1+26], %i3
+ ldub    [%i1+27], %i4
+ ldub    [%i1+24], %i5
+ ldub    [%i1+25], %g2
+ sllx    %i3, 8, %i3
+ or      %i3, %i4, %i3
+ sllx    %i5, 8, %i4
+ or      %i4, %g2, %i4
+ sllx    %i4, 16, %i4
+ or      %i4, %i3, %i3
+ sllx    %i3, 32, %i3
+ or      %i3, %i2, %i2
+ stx     %i2, [%fp+2007]
+ ldub    [%i1+22], %i2
+ ldub    [%i1+23], %i3
+ ldub    [%i1+20], %i4
+ ldub    [%i1+21], %i5
+ sllx    %i2, 8, %i2
+ or      %i2, %i3, %i2
+ sllx    %i4, 8, %i3
+ or      %i3, %i5, %i3
+ sllx    %i3, 16, %i3
+ or      %i3, %i2, %i2
+ ldub    [%i1+18], %i3
+ ldub    [%i1+19], %i4
+ ldub    [%i1+16], %i5
+ ldub    [%i1+17], %g2
+ sllx    %i3, 8, %i3
+ or      %i3, %i4, %i3
+ sllx    %i5, 8, %i4
+ or      %i4, %g2, %i4
+ sllx    %i4, 16, %i4
+ or      %i4, %i3, %i3
+ sllx    %i3, 32, %i3
+ or      %i3, %i2, %i2
+ stx     %i2, [%fp+1999]
+ ldub    [%i1+14], %i2
+ ldub    [%i1+15], %i3
+ ldub    [%i1+12], %i4
+ ldub    [%i1+13], %i5
+ sllx    %i2, 8, %i2
+ or      %i2, %i3, %i2
+ sllx    %i4, 8, %i3
+ or      %i3, %i5, %i3
+ sllx    %i3, 16, %i3
+ or      %i3, %i2, %i2
+ ldub    [%i1+10], %i3
+ ldub    [%i1+11], %i4
+ ldub    [%i1+8], %i5
+ ldub    [%i1+9], %g2
+ sllx    %i3, 8, %i3
+ or      %i3, %i4, %i3
+ sllx    %i5, 8, %i4
+ or      %i4, %g2, %i4
+ sllx    %i4, 16, %i4
+ or      %i4, %i3, %i3
+ sllx    %i3, 32, %i3
+ or      %i3, %i2, %i2
+ stx     %i2, [%fp+1991]
+ ldub    [%i1+6], %i2
+ ldub    [%i1+7], %i3
+ ldub    [%i1+4], %i4
+ ldub    [%i1+5], %i5
+ sllx    %i2, 8, %i2
+ or      %i2, %i3, %i2
+ sllx    %i4, 8, %i3
+ or      %i3, %i5, %i3
+ sllx    %i3, 16, %i3
+ or      %i3, %i2, %i2
+ ldub    [%i1+2], %i3
+ ldub    [%i1+3], %i4
+ ldub    [%i1], %i5
+ ldub    [%i1+1], %i1
+ sllx    %i3, 8, %i3
+ or      %i3, %i4, %i3
+ sllx    %i5, 8, %i4
+ or      %i4, %i1, %i1
+ sllx    %i1, 16, %i1
+ or      %i1, %i3, %i1
+ sllx    %i1, 32, %i1
+ or      %i1, %i2, %i1
+ stx     %i1, [%fp+1983]
+ add     %fp, 1983, %o1
+ mov     64, %o2
+ call    memcpy
+ mov     %i0, %o0
+ ret
+ restore

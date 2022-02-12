@@ -1,0 +1,176 @@
+asm_test::atomic_memcpy_store_align4::release:
+ add     %sp, -256, %sp
+ ld      [%o1+56], %o2
+ ld      [%o1+60], %o3
+ sllx    %o2, 32, %o2
+ ld      [%o1+48], %o4
+ or      %o2, %o3, %o2
+ ld      [%o1+52], %o3
+ stx     %o2, [%sp+2231]
+ sllx    %o4, 32, %o2
+ ld      [%o1+40], %o4
+ or      %o2, %o3, %o2
+ ld      [%o1+44], %o3
+ stx     %o2, [%sp+2223]
+ sllx    %o4, 32, %o2
+ ld      [%o1+32], %o4
+ or      %o2, %o3, %o2
+ ld      [%o1+36], %o3
+ stx     %o2, [%sp+2215]
+ sllx    %o4, 32, %o2
+ ld      [%o1+24], %o4
+ or      %o2, %o3, %o2
+ ld      [%o1+28], %o3
+ stx     %o2, [%sp+2207]
+ sllx    %o4, 32, %o2
+ ld      [%o1+16], %o4
+ or      %o2, %o3, %o2
+ ld      [%o1+20], %o3
+ stx     %o2, [%sp+2199]
+ sllx    %o4, 32, %o2
+ ld      [%o1+8], %o4
+ or      %o2, %o3, %o2
+ stx     %o2, [%sp+2191]
+ ld      [%o1+12], %o2
+ sllx    %o4, 32, %o3
+ ld      [%o1], %o4
+ ld      [%o1+4], %o1
+ or      %o3, %o2, %o2
+ stx     %o2, [%sp+2183]
+ sllx    %o4, 32, %o2
+ or      %o2, %o1, %o1
+ stx     %o1, [%sp+2175]
+ membar  #LoadLoad, |, #StoreLoad, |, #LoadStore, |, #StoreStore
+ ldx     [%sp+2231], %o1
+ ldx     [%sp+2223], %o2
+ ldx     [%sp+2215], %o3
+ stx     %o1, [%sp+2295]
+ stx     %o2, [%sp+2287]
+ ldx     [%sp+2207], %o1
+ stx     %o3, [%sp+2279]
+ ldx     [%sp+2199], %o2
+ ldx     [%sp+2191], %o3
+ stx     %o1, [%sp+2271]
+ ldx     [%sp+2183], %o1
+ stx     %o2, [%sp+2263]
+ stx     %o3, [%sp+2255]
+ ldx     [%sp+2175], %o2
+ stx     %o1, [%sp+2247]
+ and     %o0, 7, %o1
+ cmp     %o1, 0
+ bne     %xcc, .LBB10_2
+ stx     %o2, [%sp+2239]
+ ba      .LBB10_1
+ nop
+.LBB10_2:
+ ld      [%sp+2239], %o1
+ st      %o1, [%o0]
+ add     %sp, 2239, %o1
+ or      %o1, 4, %o1
+ ld      [%o1], %o1
+ ld      [%sp+2247], %o2
+ sllx    %o1, 32, %o1
+ or      %o1, %o2, %o1
+ stx     %o1, [%o0+4]
+ ld      [%sp+2251], %o1
+ ld      [%sp+2255], %o2
+ sllx    %o1, 32, %o1
+ or      %o1, %o2, %o1
+ stx     %o1, [%o0+12]
+ ld      [%sp+2259], %o1
+ ld      [%sp+2263], %o2
+ sllx    %o1, 32, %o1
+ or      %o1, %o2, %o1
+ stx     %o1, [%o0+20]
+ ld      [%sp+2267], %o1
+ ld      [%sp+2271], %o2
+ sllx    %o1, 32, %o1
+ or      %o1, %o2, %o1
+ stx     %o1, [%o0+28]
+ ld      [%sp+2275], %o1
+ ld      [%sp+2279], %o2
+ sllx    %o1, 32, %o1
+ or      %o1, %o2, %o1
+ stx     %o1, [%o0+36]
+ ld      [%sp+2283], %o1
+ ld      [%sp+2287], %o2
+ sllx    %o1, 32, %o1
+ or      %o1, %o2, %o1
+ stx     %o1, [%o0+44]
+ ld      [%sp+2291], %o1
+ ld      [%sp+2295], %o2
+ sllx    %o1, 32, %o1
+ or      %o1, %o2, %o1
+ stx     %o1, [%o0+52]
+ ld      [%sp+2299], %o1
+ st      %o1, [%o0+60]
+ retl
+ add     %sp, 256, %sp
+.LBB10_1:
+ ldx     [%sp+2239], %o1
+ stx     %o1, [%o0]
+ ldx     [%sp+2247], %o1
+ stx     %o1, [%o0+8]
+ ldx     [%sp+2255], %o1
+ stx     %o1, [%o0+16]
+ ldx     [%sp+2263], %o1
+ stx     %o1, [%o0+24]
+ ldx     [%sp+2271], %o1
+ stx     %o1, [%o0+32]
+ ldx     [%sp+2279], %o1
+ stx     %o1, [%o0+40]
+ ldx     [%sp+2287], %o1
+ stx     %o1, [%o0+48]
+ ldx     [%sp+2295], %o1
+ stx     %o1, [%o0+56]
+ retl
+ add     %sp, 256, %sp
+asm_test::atomic_memcpy_store_align4::write_volatile_release_fence:
+ save    %sp, -240, %sp
+ membar  #LoadLoad, |, #StoreLoad, |, #LoadStore, |, #StoreStore
+ ld      [%i1+56], %i2
+ ld      [%i1+60], %i3
+ sllx    %i2, 32, %i2
+ ld      [%i1+48], %i4
+ or      %i2, %i3, %i2
+ ld      [%i1+52], %i3
+ stx     %i2, [%fp+2039]
+ sllx    %i4, 32, %i2
+ ld      [%i1+40], %i4
+ or      %i2, %i3, %i2
+ ld      [%i1+44], %i3
+ stx     %i2, [%fp+2031]
+ sllx    %i4, 32, %i2
+ ld      [%i1+32], %i4
+ or      %i2, %i3, %i2
+ ld      [%i1+36], %i3
+ stx     %i2, [%fp+2023]
+ sllx    %i4, 32, %i2
+ ld      [%i1+24], %i4
+ or      %i2, %i3, %i2
+ ld      [%i1+28], %i3
+ stx     %i2, [%fp+2015]
+ sllx    %i4, 32, %i2
+ ld      [%i1+16], %i4
+ or      %i2, %i3, %i2
+ ld      [%i1+20], %i3
+ stx     %i2, [%fp+2007]
+ sllx    %i4, 32, %i2
+ ld      [%i1+8], %i4
+ or      %i2, %i3, %i2
+ stx     %i2, [%fp+1999]
+ ld      [%i1+12], %i2
+ sllx    %i4, 32, %i3
+ ld      [%i1], %i4
+ ld      [%i1+4], %i1
+ or      %i3, %i2, %i2
+ stx     %i2, [%fp+1991]
+ sllx    %i4, 32, %i2
+ or      %i2, %i1, %i1
+ stx     %i1, [%fp+1983]
+ add     %fp, 1983, %o1
+ mov     64, %o2
+ call    memcpy
+ mov     %i0, %o0
+ ret
+ restore

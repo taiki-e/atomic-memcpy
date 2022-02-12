@@ -1,0 +1,86 @@
+asm_test::atomic_memcpy_store_align2::release:
+ push    {r4, r5, r6, lr}
+ sub     sp, sp, #64
+ mov     r5, sp
+ mov     r6, r0
+ mov     r0, r5
+ mov     r2, #32
+ bl      memcpy
+ bl      __sync_synchronize
+ ldm     r5!, {r1, r2, r3, r4}
+ add     r0, sp, #32
+ tst     r6, #3
+ stm     r0!, {r1, r2, r3, r4}
+ ldm     r5, {r1, r2, r3, r4}
+ stm     r0, {r1, r2, r3, r4}
+ beq     .LBB6_2
+ ldrh    r0, [sp, #32]
+ strh    r0, [r6]
+ ldrh    r0, [sp, #36]
+ ldrh    r1, [sp, #34]
+ orr     r0, r1, r0, lsl, #16
+ str     r0, [r6, #2]
+ ldrh    r0, [sp, #40]
+ ldrh    r1, [sp, #38]
+ orr     r0, r1, r0, lsl, #16
+ str     r0, [r6, #6]
+ ldrh    r0, [sp, #44]
+ ldrh    r1, [sp, #42]
+ orr     r0, r1, r0, lsl, #16
+ str     r0, [r6, #10]
+ ldrh    r0, [sp, #48]
+ ldrh    r1, [sp, #46]
+ orr     r0, r1, r0, lsl, #16
+ str     r0, [r6, #14]
+ ldrh    r0, [sp, #52]
+ ldrh    r1, [sp, #50]
+ orr     r0, r1, r0, lsl, #16
+ str     r0, [r6, #18]
+ ldrh    r0, [sp, #56]
+ ldrh    r1, [sp, #54]
+ orr     r0, r1, r0, lsl, #16
+ str     r0, [r6, #22]
+ ldrh    r0, [sp, #60]
+ ldrh    r1, [sp, #58]
+ orr     r0, r1, r0, lsl, #16
+ str     r0, [r6, #26]
+ ldrh    r0, [sp, #62]
+ strh    r0, [r6, #30]
+ add     sp, sp, #64
+ pop     {r4, r5, r6, pc}
+.LBB6_2:
+ ldr     r0, [sp, #32]
+ str     r0, [r6]
+ ldr     r0, [sp, #36]
+ str     r0, [r6, #4]
+ ldr     r0, [sp, #40]
+ str     r0, [r6, #8]
+ ldr     r0, [sp, #44]
+ str     r0, [r6, #12]
+ ldr     r0, [sp, #48]
+ str     r0, [r6, #16]
+ ldr     r0, [sp, #52]
+ str     r0, [r6, #20]
+ ldr     r0, [sp, #56]
+ str     r0, [r6, #24]
+ ldr     r0, [sp, #60]
+ str     r0, [r6, #28]
+ add     sp, sp, #64
+ pop     {r4, r5, r6, pc}
+asm_test::atomic_memcpy_store_align2::write_volatile_release_fence:
+ push    {r4, r5, r6, lr}
+ sub     sp, sp, #32
+ mov     r4, r1
+ mov     r5, r0
+ bl      __sync_synchronize
+ mov     r6, sp
+ mov     r1, r4
+ mov     r0, r6
+ mov     r2, #32
+ bl      memcpy
+ mov     r0, r5
+ mov     r1, r6
+ mov     r2, #32
+ bl      memcpy
+ add     sp, sp, #32
+ pop     {r4, r5, r6, pc}

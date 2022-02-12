@@ -1,0 +1,50 @@
+asm_test::atomic_memcpy_store_align16::release:
+ push    ebp
+ push    ebx
+ push    edi
+ push    esi
+ sub     esp, 8
+ mov     eax, dword, ptr, [esp, +, 32]
+ mov     ecx, dword, ptr, [eax]
+ mov     esi, dword, ptr, [eax, +, 8]
+ mov     edi, dword, ptr, [eax, +, 12]
+ mov     ebx, dword, ptr, [eax, +, 16]
+ mov     ebp, dword, ptr, [eax, +, 20]
+ mov     edx, dword, ptr, [eax, +, 24]
+ mov     dword, ptr, [esp, +, 4], ecx
+ mov     ecx, dword, ptr, [eax, +, 4]
+ mov     dword, ptr, [esp], ecx
+ mov     ecx, dword, ptr, [eax, +, 28]
+ mov     eax, dword, ptr, [esp, +, 28]
+ #MEMBARRIER
+ mov     dword, ptr, [eax, +, 28], ecx
+ mov     dword, ptr, [eax, +, 24], edx
+ mov     dword, ptr, [eax, +, 20], ebp
+ mov     dword, ptr, [eax, +, 16], ebx
+ mov     dword, ptr, [eax, +, 12], edi
+ mov     dword, ptr, [eax, +, 8], esi
+ mov     ecx, dword, ptr, [esp]
+ mov     dword, ptr, [eax, +, 4], ecx
+ mov     ecx, dword, ptr, [esp, +, 4]
+ mov     dword, ptr, [eax], ecx
+ add     esp, 8
+ pop     esi
+ pop     edi
+ pop     ebx
+ pop     ebp
+ ret
+asm_test::atomic_memcpy_store_align16::write_volatile_release_fence:
+ sub     esp, 44
+ mov     ecx, dword, ptr, [esp, +, 52]
+ #MEMBARRIER
+ mov     eax, dword, ptr, [esp, +, 48]
+ movaps  xmm0, xmmword, ptr, [ecx]
+ movaps  xmm1, xmmword, ptr, [ecx, +, 16]
+ movaps  xmmword, ptr, [esp, +, 16], xmm1
+ movaps  xmmword, ptr, [esp], xmm0
+ movaps  xmm0, xmmword, ptr, [esp, +, 16]
+ movaps  xmmword, ptr, [eax, +, 16], xmm0
+ movaps  xmm0, xmmword, ptr, [esp]
+ movaps  xmmword, ptr, [eax], xmm0
+ add     esp, 44
+ ret

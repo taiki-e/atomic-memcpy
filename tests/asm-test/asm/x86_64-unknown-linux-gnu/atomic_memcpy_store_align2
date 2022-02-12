@@ -1,0 +1,206 @@
+asm_test::atomic_memcpy_store_align2::release:
+ sub     rsp, 136
+ movups  xmm0, xmmword, ptr, [rsi]
+ movups  xmm1, xmmword, ptr, [rsi, +, 16]
+ movups  xmm2, xmmword, ptr, [rsi, +, 32]
+ movups  xmm3, xmmword, ptr, [rsi, +, 48]
+ movaps  xmmword, ptr, [rsp, +, 112], xmm3
+ movaps  xmmword, ptr, [rsp, +, 96], xmm2
+ movaps  xmmword, ptr, [rsp, +, 80], xmm1
+ movaps  xmmword, ptr, [rsp, +, 64], xmm0
+ #MEMBARRIER
+ movaps  xmm0, xmmword, ptr, [rsp, +, 64]
+ movaps  xmm1, xmmword, ptr, [rsp, +, 80]
+ movaps  xmm2, xmmword, ptr, [rsp, +, 96]
+ movaps  xmm3, xmmword, ptr, [rsp, +, 112]
+ movaps  xmmword, ptr, [rsp, +, 48], xmm3
+ movaps  xmmword, ptr, [rsp, +, 32], xmm2
+ movaps  xmmword, ptr, [rsp, +, 16], xmm1
+ movaps  xmmword, ptr, [rsp], xmm0
+ lea     r8, [rdi, +, 7]
+ and     r8, -8
+ mov     rax, r8
+ sub     rax, rdi
+ cmp     rax, 64
+ jbe     .LBB6_1
+ movzx   eax, word, ptr, [rsp, +, 62]
+ mov     word, ptr, [rdi, +, 62], ax
+ movzx   eax, word, ptr, [rsp, +, 60]
+ mov     word, ptr, [rdi, +, 60], ax
+ movzx   eax, word, ptr, [rsp, +, 58]
+ mov     word, ptr, [rdi, +, 58], ax
+ movzx   eax, word, ptr, [rsp, +, 56]
+ mov     word, ptr, [rdi, +, 56], ax
+ movzx   eax, word, ptr, [rsp, +, 54]
+ mov     word, ptr, [rdi, +, 54], ax
+ movzx   eax, word, ptr, [rsp, +, 52]
+ mov     word, ptr, [rdi, +, 52], ax
+ movzx   eax, word, ptr, [rsp, +, 50]
+ mov     word, ptr, [rdi, +, 50], ax
+ movzx   eax, word, ptr, [rsp, +, 48]
+ mov     word, ptr, [rdi, +, 48], ax
+ movzx   eax, word, ptr, [rsp, +, 46]
+ mov     word, ptr, [rdi, +, 46], ax
+ movzx   eax, word, ptr, [rsp, +, 44]
+ mov     word, ptr, [rdi, +, 44], ax
+ movzx   eax, word, ptr, [rsp, +, 42]
+ mov     word, ptr, [rdi, +, 42], ax
+ movzx   eax, word, ptr, [rsp, +, 40]
+ mov     word, ptr, [rdi, +, 40], ax
+ movzx   eax, word, ptr, [rsp, +, 38]
+ mov     word, ptr, [rdi, +, 38], ax
+ movzx   eax, word, ptr, [rsp, +, 36]
+ mov     word, ptr, [rdi, +, 36], ax
+ movzx   eax, word, ptr, [rsp, +, 34]
+ mov     word, ptr, [rdi, +, 34], ax
+ movzx   eax, word, ptr, [rsp, +, 32]
+ mov     word, ptr, [rdi, +, 32], ax
+ movzx   eax, word, ptr, [rsp, +, 30]
+ mov     word, ptr, [rdi, +, 30], ax
+ movzx   eax, word, ptr, [rsp, +, 28]
+ mov     word, ptr, [rdi, +, 28], ax
+ movzx   eax, word, ptr, [rsp, +, 26]
+ mov     word, ptr, [rdi, +, 26], ax
+ movzx   eax, word, ptr, [rsp, +, 24]
+ mov     word, ptr, [rdi, +, 24], ax
+ movzx   eax, word, ptr, [rsp, +, 22]
+ mov     word, ptr, [rdi, +, 22], ax
+ movzx   eax, word, ptr, [rsp, +, 20]
+ mov     word, ptr, [rdi, +, 20], ax
+ movzx   eax, word, ptr, [rsp, +, 18]
+ mov     word, ptr, [rdi, +, 18], ax
+ movzx   eax, word, ptr, [rsp, +, 16]
+ mov     word, ptr, [rdi, +, 16], ax
+ movzx   eax, word, ptr, [rsp, +, 14]
+ mov     word, ptr, [rdi, +, 14], ax
+ movzx   eax, word, ptr, [rsp, +, 12]
+ mov     word, ptr, [rdi, +, 12], ax
+ movzx   eax, word, ptr, [rsp, +, 10]
+ mov     word, ptr, [rdi, +, 10], ax
+ movzx   eax, word, ptr, [rsp, +, 8]
+ mov     word, ptr, [rdi, +, 8], ax
+ movzx   eax, word, ptr, [rsp, +, 6]
+ mov     word, ptr, [rdi, +, 6], ax
+ movzx   eax, word, ptr, [rsp, +, 4]
+ mov     word, ptr, [rdi, +, 4], ax
+ movzx   eax, word, ptr, [rsp, +, 2]
+ mov     word, ptr, [rdi, +, 2], ax
+ movzx   eax, word, ptr, [rsp]
+ mov     word, ptr, [rdi], ax
+ add     rsp, 136
+ ret
+.LBB6_1:
+ test    rax, rax
+ je      .LBB6_2
+ mov     rcx, rdi
+ not     rcx
+ add     rcx, r8
+ mov     r9d, eax
+ and     r9d, 3
+ cmp     rcx, 3
+ jae     .LBB6_5
+ xor     esi, esi
+ jmp     .LBB6_7
+.LBB6_2:
+ mov     ecx, 64
+ jmp     .LBB6_11
+.LBB6_5:
+ mov     r10, rax
+ and     r10, -4
+ xor     edx, edx
+.LBB6_6:
+ movzx   ecx, byte, ptr, [rsp, +, rdx]
+ mov     byte, ptr, [rdi, +, rdx], cl
+ movzx   ecx, byte, ptr, [rsp, +, rdx, +, 1]
+ mov     byte, ptr, [rdi, +, rdx, +, 1], cl
+ movzx   ecx, byte, ptr, [rsp, +, rdx, +, 2]
+ mov     byte, ptr, [rdi, +, rdx, +, 2], cl
+ lea     rsi, [rdx, +, 4]
+ movzx   ecx, byte, ptr, [rsp, +, rdx, +, 3]
+ mov     byte, ptr, [rdi, +, rdx, +, 3], cl
+ mov     rdx, rsi
+ cmp     r10, rsi
+ jne     .LBB6_6
+.LBB6_7:
+ test    r9, r9
+ je      .LBB6_10
+ lea     r10, [rdi, +, rsi]
+ lea     rcx, [rsp, +, rsi]
+ xor     esi, esi
+.LBB6_9:
+ movzx   edx, byte, ptr, [rcx, +, rsi]
+ mov     byte, ptr, [r10, +, rsi], dl
+ add     rsi, 1
+ cmp     r9, rsi
+ jne     .LBB6_9
+.LBB6_10:
+ mov     rcx, rdi
+ sub     rcx, r8
+ add     rcx, 64
+ cmp     rcx, 8
+ jb      .LBB6_12
+.LBB6_11:
+ mov     rdx, qword, ptr, [rsp, +, rax]
+ mov     qword, ptr, [rdi, +, rax], rdx
+ add     rcx, -8
+ add     rax, 8
+ cmp     rcx, 7
+ ja      .LBB6_11
+.LBB6_12:
+ test    rcx, rcx
+ je      .LBB6_19
+ lea     rdx, [rcx, -, 1]
+ mov     esi, ecx
+ and     esi, 3
+ cmp     rdx, 3
+ jb      .LBB6_16
+ and     rcx, -4
+ neg     rcx
+.LBB6_15:
+ movzx   edx, byte, ptr, [rsp, +, rax]
+ mov     byte, ptr, [rdi, +, rax], dl
+ movzx   edx, byte, ptr, [rsp, +, rax, +, 1]
+ mov     byte, ptr, [rdi, +, rax, +, 1], dl
+ movzx   edx, byte, ptr, [rsp, +, rax, +, 2]
+ mov     byte, ptr, [rdi, +, rax, +, 2], dl
+ movzx   edx, byte, ptr, [rsp, +, rax, +, 3]
+ mov     byte, ptr, [rdi, +, rax, +, 3], dl
+ add     rax, 4
+ add     rcx, 4
+ jne     .LBB6_15
+.LBB6_16:
+ test    rsi, rsi
+ je      .LBB6_19
+ add     rdi, rax
+ add     rax, rsp
+ xor     ecx, ecx
+.LBB6_18:
+ movzx   edx, byte, ptr, [rax, +, rcx]
+ mov     byte, ptr, [rdi, +, rcx], dl
+ add     rcx, 1
+ cmp     rsi, rcx
+ jne     .LBB6_18
+.LBB6_19:
+ add     rsp, 136
+ ret
+asm_test::atomic_memcpy_store_align2::write_volatile_release_fence:
+ sub     rsp, 72
+ #MEMBARRIER
+ movups  xmm0, xmmword, ptr, [rsi]
+ movups  xmm1, xmmword, ptr, [rsi, +, 16]
+ movups  xmm2, xmmword, ptr, [rsi, +, 32]
+ movups  xmm3, xmmword, ptr, [rsi, +, 48]
+ movaps  xmmword, ptr, [rsp, +, 48], xmm3
+ movaps  xmmword, ptr, [rsp, +, 32], xmm2
+ movaps  xmmword, ptr, [rsp, +, 16], xmm1
+ movaps  xmmword, ptr, [rsp], xmm0
+ movaps  xmm0, xmmword, ptr, [rsp, +, 48]
+ movups  xmmword, ptr, [rdi, +, 48], xmm0
+ movaps  xmm0, xmmword, ptr, [rsp, +, 32]
+ movups  xmmword, ptr, [rdi, +, 32], xmm0
+ movaps  xmm0, xmmword, ptr, [rsp, +, 16]
+ movups  xmmword, ptr, [rdi, +, 16], xmm0
+ movaps  xmm0, xmmword, ptr, [rsp]
+ movups  xmmword, ptr, [rdi], xmm0
+ add     rsp, 72
+ ret

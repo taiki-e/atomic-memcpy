@@ -1,0 +1,76 @@
+asm_test::atomic_u64_load::unordered:
+ sub     esp, 12
+ mov     eax, dword, ptr, [esp, +, 16]
+ fild    qword, ptr, [eax]
+ fistp   qword, ptr, [esp]
+ mov     eax, dword, ptr, [esp]
+ mov     edx, dword, ptr, [esp, +, 4]
+ add     esp, 12
+ ret
+asm_test::atomic_u64_load::relaxed:
+ sub     esp, 12
+ mov     eax, dword, ptr, [esp, +, 16]
+ fild    qword, ptr, [eax]
+ fistp   qword, ptr, [esp]
+ mov     eax, dword, ptr, [esp]
+ mov     edx, dword, ptr, [esp, +, 4]
+ add     esp, 12
+ ret
+asm_test::atomic_u64_load::unordered_acquire_fence:
+ sub     esp, 12
+ mov     eax, dword, ptr, [esp, +, 16]
+ fild    qword, ptr, [eax]
+ fistp   qword, ptr, [esp]
+ mov     eax, dword, ptr, [esp]
+ mov     edx, dword, ptr, [esp, +, 4]
+ #MEMBARRIER
+ add     esp, 12
+ ret
+asm_test::atomic_u64_load::relaxed_acquire_fence:
+ sub     esp, 12
+ mov     eax, dword, ptr, [esp, +, 16]
+ fild    qword, ptr, [eax]
+ fistp   qword, ptr, [esp]
+ mov     eax, dword, ptr, [esp]
+ mov     edx, dword, ptr, [esp, +, 4]
+ #MEMBARRIER
+ add     esp, 12
+ ret
+asm_test::atomic_u64_load::acquire:
+ sub     esp, 12
+ mov     eax, dword, ptr, [esp, +, 16]
+ fild    qword, ptr, [eax]
+ fistp   qword, ptr, [esp]
+ mov     eax, dword, ptr, [esp]
+ mov     edx, dword, ptr, [esp, +, 4]
+ add     esp, 12
+ ret
+asm_test::atomic_u64_load::unordered_seq_cst_fence:
+ sub     esp, 12
+ mov     eax, dword, ptr, [esp, +, 16]
+ fild    qword, ptr, [eax]
+ fistp   qword, ptr, [esp]
+ mov     eax, dword, ptr, [esp]
+ mov     edx, dword, ptr, [esp, +, 4]
+ lock    or, dword, ptr, [esp], 0
+ add     esp, 12
+ ret
+asm_test::atomic_u64_load::relaxed_seq_cst_fence:
+ sub     esp, 12
+ mov     eax, dword, ptr, [esp, +, 16]
+ fild    qword, ptr, [eax]
+ fistp   qword, ptr, [esp]
+ mov     eax, dword, ptr, [esp]
+ mov     edx, dword, ptr, [esp, +, 4]
+ lock    or, dword, ptr, [esp], 0
+ add     esp, 12
+ ret
+asm_test::atomic_u64_load::seq_cst:
+ sub     esp, 12
+ mov     eax, dword, ptr, [esp, +, 16]
+ fild    qword, ptr, [eax]
+ fistp   qword, ptr, [esp]
+ mov     eax, dword, ptr, [esp]
+ mov     edx, dword, ptr, [esp, +, 4]
+ add     esp, 12
+ ret

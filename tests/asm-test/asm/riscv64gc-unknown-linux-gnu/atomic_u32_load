@@ -1,0 +1,31 @@
+asm_test::atomic_u32_load::unordered:
+ lw      a0, 0(a0)
+ ret
+asm_test::atomic_u32_load::relaxed:
+ lw      a0, 0(a0)
+ ret
+asm_test::atomic_u32_load::unordered_acquire_fence:
+ lw      a0, 0(a0)
+ fence   r, rw
+ ret
+asm_test::atomic_u32_load::relaxed_acquire_fence:
+ lw      a0, 0(a0)
+ fence   r, rw
+ ret
+asm_test::atomic_u32_load::acquire:
+ lw      a0, 0(a0)
+ fence   r, rw
+ ret
+asm_test::atomic_u32_load::unordered_seq_cst_fence:
+ lw      a0, 0(a0)
+ fence   rw, rw
+ ret
+asm_test::atomic_u32_load::relaxed_seq_cst_fence:
+ lw      a0, 0(a0)
+ fence   rw, rw
+ ret
+asm_test::atomic_u32_load::seq_cst:
+ fence   rw, rw
+ lw      a0, 0(a0)
+ fence   r, rw
+ ret

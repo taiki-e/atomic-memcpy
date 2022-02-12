@@ -1,0 +1,212 @@
+asm_test::atomic_memcpy_store_align2::release:
+ daddiu  $sp, $sp, -128
+ ldl     $1, 47($5)
+ ldl     $2, 39($5)
+ ldl     $3, 31($5)
+ ldl     $6, 23($5)
+ ldl     $7, 55($5)
+ ldl     $8, 63($5)
+ ldr     $1, 40($5)
+ ldr     $6, 16($5)
+ ldr     $3, 24($5)
+ ldr     $2, 32($5)
+ ldr     $7, 48($5)
+ ldr     $8, 56($5)
+ sd      $1, 40($sp)
+ ldl     $1, 15($5)
+ sd      $8, 56($sp)
+ sd      $7, 48($sp)
+ sd      $2, 32($sp)
+ sd      $3, 24($sp)
+ sd      $6, 16($sp)
+ ldr     $1, 8($5)
+ sd      $1, 8($sp)
+ ldl     $1, 7($5)
+ ldr     $1, 0($5)
+ sd      $1, 0($sp)
+ sync
+ ld      $1, 0($sp)
+ ld      $2, 8($sp)
+ ld      $3, 16($sp)
+ ld      $5, 24($sp)
+ ld      $6, 32($sp)
+ ld      $7, 40($sp)
+ ld      $8, 48($sp)
+ ld      $9, 56($sp)
+ sd      $2, 72($sp)
+ sd      $1, 64($sp)
+ daddiu  $1, $4, 7
+ daddiu  $2, $zero, -8
+ sd      $9, 120($sp)
+ sd      $8, 112($sp)
+ sd      $7, 104($sp)
+ sd      $6, 96($sp)
+ sd      $5, 88($sp)
+ and     $1, $1, $2
+ dsubu   $2, $1, $4
+ sltiu   $1, $2, 65
+ bnez    $1, .LBB6_2
+ sd      $3, 80($sp)
+ lhu     $1, 126($sp)
+ sh      $1, 62($4)
+ lhu     $1, 124($sp)
+ sh      $1, 60($4)
+ lhu     $1, 122($sp)
+ sh      $1, 58($4)
+ lhu     $1, 120($sp)
+ sh      $1, 56($4)
+ lhu     $1, 118($sp)
+ sh      $1, 54($4)
+ lhu     $1, 116($sp)
+ sh      $1, 52($4)
+ lhu     $1, 114($sp)
+ sh      $1, 50($4)
+ lhu     $1, 112($sp)
+ sh      $1, 48($4)
+ lhu     $1, 110($sp)
+ sh      $1, 46($4)
+ lhu     $1, 108($sp)
+ sh      $1, 44($4)
+ lhu     $1, 106($sp)
+ sh      $1, 42($4)
+ lhu     $1, 104($sp)
+ sh      $1, 40($4)
+ lhu     $1, 102($sp)
+ sh      $1, 38($4)
+ lhu     $1, 100($sp)
+ sh      $1, 36($4)
+ lhu     $1, 98($sp)
+ sh      $1, 34($4)
+ lhu     $1, 96($sp)
+ sh      $1, 32($4)
+ lhu     $1, 94($sp)
+ sh      $1, 30($4)
+ lhu     $1, 92($sp)
+ sh      $1, 28($4)
+ lhu     $1, 90($sp)
+ sh      $1, 26($4)
+ lhu     $1, 88($sp)
+ sh      $1, 24($4)
+ lhu     $1, 86($sp)
+ sh      $1, 22($4)
+ lhu     $1, 84($sp)
+ sh      $1, 20($4)
+ lhu     $1, 82($sp)
+ sh      $1, 18($4)
+ lhu     $1, 80($sp)
+ sh      $1, 16($4)
+ lhu     $1, 78($sp)
+ sh      $1, 14($4)
+ lhu     $1, 76($sp)
+ sh      $1, 12($4)
+ lhu     $1, 74($sp)
+ sh      $1, 10($4)
+ lhu     $1, 72($sp)
+ sh      $1, 8($4)
+ lhu     $1, 70($sp)
+ sh      $1, 6($4)
+ lhu     $1, 68($sp)
+ sh      $1, 4($4)
+ lhu     $1, 66($sp)
+ sh      $1, 2($4)
+ lhu     $1, 64($sp)
+ b       .LBB6_12
+ sh      $1, 0($4)
+.LBB6_2:
+ beqz    $2, .LBB6_7
+ daddiu  $5, $sp, 64
+ daddiu  $3, $zero, 0
+.LBB6_4:
+ daddu   $6, $5, $3
+ daddu   $1, $4, $3
+ daddiu  $3, $3, 1
+ lbu     $6, 0($6)
+ bne     $2, $3, .LBB6_4
+ sb      $6, 0($1)
+ daddiu  $1, $zero, 64
+ dsubu   $3, $1, $3
+ sltiu   $1, $3, 8
+ bnez    $1, .LBB6_9
+ nop
+ b       .LBB6_8
+ nop
+.LBB6_7:
+ daddiu  $3, $zero, 64
+.LBB6_8:
+ daddu   $1, $5, $2
+ daddiu  $3, $3, -8
+ ldl     $6, 7($1)
+ ldr     $6, 0($1)
+ daddu   $1, $4, $2
+ sd      $6, 0($1)
+ sltiu   $1, $3, 8
+ beqz    $1, .LBB6_8
+ daddiu  $2, $2, 8
+.LBB6_9:
+ beqz    $3, .LBB6_12
+ nop
+ daddu   $5, $5, $2
+ daddu   $2, $4, $2
+.LBB6_11:
+ lbu     $1, 0($5)
+ daddiu  $3, $3, -1
+ daddiu  $5, $5, 1
+ sb      $1, 0($2)
+ bnez    $3, .LBB6_11
+ daddiu  $2, $2, 1
+.LBB6_12:
+ jr      $ra
+ daddiu  $sp, $sp, 128
+asm_test::atomic_memcpy_store_align2::write_volatile_release_fence:
+ daddiu  $sp, $sp, -64
+ sync
+ ldl     $3, 23($5)
+ ldl     $7, 39($5)
+ ldl     $1, 55($5)
+ ldl     $2, 63($5)
+ ldl     $6, 7($5)
+ ldl     $8, 31($5)
+ ldr     $3, 16($5)
+ ldr     $7, 32($5)
+ ldr     $2, 56($5)
+ ldr     $1, 48($5)
+ ldr     $8, 24($5)
+ ldr     $6, 0($5)
+ sd      $3, 16($sp)
+ ldl     $3, 15($5)
+ sd      $7, 32($sp)
+ ldl     $7, 47($5)
+ sd      $8, 24($sp)
+ sd      $1, 48($sp)
+ sd      $2, 56($sp)
+ sd      $6, 0($sp)
+ ldr     $3, 8($5)
+ ldr     $7, 40($5)
+ sd      $7, 40($sp)
+ sd      $3, 8($sp)
+ ld      $1, 16($sp)
+ ld      $2, 24($sp)
+ ld      $3, 32($sp)
+ ld      $5, 40($sp)
+ ld      $6, 48($sp)
+ ld      $7, 56($sp)
+ sdl     $7, 63($4)
+ sdl     $6, 55($4)
+ sdl     $5, 47($4)
+ sdl     $3, 39($4)
+ sdl     $2, 31($4)
+ sdl     $1, 23($4)
+ ld      $8, 0($sp)
+ ld      $9, 8($sp)
+ sdl     $9, 15($4)
+ sdl     $8, 7($4)
+ sdr     $7, 56($4)
+ sdr     $6, 48($4)
+ sdr     $5, 40($4)
+ sdr     $3, 32($4)
+ sdr     $2, 24($4)
+ sdr     $1, 16($4)
+ sdr     $9, 8($4)
+ sdr     $8, 0($4)
+ jr      $ra
+ daddiu  $sp, $sp, 64

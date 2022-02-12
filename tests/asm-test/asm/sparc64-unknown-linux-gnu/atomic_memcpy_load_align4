@@ -1,0 +1,106 @@
+asm_test::atomic_memcpy_load_align4::acquire:
+ save    %sp, -240, %sp
+ and     %i1, 7, %i2
+ cmp     %i2, 0
+ bne     %xcc, .LBB8_2
+ nop
+ ba      .LBB8_1
+ nop
+.LBB8_2:
+ ld      [%i1], %i2
+ st      %i2, [%fp+1983]
+ ldx     [%i1+4], %i2
+ add     %fp, 1983, %i3
+ or      %i3, 4, %i3
+ srlx    %i2, 32, %i4
+ st      %i4, [%i3]
+ st      %i2, [%fp+1991]
+ ldx     [%i1+12], %i2
+ st      %i2, [%fp+1999]
+ srlx    %i2, 32, %i2
+ st      %i2, [%fp+1995]
+ ldx     [%i1+20], %i2
+ st      %i2, [%fp+2007]
+ srlx    %i2, 32, %i2
+ st      %i2, [%fp+2003]
+ ldx     [%i1+28], %i2
+ st      %i2, [%fp+2015]
+ srlx    %i2, 32, %i2
+ st      %i2, [%fp+2011]
+ ldx     [%i1+36], %i2
+ st      %i2, [%fp+2023]
+ srlx    %i2, 32, %i2
+ st      %i2, [%fp+2019]
+ ldx     [%i1+44], %i2
+ st      %i2, [%fp+2031]
+ srlx    %i2, 32, %i2
+ st      %i2, [%fp+2027]
+ ldx     [%i1+52], %i2
+ st      %i2, [%fp+2039]
+ srlx    %i2, 32, %i2
+ st      %i2, [%fp+2035]
+ ld      [%i1+60], %i1
+ ba      .LBB8_3
+ st      %i1, [%fp+2043]
+.LBB8_1:
+ ldx     [%i1], %i2
+ stx     %i2, [%fp+1983]
+ ldx     [%i1+8], %i2
+ stx     %i2, [%fp+1991]
+ ldx     [%i1+16], %i2
+ stx     %i2, [%fp+1999]
+ ldx     [%i1+24], %i2
+ stx     %i2, [%fp+2007]
+ ldx     [%i1+32], %i2
+ stx     %i2, [%fp+2015]
+ ldx     [%i1+40], %i2
+ stx     %i2, [%fp+2023]
+ ldx     [%i1+48], %i2
+ stx     %i2, [%fp+2031]
+ ldx     [%i1+56], %i1
+ stx     %i1, [%fp+2039]
+.LBB8_3:
+ add     %fp, 1983, %o1
+ mov     64, %o2
+ call    memcpy
+ mov     %i0, %o0
+ membar  #LoadLoad, |, #StoreLoad, |, #LoadStore, |, #StoreStore
+ ret
+ restore
+asm_test::atomic_memcpy_load_align4::read_volatile_acquire_fence:
+ save    %sp, -128, %sp
+ ld      [%i1+60], %i2
+ ld      [%i1+56], %i3
+ ld      [%i1+52], %i4
+ ld      [%i1+48], %i5
+ ld      [%i1+44], %g2
+ ld      [%i1+40], %g3
+ ld      [%i1+36], %g4
+ ld      [%i1+32], %g5
+ ld      [%i1+28], %l0
+ ld      [%i1+24], %l1
+ ld      [%i1+20], %l2
+ ld      [%i1+16], %l3
+ ld      [%i1+12], %l4
+ ld      [%i1+8], %l5
+ ld      [%i1+4], %l6
+ ld      [%i1], %i1
+ st      %i1, [%i0]
+ st      %l6, [%i0+4]
+ st      %l5, [%i0+8]
+ st      %l4, [%i0+12]
+ st      %l3, [%i0+16]
+ st      %l2, [%i0+20]
+ st      %l1, [%i0+24]
+ st      %l0, [%i0+28]
+ st      %g5, [%i0+32]
+ st      %g4, [%i0+36]
+ st      %g3, [%i0+40]
+ st      %g2, [%i0+44]
+ st      %i5, [%i0+48]
+ st      %i4, [%i0+52]
+ st      %i3, [%i0+56]
+ st      %i2, [%i0+60]
+ membar  #LoadLoad, |, #StoreLoad, |, #LoadStore, |, #StoreStore
+ ret
+ restore

@@ -1,0 +1,28 @@
+asm_test::atomic_u16_load::unordered:
+ ldrh    w0, [x0]
+ ret
+asm_test::atomic_u16_load::relaxed:
+ ldrh    w0, [x0]
+ ret
+asm_test::atomic_u16_load::unordered_acquire_fence:
+ ldrh    w0, [x0]
+ dmb     ishld
+ ret
+asm_test::atomic_u16_load::relaxed_acquire_fence:
+ ldrh    w0, [x0]
+ dmb     ishld
+ ret
+asm_test::atomic_u16_load::acquire:
+ ldarh   w0, [x0]
+ ret
+asm_test::atomic_u16_load::unordered_seq_cst_fence:
+ ldrh    w0, [x0]
+ dmb     ish
+ ret
+asm_test::atomic_u16_load::relaxed_seq_cst_fence:
+ ldrh    w0, [x0]
+ dmb     ish
+ ret
+asm_test::atomic_u16_load::seq_cst:
+ ldarh   w0, [x0]
+ ret

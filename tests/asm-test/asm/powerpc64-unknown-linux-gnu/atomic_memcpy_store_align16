@@ -1,0 +1,44 @@
+asm_test::atomic_memcpy_store_align16::release:
+.Lfunc_begin18:
+ ld      5, 0(4)
+ ld      6, 8(4)
+ ld      7, 16(4)
+ ld      8, 24(4)
+ ld      9, 32(4)
+ ld      10, 40(4)
+ ld      11, 48(4)
+ ld      4, 56(4)
+ lwsync
+ std     5, 0(3)
+ std     6, 8(3)
+ std     7, 16(3)
+ std     8, 24(3)
+ std     9, 32(3)
+ std     10, 40(3)
+ std     11, 48(3)
+ std     4, 56(3)
+ blr
+asm_test::atomic_memcpy_store_align16::write_volatile_release_fence:
+.Lfunc_begin19:
+ lwsync
+ li      5, 16
+ addi    6, 1, -64
+ li      7, 32
+ li      8, 48
+ lvx     2, 4, 5
+ stvx    2, 6, 5
+ lvx     2, 4, 7
+ stvx    2, 6, 7
+ lvx     2, 4, 8
+ stvx    2, 6, 8
+ lvx     2, 0, 4
+ stvx    2, 0, 6
+ lvx     2, 6, 5
+ stvx    2, 3, 5
+ lvx     2, 6, 7
+ stvx    2, 3, 7
+ lvx     2, 6, 8
+ stvx    2, 3, 8
+ lvx     2, 0, 6
+ stvx    2, 0, 3
+ blr

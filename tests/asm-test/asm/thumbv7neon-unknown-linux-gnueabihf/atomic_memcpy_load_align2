@@ -1,0 +1,123 @@
+asm_test::atomic_memcpy_load_align2::acquire:
+ sub     sp, #32
+ lsls    r2, r1, #30
+ beq     .LBB4_2
+ ldrh    r2, [r1]
+ strh.w  r2, [sp]
+ ldr.w   r2, [r1, #2]
+ str.w   r2, [sp, #2]
+ ldr.w   r2, [r1, #6]
+ str.w   r2, [sp, #6]
+ ldr.w   r2, [r1, #10]
+ str.w   r2, [sp, #10]
+ ldr.w   r2, [r1, #14]
+ str.w   r2, [sp, #14]
+ ldr.w   r2, [r1, #18]
+ str.w   r2, [sp, #18]
+ ldr.w   r2, [r1, #22]
+ str.w   r2, [sp, #22]
+ ldr.w   r2, [r1, #26]
+ str.w   r2, [sp, #26]
+ ldrh    r1, [r1, #30]
+ strh.w  r1, [sp, #30]
+ b       .LBB4_3
+.LBB4_2:
+ ldr     r2, [r1]
+ str     r2, [sp]
+ ldr     r2, [r1, #4]
+ str     r2, [sp, #4]
+ ldr     r2, [r1, #8]
+ str     r2, [sp, #8]
+ ldr     r2, [r1, #12]
+ str     r2, [sp, #12]
+ ldr     r2, [r1, #16]
+ str     r2, [sp, #16]
+ ldr     r2, [r1, #20]
+ str     r2, [sp, #20]
+ ldr     r2, [r1, #24]
+ str     r2, [sp, #24]
+ ldr     r1, [r1, #28]
+ str     r1, [sp, #28]
+.LBB4_3:
+ mov     r1, sp
+ vld1.16 {d16, d17}, [r1]!
+ vld1.64 {d18, d19}, [r1]
+ vst1.16 {d16, d17}, [r0]!
+ vst1.16 {d18, d19}, [r0]
+ dmb     ish
+ add     sp, #32
+ bx      lr
+.LBB6_2:
+ ldr     r1, [sp, #32]
+ str     r1, [r0]
+ ldr     r1, [sp, #36]
+ str     r1, [r0, #4]
+ ldr     r1, [sp, #40]
+ str     r1, [r0, #8]
+ ldr     r1, [sp, #44]
+ str     r1, [r0, #12]
+ ldr     r1, [sp, #48]
+ str     r1, [r0, #16]
+ ldr     r1, [sp, #52]
+ str     r1, [r0, #20]
+ ldr     r1, [sp, #56]
+ str     r1, [r0, #24]
+ ldr     r1, [sp, #60]
+ str     r1, [r0, #28]
+ add     sp, #64
+ bx      lr
+asm_test::atomic_memcpy_load_align2::read_volatile_acquire_fence:
+ push    {r4, r5, r7, lr}
+ ldrh    r2, [r1, #28]
+ ldrh    r3, [r1, #26]
+ ldrh.w  r12, [r1, #24]
+ ldrh.w  lr, [r1, #22]
+ ldrh    r4, [r1, #20]
+ ldrh    r5, [r1, #30]
+ strh    r5, [r0, #30]
+ ldrh    r5, [r1, #18]
+ strh    r2, [r0, #28]
+ ldrh    r2, [r1, #16]
+ strh    r3, [r0, #26]
+ ldrh    r3, [r1, #14]
+ strh.w  r12, [r0, #24]
+ ldrh.w  r12, [r1, #10]
+ strh.w  lr, [r0, #22]
+ ldrh.w  lr, [r1, #8]
+ strh    r4, [r0, #20]
+ ldrh    r4, [r1, #6]
+ strh    r5, [r0, #18]
+ ldrh    r5, [r1, #4]
+ strh    r2, [r0, #16]
+ ldrh    r2, [r1, #2]
+ strh    r3, [r0, #14]
+ ldrh    r3, [r1]
+ ldrh    r1, [r1, #12]
+ strh    r1, [r0, #12]
+ strh.w  r12, [r0, #10]
+ strh.w  lr, [r0, #8]
+ strh    r4, [r0, #6]
+ strh    r5, [r0, #4]
+ strh    r2, [r0, #2]
+ strh    r3, [r0]
+ dmb     ish
+ pop     {r4, r5, r7, pc}
+.LBB6_2:
+ ldr     r1, [sp, #32]
+ str     r1, [r0]
+ ldr     r1, [sp, #36]
+ str     r1, [r0, #4]
+ ldr     r1, [sp, #40]
+ str     r1, [r0, #8]
+ ldr     r1, [sp, #44]
+ str     r1, [r0, #12]
+ ldr     r1, [sp, #48]
+ str     r1, [r0, #16]
+ ldr     r1, [sp, #52]
+ str     r1, [r0, #20]
+ ldr     r1, [sp, #56]
+ str     r1, [r0, #24]
+ ldr     r1, [sp, #60]
+ str     r1, [r0, #28]
+ add     sp, #64
+ bx      lr

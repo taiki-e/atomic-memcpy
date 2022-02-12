@@ -1,0 +1,40 @@
+asm_test::atomic_memcpy_load_align16::acquire:
+.Lfunc_begin16:
+ ld      5, 0(4)
+ ld      6, 8(4)
+ ld      7, 16(4)
+ ld      8, 24(4)
+ ld      9, 32(4)
+ ld      10, 40(4)
+ ld      11, 48(4)
+ ld      4, 56(4)
+ std     5, 0(3)
+ std     6, 8(3)
+ std     7, 16(3)
+ std     8, 24(3)
+ std     9, 32(3)
+ std     10, 40(3)
+ std     11, 48(3)
+ std     4, 56(3)
+ lwsync
+ blr
+asm_test::atomic_memcpy_load_align16::read_volatile_acquire_fence:
+.Lfunc_begin17:
+ ld      5, 56(4)
+ ld      6, 48(4)
+ ld      7, 40(4)
+ ld      8, 32(4)
+ ld      9, 24(4)
+ ld      10, 16(4)
+ ld      11, 8(4)
+ ld      4, 0(4)
+ std     4, 0(3)
+ std     11, 8(3)
+ std     10, 16(3)
+ std     9, 24(3)
+ std     8, 32(3)
+ std     7, 40(3)
+ std     6, 48(3)
+ std     5, 56(3)
+ lwsync
+ blr

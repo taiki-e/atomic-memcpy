@@ -1,0 +1,60 @@
+asm_test::atomic_u128_load::seq_cst:
+ mov     x8, x0
+.LBB52_1:
+ ldaxp   x0, x1, [x8]
+ stlxp   w9, x0, x1, [x8]
+ cbnz    w9, .LBB52_1
+ ret
+asm_test::atomic_u128_load::relaxed_seq_cst_fence:
+ mov     x8, x0
+.LBB53_1:
+ ldxp    x0, x1, [x8]
+ stxp    w9, x0, x1, [x8]
+ cbnz    w9, .LBB53_1
+ dmb     ish
+ ret
+asm_test::atomic_u128_load::unordered_seq_cst_fence:
+ mov     x8, x0
+.LBB54_1:
+ ldxp    x0, x1, [x8]
+ stxp    w9, x0, x1, [x8]
+ cbnz    w9, .LBB54_1
+ dmb     ish
+ ret
+asm_test::atomic_u128_load::acquire:
+ mov     x8, x0
+.LBB55_1:
+ ldaxp   x0, x1, [x8]
+ stxp    w9, x0, x1, [x8]
+ cbnz    w9, .LBB55_1
+ ret
+asm_test::atomic_u128_load::relaxed_acquire_fence:
+ mov     x8, x0
+.LBB56_1:
+ ldxp    x0, x1, [x8]
+ stxp    w9, x0, x1, [x8]
+ cbnz    w9, .LBB56_1
+ dmb     ishld
+ ret
+asm_test::atomic_u128_load::unordered_acquire_fence:
+ mov     x8, x0
+.LBB57_1:
+ ldxp    x0, x1, [x8]
+ stxp    w9, x0, x1, [x8]
+ cbnz    w9, .LBB57_1
+ dmb     ishld
+ ret
+asm_test::atomic_u128_load::relaxed:
+ mov     x8, x0
+.LBB58_1:
+ ldxp    x0, x1, [x8]
+ stxp    w9, x0, x1, [x8]
+ cbnz    w9, .LBB58_1
+ ret
+asm_test::atomic_u128_load::unordered:
+ mov     x8, x0
+.LBB59_1:
+ ldxp    x0, x1, [x8]
+ stxp    w9, x0, x1, [x8]
+ cbnz    w9, .LBB59_1
+ ret

@@ -1,0 +1,127 @@
+asm_test::atomic_memcpy_load_align4::acquire:
+ push    rbp
+ push    rbx
+ sub     rsp, 64
+ mov     rax, rdi
+ test    sil, 7
+ je      .LBB8_1
+ mov     ecx, dword, ptr, [rsi]
+ mov     dword, ptr, [rsp], ecx
+ mov     rcx, qword, ptr, [rsi, +, 4]
+ mov     qword, ptr, [rsp, +, 4], rcx
+ mov     rcx, qword, ptr, [rsi, +, 12]
+ mov     qword, ptr, [rsp, +, 12], rcx
+ mov     rcx, qword, ptr, [rsi, +, 20]
+ mov     qword, ptr, [rsp, +, 20], rcx
+ mov     rcx, qword, ptr, [rsi, +, 28]
+ mov     qword, ptr, [rsp, +, 28], rcx
+ mov     rcx, qword, ptr, [rsi, +, 36]
+ mov     qword, ptr, [rsp, +, 36], rcx
+ mov     rcx, qword, ptr, [rsi, +, 44]
+ mov     qword, ptr, [rsp, +, 44], rcx
+ mov     rcx, qword, ptr, [rsi, +, 52]
+ mov     qword, ptr, [rsp, +, 52], rcx
+ mov     ecx, dword, ptr, [rsi, +, 60]
+ mov     dword, ptr, [rsp, +, 60], ecx
+ jmp     .LBB8_3
+.LBB8_1:
+ mov     rcx, qword, ptr, [rsi]
+ mov     qword, ptr, [rsp], rcx
+ mov     rcx, qword, ptr, [rsi, +, 8]
+ mov     qword, ptr, [rsp, +, 8], rcx
+ mov     rcx, qword, ptr, [rsi, +, 16]
+ mov     qword, ptr, [rsp, +, 16], rcx
+ mov     rcx, qword, ptr, [rsi, +, 24]
+ mov     qword, ptr, [rsp, +, 24], rcx
+ mov     rcx, qword, ptr, [rsi, +, 32]
+ mov     qword, ptr, [rsp, +, 32], rcx
+ mov     rcx, qword, ptr, [rsi, +, 40]
+ mov     qword, ptr, [rsp, +, 40], rcx
+ mov     rcx, qword, ptr, [rsi, +, 48]
+ mov     qword, ptr, [rsp, +, 48], rcx
+ mov     rcx, qword, ptr, [rsi, +, 56]
+ mov     qword, ptr, [rsp, +, 56], rcx
+.LBB8_3:
+ mov     r8d, dword, ptr, [rsp]
+ mov     r9, qword, ptr, [rsp, +, 4]
+ mov     r10d, dword, ptr, [rsp, +, 12]
+ mov     rdi, qword, ptr, [rsp, +, 16]
+ mov     r11d, dword, ptr, [rsp, +, 24]
+ mov     ebp, dword, ptr, [rsp, +, 28]
+ mov     rsi, qword, ptr, [rsp, +, 32]
+ mov     ecx, dword, ptr, [rsp, +, 40]
+ mov     ebx, dword, ptr, [rsp, +, 44]
+ mov     rdx, qword, ptr, [rsp, +, 48]
+ mov     qword, ptr, [rax, +, 48], rdx
+ mov     edx, dword, ptr, [rsp, +, 56]
+ mov     dword, ptr, [rax, +, 56], edx
+ mov     edx, dword, ptr, [rsp, +, 60]
+ mov     dword, ptr, [rax, +, 60], edx
+ mov     qword, ptr, [rax, +, 32], rsi
+ mov     dword, ptr, [rax, +, 40], ecx
+ mov     dword, ptr, [rax, +, 44], ebx
+ mov     qword, ptr, [rax, +, 16], rdi
+ mov     dword, ptr, [rax, +, 24], r11d
+ mov     dword, ptr, [rax, +, 28], ebp
+ mov     dword, ptr, [rax], r8d
+ mov     qword, ptr, [rax, +, 4], r9
+ mov     dword, ptr, [rax, +, 12], r10d
+ #MEMBARRIER
+ add     rsp, 64
+ pop     rbx
+ pop     rbp
+ ret
+asm_test::atomic_memcpy_load_align4::read_volatile_acquire_fence:
+ push    rbp
+ push    r15
+ push    r14
+ push    r13
+ push    r12
+ push    rbx
+ push    rax
+ mov     rax, rdi
+ mov     ecx, dword, ptr, [rsi, +, 60]
+ mov     dword, ptr, [rsp, +, 4], ecx
+ mov     ecx, dword, ptr, [rsi, +, 56]
+ mov     dword, ptr, [rsp], ecx
+ mov     r10d, dword, ptr, [rsi, +, 52]
+ mov     r11d, dword, ptr, [rsi, +, 48]
+ mov     r14d, dword, ptr, [rsi, +, 44]
+ mov     r15d, dword, ptr, [rsi, +, 40]
+ mov     r12d, dword, ptr, [rsi, +, 36]
+ mov     r13d, dword, ptr, [rsi, +, 32]
+ mov     ebp, dword, ptr, [rsi, +, 28]
+ mov     r9d, dword, ptr, [rsi, +, 24]
+ mov     r8d, dword, ptr, [rsi, +, 20]
+ mov     edi, dword, ptr, [rsi, +, 16]
+ mov     ebx, dword, ptr, [rsi, +, 12]
+ mov     edx, dword, ptr, [rsi, +, 8]
+ mov     ecx, dword, ptr, [rsi]
+ mov     esi, dword, ptr, [rsi, +, 4]
+ mov     dword, ptr, [rax], ecx
+ mov     dword, ptr, [rax, +, 4], esi
+ mov     dword, ptr, [rax, +, 8], edx
+ mov     dword, ptr, [rax, +, 12], ebx
+ mov     dword, ptr, [rax, +, 16], edi
+ mov     dword, ptr, [rax, +, 20], r8d
+ mov     dword, ptr, [rax, +, 24], r9d
+ mov     dword, ptr, [rax, +, 28], ebp
+ mov     dword, ptr, [rax, +, 32], r13d
+ mov     dword, ptr, [rax, +, 36], r12d
+ mov     dword, ptr, [rax, +, 40], r15d
+ mov     dword, ptr, [rax, +, 44], r14d
+ mov     dword, ptr, [rax, +, 48], r11d
+ mov     dword, ptr, [rax, +, 52], r10d
+ mov     ecx, dword, ptr, [rsp]
+ mov     dword, ptr, [rax, +, 56], ecx
+ mov     ecx, dword, ptr, [rsp, +, 4]
+ mov     dword, ptr, [rax, +, 60], ecx
+ #MEMBARRIER
+ add     rsp, 8
+ pop     rbx
+ pop     r12
+ pop     r13
+ pop     r14
+ pop     r15
+ pop     rbp
+ ret

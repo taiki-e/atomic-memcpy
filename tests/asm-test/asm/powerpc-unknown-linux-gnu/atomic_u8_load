@@ -1,0 +1,31 @@
+asm_test::atomic_u8_load::unordered:
+ lbz     3, 0(3)
+ blr
+asm_test::atomic_u8_load::relaxed:
+ lbz     3, 0(3)
+ blr
+asm_test::atomic_u8_load::unordered_acquire_fence:
+ lbz     3, 0(3)
+ lwsync
+ blr
+asm_test::atomic_u8_load::relaxed_acquire_fence:
+ lbz     3, 0(3)
+ lwsync
+ blr
+asm_test::atomic_u8_load::acquire:
+ lbz     3, 0(3)
+ lwsync
+ blr
+asm_test::atomic_u8_load::unordered_seq_cst_fence:
+ lbz     3, 0(3)
+ sync
+ blr
+asm_test::atomic_u8_load::relaxed_seq_cst_fence:
+ lbz     3, 0(3)
+ sync
+ blr
+asm_test::atomic_u8_load::seq_cst:
+ sync
+ lbz     3, 0(3)
+ lwsync
+ blr

@@ -1,0 +1,42 @@
+asm_test::atomic_u8_load::unordered:
+ ldrb    r0, [r0]
+ bx      lr
+asm_test::atomic_u8_load::relaxed:
+ ldrb    r0, [r0]
+ bx      lr
+asm_test::atomic_u8_load::unordered_acquire_fence:
+ push    {r4, lr}
+ ldrb    r4, [r0]
+ bl      __sync_synchronize
+ mov     r0, r4
+ pop     {r4, pc}
+asm_test::atomic_u8_load::relaxed_acquire_fence:
+ push    {r4, lr}
+ ldrb    r4, [r0]
+ bl      __sync_synchronize
+ mov     r0, r4
+ pop     {r4, pc}
+asm_test::atomic_u8_load::acquire:
+ push    {r11, lr}
+ mov     r1, #0
+ mov     r2, #0
+ bl      __sync_val_compare_and_swap_1
+ pop     {r11, pc}
+asm_test::atomic_u8_load::unordered_seq_cst_fence:
+ push    {r4, lr}
+ ldrb    r4, [r0]
+ bl      __sync_synchronize
+ mov     r0, r4
+ pop     {r4, pc}
+asm_test::atomic_u8_load::relaxed_seq_cst_fence:
+ push    {r4, lr}
+ ldrb    r4, [r0]
+ bl      __sync_synchronize
+ mov     r0, r4
+ pop     {r4, pc}
+asm_test::atomic_u8_load::seq_cst:
+ push    {r11, lr}
+ mov     r1, #0
+ mov     r2, #0
+ bl      __sync_val_compare_and_swap_1
+ pop     {r11, pc}

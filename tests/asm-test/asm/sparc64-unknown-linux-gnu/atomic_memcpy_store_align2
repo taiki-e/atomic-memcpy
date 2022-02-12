@@ -1,0 +1,367 @@
+asm_test::atomic_memcpy_store_align2::release:
+ add     %sp, -256, %sp
+ lduh    [%o1+60], %o2
+ lduh    [%o1+62], %o3
+ lduh    [%o1+56], %o4
+ lduh    [%o1+58], %o5
+ sllx    %o2, 16, %o2
+ or      %o2, %o3, %o2
+ sllx    %o4, 16, %o3
+ or      %o3, %o5, %o3
+ sllx    %o3, 32, %o3
+ or      %o3, %o2, %o2
+ stx     %o2, [%sp+2231]
+ lduh    [%o1+52], %o2
+ lduh    [%o1+54], %o3
+ lduh    [%o1+48], %o4
+ lduh    [%o1+50], %o5
+ sllx    %o2, 16, %o2
+ or      %o2, %o3, %o2
+ sllx    %o4, 16, %o3
+ or      %o3, %o5, %o3
+ sllx    %o3, 32, %o3
+ or      %o3, %o2, %o2
+ stx     %o2, [%sp+2223]
+ lduh    [%o1+44], %o2
+ lduh    [%o1+46], %o3
+ lduh    [%o1+40], %o4
+ lduh    [%o1+42], %o5
+ sllx    %o2, 16, %o2
+ or      %o2, %o3, %o2
+ sllx    %o4, 16, %o3
+ or      %o3, %o5, %o3
+ sllx    %o3, 32, %o3
+ or      %o3, %o2, %o2
+ stx     %o2, [%sp+2215]
+ lduh    [%o1+36], %o2
+ lduh    [%o1+38], %o3
+ lduh    [%o1+32], %o4
+ lduh    [%o1+34], %o5
+ sllx    %o2, 16, %o2
+ or      %o2, %o3, %o2
+ sllx    %o4, 16, %o3
+ or      %o3, %o5, %o3
+ sllx    %o3, 32, %o3
+ or      %o3, %o2, %o2
+ stx     %o2, [%sp+2207]
+ lduh    [%o1+28], %o2
+ lduh    [%o1+30], %o3
+ lduh    [%o1+24], %o4
+ lduh    [%o1+26], %o5
+ sllx    %o2, 16, %o2
+ or      %o2, %o3, %o2
+ sllx    %o4, 16, %o3
+ or      %o3, %o5, %o3
+ sllx    %o3, 32, %o3
+ or      %o3, %o2, %o2
+ stx     %o2, [%sp+2199]
+ lduh    [%o1+20], %o2
+ lduh    [%o1+22], %o3
+ lduh    [%o1+16], %o4
+ lduh    [%o1+18], %o5
+ sllx    %o2, 16, %o2
+ or      %o2, %o3, %o2
+ sllx    %o4, 16, %o3
+ or      %o3, %o5, %o3
+ sllx    %o3, 32, %o3
+ or      %o3, %o2, %o2
+ stx     %o2, [%sp+2191]
+ lduh    [%o1+12], %o2
+ lduh    [%o1+14], %o3
+ lduh    [%o1+8], %o4
+ lduh    [%o1+10], %o5
+ sllx    %o2, 16, %o2
+ or      %o2, %o3, %o2
+ sllx    %o4, 16, %o3
+ or      %o3, %o5, %o3
+ sllx    %o3, 32, %o3
+ or      %o3, %o2, %o2
+ stx     %o2, [%sp+2183]
+ lduh    [%o1+4], %o2
+ lduh    [%o1+6], %o3
+ lduh    [%o1], %o4
+ lduh    [%o1+2], %o1
+ sllx    %o2, 16, %o2
+ or      %o2, %o3, %o2
+ sllx    %o4, 16, %o3
+ or      %o3, %o1, %o1
+ sllx    %o1, 32, %o1
+ or      %o1, %o2, %o1
+ stx     %o1, [%sp+2175]
+ membar  #LoadLoad, |, #StoreLoad, |, #LoadStore, |, #StoreStore
+ ldx     [%sp+2231], %o1
+ ldx     [%sp+2223], %o2
+ ldx     [%sp+2215], %o3
+ stx     %o1, [%sp+2295]
+ stx     %o2, [%sp+2287]
+ stx     %o3, [%sp+2279]
+ ldx     [%sp+2207], %o1
+ ldx     [%sp+2199], %o2
+ ldx     [%sp+2191], %o3
+ ldx     [%sp+2183], %o4
+ stx     %o1, [%sp+2271]
+ stx     %o2, [%sp+2263]
+ stx     %o3, [%sp+2255]
+ stx     %o4, [%sp+2247]
+ ldx     [%sp+2175], %o2
+ add     %o0, 7, %o1
+ and     %o1, -8, %o3
+ sub     %o3, %o0, %o1
+ cmp     %o1, 64
+ bgu     %xcc, .LBB6_10
+ stx     %o2, [%sp+2239]
+ ba      .LBB6_1
+ nop
+.LBB6_10:
+ lduh    [%sp+2239], %o1
+ sth     %o1, [%o0]
+ add     %sp, 2239, %o1
+ or      %o1, 2, %o2
+ lduh    [%o2], %o2
+ sth     %o2, [%o0+2]
+ or      %o1, 4, %o2
+ lduh    [%o2], %o2
+ sth     %o2, [%o0+4]
+ or      %o1, 6, %o1
+ lduh    [%o1], %o1
+ sth     %o1, [%o0+6]
+ lduh    [%sp+2247], %o1
+ sth     %o1, [%o0+8]
+ lduh    [%sp+2249], %o1
+ sth     %o1, [%o0+10]
+ lduh    [%sp+2251], %o1
+ sth     %o1, [%o0+12]
+ lduh    [%sp+2253], %o1
+ sth     %o1, [%o0+14]
+ lduh    [%sp+2255], %o1
+ sth     %o1, [%o0+16]
+ lduh    [%sp+2257], %o1
+ sth     %o1, [%o0+18]
+ lduh    [%sp+2259], %o1
+ sth     %o1, [%o0+20]
+ lduh    [%sp+2261], %o1
+ sth     %o1, [%o0+22]
+ lduh    [%sp+2263], %o1
+ sth     %o1, [%o0+24]
+ lduh    [%sp+2265], %o1
+ sth     %o1, [%o0+26]
+ lduh    [%sp+2267], %o1
+ sth     %o1, [%o0+28]
+ lduh    [%sp+2269], %o1
+ sth     %o1, [%o0+30]
+ lduh    [%sp+2271], %o1
+ sth     %o1, [%o0+32]
+ lduh    [%sp+2273], %o1
+ sth     %o1, [%o0+34]
+ lduh    [%sp+2275], %o1
+ sth     %o1, [%o0+36]
+ lduh    [%sp+2277], %o1
+ sth     %o1, [%o0+38]
+ lduh    [%sp+2279], %o1
+ sth     %o1, [%o0+40]
+ lduh    [%sp+2281], %o1
+ sth     %o1, [%o0+42]
+ lduh    [%sp+2283], %o1
+ sth     %o1, [%o0+44]
+ lduh    [%sp+2285], %o1
+ sth     %o1, [%o0+46]
+ lduh    [%sp+2287], %o1
+ sth     %o1, [%o0+48]
+ lduh    [%sp+2289], %o1
+ sth     %o1, [%o0+50]
+ lduh    [%sp+2291], %o1
+ sth     %o1, [%o0+52]
+ lduh    [%sp+2293], %o1
+ sth     %o1, [%o0+54]
+ lduh    [%sp+2295], %o1
+ sth     %o1, [%o0+56]
+ lduh    [%sp+2297], %o1
+ sth     %o1, [%o0+58]
+ lduh    [%sp+2299], %o1
+ sth     %o1, [%o0+60]
+ lduh    [%sp+2301], %o1
+ ba      .LBB6_11
+ sth     %o1, [%o0+62]
+.LBB6_1:
+ cmp     %o1, 0
+ be      %xcc, .LBB6_5
+ mov     64, %o2
+ ba      .LBB6_2
+ nop
+.LBB6_2:
+ add     %sp, 2239, %o2
+ sub     %o0, %o3, %o5
+ mov     %g0, %o4
+ mov     %o0, %g2
+.LBB6_3:
+ ldub    [%o2], %g3
+ stb     %g3, [%g2]
+ add     %g2, 1, %g2
+ add     %o5, 1, %g3
+ cmp     %g3, %o5
+ mov     %o4, %o5
+ movcs   %xcc, 1, %o5
+ cmp     %o5, 1
+ add     %o2, 1, %o2
+ bne     .LBB6_3
+ mov     %g3, %o5
+ sub     %o0, %o3, %o2
+ add     %o2, 64, %o2
+ cmp     %o2, 8
+ bcs     %xcc, .LBB6_7
+ nop
+ ba      .LBB6_5
+ nop
+.LBB6_5:
+ add     %sp, 2239, %o3
+.LBB6_6:
+ add     %o3, %o1, %o4
+ ldub    [%o4+6], %o5
+ ldub    [%o4+7], %g2
+ ldub    [%o4+4], %g3
+ ldub    [%o4+5], %g4
+ sllx    %o5, 8, %o5
+ or      %o5, %g2, %o5
+ sllx    %g3, 8, %g2
+ or      %g2, %g4, %g2
+ sllx    %g2, 16, %g2
+ or      %g2, %o5, %o5
+ ldub    [%o4+2], %g2
+ ldub    [%o4+3], %g3
+ ldub    [%o3+%o1], %g4
+ ldub    [%o4+1], %o4
+ sllx    %g2, 8, %g2
+ or      %g2, %g3, %g2
+ sllx    %g4, 8, %g3
+ or      %g3, %o4, %o4
+ sllx    %o4, 16, %o4
+ or      %o4, %g2, %o4
+ sllx    %o4, 32, %o4
+ or      %o4, %o5, %o4
+ stx     %o4, [%o0+%o1]
+ add     %o2, -8, %o2
+ cmp     %o2, 7
+ bgu     %xcc, .LBB6_6
+ add     %o1, 8, %o1
+ ba      .LBB6_7
+ nop
+.LBB6_7:
+ cmp     %o2, 0
+ be      %xcc, .LBB6_11
+ nop
+ ba      .LBB6_8
+ nop
+.LBB6_8:
+ add     %o0, %o1, %o0
+ add     %sp, 2239, %o3
+ add     %o3, %o1, %o1
+.LBB6_9:
+ ldub    [%o1], %o3
+ stb     %o3, [%o0]
+ add     %o0, 1, %o0
+ add     %o2, -1, %o2
+ cmp     %o2, 0
+ be      %xcc, .LBB6_11
+ add     %o1, 1, %o1
+ ba      .LBB6_9
+ nop
+.LBB6_11:
+ retl
+ add     %sp, 256, %sp
+asm_test::atomic_memcpy_store_align2::write_volatile_release_fence:
+ save    %sp, -240, %sp
+ membar  #LoadLoad, |, #StoreLoad, |, #LoadStore, |, #StoreStore
+ lduh    [%i1+60], %i2
+ lduh    [%i1+62], %i3
+ lduh    [%i1+56], %i4
+ lduh    [%i1+58], %i5
+ sllx    %i2, 16, %i2
+ or      %i2, %i3, %i2
+ sllx    %i4, 16, %i3
+ or      %i3, %i5, %i3
+ sllx    %i3, 32, %i3
+ or      %i3, %i2, %i2
+ stx     %i2, [%fp+2039]
+ lduh    [%i1+52], %i2
+ lduh    [%i1+54], %i3
+ lduh    [%i1+48], %i4
+ lduh    [%i1+50], %i5
+ sllx    %i2, 16, %i2
+ or      %i2, %i3, %i2
+ sllx    %i4, 16, %i3
+ or      %i3, %i5, %i3
+ sllx    %i3, 32, %i3
+ or      %i3, %i2, %i2
+ stx     %i2, [%fp+2031]
+ lduh    [%i1+44], %i2
+ lduh    [%i1+46], %i3
+ lduh    [%i1+40], %i4
+ lduh    [%i1+42], %i5
+ sllx    %i2, 16, %i2
+ or      %i2, %i3, %i2
+ sllx    %i4, 16, %i3
+ or      %i3, %i5, %i3
+ sllx    %i3, 32, %i3
+ or      %i3, %i2, %i2
+ stx     %i2, [%fp+2023]
+ lduh    [%i1+36], %i2
+ lduh    [%i1+38], %i3
+ lduh    [%i1+32], %i4
+ lduh    [%i1+34], %i5
+ sllx    %i2, 16, %i2
+ or      %i2, %i3, %i2
+ sllx    %i4, 16, %i3
+ or      %i3, %i5, %i3
+ sllx    %i3, 32, %i3
+ or      %i3, %i2, %i2
+ stx     %i2, [%fp+2015]
+ lduh    [%i1+28], %i2
+ lduh    [%i1+30], %i3
+ lduh    [%i1+24], %i4
+ lduh    [%i1+26], %i5
+ sllx    %i2, 16, %i2
+ or      %i2, %i3, %i2
+ sllx    %i4, 16, %i3
+ or      %i3, %i5, %i3
+ sllx    %i3, 32, %i3
+ or      %i3, %i2, %i2
+ stx     %i2, [%fp+2007]
+ lduh    [%i1+20], %i2
+ lduh    [%i1+22], %i3
+ lduh    [%i1+16], %i4
+ lduh    [%i1+18], %i5
+ sllx    %i2, 16, %i2
+ or      %i2, %i3, %i2
+ sllx    %i4, 16, %i3
+ or      %i3, %i5, %i3
+ sllx    %i3, 32, %i3
+ or      %i3, %i2, %i2
+ stx     %i2, [%fp+1999]
+ lduh    [%i1+12], %i2
+ lduh    [%i1+14], %i3
+ lduh    [%i1+8], %i4
+ lduh    [%i1+10], %i5
+ sllx    %i2, 16, %i2
+ or      %i2, %i3, %i2
+ sllx    %i4, 16, %i3
+ or      %i3, %i5, %i3
+ sllx    %i3, 32, %i3
+ or      %i3, %i2, %i2
+ stx     %i2, [%fp+1991]
+ lduh    [%i1+4], %i2
+ lduh    [%i1+6], %i3
+ lduh    [%i1], %i4
+ lduh    [%i1+2], %i1
+ sllx    %i2, 16, %i2
+ or      %i2, %i3, %i2
+ sllx    %i4, 16, %i3
+ or      %i3, %i1, %i1
+ sllx    %i1, 32, %i1
+ or      %i1, %i2, %i1
+ stx     %i1, [%fp+1983]
+ add     %fp, 1983, %o1
+ mov     64, %o2
+ call    memcpy
+ mov     %i0, %o0
+ ret
+ restore

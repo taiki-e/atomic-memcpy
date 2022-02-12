@@ -1,0 +1,32 @@
+asm_test::atomic_memcpy_store_align16::release:
+ ldp     x8, x9, [x1]
+ ldp     x10, x11, [x1, #16]
+ ldp     x12, x13, [x1, #48]
+ ldp     x14, x15, [x1, #32]
+ dmb     ish
+ str     x13, [x0, #56]
+ str     x12, [x0, #48]
+ str     x15, [x0, #40]
+ str     x14, [x0, #32]
+ str     x11, [x0, #24]
+ str     x10, [x0, #16]
+ str     x9, [x0, #8]
+ str     x8, [x0]
+ ret
+asm_test::atomic_memcpy_store_align16::write_volatile_release_fence:
+ sub     sp, sp, #64
+ dmb     ish
+ ldp     q0, q1, [x1, #32]
+ ldp     q3, q2, [x1]
+ stp     q0, q1, [sp, #32]
+ stp     q3, q2, [sp]
+ ldr     q0, [sp, #16]
+ ldr     q1, [sp, #32]
+ ldr     q2, [sp, #48]
+ ldr     q3, [sp]
+ str     q3, [x0]
+ str     q2, [x0, #48]
+ str     q1, [x0, #32]
+ str     q0, [x0, #16]
+ add     sp, sp, #64
+ ret

@@ -1,0 +1,200 @@
+asm_test::atomic_memcpy_load_align2::acquire:
+ sub     sp, sp, #64
+ add     x9, x0, #7
+ and     x10, x9, #0xfffffffffffffff8
+ sub     x9, x10, x0
+ cmp     x9, #65
+ b.lo    .LBB4_2
+ ldrh    w9, [x0, #62]
+ strh    w9, [sp, #62]
+ ldrh    w9, [x0, #60]
+ strh    w9, [sp, #60]
+ ldrh    w9, [x0, #58]
+ strh    w9, [sp, #58]
+ ldrh    w9, [x0, #56]
+ strh    w9, [sp, #56]
+ ldrh    w9, [x0, #54]
+ strh    w9, [sp, #54]
+ ldrh    w9, [x0, #52]
+ strh    w9, [sp, #52]
+ ldrh    w9, [x0, #50]
+ strh    w9, [sp, #50]
+ ldrh    w9, [x0, #48]
+ strh    w9, [sp, #48]
+ ldrh    w9, [x0, #46]
+ strh    w9, [sp, #46]
+ ldrh    w9, [x0, #44]
+ strh    w9, [sp, #44]
+ ldrh    w9, [x0, #42]
+ strh    w9, [sp, #42]
+ ldrh    w9, [x0, #40]
+ strh    w9, [sp, #40]
+ ldrh    w9, [x0, #38]
+ strh    w9, [sp, #38]
+ ldrh    w9, [x0, #36]
+ strh    w9, [sp, #36]
+ ldrh    w9, [x0, #34]
+ strh    w9, [sp, #34]
+ ldrh    w9, [x0, #32]
+ strh    w9, [sp, #32]
+ ldrh    w9, [x0, #30]
+ strh    w9, [sp, #30]
+ ldrh    w9, [x0, #28]
+ strh    w9, [sp, #28]
+ ldrh    w9, [x0, #26]
+ strh    w9, [sp, #26]
+ ldrh    w9, [x0, #24]
+ strh    w9, [sp, #24]
+ ldrh    w9, [x0, #22]
+ strh    w9, [sp, #22]
+ ldrh    w9, [x0, #20]
+ strh    w9, [sp, #20]
+ ldrh    w9, [x0, #18]
+ strh    w9, [sp, #18]
+ ldrh    w9, [x0, #16]
+ strh    w9, [sp, #16]
+ ldrh    w9, [x0, #14]
+ strh    w9, [sp, #14]
+ ldrh    w9, [x0, #12]
+ strh    w9, [sp, #12]
+ ldrh    w9, [x0, #10]
+ strh    w9, [sp, #10]
+ ldrh    w9, [x0, #8]
+ strh    w9, [sp, #8]
+ ldrh    w9, [x0, #6]
+ strh    w9, [sp, #6]
+ ldrh    w9, [x0, #4]
+ strh    w9, [sp, #4]
+ ldrh    w9, [x0, #2]
+ strh    w9, [sp, #2]
+ ldrh    w9, [x0]
+ strh    w9, [sp]
+ b       .LBB4_12
+.LBB4_2:
+ cbz     x9, .LBB4_6
+ sub     x10, x0, x10
+ mov     x11, sp
+ mov     x12, x10
+ mov     x13, x0
+.LBB4_4:
+ ldrb    w14, [x13], #1
+ adds    x12, x12, #1
+ strb    w14, [x11], #1
+ b.lo    .LBB4_4
+ add     x10, x10, #64
+ cmp     x10, #8
+ b.hs    .LBB4_7
+ b       .LBB4_9
+.LBB4_6:
+ mov     w10, #64
+.LBB4_7:
+ mov     x11, sp
+.LBB4_8:
+ ldr     x12, [x0, x9]
+ sub     x10, x10, #8
+ cmp     x10, #7
+ str     x12, [x11, x9]
+ add     x9, x9, #8
+ b.hi    .LBB4_8
+.LBB4_9:
+ cbz     x10, .LBB4_12
+ mov     x11, sp
+ add     x11, x11, x9
+ add     x9, x0, x9
+.LBB4_11:
+ ldrb    w12, [x9], #1
+ subs    x10, x10, #1
+ strb    w12, [x11], #1
+ b.ne    .LBB4_11
+.LBB4_12:
+ ldp     q0, q1, [sp]
+ ldp     q2, q3, [sp, #32]
+ stp     q0, q1, [x8]
+ stp     q2, q3, [x8, #32]
+ dmb     ishld
+ add     sp, sp, #64
+ ret
+asm_test::atomic_memcpy_load_align2::read_volatile_acquire_fence:
+ sub     sp, sp, #112
+ stp     x29, x30, [sp, #16]
+ stp     x28, x27, [sp, #32]
+ stp     x26, x25, [sp, #48]
+ stp     x24, x23, [sp, #64]
+ stp     x22, x21, [sp, #80]
+ stp     x20, x19, [sp, #96]
+ ldrh    w10, [x0, #62]
+ ldrh    w9, [x0, #60]
+ stp     w9, w10, [sp, #8]
+ ldrh    w11, [x0, #58]
+ ldrh    w12, [x0, #56]
+ ldrh    w13, [x0, #54]
+ ldrh    w14, [x0, #52]
+ ldrh    w15, [x0, #50]
+ ldrh    w16, [x0, #48]
+ ldrh    w17, [x0, #46]
+ ldrh    w18, [x0, #44]
+ ldrh    w1, [x0, #42]
+ ldrh    w2, [x0, #40]
+ ldrh    w3, [x0, #38]
+ ldrh    w4, [x0, #36]
+ ldrh    w5, [x0, #34]
+ ldrh    w6, [x0, #32]
+ ldrh    w7, [x0, #30]
+ ldrh    w19, [x0, #28]
+ ldrh    w20, [x0, #26]
+ ldrh    w21, [x0, #24]
+ ldrh    w22, [x0, #22]
+ ldrh    w23, [x0, #20]
+ ldrh    w24, [x0, #18]
+ ldrh    w25, [x0, #16]
+ ldrh    w26, [x0, #14]
+ ldrh    w27, [x0, #12]
+ ldrh    w28, [x0, #10]
+ ldrh    w29, [x0, #8]
+ ldrh    w30, [x0, #6]
+ ldrh    w10, [x0, #4]
+ ldrh    w9, [x0, #2]
+ ldrh    w0, [x0]
+ strh    w30, [x8, #6]
+ strh    w10, [x8, #4]
+ strh    w9, [x8, #2]
+ ldr     w9, [sp, #8]
+ strh    w0, [x8]
+ strh    w29, [x8, #8]
+ strh    w28, [x8, #10]
+ strh    w9, [x8, #60]
+ ldr     w9, [sp, #12]
+ strh    w27, [x8, #12]
+ strh    w26, [x8, #14]
+ strh    w25, [x8, #16]
+ strh    w24, [x8, #18]
+ strh    w23, [x8, #20]
+ strh    w22, [x8, #22]
+ strh    w21, [x8, #24]
+ strh    w20, [x8, #26]
+ strh    w19, [x8, #28]
+ strh    w7, [x8, #30]
+ strh    w6, [x8, #32]
+ strh    w5, [x8, #34]
+ strh    w4, [x8, #36]
+ strh    w3, [x8, #38]
+ strh    w2, [x8, #40]
+ strh    w1, [x8, #42]
+ strh    w18, [x8, #44]
+ strh    w17, [x8, #46]
+ strh    w16, [x8, #48]
+ strh    w15, [x8, #50]
+ strh    w14, [x8, #52]
+ strh    w13, [x8, #54]
+ strh    w12, [x8, #56]
+ strh    w11, [x8, #58]
+ strh    w9, [x8, #62]
+ dmb     ishld
+ ldp     x20, x19, [sp, #96]
+ ldp     x22, x21, [sp, #80]
+ ldp     x24, x23, [sp, #64]
+ ldp     x26, x25, [sp, #48]
+ ldp     x28, x27, [sp, #32]
+ ldp     x29, x30, [sp, #16]
+ add     sp, sp, #112
+ ret

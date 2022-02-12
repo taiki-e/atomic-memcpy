@@ -1,0 +1,32 @@
+asm_test::atomic_memcpy_store_align8::release:
+ mov     r8d, dword, ptr, [esi]
+ mov     r9d, dword, ptr, [esi, +, 4]
+ mov     r10d, dword, ptr, [esi, +, 8]
+ mov     r11d, dword, ptr, [esi, +, 12]
+ mov     ecx, dword, ptr, [esi, +, 16]
+ mov     edx, dword, ptr, [esi, +, 20]
+ mov     eax, dword, ptr, [esi, +, 24]
+ mov     esi, dword, ptr, [esi, +, 28]
+ #MEMBARRIER
+ mov     dword, ptr, [edi, +, 28], esi
+ mov     dword, ptr, [edi, +, 24], eax
+ mov     dword, ptr, [edi, +, 20], edx
+ mov     dword, ptr, [edi, +, 16], ecx
+ mov     dword, ptr, [edi, +, 12], r11d
+ mov     dword, ptr, [edi, +, 8], r10d
+ mov     dword, ptr, [edi, +, 4], r9d
+ mov     dword, ptr, [edi], r8d
+ ret
+asm_test::atomic_memcpy_store_align8::write_volatile_release_fence:
+ sub     esp, 40
+ #MEMBARRIER
+ movups  xmm0, xmmword, ptr, [esi]
+ movups  xmm1, xmmword, ptr, [esi, +, 16]
+ movaps  xmmword, ptr, [esp, +, 16], xmm1
+ movaps  xmmword, ptr, [esp], xmm0
+ movaps  xmm0, xmmword, ptr, [esp, +, 16]
+ movups  xmmword, ptr, [edi, +, 16], xmm0
+ movaps  xmm0, xmmword, ptr, [esp]
+ movups  xmmword, ptr, [edi], xmm0
+ add     esp, 40
+ ret

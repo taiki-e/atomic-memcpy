@@ -1,0 +1,38 @@
+asm_test::atomic_u64_load::unordered:
+ ld      $2, 0($4)
+ jr      $ra
+ nop
+asm_test::atomic_u64_load::relaxed:
+ ld      $2, 0($4)
+ jr      $ra
+ nop
+asm_test::atomic_u64_load::unordered_acquire_fence:
+ ld      $2, 0($4)
+ sync
+ jr      $ra
+ nop
+asm_test::atomic_u64_load::relaxed_acquire_fence:
+ ld      $2, 0($4)
+ sync
+ jr      $ra
+ nop
+asm_test::atomic_u64_load::acquire:
+ ld      $2, 0($4)
+ sync
+ jr      $ra
+ nop
+asm_test::atomic_u64_load::unordered_seq_cst_fence:
+ ld      $2, 0($4)
+ sync
+ jr      $ra
+ nop
+asm_test::atomic_u64_load::relaxed_seq_cst_fence:
+ ld      $2, 0($4)
+ sync
+ jr      $ra
+ nop
+asm_test::atomic_u64_load::seq_cst:
+ ld      $2, 0($4)
+ sync
+ jr      $ra
+ nop

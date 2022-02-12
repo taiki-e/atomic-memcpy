@@ -1,0 +1,121 @@
+asm_test::atomic_memcpy_load_align2::acquire:
+ sub     esp, 32
+ mov     ecx, dword, ptr, [esp, +, 40]
+ mov     eax, dword, ptr, [esp, +, 36]
+ test    cl, 3
+ je      .LBB4_1
+ movzx   edx, word, ptr, [ecx]
+ mov     word, ptr, [esp], dx
+ mov     edx, dword, ptr, [ecx, +, 2]
+ mov     dword, ptr, [esp, +, 2], edx
+ mov     edx, dword, ptr, [ecx, +, 6]
+ mov     dword, ptr, [esp, +, 6], edx
+ mov     edx, dword, ptr, [ecx, +, 10]
+ mov     dword, ptr, [esp, +, 10], edx
+ mov     edx, dword, ptr, [ecx, +, 14]
+ mov     dword, ptr, [esp, +, 14], edx
+ mov     edx, dword, ptr, [ecx, +, 18]
+ mov     dword, ptr, [esp, +, 18], edx
+ mov     edx, dword, ptr, [ecx, +, 22]
+ mov     dword, ptr, [esp, +, 22], edx
+ mov     edx, dword, ptr, [ecx, +, 26]
+ mov     dword, ptr, [esp, +, 26], edx
+ movzx   ecx, word, ptr, [ecx, +, 30]
+ mov     word, ptr, [esp, +, 30], cx
+ jmp     .LBB4_3
+.LBB4_1:
+ mov     edx, dword, ptr, [ecx]
+ mov     dword, ptr, [esp], edx
+ mov     edx, dword, ptr, [ecx, +, 4]
+ mov     dword, ptr, [esp, +, 4], edx
+ mov     edx, dword, ptr, [ecx, +, 8]
+ mov     dword, ptr, [esp, +, 8], edx
+ mov     edx, dword, ptr, [ecx, +, 12]
+ mov     dword, ptr, [esp, +, 12], edx
+ mov     edx, dword, ptr, [ecx, +, 16]
+ mov     dword, ptr, [esp, +, 16], edx
+ mov     edx, dword, ptr, [ecx, +, 20]
+ mov     dword, ptr, [esp, +, 20], edx
+ mov     edx, dword, ptr, [ecx, +, 24]
+ mov     dword, ptr, [esp, +, 24], edx
+ mov     ecx, dword, ptr, [ecx, +, 28]
+ mov     dword, ptr, [esp, +, 28], ecx
+.LBB4_3:
+ movsd   xmm1, qword, ptr, [esp, +, 16]
+ movsd   xmm0, qword, ptr, [esp, +, 24]
+ movsd   xmm2, qword, ptr, [esp]
+ movsd   qword, ptr, [eax, +, 16], xmm1
+ movsd   xmm1, qword, ptr, [esp, +, 8]
+ movsd   qword, ptr, [eax, +, 24], xmm0
+ movsd   qword, ptr, [eax], xmm2
+ movsd   qword, ptr, [eax, +, 8], xmm1
+ #MEMBARRIER
+ add     esp, 32
+ ret     4
+asm_test::atomic_memcpy_load_align2::read_volatile_acquire_fence:
+ push    ebp
+ push    ebx
+ push    edi
+ push    esi
+ sub     esp, 20
+ mov     eax, dword, ptr, [esp, +, 44]
+ movzx   ecx, word, ptr, [eax, +, 30]
+ mov     word, ptr, [esp, +, 18], cx
+ movzx   ecx, word, ptr, [eax, +, 28]
+ mov     word, ptr, [esp, +, 16], cx
+ movzx   ecx, word, ptr, [eax, +, 26]
+ mov     word, ptr, [esp, +, 14], cx
+ movzx   ecx, word, ptr, [eax, +, 24]
+ mov     word, ptr, [esp, +, 12], cx
+ movzx   ecx, word, ptr, [eax, +, 22]
+ mov     word, ptr, [esp, +, 10], cx
+ movzx   ecx, word, ptr, [eax, +, 20]
+ mov     word, ptr, [esp, +, 8], cx
+ movzx   ecx, word, ptr, [eax, +, 18]
+ mov     word, ptr, [esp, +, 6], cx
+ movzx   ecx, word, ptr, [eax, +, 16]
+ mov     word, ptr, [esp, +, 4], cx
+ movzx   ecx, word, ptr, [eax, +, 14]
+ mov     word, ptr, [esp, +, 2], cx
+ movzx   ecx, word, ptr, [eax, +, 12]
+ mov     word, ptr, [esp], cx
+ movzx   ebp, word, ptr, [eax, +, 10]
+ movzx   ebx, word, ptr, [eax, +, 8]
+ movzx   edi, word, ptr, [eax, +, 6]
+ movzx   esi, word, ptr, [eax, +, 4]
+ movzx   ecx, word, ptr, [eax]
+ movzx   edx, word, ptr, [eax, +, 2]
+ mov     eax, dword, ptr, [esp, +, 40]
+ mov     word, ptr, [eax], cx
+ mov     word, ptr, [eax, +, 2], dx
+ mov     word, ptr, [eax, +, 4], si
+ movzx   esi, word, ptr, [esp]
+ movzx   edx, word, ptr, [esp, +, 2]
+ mov     word, ptr, [eax, +, 6], di
+ mov     word, ptr, [eax, +, 8], bx
+ mov     word, ptr, [eax, +, 10], bp
+ mov     word, ptr, [eax, +, 12], si
+ mov     word, ptr, [eax, +, 14], dx
+ movzx   esi, word, ptr, [esp, +, 4]
+ movzx   edx, word, ptr, [esp, +, 6]
+ mov     word, ptr, [eax, +, 16], si
+ mov     word, ptr, [eax, +, 18], dx
+ movzx   esi, word, ptr, [esp, +, 8]
+ movzx   edx, word, ptr, [esp, +, 10]
+ mov     word, ptr, [eax, +, 20], si
+ mov     word, ptr, [eax, +, 22], dx
+ movzx   esi, word, ptr, [esp, +, 12]
+ movzx   edx, word, ptr, [esp, +, 14]
+ mov     word, ptr, [eax, +, 24], si
+ mov     word, ptr, [eax, +, 26], dx
+ movzx   esi, word, ptr, [esp, +, 16]
+ movzx   edx, word, ptr, [esp, +, 18]
+ mov     word, ptr, [eax, +, 28], si
+ mov     word, ptr, [eax, +, 30], dx
+ #MEMBARRIER
+ add     esp, 20
+ pop     esi
+ pop     edi
+ pop     ebx
+ pop     ebp
+ ret     4

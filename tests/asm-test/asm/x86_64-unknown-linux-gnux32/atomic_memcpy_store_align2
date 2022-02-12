@@ -1,0 +1,65 @@
+asm_test::atomic_memcpy_store_align2::release:
+ sub     esp, 72
+ movups  xmm0, xmmword, ptr, [esi]
+ movups  xmm1, xmmword, ptr, [esi, +, 16]
+ movaps  xmmword, ptr, [esp, +, 48], xmm1
+ movaps  xmmword, ptr, [esp, +, 32], xmm0
+ #MEMBARRIER
+ movaps  xmm0, xmmword, ptr, [esp, +, 32]
+ movaps  xmm1, xmmword, ptr, [esp, +, 48]
+ movaps  xmmword, ptr, [esp, +, 16], xmm1
+ movaps  xmmword, ptr, [esp], xmm0
+ test    dil, 3
+ je      .LBB6_1
+ movzx   eax, word, ptr, [esp]
+ mov     word, ptr, [edi], ax
+ mov     eax, dword, ptr, [esp, +, 2]
+ mov     dword, ptr, [edi, +, 2], eax
+ mov     eax, dword, ptr, [esp, +, 6]
+ mov     dword, ptr, [edi, +, 6], eax
+ mov     eax, dword, ptr, [esp, +, 10]
+ mov     dword, ptr, [edi, +, 10], eax
+ mov     eax, dword, ptr, [esp, +, 14]
+ mov     dword, ptr, [edi, +, 14], eax
+ mov     eax, dword, ptr, [esp, +, 18]
+ mov     dword, ptr, [edi, +, 18], eax
+ mov     eax, dword, ptr, [esp, +, 22]
+ mov     dword, ptr, [edi, +, 22], eax
+ mov     eax, dword, ptr, [esp, +, 26]
+ mov     dword, ptr, [edi, +, 26], eax
+ movzx   eax, word, ptr, [esp, +, 30]
+ mov     word, ptr, [edi, +, 30], ax
+ add     esp, 72
+ ret
+.LBB6_1:
+ mov     eax, dword, ptr, [esp]
+ mov     dword, ptr, [edi], eax
+ mov     eax, dword, ptr, [esp, +, 4]
+ mov     dword, ptr, [edi, +, 4], eax
+ mov     eax, dword, ptr, [esp, +, 8]
+ mov     dword, ptr, [edi, +, 8], eax
+ mov     eax, dword, ptr, [esp, +, 12]
+ mov     dword, ptr, [edi, +, 12], eax
+ mov     eax, dword, ptr, [esp, +, 16]
+ mov     dword, ptr, [edi, +, 16], eax
+ mov     eax, dword, ptr, [esp, +, 20]
+ mov     dword, ptr, [edi, +, 20], eax
+ mov     eax, dword, ptr, [esp, +, 24]
+ mov     dword, ptr, [edi, +, 24], eax
+ mov     eax, dword, ptr, [esp, +, 28]
+ mov     dword, ptr, [edi, +, 28], eax
+ add     esp, 72
+ ret
+asm_test::atomic_memcpy_store_align2::write_volatile_release_fence:
+ sub     esp, 40
+ #MEMBARRIER
+ movups  xmm0, xmmword, ptr, [esi]
+ movups  xmm1, xmmword, ptr, [esi, +, 16]
+ movaps  xmmword, ptr, [esp, +, 16], xmm1
+ movaps  xmmword, ptr, [esp], xmm0
+ movaps  xmm0, xmmword, ptr, [esp, +, 16]
+ movups  xmmword, ptr, [edi, +, 16], xmm0
+ movaps  xmm0, xmmword, ptr, [esp]
+ movups  xmmword, ptr, [edi], xmm0
+ add     esp, 40
+ ret

@@ -1,0 +1,43 @@
+asm_test::atomic_u64_load::unordered:
+.Lfunc_begin44:
+ ld      3, 0(3)
+ blr
+asm_test::atomic_u64_load::relaxed:
+.Lfunc_begin45:
+ ld      3, 0(3)
+ blr
+asm_test::atomic_u64_load::unordered_acquire_fence:
+.Lfunc_begin46:
+ ld      3, 0(3)
+ lwsync
+ blr
+asm_test::atomic_u64_load::relaxed_acquire_fence:
+.Lfunc_begin47:
+ ld      3, 0(3)
+ lwsync
+ blr
+asm_test::atomic_u64_load::acquire:
+.Lfunc_begin48:
+ ld      3, 0(3)
+ cmpd    7, 3, 3
+ bne-    7, .+4
+ isync
+ blr
+asm_test::atomic_u64_load::unordered_seq_cst_fence:
+.Lfunc_begin49:
+ ld      3, 0(3)
+ sync
+ blr
+asm_test::atomic_u64_load::relaxed_seq_cst_fence:
+.Lfunc_begin50:
+ ld      3, 0(3)
+ sync
+ blr
+asm_test::atomic_u64_load::seq_cst:
+.Lfunc_begin51:
+ sync
+ ld      3, 0(3)
+ cmpd    7, 3, 3
+ bne-    7, .+4
+ isync
+ blr

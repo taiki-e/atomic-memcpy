@@ -1,0 +1,56 @@
+asm_test::atomic_memcpy_store_align4::release:
+ aghi    %r15, -288
+ mvc     160(64, %r15), 0(%r3)
+ #MEMBARRIER
+ mvc     224(64, %r15), 160(%r15)
+ tmll    %r2, 7
+ je      .LBB10_2
+ l       %r0, 224(%r15)
+ st      %r0, 0(%r2)
+ lg      %r0, 228(%r15)
+ stg     %r0, 4(%r2)
+ lg      %r0, 236(%r15)
+ stg     %r0, 12(%r2)
+ lg      %r0, 244(%r15)
+ stg     %r0, 20(%r2)
+ lg      %r0, 252(%r15)
+ stg     %r0, 28(%r2)
+ lg      %r0, 260(%r15)
+ stg     %r0, 36(%r2)
+ lg      %r0, 268(%r15)
+ stg     %r0, 44(%r2)
+ lg      %r0, 276(%r15)
+ stg     %r0, 52(%r2)
+ l       %r0, 284(%r15)
+ st      %r0, 60(%r2)
+ aghi    %r15, 288
+ br      %r14
+.LBB10_2:
+ lg      %r0, 224(%r15)
+ stg     %r0, 0(%r2)
+ lg      %r0, 232(%r15)
+ stg     %r0, 8(%r2)
+ lg      %r0, 240(%r15)
+ stg     %r0, 16(%r2)
+ lg      %r0, 248(%r15)
+ stg     %r0, 24(%r2)
+ lg      %r0, 256(%r15)
+ stg     %r0, 32(%r2)
+ lg      %r0, 264(%r15)
+ stg     %r0, 40(%r2)
+ lg      %r0, 272(%r15)
+ stg     %r0, 48(%r2)
+ lg      %r0, 280(%r15)
+ stg     %r0, 56(%r2)
+ aghi    %r15, 288
+ br      %r14
+asm_test::atomic_memcpy_store_align4::write_volatile_release_fence:
+ stmg    %r14, %r15, 112(%r15)
+ aghi    %r15, -224
+ #MEMBARRIER
+ mvc     160(64, %r15), 0(%r3)
+ la      %r3, 160(%r15)
+ lghi    %r4, 64
+ brasl   %r14, memcpy@PLT
+ lmg     %r14, %r15, 336(%r15)
+ br      %r14
