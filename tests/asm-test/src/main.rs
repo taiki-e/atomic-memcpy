@@ -7,9 +7,9 @@ use duct::cmd;
 use fs_err as fs;
 use lexopt::prelude::*;
 
-// All tier 1 or tier 2 linux (GNU) target
-// rustup target list | grep -e '-linux-gnu' | sed 's/ .*$//g' | sed 's/^/"/g' | sed 's/$/",/g'
 const DEFAULT_TARGETS: &[&str] = &[
+    // All tier 1 or tier 2 linux (GNU) target
+    // rustup target list | grep -e '-linux-gnu' | sed 's/ .*$//g' | sed 's/^/"/g' | sed 's/$/",/g'
     "aarch64-unknown-linux-gnu",
     "arm-unknown-linux-gnueabi",
     "arm-unknown-linux-gnueabihf",
@@ -31,6 +31,8 @@ const DEFAULT_TARGETS: &[&str] = &[
     "thumbv7neon-unknown-linux-gnueabihf",
     "x86_64-unknown-linux-gnu",
     "x86_64-unknown-linux-gnux32",
+    // Other targets
+    "riscv32imac-unknown-none-elf",
 ];
 
 fn main() -> Result<()> {
@@ -126,8 +128,11 @@ fn main() -> Result<()> {
                     cmd = cmd.env_remove("RUSTFLAGS");
                 }
                 let asm = &cmd.dir(manifest_dir).read()?;
-                if target.starts_with("arm") || target.starts_with("thumb") {
-                    // cargo-asm has demangling bug on arm asm
+                if target.starts_with("arm")
+                    || target.starts_with("thumb")
+                    || target.starts_with("riscv32")
+                {
+                    // cargo-asm has demangling bug on arm/riscv32 asm
                     let mut lines = asm.lines().peekable();
                     while let Some(line) = lines.next() {
                         assert!(!line.starts_with(' '));

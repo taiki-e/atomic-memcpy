@@ -2,7 +2,8 @@
 #![no_std]
 #![warn(rust_2018_idioms, single_use_lifetimes, unsafe_op_in_unsafe_fn)]
 #![allow(clippy::missing_safety_doc)]
-#![feature(core_intrinsics, atomic_mut_ptr)]
+#![feature(core_intrinsics)]
+#![cfg_attr(target_has_atomic_load_store = "ptr", feature(atomic_mut_ptr))]
 
 type Data = [u8; core::mem::size_of::<usize>() * 8];
 
@@ -191,6 +192,7 @@ pub mod atomic_memcpy_store_align16 {
     }
 }
 
+#[cfg(target_has_atomic_load_store = "8")]
 pub mod atomic_u8_load {
     use core::{
         intrinsics,
@@ -240,6 +242,7 @@ pub mod atomic_u8_load {
     }
 }
 
+#[cfg(target_has_atomic_load_store = "16")]
 pub mod atomic_u16_load {
     use core::{
         intrinsics,
