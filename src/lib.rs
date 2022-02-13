@@ -213,13 +213,17 @@ mod imp {
         sync::atomic::{AtomicU16, AtomicUsize, Ordering},
     };
 
+    #[cfg(not(atomic_memcpy_symbolic_alignment_check_compat))]
     #[cfg(target_pointer_width = "32")]
     type Half = u16;
+    #[cfg(not(atomic_memcpy_symbolic_alignment_check_compat))]
     #[cfg(target_pointer_width = "32")]
     type AtomicHalf = AtomicU16;
 
+    #[cfg(not(atomic_memcpy_symbolic_alignment_check_compat))]
     #[cfg(target_pointer_width = "64")]
     type Half = u32;
+    #[cfg(not(atomic_memcpy_symbolic_alignment_check_compat))]
     #[cfg(target_pointer_width = "64")]
     type AtomicHalf = AtomicU32;
 
@@ -327,9 +331,10 @@ mod imp {
                 }
             }
 
+            #[cfg(not(atomic_memcpy_symbolic_alignment_check_compat))]
+            #[cfg(not(target_pointer_width = "16"))]
             #[cfg_attr(feature = "inline-always", inline(always))]
             #[cfg_attr(not(feature = "inline-always"), inline)]
-            #[cfg(not(target_pointer_width = "16"))]
             pub(super) unsafe fn atomic_load_half(&mut self) {
                 use super::{AtomicHalf, Half};
                 debug_assert!(self.remaining() >= mem::size_of::<Half>());
@@ -423,38 +428,6 @@ mod imp {
             return result;
         }
 
-        // HACK: Miri cannot track uninitialized bytes on a per byte basis for
-        // partially initialized scalars: https://github.com/rust-lang/rust/issues/69488
-        //
-        // This hack allows miri to properly track the use of uninitialized
-        // bytes. See also tests/uninit.rs that is a test to check if
-        // valgrind/sanitizer/miri can properly detect the use of uninitialized
-        // bytes.
-        //
-        // Note: With or without this hack, atomic load/store of integers
-        // containing uninitialized bytes is technically an undefined behavior.
-        // The only purpose of this hack is to make sure that Miri errors for
-        // atomic load/store of integers containing uninitialized bytes
-        // (which is probably not a problem and uncharted territory at best [1] [2] [3],
-        // and can be detected by `-Zmiri-check-number-validity` [4]),
-        // do not mask Miri errors for the use of uninitialized bytes (which is definitely a problem).
-        // See also tests/padding.rs.
-        //
-        // [1] https://github.com/crossbeam-rs/crossbeam/issues/315
-        // [2] https://github.com/rust-lang/unsafe-code-guidelines/issues/158
-        // [3] https://github.com/rust-lang/unsafe-code-guidelines/issues/71
-        // [4] https://github.com/rust-lang/miri/pull/1904
-        //
-        // rust-lang/rust#69488 affects only CTFE(compile-time function evaluation)/Miri
-        // and atomic operations cannot be called in const context, so our code
-        // is only affected in the case of cfg(miri).
-        if cfg!(miri) {
-            let mut state = load::LoadState::new(result.as_mut_ptr(), src);
-            state.atomic_load_u8(state.remaining());
-            debug_assert_eq!(state.remaining(), 0);
-            return result;
-        }
-
         // Branch 1: If the alignment of `T` is less than usize, but `T` can be read as
         // at least one or more usize, compute the align offset and read it
         // like `(&[AtomicU8], &[AtomicUsize], &[AtomicU8])`.
@@ -462,6 +435,8 @@ mod imp {
             && mem::size_of::<T>() >= mem::size_of::<usize>() * 4
         {
             let mut state = load::LoadState::new(result.as_mut_ptr(), src);
+            // -Zmiri-symbolic-alignment-check is incompatible with the code that does manual integer arithmetic to ensure alignment.
+            #[cfg(not(atomic_memcpy_symbolic_alignment_check_compat))]
             #[cfg(not(target_pointer_width = "16"))]
             {
                 // Since the caller guarantees that the pointer is properly aligned,
@@ -702,9 +677,10 @@ mod imp {
                 }
             }
 
+            #[cfg(not(atomic_memcpy_symbolic_alignment_check_compat))]
+            #[cfg(not(target_pointer_width = "16"))]
             #[cfg_attr(feature = "inline-always", inline(always))]
             #[cfg_attr(not(feature = "inline-always"), inline)]
-            #[cfg(not(target_pointer_width = "16"))]
             pub(super) unsafe fn atomic_store_half(&mut self) {
                 use super::{AtomicHalf, Half};
                 debug_assert!(self.remaining() >= mem::size_of::<Half>());
@@ -769,15 +745,6 @@ mod imp {
             return;
         }
 
-        // HACK: See the `atomic_load` function for the detailed comment.
-        if cfg!(miri) {
-            let mut state = store::StoreState::new(dst, &*val);
-            state.atomic_store_u8(state.remaining());
-            debug_assert_eq!(state.remaining(), 0);
-            mem::forget(guard);
-            return;
-        }
-
         // Branch 1: If the alignment of `T` is less than usize, but `T` can be write as
         // at least one or more usize, compute the align offset and write it
         // like `(&[AtomicU8], &[AtomicUsize], &[AtomicU8])`.
@@ -785,9 +752,10 @@ mod imp {
             && mem::size_of::<T>() >= mem::size_of::<usize>() * 4
         {
             let mut state = store::StoreState::new(dst, &*val);
+            // See the `atomic_load` function for the detailed comment.
+            #[cfg(not(atomic_memcpy_symbolic_alignment_check_compat))]
             #[cfg(not(target_pointer_width = "16"))]
             {
-                // See the `atomic_load` function for the detailed comment.
                 if mem::align_of::<T>() >= mem::align_of::<Half>() {
                     if dst as usize % mem::size_of::<usize>() == 0 {
                         // SAFETY:

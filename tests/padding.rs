@@ -1,15 +1,16 @@
-// https://github.com/rust-lang/unsafe-code-guidelines/issues/71
-// https://github.com/rust-lang/miri/pull/1904
-//
-// With miri:
-//   MIRIFLAGS='-Zmiri-check-number-validity' cargo miri test --test padding -- --test-threads=1
-
 use std::{cell::UnsafeCell, mem, sync::atomic::Ordering};
 
 use atomic_memcpy::{atomic_load, atomic_store};
 
 #[test]
 fn enum_padding() {
+    // Miri cannot track uninitialized bytes on a per byte basis for partially
+    // initialized scalars: https://github.com/rust-lang/rust/issues/69488
+    // See also https://github.com/crossbeam-rs/crossbeam/issues/748#issuecomment-1022432401
+    if cfg!(miri) {
+        return;
+    }
+
     #[allow(dead_code)]
     #[repr(align(8))]
     #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -37,6 +38,13 @@ fn enum_padding() {
 
 #[test]
 fn union_padding() {
+    // Miri cannot track uninitialized bytes on a per byte basis for partially
+    // initialized scalars: https://github.com/rust-lang/rust/issues/69488
+    // See also https://github.com/crossbeam-rs/crossbeam/issues/748#issuecomment-1022432401
+    if cfg!(miri) {
+        return;
+    }
+
     #[allow(dead_code)]
     #[repr(C, align(8))]
     #[derive(Clone, Copy)]
