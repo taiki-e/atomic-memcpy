@@ -33,7 +33,9 @@ const DEFAULT_TARGETS: &[&str] = &[
     "x86_64-unknown-linux-gnu",
     "x86_64-unknown-linux-gnux32",
     // Other targets
+    "riscv32i-unknown-none-elf",
     "riscv32imac-unknown-none-elf",
+    "riscv32imc-unknown-none-elf",
 ];
 
 fn main() -> Result<()> {
@@ -107,6 +109,11 @@ fn main() -> Result<()> {
             }
             if m.contains("atomic_u64")
                 && !target_cfg.contains(&"target_has_atomic_load_store=\"64\"")
+            {
+                continue;
+            }
+            if m.contains("atomic_u")
+                && !target_cfg.contains(&"target_has_atomic_load_store=\"ptr\"")
             {
                 continue;
             }
