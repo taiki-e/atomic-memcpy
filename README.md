@@ -21,7 +21,7 @@ See [P1478R1][p1478r1] for more.
 - If the type being copied contains uninitialized bytes (e.g., padding), it is incompatible with `-Zmiri-check-number-validity`. This will probably not be resolved until something like `AtomicMaybeUninit` is supported. **Note**: Due to [Miri cannot track uninitialized bytes on a per byte basis for partially initialized scalars][rust-lang/rust#69488], Miri may report this case as an access to an uninitialized byte, regardless of whether the uninitialized byte is actually accessed or not.
 
 [p1478r1]: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/p1478r1.html
-[implementation]: https://github.com/taiki-e/atomic-memcpy/blob/279d7041e48fae0943a50102ebab97e7ed3977ae/src/lib.rs#L359-L403
+[implementation]: https://github.com/taiki-e/atomic-memcpy/blob/fd3bd1ef0c7377422714399c0d1b84a5be8c0a00/src/lib.rs#L381-L427
 [asm-test]: tests/asm-test/asm
 [rust-lang/rust#69488]: https://github.com/rust-lang/rust/issues/69488
 
