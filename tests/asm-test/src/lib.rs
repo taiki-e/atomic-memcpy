@@ -7,6 +7,8 @@
 
 type Data = [u8; core::mem::size_of::<usize>() * 8];
 
+// TODO: Add tests for the case where the pointers are known to be aligned.
+
 #[repr(C, align(1))]
 pub struct Align1<T>(T);
 #[repr(C, align(2))]

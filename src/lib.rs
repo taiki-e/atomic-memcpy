@@ -227,6 +227,12 @@ mod imp {
     #[cfg(target_pointer_width = "64")]
     type AtomicHalf = AtomicU32;
 
+    // Boundary to make the fields of LoadState private.
+    //
+    // Note that this is not a complete safe/unsafe boundary[1], since it is still
+    // possible to pass an invalid pointer to the constructor.
+    //
+    // [1]: https://www.ralfj.de/blog/2016/01/09/the-scope-of-unsafe.html
     mod load {
         use core::{
             mem,
@@ -311,9 +317,16 @@ mod imp {
                 }
             }
 
+            /// Note: The remaining bytes smaller than usize are ignored.
+            ///
+            /// # Safety
+            ///
+            /// - `self.src` must be properly aligned for `usize`.
+            ///
+            /// There is no alignment requirement for `self.result`.
             #[cfg_attr(feature = "inline-always", inline(always))]
             #[cfg_attr(not(feature = "inline-always"), inline)]
-            pub(super) unsafe fn atomic_load_usize(&mut self) {
+            pub(super) unsafe fn atomic_load_usize_to_end(&mut self) {
                 while self.remaining() >= mem::size_of::<usize>() {
                     // SAFETY:
                     // - the caller must guarantee that `src` is properly aligned for `usize`.
@@ -331,6 +344,10 @@ mod imp {
                 }
             }
 
+            /// # Safety
+            ///
+            /// - both `self.src` and `self.result` must be properly aligned for `Half`.
+            /// - the remaining bytes is greater than or equal to `size_of::<Half>()`.
             #[cfg(not(atomic_memcpy_symbolic_alignment_check_compat))]
             #[cfg(not(target_pointer_width = "16"))]
             #[cfg_attr(feature = "inline-always", inline(always))]
@@ -405,6 +422,8 @@ mod imp {
 
     Whether to choose Branch 1 or Branch 3/4/5 when `T` is small is currently based on a rough heuristic based on simple benchmarks on x86_64.
 
+    TODO: Update description to include additional optimization in Branch 1.
+
     [p1478r1]: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/p1478r1.html
     */
     #[cfg_attr(feature = "inline-always", inline(always))]
@@ -453,12 +472,14 @@ mod imp {
                 //
                 // Handling this case manually can reduce the number of instructions
                 // significantly compared to using align_offset.
+                //
+                // TODO: This may not be necessary if the call is well inlined.
                 if mem::align_of::<T>() >= mem::align_of::<Half>() {
                     if src as usize % mem::size_of::<usize>() == 0 {
                         // SAFETY:
                         // - we've checked that `src` is properly aligned for `usize`.
                         // - the remaining bytes is greater than or equal to `size_of::<usize>()`.
-                        unsafe { state.atomic_load_usize() }
+                        unsafe { state.atomic_load_usize_to_end() }
                     } else {
                         debug_assert_eq!(
                             src as usize % mem::size_of::<usize>(),
@@ -472,7 +493,7 @@ mod imp {
                             state.atomic_load_half();
                             // SAFETY: we've advanced `size_of::<Half>()` bytes,
                             // so now `state.src` is definitely aligned.
-                            state.atomic_load_usize();
+                            state.atomic_load_usize_to_end();
                         }
                     }
                     // Load remaining bytes.
@@ -500,9 +521,9 @@ mod imp {
                 //   or equal to `size_of::<usize>()`.
                 //
                 // In this branch, the pointer to `state.result` is usually
-                // not properly aligned, so we use `atomic_load_usize_result_unaligned`,
+                // not properly aligned, so we use `atomic_load_usize_to_end`,
                 // which has no requirement for alignment of `state.result`.
-                unsafe { state.atomic_load_usize() }
+                unsafe { state.atomic_load_usize_to_end() }
                 // Load remaining bytes per byte.
                 state.atomic_load_u8(state.remaining());
                 debug_assert_eq!(state.remaining(), 0);
@@ -574,6 +595,10 @@ mod imp {
         result
     }
 
+    // Boundary to make the fields of StoreState private.
+    //
+    // Note that this is not a complete safe/unsafe boundary, since it is still
+    // possible to pass an invalid pointer to the constructor.
     mod store {
         use core::{
             mem,
@@ -657,9 +682,16 @@ mod imp {
                 }
             }
 
+            /// Note: The remaining bytes smaller than usize are ignored.
+            ///
+            /// # Safety
+            ///
+            /// - `self.dst` must be properly aligned for `usize`.
+            ///
+            /// There is no alignment requirement for `self.src`.
             #[cfg_attr(feature = "inline-always", inline(always))]
             #[cfg_attr(not(feature = "inline-always"), inline)]
-            pub(super) unsafe fn atomic_store_usize(&mut self) {
+            pub(super) unsafe fn atomic_store_usize_to_end(&mut self) {
                 while self.remaining() >= mem::size_of::<usize>() {
                     // SAFETY:
                     // - the caller must guarantee that `dst` is properly aligned for `usize`.
@@ -677,6 +709,10 @@ mod imp {
                 }
             }
 
+            /// # Safety
+            ///
+            /// - both `self.src` and `self.dst` must be properly aligned for `Half`.
+            /// - the remaining bytes is greater than or equal to `size_of::<Half>()`.
             #[cfg(not(atomic_memcpy_symbolic_alignment_check_compat))]
             #[cfg(not(target_pointer_width = "16"))]
             #[cfg_attr(feature = "inline-always", inline(always))]
@@ -685,8 +721,8 @@ mod imp {
                 use super::{AtomicHalf, Half};
                 debug_assert!(self.remaining() >= mem::size_of::<Half>());
                 // SAFETY:
-                // - the caller must guarantee that `dst` is properly aligned for `Half`.
-                // - we've checked that the remaining bytes is greater than
+                // - the caller must guarantee that both `src` and `dst` is properly aligned for `Half`.
+                // - the caller must guarantee that the remaining bytes is greater than
                 //   or equal to `size_of::<Half>()`.
                 // Therefore, due to `StoreState`'s invariant:
                 // - `src` is valid to read of `Half`.
@@ -761,7 +797,7 @@ mod imp {
                         // SAFETY:
                         // - we've checked that `dst` is properly aligned for `usize`.
                         // - the remaining bytes is greater than or equal to `size_of::<usize>()`.
-                        unsafe { state.atomic_store_usize() }
+                        unsafe { state.atomic_store_usize_to_end() }
                     } else {
                         debug_assert_eq!(
                             dst as usize % mem::size_of::<usize>(),
@@ -775,7 +811,7 @@ mod imp {
                             state.atomic_store_half();
                             // SAFETY: we've advanced `size_of::<Half>()` bytes,
                             // so now `state.dst` is definitely aligned.
-                            state.atomic_store_usize();
+                            state.atomic_store_usize_to_end();
                         }
                     }
                     // Store remaining bytes.
@@ -804,10 +840,10 @@ mod imp {
                 //   or equal to `size_of::<usize>()`.
                 //
                 // In this branch, the pointer to `state.src` is usually
-                // not properly aligned, so we use `atomic_store_usize_src_unaligned`,
+                // not properly aligned, so we use `atomic_store_usize_to_end`,
                 // which has no requirement for alignment of `state.src`.
                 unsafe {
-                    state.atomic_store_usize();
+                    state.atomic_store_usize_to_end();
                 }
                 // Store remaining bytes per byte.
                 state.atomic_store_u8(state.remaining());
@@ -905,18 +941,18 @@ mod imp {
         r
     }
 
-    /// Atomic integers larger than the pointer size often does not have the
-    /// same alignment as the corresponding integer types.
-    ///
-    /// ```console
-    /// $ rustc --print cfg --target x86_64-apple-darwin | grep -E 'target_has_atomic_.*(64|128)'
-    /// target_has_atomic_equal_alignment="64"
-    /// target_has_atomic_load_store="128"
-    /// target_has_atomic_load_store="64"
-    /// ```
-    ///
-    /// It's unlikely that the same thing will happen with an atomic type
-    /// less than or equal to the pointer size, but we'll check just in case.
+    // Atomic integers larger than the pointer size often does not have the
+    // same alignment as the corresponding integer types.
+    //
+    // ```console
+    // $ rustc --print cfg --target x86_64-apple-darwin | grep -E 'target_has_atomic_.*(64|128)'
+    // target_has_atomic_equal_alignment="64"
+    // target_has_atomic_load_store="128"
+    // target_has_atomic_load_store="64"
+    // ```
+    //
+    // It's unlikely that the same thing will happen with an atomic type
+    // less than or equal to the pointer size, but we'll check just in case.
     #[cfg_attr(feature = "inline-always", inline(always))]
     #[cfg_attr(not(feature = "inline-always"), inline)]
     fn static_assert_atomic_alignment() {
