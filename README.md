@@ -18,11 +18,12 @@ See [P1478R1][p1478r1] for more.
 - If the alignment of the type being copied is the same as the pointer width, `atomic_load` is possible to produce an assembly roughly equivalent to the case of using volatile read + atomic fence on many platforms. (See [`tests/asm-test/asm`][asm-test] directory for more).
 - If the alignment of the type being copied is smaller than the pointer width, there will be some performance degradation. However, it is implemented in such a way that it does not cause extreme performance degradation at least on x86_64. (See [the implementation comments of `atomic_load`][implementation] for more.) It is possible that there is still room for improvement, especially on non-x86_64 platforms.
 - Optimization for the case where the alignment of the type being copied is larger than the pointer width has not yet been fully investigated. It is possible that there is still room for improvement, especially on 32-bit platforms where `AtomicU64` is available.
-- If the type being copied contains uninitialized bytes (e.g., padding), it is incompatible with `-Zmiri-check-number-validity`. This will probably not be resolved until something like `AtomicMaybeUninit` is supported.
+- If the type being copied contains uninitialized bytes (e.g., padding), it is incompatible with `-Zmiri-check-number-validity`. This will probably not be resolved until something like `AtomicMaybeUninit` is supported. **Note**: Due to [Miri cannot track uninitialized bytes on a per byte basis for partially initialized scalars][rust-lang/rust#69488], Miri may report this case as an access to an uninitialized byte, regardless of whether the uninitialized byte is actually accessed or not.
 
 [p1478r1]: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/p1478r1.html
 [implementation]: https://github.com/taiki-e/atomic-memcpy/blob/279d7041e48fae0943a50102ebab97e7ed3977ae/src/lib.rs#L359-L403
 [asm-test]: tests/asm-test/asm
+[rust-lang/rust#69488]: https://github.com/rust-lang/rust/issues/69488
 
 ## License
 

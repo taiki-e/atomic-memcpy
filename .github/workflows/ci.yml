@@ -146,11 +146,12 @@ jobs:
           component: miri
       - run: cargo miri test --workspace -- --test-threads=1
         env:
-          MIRIFLAGS: -Zmiri-symbolic-alignment-check -Zmiri-tag-raw-pointers -Zmiri-disable-isolation
-      # tests/padding.rs intentional contains tests for cases that are incompatible with -Zmiri-check-number-validity.
-      - run: cargo miri test --test test -- --test-threads=1
+          MIRIFLAGS: -Zmiri-check-number-validity -Zmiri-tag-raw-pointers -Zmiri-disable-isolation
+      - run: cargo miri test --workspace -- --test-threads=1
         env:
           MIRIFLAGS: -Zmiri-check-number-validity -Zmiri-symbolic-alignment-check -Zmiri-tag-raw-pointers -Zmiri-disable-isolation
+          # -Zmiri-symbolic-alignment-check is incompatible with the code that does manual integer arithmetic to ensure alignment.
+          RUSTFLAGS: ${{ env.RUSTFLAGS }} --cfg atomic_memcpy_symbolic_alignment_check_compat
 
   san:
     strategy:
