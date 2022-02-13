@@ -1,10 +1,11 @@
 #![allow(clippy::single_match)]
 
-use std::{collections::BTreeMap, env, path::Path};
+use std::{env, path::Path};
 
 use anyhow::{bail, Result};
 use duct::cmd;
 use fs_err as fs;
+use indexmap::{IndexMap, IndexSet};
 use lexopt::prelude::*;
 
 const DEFAULT_TARGETS: &[&str] = &[
@@ -61,7 +62,7 @@ fn main() -> Result<()> {
     let file = &fs::read_to_string(manifest_dir.join("src/lib.rs"))?;
     let file = syn::parse_file(file)?;
     let crate_name = env!("CARGO_PKG_NAME").replace('-', "_");
-    let mut modules: BTreeMap<_, Vec<_>> = BTreeMap::new();
+    let mut modules: IndexMap<_, IndexSet<_>> = IndexMap::new();
     for item in file.items {
         match item {
             syn::Item::Fn(f) if matches!(f.vis, syn::Visibility::Public(..)) => {
@@ -77,9 +78,9 @@ fn main() -> Result<()> {
                         syn::Item::Fn(f) if matches!(f.vis, syn::Visibility::Public(..)) => {
                             let path = format!("{crate_name}::{mod_name}::{}", f.sig.ident);
                             if let Some(v) = modules.get_mut(&mod_name) {
-                                v.push(path);
+                                v.insert(path);
                             } else {
-                                modules.insert(mod_name.clone(), vec![path]);
+                                modules.insert(mod_name.clone(), indexmap::indexset![path]);
                             }
                         }
                         _ => {}
@@ -98,8 +99,6 @@ fn main() -> Result<()> {
         let outdir = &outdir.join(target);
         fs::create_dir_all(outdir)?;
         for (m, functions) in &modules {
-            println!("  {}", m);
-            let mut out = String::new();
             if m.contains("atomic_u128")
                 && !target_cfg.contains(&"target_has_atomic_load_store=\"128\"")
                 && !target.contains("x86_64")
@@ -111,6 +110,8 @@ fn main() -> Result<()> {
             {
                 continue;
             }
+            println!("  {}", m);
+            let mut out = String::new();
             for func in functions {
                 let mut cmd = cmd!(
                     "cargo",
@@ -130,7 +131,7 @@ fn main() -> Result<()> {
                 let asm = &cmd.dir(manifest_dir).read()?;
                 if target.starts_with("arm")
                     || target.starts_with("thumb")
-                    || target.starts_with("riscv32")
+                    || target.starts_with("riscv") && !target.contains("linux")
                 {
                     // cargo-asm has demangling bug on arm/riscv32 asm
                     let mut lines = asm.lines().peekable();

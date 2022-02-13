@@ -401,30 +401,12 @@ pub mod atomic_u128_load {
     type A = *mut u128;
     type T = u128;
     #[inline(never)]
-    pub unsafe fn seq_cst(a: A) -> T {
-        unsafe { intrinsics::atomic_load(a) }
+    pub unsafe fn unordered(a: A) -> T {
+        unsafe { intrinsics::atomic_load_unordered(a) }
     }
     #[inline(never)]
-    pub unsafe fn relaxed_seq_cst_fence(a: A) -> T {
-        let v = unsafe { intrinsics::atomic_load_relaxed(a) };
-        atomic::fence(Ordering::SeqCst);
-        v
-    }
-    #[inline(never)]
-    pub unsafe fn unordered_seq_cst_fence(a: A) -> T {
-        let v = unsafe { intrinsics::atomic_load_unordered(a) };
-        atomic::fence(Ordering::SeqCst);
-        v
-    }
-    #[inline(never)]
-    pub unsafe fn acquire(a: A) -> T {
-        unsafe { intrinsics::atomic_load_acq(a) }
-    }
-    #[inline(never)]
-    pub unsafe fn relaxed_acquire_fence(a: A) -> T {
-        let v = unsafe { intrinsics::atomic_load_relaxed(a) };
-        atomic::fence(Ordering::Acquire);
-        v
+    pub unsafe fn relaxed(a: A) -> T {
+        unsafe { intrinsics::atomic_load_relaxed(a) }
     }
     #[inline(never)]
     pub unsafe fn unordered_acquire_fence(a: A) -> T {
@@ -433,11 +415,29 @@ pub mod atomic_u128_load {
         v
     }
     #[inline(never)]
-    pub unsafe fn relaxed(a: A) -> T {
-        unsafe { intrinsics::atomic_load_relaxed(a) }
+    pub unsafe fn relaxed_acquire_fence(a: A) -> T {
+        let v = unsafe { intrinsics::atomic_load_relaxed(a) };
+        atomic::fence(Ordering::Acquire);
+        v
     }
     #[inline(never)]
-    pub unsafe fn unordered(a: A) -> T {
-        unsafe { intrinsics::atomic_load_unordered(a) }
+    pub unsafe fn acquire(a: A) -> T {
+        unsafe { intrinsics::atomic_load_acq(a) }
+    }
+    #[inline(never)]
+    pub unsafe fn unordered_seq_cst_fence(a: A) -> T {
+        let v = unsafe { intrinsics::atomic_load_unordered(a) };
+        atomic::fence(Ordering::SeqCst);
+        v
+    }
+    #[inline(never)]
+    pub unsafe fn relaxed_seq_cst_fence(a: A) -> T {
+        let v = unsafe { intrinsics::atomic_load_relaxed(a) };
+        atomic::fence(Ordering::SeqCst);
+        v
+    }
+    #[inline(never)]
+    pub unsafe fn seq_cst(a: A) -> T {
+        unsafe { intrinsics::atomic_load(a) }
     }
 }
