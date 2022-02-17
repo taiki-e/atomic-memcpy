@@ -31,12 +31,12 @@
     clippy::pedantic,
     clippy::undocumented_unsafe_blocks
 )]
-#![allow(clippy::too_many_lines)]
-#![cfg_attr(feature = "inline-always", allow(clippy::inline_always))]
+#![allow(clippy::inline_always, clippy::single_match_else, clippy::too_many_lines)]
 
 // This crate should work on targets with power-of-two pointer widths,
 // but it is not clear how it will work on targets without them.
 // There are currently no 8-bit, 128-bit, or higher builtin targets.
+// Note that Rust (and C99) pointers must be at least 16-bits: https://github.com/rust-lang/rust/pull/49305
 #[cfg(not(any(
     target_pointer_width = "16",
     target_pointer_width = "32",
@@ -44,7 +44,7 @@
 )))]
 compile_error!(
     "atomic-memcpy currently only supports targets with {16,32,64}-bit pointer width; \
-     if you need support for 8-bit or others, \
+     if you need support for others, \
      please submit an issue at <https://github.com/taiki-e/atomic-memcpy>"
 );
 
