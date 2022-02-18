@@ -2,7 +2,7 @@
 #![no_std]
 #![warn(rust_2018_idioms, single_use_lifetimes, unsafe_op_in_unsafe_fn)]
 #![allow(clippy::missing_safety_doc)]
-#![feature(core_intrinsics)]
+#![feature(cfg_target_has_atomic, core_intrinsics)]
 #![cfg_attr(target_has_atomic_load_store = "ptr", feature(atomic_mut_ptr))]
 
 type Data = [u8; core::mem::size_of::<usize>() * 8];
