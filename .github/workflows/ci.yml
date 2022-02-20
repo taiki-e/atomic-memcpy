@@ -147,11 +147,12 @@ jobs:
       - run: cargo miri test --workspace -- --test-threads=1
         env:
           MIRIFLAGS: -Zmiri-check-number-validity -Zmiri-tag-raw-pointers -Zmiri-disable-isolation
+          RUSTFLAGS: ${{ env.RUSTFLAGS }} -Z randomize-layout
       - run: cargo miri test --workspace -- --test-threads=1
         env:
           MIRIFLAGS: -Zmiri-check-number-validity -Zmiri-symbolic-alignment-check -Zmiri-tag-raw-pointers -Zmiri-disable-isolation
           # -Zmiri-symbolic-alignment-check is incompatible with the code that does manual integer arithmetic to ensure alignment.
-          RUSTFLAGS: ${{ env.RUSTFLAGS }} --cfg atomic_memcpy_symbolic_alignment_check_compat
+          RUSTFLAGS: ${{ env.RUSTFLAGS }} -Z randomize-layout --cfg atomic_memcpy_symbolic_alignment_check_compat
 
   san:
     strategy:
