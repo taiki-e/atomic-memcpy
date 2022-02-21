@@ -207,7 +207,7 @@ jobs:
 
   valgrind:
     env:
-      CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUNNER: valgrind --error-exitcode=1 --error-limit=no --leak-check=full --show-leak-kinds=all --track-origins=yes
+      CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUNNER: valgrind -v --error-exitcode=1 --error-limit=no --leak-check=full --show-leak-kinds=all --track-origins=yes
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -217,15 +217,15 @@ jobs:
         with:
           component: rust-src
       - uses: taiki-e/install-action@valgrind
-      - run: cargo test --workspace
-      - run: cargo test --workspace --release
+      - run: cargo test -v --workspace
+      - run: cargo test -v --workspace --release
       # Use -Z build-std because the prebuilt libtest seems to be incompatible with LTO, causing miscompilation: https://gist.github.com/taiki-e/9713f8e02e8f9f852ccee8d6f089ec24
       - run: |
-          cargo -Z build-std test --workspace --release --target "$(rustc -Vv | grep host | sed 's/host: //')"
+          cargo -Z build-std test -v --workspace --release --target "$(rustc -Vv | grep host | sed 's/host: //')"
         env:
           CARGO_PROFILE_RELEASE_LTO: thin
       - run: |
-          cargo -Z build-std test --workspace --release --target "$(rustc -Vv | grep host | sed 's/host: //')"
+          cargo -Z build-std test -v --workspace --release --target "$(rustc -Vv | grep host | sed 's/host: //')"
         env:
           CARGO_PROFILE_RELEASE_CODEGEN_UNITS: 1
           CARGO_PROFILE_RELEASE_LTO: fat
