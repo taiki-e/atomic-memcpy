@@ -4,6 +4,10 @@ version = "0.0.0"
 edition = "2018"
 publish = false
 
+[lib]
+doctest = false
+doc = false
+
 [features]
 default = ["anyhow", "duct", "fs-err", "indexmap", "lexopt", "rustc-demangle", "syn"]
 

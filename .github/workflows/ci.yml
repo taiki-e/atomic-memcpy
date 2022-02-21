@@ -95,17 +95,19 @@ jobs:
           - target: aarch64-unknown-linux-gnu
           - target: armv5te-unknown-linux-gnueabi
           - target: i686-unknown-linux-gnu
-          - target: mips-unknown-linux-gnu
+          - target: s390x-unknown-linux-gnu
     runs-on: ${{ matrix.os || 'ubuntu-latest' }}
     steps:
       - uses: actions/checkout@v2
         with:
           persist-credentials: false
       - uses: taiki-e/github-actions/install-rust@main
-      - uses: taiki-e/install-action@cross
-      - run: cross test --workspace --target ${{ matrix.target }} -- --test-threads=1
-      - run: cross test --workspace --release --target ${{ matrix.target }} -- --test-threads=1
-      - run: cross test --workspace --release --all-features --exclude asm-test --tests --target ${{ matrix.target }} -- --test-threads=1
+      - uses: taiki-e/setup-cross-toolchain@main
+        with:
+          target: ${{ matrix.target }}
+      - run: cargo test --verbose --workspace -Z doctest-xcompile -- --test-threads=1
+      - run: cargo test --verbose --workspace --release -Z doctest-xcompile -- --test-threads=1
+      - run: cargo test --verbose --workspace --release --all-features --exclude asm-test --tests -- --test-threads=1
 
   msrv:
     runs-on: ubuntu-latest
