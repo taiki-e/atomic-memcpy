@@ -4,6 +4,10 @@ version = "0.0.0"
 edition = "2018"
 publish = false
 
+[lib]
+doctest = false
+doc = false
+
 [features]
 # Note: this will not work unless you build tests with release mode.
 no-panic = ["atomic-memcpy/no-panic"]

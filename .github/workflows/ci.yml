@@ -19,6 +19,8 @@ env:
   CARGO_NET_RETRY: 10
   CARGO_TERM_COLOR: always
   RUST_BACKTRACE: full
+  RUST_TEST_THREADS: 1
+  RUSTDOCFLAGS: -D warnings
   RUSTFLAGS: -D warnings
   RUSTUP_MAX_RETRIES: 10
 
@@ -35,6 +37,14 @@ jobs:
           - rust: stable
           - rust: beta
           - rust: nightly
+          - rust: nightly
+            target: aarch64-unknown-linux-gnu
+          - rust: nightly
+            target: armv5te-unknown-linux-gnueabi
+          - rust: nightly
+            target: i686-unknown-linux-gnu
+          - rust: nightly
+            target: s390x-unknown-linux-gnu
     runs-on: ${{ matrix.os || 'ubuntu-latest' }}
     steps:
       - uses: actions/checkout@v2
@@ -50,62 +60,63 @@ jobs:
           # msp430-none-elf: 16-bit, does not support atomic at all
           target: thumbv7m-none-eabi,thumbv6m-none-eabi,riscv32i-unknown-none-elf,riscv32imc-unknown-none-elf,riscv32imac-unknown-none-elf
       - uses: taiki-e/install-action@cargo-hack
-      - run: cargo test --workspace -- --test-threads=1
-      - run: cargo test --workspace --release -- --test-threads=1
-      - run: cargo test --workspace --release --all-features --exclude asm-test --tests -- --test-threads=1
+      - uses: taiki-e/setup-cross-toolchain@main
+        with:
+          target: ${{ matrix.target }}
+        if: matrix.target != ''
+      - run: echo "XCOMPILE=-Z doctest-xcompile" >> "${GITHUB_ENV}"
+        if: matrix.target != ''
+      - run: cargo test -v --workspace $XCOMPILE
+      - run: cargo test -v --workspace --release $XCOMPILE
+      - run: cargo test -v --workspace --release --all-features --exclude asm-test --tests
       # opt-level=0, opt-level=1, opt-level=s, opt-level=z fail to remove panic.
-      - run: cargo test --workspace --release --all-features --exclude asm-test --tests -- --test-threads=1
+      - run: cargo test -v --workspace --release --all-features --exclude asm-test --tests
         env:
           RUSTFLAGS: ${{ env.RUSTFLAGS }} -C opt-level=2
-      - run: cargo test --workspace -- --test-threads=1
+      # Use -Z build-std because the prebuilt libtest seems to be incompatible with LTO, causing miscompilation: https://gist.github.com/taiki-e/9713f8e02e8f9f852ccee8d6f089ec24
+      - run: |
+          cargo -Z build-std test -v --workspace --release --all-features --exclude asm-test --tests --target "${CARGO_BUILD_TARGET:-"$(rustc -Vv | grep host | sed 's/host: //')"}"
+        env:
+          CARGO_PROFILE_RELEASE_LTO: thin
+        if: startsWith(matrix.rust, 'nightly')
+      - run: |
+          cargo -Z build-std test -v --workspace --release --all-features --exclude asm-test --tests --target "${CARGO_BUILD_TARGET:-"$(rustc -Vv | grep host | sed 's/host: //')"}"
+        env:
+          CARGO_PROFILE_RELEASE_CODEGEN_UNITS: 1
+          CARGO_PROFILE_RELEASE_LTO: fat
+        if: startsWith(matrix.rust, 'nightly')
+      - run: cargo hack build -vv --workspace --ignore-private --feature-powerset --optional-deps --no-dev-deps
+      - run: cargo hack build -vv --workspace --ignore-private --feature-powerset --optional-deps --no-dev-deps
         env:
           RUSTFLAGS: ${{ env.RUSTFLAGS }} --cfg atomic_memcpy_unsafe_volatile
-      - run: cargo test --workspace --release --all-features --exclude asm-test --tests -- --test-threads=1
-        env:
-          RUSTFLAGS: ${{ env.RUSTFLAGS }} --cfg atomic_memcpy_unsafe_volatile
-      - run: cargo hack build --workspace --ignore-private --feature-powerset --optional-deps --no-dev-deps
-      - run: cargo hack build --workspace --ignore-private --feature-powerset --optional-deps --no-dev-deps
-        env:
-          RUSTFLAGS: ${{ env.RUSTFLAGS }} --cfg atomic_memcpy_unsafe_volatile
-      - run: cargo build --manifest-path tests/no-std/Cargo.toml --target thumbv7m-none-eabi
-      - run: cargo build --manifest-path tests/no-std/Cargo.toml --release --target thumbv7m-none-eabi
-      - run: cargo build --manifest-path tests/no-std/Cargo.toml --target thumbv6m-none-eabi
-      - run: cargo build --manifest-path tests/no-std/Cargo.toml --release --target thumbv6m-none-eabi
-      - run: cargo build --manifest-path tests/no-std/Cargo.toml --target riscv32i-unknown-none-elf
-      - run: cargo build --manifest-path tests/no-std/Cargo.toml --release --target riscv32i-unknown-none-elf
-      - run: cargo build --manifest-path tests/no-std/Cargo.toml --target riscv32imc-unknown-none-elf
-      - run: cargo build --manifest-path tests/no-std/Cargo.toml --release --target riscv32imc-unknown-none-elf
-      - run: cargo build --manifest-path tests/no-std/Cargo.toml --target riscv32imac-unknown-none-elf
-      - run: cargo build --manifest-path tests/no-std/Cargo.toml --release --target riscv32imac-unknown-none-elf
-      - run: cargo -Z build-std=core build --manifest-path tests/no-std/Cargo.toml --target riscv32imc-esp-espidf
-        if: startsWith(matrix.rust, 'nightly')
-      - run: cargo -Z build-std=core build --manifest-path tests/no-std/Cargo.toml --release --target riscv32imc-esp-espidf
-        if: startsWith(matrix.rust, 'nightly')
-      - run: cargo -Z build-std=core build --manifest-path tests/no-std/Cargo.toml --target msp430-none-elf
-        if: startsWith(matrix.rust, 'nightly')
-      - run: cargo -Z build-std=core build --manifest-path tests/no-std/Cargo.toml --release --target msp430-none-elf
-        if: startsWith(matrix.rust, 'nightly')
-
-  cross:
-    name: test (${{ matrix.target }})
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - target: aarch64-unknown-linux-gnu
-          - target: armv5te-unknown-linux-gnueabi
-          - target: i686-unknown-linux-gnu
-          - target: mips-unknown-linux-gnu
-    runs-on: ${{ matrix.os || 'ubuntu-latest' }}
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          persist-credentials: false
-      - uses: taiki-e/github-actions/install-rust@main
-      - uses: taiki-e/install-action@cross
-      - run: cross test --workspace --target ${{ matrix.target }} -- --test-threads=1
-      - run: cross test --workspace --release --target ${{ matrix.target }} -- --test-threads=1
-      - run: cross test --workspace --release --all-features --exclude asm-test --tests --target ${{ matrix.target }} -- --test-threads=1
+      - run: cargo build -v --manifest-path tests/no-std/Cargo.toml --target thumbv7m-none-eabi
+        if: matrix.target == ''
+      - run: cargo build -v --manifest-path tests/no-std/Cargo.toml --release --target thumbv7m-none-eabi
+        if: matrix.target == ''
+      - run: cargo build -v --manifest-path tests/no-std/Cargo.toml --target thumbv6m-none-eabi
+        if: matrix.target == ''
+      - run: cargo build -v --manifest-path tests/no-std/Cargo.toml --release --target thumbv6m-none-eabi
+        if: matrix.target == ''
+      - run: cargo build -v --manifest-path tests/no-std/Cargo.toml --target riscv32i-unknown-none-elf
+        if: matrix.target == ''
+      - run: cargo build -v --manifest-path tests/no-std/Cargo.toml --release --target riscv32i-unknown-none-elf
+        if: matrix.target == ''
+      - run: cargo build -v --manifest-path tests/no-std/Cargo.toml --target riscv32imc-unknown-none-elf
+        if: matrix.target == ''
+      - run: cargo build -v --manifest-path tests/no-std/Cargo.toml --release --target riscv32imc-unknown-none-elf
+        if: matrix.target == ''
+      - run: cargo build -v --manifest-path tests/no-std/Cargo.toml --target riscv32imac-unknown-none-elf
+        if: matrix.target == ''
+      - run: cargo build -v --manifest-path tests/no-std/Cargo.toml --release --target riscv32imac-unknown-none-elf
+        if: matrix.target == ''
+      - run: cargo -Z build-std=core build -v --manifest-path tests/no-std/Cargo.toml --target riscv32imc-esp-espidf
+        if: matrix.target == '' && startsWith(matrix.rust, 'nightly')
+      - run: cargo -Z build-std=core build -v --manifest-path tests/no-std/Cargo.toml --release --target riscv32imc-esp-espidf
+        if: matrix.target == '' && startsWith(matrix.rust, 'nightly')
+      - run: cargo -Z build-std=core build -v --manifest-path tests/no-std/Cargo.toml --target msp430-none-elf
+        if: matrix.target == '' && startsWith(matrix.rust, 'nightly')
+      - run: cargo -Z build-std=core build -v --manifest-path tests/no-std/Cargo.toml --release --target msp430-none-elf
+        if: matrix.target == '' && startsWith(matrix.rust, 'nightly')
 
   msrv:
     runs-on: ubuntu-latest
@@ -144,11 +155,11 @@ jobs:
       - uses: taiki-e/github-actions/install-rust@main
         with:
           component: miri
-      - run: cargo miri test --workspace -- --test-threads=1
+      - run: cargo miri test --workspace
         env:
           MIRIFLAGS: -Zmiri-check-number-validity -Zmiri-tag-raw-pointers -Zmiri-disable-isolation
           RUSTFLAGS: ${{ env.RUSTFLAGS }} -Z randomize-layout
-      - run: cargo miri test --workspace -- --test-threads=1
+      - run: cargo miri test --workspace
         env:
           MIRIFLAGS: -Zmiri-check-number-validity -Zmiri-symbolic-alignment-check -Zmiri-tag-raw-pointers -Zmiri-disable-isolation
           # -Zmiri-symbolic-alignment-check is incompatible with the code that does manual integer arithmetic to ensure alignment.
@@ -171,26 +182,53 @@ jobs:
         with:
           component: rust-src
       - run: |
-          cargo -Z build-std test --workspace --target "$(rustc -Vv | grep host | sed 's/host: //')" --tests -- --test-threads=1
+          cargo -Z build-std test --workspace --target "$(rustc -Vv | grep host | sed 's/host: //')"
         env:
+          RUSTDOCFLAGS: ${{ env.RUSTDOCFLAGS }} -Z sanitizer=${{ matrix.sanitizer }}
           RUSTFLAGS: ${{ env.RUSTFLAGS }} -Z sanitizer=${{ matrix.sanitizer }}
       - run: |
-          cargo -Z build-std test --workspace --release --target "$(rustc -Vv | grep host | sed 's/host: //')" --tests -- --test-threads=1
+          cargo -Z build-std test --workspace --release --target "$(rustc -Vv | grep host | sed 's/host: //')"
         env:
+          RUSTDOCFLAGS: ${{ env.RUSTDOCFLAGS }} -Z sanitizer=${{ matrix.sanitizer }}
+          RUSTFLAGS: ${{ env.RUSTFLAGS }} -Z sanitizer=${{ matrix.sanitizer }}
+      - run: |
+          cargo -Z build-std test --workspace --release --target "$(rustc -Vv | grep host | sed 's/host: //')"
+        env:
+          CARGO_PROFILE_RELEASE_LTO: thin
+          RUSTDOCFLAGS: ${{ env.RUSTDOCFLAGS }} -Z sanitizer=${{ matrix.sanitizer }}
+          RUSTFLAGS: ${{ env.RUSTFLAGS }} -Z sanitizer=${{ matrix.sanitizer }}
+      - run: |
+          cargo -Z build-std test --workspace --release --target "$(rustc -Vv | grep host | sed 's/host: //')"
+        env:
+          CARGO_PROFILE_RELEASE_CODEGEN_UNITS: 1
+          CARGO_PROFILE_RELEASE_LTO: fat
+          RUSTDOCFLAGS: ${{ env.RUSTDOCFLAGS }} -Z sanitizer=${{ matrix.sanitizer }}
           RUSTFLAGS: ${{ env.RUSTFLAGS }} -Z sanitizer=${{ matrix.sanitizer }}
 
   valgrind:
     env:
-      CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUNNER: valgrind --error-exitcode=1 --leak-check=full --show-leak-kinds=all
+      CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUNNER: valgrind --error-exitcode=1 --error-limit=no --leak-check=full --show-leak-kinds=all --track-origins=yes
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
           persist-credentials: false
       - uses: taiki-e/github-actions/install-rust@main
+        with:
+          component: rust-src
       - uses: taiki-e/install-action@valgrind
-      - run: cargo test --workspace -- --test-threads=1
-      - run: cargo test --workspace --release -- --test-threads=1
+      - run: cargo test --workspace
+      - run: cargo test --workspace --release
+      # Use -Z build-std because the prebuilt libtest seems to be incompatible with LTO, causing miscompilation: https://gist.github.com/taiki-e/9713f8e02e8f9f852ccee8d6f089ec24
+      - run: |
+          cargo -Z build-std test --workspace --release --target "$(rustc -Vv | grep host | sed 's/host: //')"
+        env:
+          CARGO_PROFILE_RELEASE_LTO: thin
+      - run: |
+          cargo -Z build-std test --workspace --release --target "$(rustc -Vv | grep host | sed 's/host: //')"
+        env:
+          CARGO_PROFILE_RELEASE_CODEGEN_UNITS: 1
+          CARGO_PROFILE_RELEASE_LTO: fat
 
   cov:
     runs-on: ubuntu-latest
@@ -202,7 +240,8 @@ jobs:
         with:
           component: llvm-tools-preview
       - uses: taiki-e/install-action@cargo-llvm-cov
-      - run: cargo llvm-cov --workspace --text --hide-instantiations -- --test-threads=1
+      - run: cargo llvm-cov --workspace
+      - run: cargo llvm-cov --workspace --text --no-run --hide-instantiations
       - run: cargo llvm-cov --workspace --text --no-run
 
   codegen:
@@ -270,8 +309,6 @@ jobs:
           persist-credentials: false
       - uses: taiki-e/github-actions/install-rust@main
       - run: cargo doc --workspace --document-private-items
-        env:
-          RUSTDOCFLAGS: -D warnings
 
   # This job doesn't actually test anything, but they're used to tell bors the
   # build completed, as there is no practical way to detect when a workflow is
@@ -284,7 +321,6 @@ jobs:
     if: github.event_name == 'push' && success()
     needs:
       - test
-      - cross
       - msrv
       # - asm
       - miri
