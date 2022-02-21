@@ -134,74 +134,96 @@ fn ordering() {
     }
 }
 
+// test for alignment smaller than usize
 #[test]
-fn unaligned() {
+fn small_alignment() {
     #[derive(Clone, Copy)]
     #[repr(C, align(8))]
     struct Align8<T>(T);
 
-    let x = UnsafeCell::new(Align8([0u8; 1024]));
-    assert_eq!(x.get() as usize % mem::align_of::<AtomicUsize>(), 0);
-    unsafe {
-        let ptr = x.get().cast::<u8>().add(1).cast::<[u8; 1000]>();
-        assert_ne!(ptr as usize % mem::align_of::<AtomicUsize>(), 0);
-        assert_eq!(atomic_load(ptr, Ordering::Relaxed).assume_init()[..], [0u8; 1000][..]);
-        atomic_store(ptr, [1u8; 1000], Ordering::Relaxed);
-        assert_eq!(atomic_load(ptr, Ordering::Relaxed).assume_init()[..], [1u8; 1000][..]);
+    macro_rules! test_small_alignment {
+        ($ty:ident) => {
+            unsafe {
+                let x = UnsafeCell::new(Align8::<[$ty; 1024]>([0; 1024]));
+                assert_eq!(x.get() as usize % mem::align_of::<AtomicUsize>(), 0);
+                let ptr = x.get().cast::<$ty>().add(1).cast::<[$ty; 1000]>();
+                assert_ne!(ptr as usize % mem::align_of::<AtomicUsize>(), 0);
+                assert_eq!(atomic_load(ptr, Ordering::Relaxed).assume_init()[..], [0; 1000][..]);
+                atomic_store(ptr, [1; 1000], Ordering::Relaxed);
+                assert_eq!(atomic_load(ptr, Ordering::Relaxed).assume_init()[..], [1; 1000][..]);
 
-        for i in 0..mem::size_of::<usize>() * 4 {
-            *x.get().cast::<u8>().add(i) = i as u8;
-        }
-        let mut ptr = x.get().cast::<u8>();
-        for i in 0..mem::size_of::<usize>() * 2 {
-            assert_eq!(ptr as usize % mem::align_of::<AtomicUsize>(), i % mem::size_of::<usize>());
-            assert_eq!(ptr.align_offset(mem::align_of::<AtomicUsize>()), {
-                let v = mem::size_of::<usize>() - i % mem::size_of::<usize>();
-                if v == mem::size_of::<usize>() {
-                    0
-                } else {
-                    v
+                for i in 0..mem::size_of::<usize>() * 4 {
+                    *x.get().cast::<$ty>().add(i) = i as $ty;
                 }
-            });
+                let mut ptr = x.get().cast::<$ty>();
+                for i in 0..mem::size_of::<usize>() * 2 {
+                    assert_eq!(
+                        ptr as usize % mem::align_of::<AtomicUsize>(),
+                        i * mem::size_of::<$ty>() % mem::size_of::<usize>()
+                    );
+                    assert_eq!(ptr.align_offset(mem::align_of::<AtomicUsize>()), {
+                        let v = i * mem::size_of::<$ty>() % mem::size_of::<usize>();
+                        if v == 0 {
+                            0
+                        } else {
+                            (mem::size_of::<usize>() - v) / mem::size_of::<$ty>()
+                        }
+                    });
 
-            let val =
-                atomic_load(ptr.cast::<[u8; mem::size_of::<usize>() * 2]>(), Ordering::Relaxed)
+                    let val = atomic_load(
+                        ptr.cast::<[$ty; mem::size_of::<usize>() * 2]>(),
+                        Ordering::Relaxed,
+                    )
                     .assume_init();
-            atomic_store(ptr.cast::<[u8; mem::size_of::<usize>() * 2]>(), val, Ordering::Relaxed);
-            assert_eq!(
-                val[..],
-                (i as u8..).take(mem::size_of::<usize>() * 2).collect::<Vec<_>>()[..]
-            );
+                    atomic_store(
+                        ptr.cast::<[$ty; mem::size_of::<usize>() * 2]>(),
+                        val,
+                        Ordering::Relaxed,
+                    );
+                    assert_eq!(
+                        val[..],
+                        (i as $ty..).take(mem::size_of::<usize>() * 2).collect::<Vec<_>>()[..]
+                    );
 
-            let val =
-                atomic_load(ptr.cast::<[u8; mem::size_of::<usize>() * 2 - 1]>(), Ordering::Relaxed)
+                    let val = atomic_load(
+                        ptr.cast::<[$ty; mem::size_of::<usize>() * 2 - 1]>(),
+                        Ordering::Relaxed,
+                    )
                     .assume_init();
-            atomic_store(
-                ptr.cast::<[u8; mem::size_of::<usize>() * 2 - 1]>(),
-                val,
-                Ordering::Relaxed,
-            );
-            assert_eq!(
-                val[..],
-                (i as u8..).take(mem::size_of::<usize>() * 2 - 1).collect::<Vec<_>>()[..]
-            );
+                    atomic_store(
+                        ptr.cast::<[$ty; mem::size_of::<usize>() * 2 - 1]>(),
+                        val,
+                        Ordering::Relaxed,
+                    );
+                    assert_eq!(
+                        val[..],
+                        (i as $ty..).take(mem::size_of::<usize>() * 2 - 1).collect::<Vec<_>>()[..]
+                    );
 
-            let val =
-                atomic_load(ptr.cast::<[u8; mem::size_of::<usize>() * 2 - 2]>(), Ordering::Relaxed)
+                    let val = atomic_load(
+                        ptr.cast::<[$ty; mem::size_of::<usize>() * 2 - 2]>(),
+                        Ordering::Relaxed,
+                    )
                     .assume_init();
-            atomic_store(
-                ptr.cast::<[u8; mem::size_of::<usize>() * 2 - 2]>(),
-                val,
-                Ordering::Relaxed,
-            );
-            assert_eq!(
-                val[..],
-                (i as u8..).take(mem::size_of::<usize>() * 2 - 2).collect::<Vec<_>>()[..]
-            );
+                    atomic_store(
+                        ptr.cast::<[$ty; mem::size_of::<usize>() * 2 - 2]>(),
+                        val,
+                        Ordering::Relaxed,
+                    );
+                    assert_eq!(
+                        val[..],
+                        (i as $ty..).take(mem::size_of::<usize>() * 2 - 2).collect::<Vec<_>>()[..]
+                    );
 
-            ptr = ptr.cast::<u8>().add(1).cast();
-        }
+                    ptr = ptr.cast::<$ty>().add(1).cast();
+                }
+            }
+        };
     }
+    test_small_alignment!(u8); // align 1
+    test_small_alignment!(u16); // align 2
+    #[cfg(target_pointer_width = "64")]
+    test_small_alignment!(u32); // align 4
 }
 
 #[test]
