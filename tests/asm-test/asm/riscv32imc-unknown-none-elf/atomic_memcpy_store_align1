@@ -106,7 +106,7 @@ asm_test::atomic_memcpy_store_align1::release:
  sw      a3, 48(sp)
  sw      a4, 44(sp)
  addi    a1, sp, 44
- addi    a2, zero, 32
+ li      a2, 32
  call    memcpy@plt
  lw      ra, 76(sp)
  addi    sp, sp, 80
@@ -203,7 +203,7 @@ asm_test::atomic_memcpy_store_align1::write_volatile_release_fence:
  or      a1, a1, a2
  sw      a1, 12(sp)
  addi    a1, sp, 12
- addi    a2, zero, 32
+ li      a2, 32
  call    memcpy@plt
  lw      ra, 44(sp)
  addi    sp, sp, 48

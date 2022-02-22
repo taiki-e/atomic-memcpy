@@ -34,8 +34,8 @@ asm_test::atomic_memcpy_load_align2::acquire:
  sh      a7, 28(a0)
  sh      a6, 30(a0)
  fence   r, rw
- lw      s1, 8(sp)
  lw      s0, 12(sp)
+ lw      s1, 8(sp)
  addi    sp, sp, 16
  ret
 asm_test::atomic_memcpy_load_align2::read_volatile_acquire_fence:
@@ -74,7 +74,7 @@ asm_test::atomic_memcpy_load_align2::read_volatile_acquire_fence:
  sh      a7, 28(a0)
  sh      a6, 30(a0)
  fence   r, rw
- lw      s1, 8(sp)
  lw      s0, 12(sp)
+ lw      s1, 8(sp)
  addi    sp, sp, 16
  ret

@@ -144,7 +144,6 @@ asm_test::atomic_memcpy_store_align1::release:
  cmp     edx, 3
  jb      .LBB2_3
  and     ecx, -4
- neg     ecx
 .LBB2_19:
  movzx   edx, byte, ptr, [esp, +, eax]
  mov     byte, ptr, [edi, +, eax], dl
@@ -155,7 +154,7 @@ asm_test::atomic_memcpy_store_align1::release:
  movzx   edx, byte, ptr, [esp, +, eax, +, 3]
  mov     byte, ptr, [edi, +, eax, +, 3], dl
  add     eax, 4
- add     ecx, 4
+ add     ecx, -4
  jne     .LBB2_19
 .LBB2_3:
  test    esi, esi

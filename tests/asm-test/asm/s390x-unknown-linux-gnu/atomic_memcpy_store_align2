@@ -76,7 +76,7 @@ asm_test::atomic_memcpy_store_align2::release:
  lmg     %r12, %r15, 384(%r15)
  br      %r14
 .LBB6_2:
- cgije   %r1, 0, .LBB6_27
+ cgije   %r1, 0, .LBB6_11
  lgr     %r4, %r2
  xihf    %r4, 4294967295
  xilf    %r4, 4294967295
@@ -118,31 +118,32 @@ asm_test::atomic_memcpy_store_align2::release:
  lgr     %r3, %r2
  sgr     %r3, %r0
  la      %r3, 64(%r3)
- clgijl  %r3, 8, .LBB6_18
- lay     %r0, -8(%r3)
- clgijl  %r0, 7, .LBB6_13
+ clgijhe %r3, 8, .LBB6_12
+ j       .LBB6_19
+.LBB6_11:
+ lghi    %r3, 64
 .LBB6_12:
  lghi    %r0, 7
-.LBB6_13:
- xihf    %r0, 4294967295
- xilf    %r0, 4294967295
+ sgr     %r0, %r3
+ lghi    %r4, -8
+ clgrjh  %r0, %r4, .LBB6_14
+ lghi    %r0, -8
+.LBB6_14:
  agr     %r0, %r3
  srlg    %r4, %r0, 3
  la      %r4, 1(%r4)
  tmll    %r4, 3
- je      .LBB6_16
+ je      .LBB6_17
  risbg   %r4, %r4, 62, 191, 0
- lcgr    %r4, %r4
-.LBB6_15:
+.LBB6_16:
  lg      %r5, 224(%r1, %r15)
  stg     %r5, 0(%r1, %r2)
  aghi    %r3, -8
- algfi   %r4, 1
  la      %r1, 8(%r1)
- jle     .LBB6_15
-.LBB6_16:
- clgijl  %r0, 24, .LBB6_18
+ brctg   %r4, .LBB6_16
 .LBB6_17:
+ clgijl  %r0, 24, .LBB6_19
+.LBB6_18:
  lg      %r0, 224(%r1, %r15)
  stg     %r0, 0(%r1, %r2)
  lg      %r0, 232(%r1, %r15)
@@ -153,19 +154,18 @@ asm_test::atomic_memcpy_store_align2::release:
  stg     %r0, 24(%r1, %r2)
  aghi    %r3, -32
  la      %r1, 32(%r1)
- clgijh  %r3, 7, .LBB6_17
-.LBB6_18:
- cgije   %r3, 0, .LBB6_26
+ clgijh  %r3, 7, .LBB6_18
+.LBB6_19:
+ cgije   %r3, 0, .LBB6_27
  lay     %r4, -1(%r3)
  risbg   %r0, %r3, 62, 191, 0
- clgijl  %r4, 3, .LBB6_23
+ clgijl  %r4, 3, .LBB6_24
+ nill    %r3, 65532
  lcgr    %r4, %r1
  lgr     %r5, %r2
  agr     %r5, %r1
  la      %r1, 224(%r1, %r15)
- nill    %r3, 65532
- lcgr    %r3, %r3
-.LBB6_21:
+.LBB6_22:
  lb      %r14, 0(%r1)
  stc     %r14, 0(%r5)
  lb      %r14, 1(%r1)
@@ -176,28 +176,23 @@ asm_test::atomic_memcpy_store_align2::release:
  stc     %r14, 3(%r5)
  aghi    %r4, -4
  la      %r5, 4(%r5)
- la      %r3, 4(%r3)
+ aghi    %r3, -4
  la      %r1, 4(%r1)
- cgijlh  %r3, 0, .LBB6_21
+ jne     .LBB6_22
  lcgr    %r1, %r4
-.LBB6_23:
- cgije   %r0, 0, .LBB6_26
+.LBB6_24:
+ cgije   %r0, 0, .LBB6_27
  agr     %r2, %r1
  la      %r1, 224(%r1, %r15)
-.LBB6_25:
+.LBB6_26:
  lb      %r3, 0(%r1)
  stc     %r3, 0(%r2)
  la      %r2, 1(%r2)
  la      %r1, 1(%r1)
- brctg   %r0, .LBB6_25
-.LBB6_26:
+ brctg   %r0, .LBB6_26
+.LBB6_27:
  lmg     %r12, %r15, 384(%r15)
  br      %r14
-.LBB6_27:
- lghi    %r3, 64
- lay     %r0, -8(%r3)
- clgijhe %r0, 7, .LBB6_12
- j       .LBB6_13
 asm_test::atomic_memcpy_store_align2::write_volatile_release_fence:
  stmg    %r14, %r15, 112(%r15)
  aghi    %r15, -224

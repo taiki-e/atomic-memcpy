@@ -1,17 +1,17 @@
 asm_test::atomic_memcpy_store_align1::release:
  ldp     q0, q1, [x1]
+ add     x8, x0, #7
+ and     x9, x8, #0xfffffffffffffff8
  ldp     q2, q3, [x1, #32]
  stp     q0, q1, [sp, #-128]!
  stp     q2, q3, [sp, #32]
- dmb     ish
- ldp     q0, q1, [sp]
- add     x8, x0, #7
- and     x9, x8, #0xfffffffffffffff8
  sub     x8, x9, x0
- stp     q0, q1, [sp, #64]
- ldp     q0, q1, [sp, #32]
+ dmb     ish
  cmp     x8, #65
- stp     q0, q1, [sp, #96]
+ ldp     q0, q1, [sp]
+ ldp     q2, q3, [sp, #32]
+ stp     q0, q1, [sp, #64]
+ stp     q2, q3, [sp, #96]
  b.lo    .LBB2_2
  ldrb    w8, [sp, #64]
  strb    w8, [x0]

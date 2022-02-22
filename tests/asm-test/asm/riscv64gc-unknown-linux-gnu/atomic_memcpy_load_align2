@@ -4,7 +4,7 @@ asm_test::atomic_memcpy_load_align2::acquire:
  addi    a2, a1, 7
  andi    a6, a2, -8
  sub     t0, a6, a1
- addi    a3, zero, 65
+ li      a3, 65
  bltu    t0, a3, .LBB4_2
  lh      a2, 62(a1)
  sh      a2, 70(sp)
@@ -86,14 +86,14 @@ asm_test::atomic_memcpy_load_align2::acquire:
  bgeu    a3, a2, .LBB4_4
  sub     a2, a1, a6
  addi    a3, a2, 64
- addi    a2, zero, 8
+ li      a2, 8
  bgeu    a3, a2, .LBB4_7
  j       .LBB4_9
 .LBB4_6:
- addi    a3, zero, 64
+ li      a3, 64
 .LBB4_7:
  addi    a6, sp, 8
- addi    a7, zero, 7
+ li      a7, 7
 .LBB4_8:
  add     a2, a1, t0
  ld      a2, 0(a2)
@@ -130,7 +130,7 @@ asm_test::atomic_memcpy_load_align2::acquire:
  bnez    a3, .LBB4_11
 .LBB4_12:
  addi    a1, sp, 8
- addi    a2, zero, 64
+ li      a2, 64
  call    memcpy@plt
  fence   r, rw
  ld      ra, 72(sp)
@@ -226,18 +226,18 @@ asm_test::atomic_memcpy_load_align2::read_volatile_acquire_fence:
  ld      a1, 32(sp)
  sh      a1, 62(a0)
  fence   r, rw
- ld      s11, 40(sp)
- ld      s10, 48(sp)
- ld      s9, 56(sp)
- ld      s8, 64(sp)
- ld      s7, 72(sp)
- ld      s6, 80(sp)
- ld      s5, 88(sp)
- ld      s4, 96(sp)
- ld      s3, 104(sp)
- ld      s2, 112(sp)
- ld      s1, 120(sp)
- ld      s0, 128(sp)
  ld      ra, 136(sp)
+ ld      s0, 128(sp)
+ ld      s1, 120(sp)
+ ld      s2, 112(sp)
+ ld      s3, 104(sp)
+ ld      s4, 96(sp)
+ ld      s5, 88(sp)
+ ld      s6, 80(sp)
+ ld      s7, 72(sp)
+ ld      s8, 64(sp)
+ ld      s9, 56(sp)
+ ld      s10, 48(sp)
+ ld      s11, 40(sp)
  addi    sp, sp, 144
  ret

@@ -1,12 +1,12 @@
 asm_test::atomic_memcpy_store_align4::release:
  ldp     q0, q1, [x1]
+ tst     x0, #0x7
  ldp     q2, q3, [x1, #32]
  stp     q0, q1, [sp, #-128]!
  stp     q2, q3, [sp, #32]
  dmb     ish
  ldp     q0, q1, [sp]
  ldp     q2, q3, [sp, #32]
- tst     x0, #0x7
  stp     q0, q1, [sp, #64]
  stp     q2, q3, [sp, #96]
  b.eq    .LBB10_2

@@ -164,7 +164,7 @@ asm_test::atomic_memcpy_store_align4::write_volatile_release_fence:
  or      a1, a1, a2
  sd      a1, 8(sp)
  addi    a1, sp, 8
- addi    a2, zero, 64
+ li      a2, 64
  call    memcpy@plt
  ld      ra, 72(sp)
  addi    sp, sp, 80

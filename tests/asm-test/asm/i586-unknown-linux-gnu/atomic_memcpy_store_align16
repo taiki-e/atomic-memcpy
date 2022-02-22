@@ -4,17 +4,17 @@ asm_test::atomic_memcpy_store_align16::release:
  push    edi
  push    esi
  sub     esp, 8
- mov     eax, dword, ptr, [esp, +, 32]
- mov     ecx, dword, ptr, [eax]
- mov     dword, ptr, [esp, +, 4], ecx
- mov     ecx, dword, ptr, [eax, +, 4]
- mov     dword, ptr, [esp], ecx
- mov     esi, dword, ptr, [eax, +, 8]
- mov     edi, dword, ptr, [eax, +, 12]
- mov     ebx, dword, ptr, [eax, +, 16]
- mov     ebp, dword, ptr, [eax, +, 20]
- mov     edx, dword, ptr, [eax, +, 24]
- mov     ecx, dword, ptr, [eax, +, 28]
+ mov     ecx, dword, ptr, [esp, +, 32]
+ mov     eax, dword, ptr, [ecx]
+ mov     dword, ptr, [esp, +, 4], eax
+ mov     eax, dword, ptr, [ecx, +, 4]
+ mov     dword, ptr, [esp], eax
+ mov     esi, dword, ptr, [ecx, +, 8]
+ mov     edi, dword, ptr, [ecx, +, 12]
+ mov     ebx, dword, ptr, [ecx, +, 16]
+ mov     ebp, dword, ptr, [ecx, +, 20]
+ mov     edx, dword, ptr, [ecx, +, 24]
+ mov     ecx, dword, ptr, [ecx, +, 28]
  #MEMBARRIER
  mov     eax, dword, ptr, [esp, +, 28]
  mov     dword, ptr, [eax, +, 28], ecx

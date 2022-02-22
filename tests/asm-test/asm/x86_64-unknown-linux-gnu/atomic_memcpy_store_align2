@@ -17,9 +17,9 @@ asm_test::atomic_memcpy_store_align2::release:
  movaps  xmmword, ptr, [rsp, +, 32], xmm2
  movaps  xmmword, ptr, [rsp, +, 16], xmm1
  movaps  xmmword, ptr, [rsp], xmm0
- lea     r8, [rdi, +, 7]
- and     r8, -8
- mov     rax, r8
+ lea     rcx, [rdi, +, 7]
+ and     rcx, -8
+ mov     rax, rcx
  sub     rax, rdi
  cmp     rax, 64
  jbe     .LBB6_1
@@ -92,71 +92,72 @@ asm_test::atomic_memcpy_store_align2::release:
 .LBB6_1:
  test    rax, rax
  je      .LBB6_2
- mov     rcx, rdi
- not     rcx
- add     rcx, r8
- mov     r9d, eax
- and     r9d, 3
+ mov     rdx, rdi
+ not     rdx
+ add     rcx, rdx
+ mov     r8d, eax
+ and     r8d, 3
  cmp     rcx, 3
  jae     .LBB6_5
+ mov     ecx, 64
  xor     esi, esi
- jmp     .LBB6_7
+ test    r8, r8
+ jne     .LBB6_9
+ jmp     .LBB6_12
 .LBB6_2:
  mov     ecx, 64
- jmp     .LBB6_11
+ jmp     .LBB6_13
 .LBB6_5:
- mov     r10, rax
- and     r10, -4
- xor     edx, edx
-.LBB6_6:
- movzx   ecx, byte, ptr, [rsp, +, rdx]
- mov     byte, ptr, [rdi, +, rdx], cl
- movzx   ecx, byte, ptr, [rsp, +, rdx, +, 1]
- mov     byte, ptr, [rdi, +, rdx, +, 1], cl
- movzx   ecx, byte, ptr, [rsp, +, rdx, +, 2]
- mov     byte, ptr, [rdi, +, rdx, +, 2], cl
- lea     rsi, [rdx, +, 4]
- movzx   ecx, byte, ptr, [rsp, +, rdx, +, 3]
- mov     byte, ptr, [rdi, +, rdx, +, 3], cl
- mov     rdx, rsi
- cmp     r10, rsi
- jne     .LBB6_6
-.LBB6_7:
- test    r9, r9
- je      .LBB6_10
- lea     r10, [rdi, +, rsi]
- lea     rcx, [rsp, +, rsi]
+ mov     rcx, rax
+ and     rcx, -4
  xor     esi, esi
+.LBB6_6:
+ movzx   edx, byte, ptr, [rsp, +, rsi]
+ mov     byte, ptr, [rdi, +, rsi], dl
+ movzx   edx, byte, ptr, [rsp, +, rsi, +, 1]
+ mov     byte, ptr, [rdi, +, rsi, +, 1], dl
+ movzx   edx, byte, ptr, [rsp, +, rsi, +, 2]
+ mov     byte, ptr, [rdi, +, rsi, +, 2], dl
+ movzx   edx, byte, ptr, [rsp, +, rsi, +, 3]
+ mov     byte, ptr, [rdi, +, rsi, +, 3], dl
+ add     rsi, 4
+ cmp     rcx, rsi
+ jne     .LBB6_6
+ mov     ecx, 64
+ sub     rcx, rsi
+ test    r8, r8
+ je      .LBB6_12
 .LBB6_9:
- movzx   edx, byte, ptr, [rcx, +, rsi]
- mov     byte, ptr, [r10, +, rsi], dl
- add     rsi, 1
- cmp     r9, rsi
- jne     .LBB6_9
+ lea     r9, [rdi, +, rsi]
+ lea     r10, [rsp, +, rsi]
+ xor     esi, esi
 .LBB6_10:
- mov     rcx, rdi
- sub     rcx, r8
- add     rcx, 64
+ movzx   edx, byte, ptr, [r10, +, rsi]
+ mov     byte, ptr, [r9, +, rsi], dl
+ add     rsi, 1
+ cmp     r8, rsi
+ jne     .LBB6_10
+ sub     rcx, rsi
+.LBB6_12:
  cmp     rcx, 8
- jb      .LBB6_12
-.LBB6_11:
+ jb      .LBB6_14
+.LBB6_13:
  mov     rdx, qword, ptr, [rsp, +, rax]
  mov     qword, ptr, [rdi, +, rax], rdx
  add     rcx, -8
  add     rax, 8
  cmp     rcx, 7
- ja      .LBB6_11
-.LBB6_12:
+ ja      .LBB6_13
+.LBB6_14:
  test    rcx, rcx
- je      .LBB6_19
+ je      .LBB6_21
  lea     rdx, [rcx, -, 1]
  mov     esi, ecx
  and     esi, 3
  cmp     rdx, 3
- jb      .LBB6_16
+ jb      .LBB6_18
  and     rcx, -4
- neg     rcx
-.LBB6_15:
+.LBB6_17:
  movzx   edx, byte, ptr, [rsp, +, rax]
  mov     byte, ptr, [rdi, +, rax], dl
  movzx   edx, byte, ptr, [rsp, +, rax, +, 1]
@@ -166,21 +167,21 @@ asm_test::atomic_memcpy_store_align2::release:
  movzx   edx, byte, ptr, [rsp, +, rax, +, 3]
  mov     byte, ptr, [rdi, +, rax, +, 3], dl
  add     rax, 4
- add     rcx, 4
- jne     .LBB6_15
-.LBB6_16:
+ add     rcx, -4
+ jne     .LBB6_17
+.LBB6_18:
  test    rsi, rsi
- je      .LBB6_19
+ je      .LBB6_21
  add     rdi, rax
  add     rax, rsp
  xor     ecx, ecx
-.LBB6_18:
+.LBB6_20:
  movzx   edx, byte, ptr, [rax, +, rcx]
  mov     byte, ptr, [rdi, +, rcx], dl
  add     rcx, 1
  cmp     rsi, rcx
- jne     .LBB6_18
-.LBB6_19:
+ jne     .LBB6_20
+.LBB6_21:
  add     rsp, 136
  ret
 asm_test::atomic_memcpy_store_align2::write_volatile_release_fence:

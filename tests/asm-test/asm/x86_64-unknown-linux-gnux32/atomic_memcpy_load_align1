@@ -166,7 +166,6 @@ asm_test::atomic_memcpy_load_align1::acquire:
  cmp     r8d, 3
  jb      .LBB0_16
  and     edx, -4
- neg     edx
 .LBB0_15:
  movzx   ecx, byte, ptr, [esi, +, ebx]
  mov     byte, ptr, [esp, +, ebx], cl
@@ -177,7 +176,7 @@ asm_test::atomic_memcpy_load_align1::acquire:
  movzx   ecx, byte, ptr, [esi, +, ebx, +, 3]
  mov     byte, ptr, [esp, +, ebx, +, 3], cl
  add     ebx, 4
- add     edx, 4
+ add     edx, -4
  jne     .LBB0_15
 .LBB0_16:
  test    edi, edi

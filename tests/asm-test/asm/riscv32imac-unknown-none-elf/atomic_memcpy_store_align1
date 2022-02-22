@@ -106,7 +106,7 @@ asm_test::atomic_memcpy_store_align1::release:
  addi    a1, a0, 3
  andi    a6, a1, -4
  sub     a1, a6, a0
- addi    a4, zero, 33
+ li      a4, 33
  sw      a3, 32(sp)
  bltu    a1, a4, .LBB2_2
  lb      a1, 32(sp)
@@ -190,14 +190,14 @@ asm_test::atomic_memcpy_store_align1::release:
  bgeu    a4, a2, .LBB2_4
  sub     a2, a0, a6
  addi    a2, a2, 32
- addi    a3, zero, 4
+ li      a3, 4
  bgeu    a2, a3, .LBB2_7
  j       .LBB2_9
 .LBB2_6:
- addi    a2, zero, 32
+ li      a2, 32
 .LBB2_7:
  addi    a6, sp, 32
- addi    a7, zero, 3
+ li      a7, 3
 .LBB2_8:
  add     a5, a6, a1
  lbu     t0, 1(a5)
@@ -249,7 +249,7 @@ asm_test::atomic_memcpy_store_align1::release:
  sw      a1, 40(sp)
 .LBB4_3:
  addi    a1, sp, 12
- addi    a2, zero, 32
+ li      a2, 32
  call    memcpy@plt
  fence   r, rw
  lw      ra, 44(sp)
@@ -366,7 +366,7 @@ asm_test::atomic_memcpy_store_align1::write_volatile_release_fence:
  or      a1, a1, a2
  sw      a1, 12(sp)
  addi    a1, sp, 12
- addi    a2, zero, 32
+ li      a2, 32
  call    memcpy@plt
  lw      ra, 44(sp)
  addi    sp, sp, 48
@@ -390,7 +390,7 @@ asm_test::atomic_memcpy_store_align1::write_volatile_release_fence:
  sw      a1, 40(sp)
 .LBB4_3:
  addi    a1, sp, 12
- addi    a2, zero, 32
+ li      a2, 32
  call    memcpy@plt
  fence   r, rw
  lw      ra, 44(sp)

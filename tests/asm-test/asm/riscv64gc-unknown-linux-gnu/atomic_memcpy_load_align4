@@ -55,7 +55,7 @@ asm_test::atomic_memcpy_load_align4::acquire:
  sd      a1, 64(sp)
 .LBB8_3:
  addi    a1, sp, 8
- addi    a2, zero, 64
+ li      a2, 64
  call    memcpy@plt
  fence   r, rw
  ld      ra, 72(sp)
@@ -98,7 +98,7 @@ asm_test::atomic_memcpy_load_align4::read_volatile_acquire_fence:
  sw      a7, 56(a0)
  sw      a6, 60(a0)
  fence   r, rw
- ld      s1, 0(sp)
  ld      s0, 8(sp)
+ ld      s1, 0(sp)
  addi    sp, sp, 16
  ret
