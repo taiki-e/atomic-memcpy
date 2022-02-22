@@ -60,14 +60,13 @@ jobs:
           # msp430-none-elf: 16-bit, does not support atomic at all
           target: thumbv7m-none-eabi,thumbv6m-none-eabi,riscv32i-unknown-none-elf,riscv32imc-unknown-none-elf,riscv32imac-unknown-none-elf
       - uses: taiki-e/install-action@cargo-hack
+      - uses: taiki-e/install-action@cargo-minimal-versions
       - uses: taiki-e/setup-cross-toolchain@main
         with:
           target: ${{ matrix.target }}
         if: matrix.target != ''
-      - run: echo "XCOMPILE=-Z doctest-xcompile" >> "${GITHUB_ENV}"
-        if: matrix.target != ''
-      - run: cargo test -v --workspace $XCOMPILE
-      - run: cargo test -v --workspace --release $XCOMPILE
+      - run: cargo test -v --workspace $DOCTEST_XCOMPILE
+      - run: cargo test -v --workspace --release $DOCTEST_XCOMPILE
       - run: cargo test -v --workspace --release --all-features --exclude asm-test --tests
       # opt-level=0, opt-level=1, opt-level=s, opt-level=z fail to remove panic.
       - run: cargo test -v --workspace --release --all-features --exclude asm-test --tests
@@ -117,6 +116,8 @@ jobs:
         if: matrix.target == '' && startsWith(matrix.rust, 'nightly')
       - run: cargo -Z build-std=core build -v --manifest-path tests/no-std/Cargo.toml --release --target msp430-none-elf
         if: matrix.target == '' && startsWith(matrix.rust, 'nightly')
+      - run: cargo minimal-versions build -vv --workspace --all-features --ignore-private
+        if: startsWith(matrix.rust, 'nightly')
 
   msrv:
     runs-on: ubuntu-latest
@@ -217,15 +218,15 @@ jobs:
         with:
           component: rust-src
       - uses: taiki-e/install-action@valgrind
-      - run: cargo test -v --workspace
-      - run: cargo test -v --workspace --release
+      - run: cargo test -v --workspace -Z doctest-xcompile
+      - run: cargo test -v --workspace --release -Z doctest-xcompile
       # Use -Z build-std because the prebuilt libtest seems to be incompatible with LTO, causing miscompilation: https://gist.github.com/taiki-e/9713f8e02e8f9f852ccee8d6f089ec24
       - run: |
-          cargo -Z build-std test -v --workspace --release --target "$(rustc -Vv | grep host | sed 's/host: //')"
+          cargo -Z build-std test -v --workspace --release --tests --target "$(rustc -Vv | grep host | sed 's/host: //')"
         env:
           CARGO_PROFILE_RELEASE_LTO: thin
       - run: |
-          cargo -Z build-std test -v --workspace --release --target "$(rustc -Vv | grep host | sed 's/host: //')"
+          cargo -Z build-std test -v --workspace --release --tests --target "$(rustc -Vv | grep host | sed 's/host: //')"
         env:
           CARGO_PROFILE_RELEASE_CODEGEN_UNITS: 1
           CARGO_PROFILE_RELEASE_LTO: fat
@@ -289,14 +290,10 @@ jobs:
       - uses: taiki-e/github-actions/install-rust@main
         with:
           component: clippy,rustfmt
-      - uses: taiki-e/install-action@cargo-hack
-      - uses: taiki-e/install-action@cargo-minimal-versions
       - uses: taiki-e/install-action@shellcheck
       - run: cargo fmt --all --check
         if: always()
       - run: cargo clippy --workspace --all-targets
-        if: always()
-      - run: cargo minimal-versions build --workspace --ignore-private
         if: always()
       - run: shellcheck $(git ls-files '*.sh')
         if: always()
