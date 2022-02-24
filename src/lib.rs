@@ -211,20 +211,6 @@ mod imp {
         sync::atomic::{AtomicU16, AtomicUsize, Ordering},
     };
 
-    #[cfg(not(atomic_memcpy_symbolic_alignment_check_compat))]
-    #[cfg(target_pointer_width = "32")]
-    type Half = u16;
-    #[cfg(not(atomic_memcpy_symbolic_alignment_check_compat))]
-    #[cfg(target_pointer_width = "32")]
-    type AtomicHalf = AtomicU16;
-
-    #[cfg(not(atomic_memcpy_symbolic_alignment_check_compat))]
-    #[cfg(target_pointer_width = "64")]
-    type Half = u32;
-    #[cfg(not(atomic_memcpy_symbolic_alignment_check_compat))]
-    #[cfg(target_pointer_width = "64")]
-    type AtomicHalf = AtomicU32;
-
     // Boundary to make the fields of LoadState private.
     //
     // Note that this is not a complete safe/unsafe boundary[1], since it is still
@@ -341,32 +327,6 @@ mod imp {
                     }
                 }
             }
-
-            /// # Safety
-            ///
-            /// - both `self.src` and `self.result` must be properly aligned for `Half`.
-            /// - the remaining bytes is greater than or equal to `size_of::<Half>()`.
-            #[cfg(not(atomic_memcpy_symbolic_alignment_check_compat))]
-            #[cfg(not(target_pointer_width = "16"))]
-            #[cfg_attr(feature = "inline-always", inline(always))]
-            #[cfg_attr(not(feature = "inline-always"), inline)]
-            pub(super) unsafe fn atomic_load_half(&mut self) {
-                use super::{AtomicHalf, Half};
-                debug_assert!(self.remaining() >= mem::size_of::<Half>());
-                // SAFETY:
-                // - the caller must guarantee that both `src` and `dst` are properly aligned for `Half`.
-                // - the caller must guarantee that the remaining bytes is greater than
-                //   or equal to `size_of::<Half>()`.
-                // Therefore, due to `LoadState`'s invariant:
-                // - `src` is valid to atomic read of `Half`.
-                // - `result` is valid to write of `Half`.
-                unsafe {
-                    let val = self.src::<AtomicHalf>().load(Ordering::Relaxed);
-                    self.result::<Half>().write(val);
-                    // SAFETY: we've filled `size_of::<Half>()` bytes.
-                    self.advance(mem::size_of::<Half>());
-                }
-            }
         }
     }
 
@@ -420,8 +380,6 @@ mod imp {
 
     Whether to choose Branch 1 or Branch 3/4/5 when `T` is small is currently based on a rough heuristic based on simple benchmarks on x86_64.
 
-    TODO: Update description to include additional optimization in Branch 1.
-
     [p1478r1]: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/p1478r1.html
     */
     #[cfg_attr(feature = "inline-always", inline(always))]
@@ -452,60 +410,6 @@ mod imp {
             && mem::size_of::<T>() >= mem::size_of::<usize>() * 4
         {
             let mut state = load::LoadState::new(result.as_mut_ptr(), src);
-            // -Zmiri-symbolic-alignment-check is incompatible with the code that does manual integer arithmetic to ensure alignment.
-            #[cfg(not(atomic_memcpy_symbolic_alignment_check_compat))]
-            #[cfg(not(target_pointer_width = "16"))]
-            {
-                // Since the caller guarantees that the pointer is properly aligned,
-                // if `T` has an alignment of half of usize, there are only two
-                // patterns: read as usize from the first byte, or read as usize
-                // after reading `usize / 2` bytes.
-                //
-                // on 64-bit:
-                // | 8 | 8 | 8 | 4 |
-                // | 4 | 8 | 8 | 8 |
-                // or
-                // | 8 | 8 | 8 |
-                // | 4 | 8 | 8 | 4 |
-                //
-                // Handling this case manually can reduce the number of instructions
-                // significantly compared to using align_offset.
-                //
-                // TODO: This may not be necessary if the call is well inlined.
-                if mem::align_of::<T>() >= mem::align_of::<Half>() {
-                    if src as usize % mem::size_of::<usize>() == 0 {
-                        // SAFETY:
-                        // - we've checked that `src` is properly aligned for `usize`.
-                        // - the remaining bytes is greater than or equal to `size_of::<usize>()`.
-                        unsafe { state.atomic_load_usize_to_end() }
-                    } else {
-                        debug_assert_eq!(
-                            src as usize % mem::size_of::<usize>(),
-                            mem::size_of::<Half>()
-                        );
-                        // SAFETY:
-                        // - the caller must guarantee that `src` is properly aligned for `T`.
-                        // - `T` has an alignment greater than or equal to `Half`.
-                        // - the remaining bytes is greater than or equal to `size_of::<usize>()`.
-                        unsafe {
-                            state.atomic_load_half();
-                            // SAFETY: we've advanced `size_of::<Half>()` bytes,
-                            // so now `state.src` is definitely aligned.
-                            state.atomic_load_usize_to_end();
-                        }
-                    }
-                    // Load remaining bytes.
-                    if state.remaining() != 0 {
-                        debug_assert_eq!(state.remaining(), mem::size_of::<Half>());
-                        // SAFETY:
-                        // - the caller must guarantee that `src` is properly aligned for `T`.
-                        // - `T` has an alignment greater than or equal to `Half`.
-                        // - the remaining bytes is equal to `size_of::<Half>()`.
-                        unsafe { state.atomic_load_half() }
-                    }
-                    return result;
-                }
-            }
             let offset = (src as *const u8).align_offset(mem::align_of::<AtomicUsize>());
             // Note: align_offset may returns usize::MAX: https://github.com/rust-lang/rust/issues/62420
             if state.remaining() >= offset {
@@ -706,32 +610,6 @@ mod imp {
                     }
                 }
             }
-
-            /// # Safety
-            ///
-            /// - both `self.src` and `self.dst` must be properly aligned for `Half`.
-            /// - the remaining bytes is greater than or equal to `size_of::<Half>()`.
-            #[cfg(not(atomic_memcpy_symbolic_alignment_check_compat))]
-            #[cfg(not(target_pointer_width = "16"))]
-            #[cfg_attr(feature = "inline-always", inline(always))]
-            #[cfg_attr(not(feature = "inline-always"), inline)]
-            pub(super) unsafe fn atomic_store_half(&mut self) {
-                use super::{AtomicHalf, Half};
-                debug_assert!(self.remaining() >= mem::size_of::<Half>());
-                // SAFETY:
-                // - the caller must guarantee that both `src` and `dst` is properly aligned for `Half`.
-                // - the caller must guarantee that the remaining bytes is greater than
-                //   or equal to `size_of::<Half>()`.
-                // Therefore, due to `StoreState`'s invariant:
-                // - `src` is valid to read of `Half`.
-                // - `dst` is valid to atomic write of `Half`.
-                unsafe {
-                    let val = self.src::<Half>().read();
-                    self.dst::<AtomicHalf>().store(val, Ordering::Relaxed);
-                    // SAFETY: we've filled `size_of::<Half>()` bytes.
-                    self.advance(mem::size_of::<Half>());
-                }
-            }
         }
     }
 
@@ -786,45 +664,6 @@ mod imp {
             && mem::size_of::<T>() >= mem::size_of::<usize>() * 4
         {
             let mut state = store::StoreState::new(dst, &*val);
-            // See the `atomic_load` function for the detailed comment.
-            #[cfg(not(atomic_memcpy_symbolic_alignment_check_compat))]
-            #[cfg(not(target_pointer_width = "16"))]
-            {
-                if mem::align_of::<T>() >= mem::align_of::<Half>() {
-                    if dst as usize % mem::size_of::<usize>() == 0 {
-                        // SAFETY:
-                        // - we've checked that `dst` is properly aligned for `usize`.
-                        // - the remaining bytes is greater than or equal to `size_of::<usize>()`.
-                        unsafe { state.atomic_store_usize_to_end() }
-                    } else {
-                        debug_assert_eq!(
-                            dst as usize % mem::size_of::<usize>(),
-                            mem::size_of::<Half>()
-                        );
-                        // SAFETY:
-                        // - the caller must guarantee that `dst` is properly aligned for `T`.
-                        // - `T` has an alignment greater than or equal to `Half`.
-                        // - the remaining bytes is greater than or equal to `size_of::<usize>()`.
-                        unsafe {
-                            state.atomic_store_half();
-                            // SAFETY: we've advanced `size_of::<Half>()` bytes,
-                            // so now `state.dst` is definitely aligned.
-                            state.atomic_store_usize_to_end();
-                        }
-                    }
-                    // Store remaining bytes.
-                    if state.remaining() != 0 {
-                        debug_assert_eq!(state.remaining(), mem::size_of::<Half>());
-                        // SAFETY:
-                        // - the caller must guarantee that `src` is properly aligned for `T`.
-                        // - `T` has an alignment greater than or equal to `Half`.
-                        // - the remaining bytes is equal to `size_of::<Half>()`.
-                        unsafe { state.atomic_store_half() }
-                    }
-                    mem::forget(guard);
-                    return;
-                }
-            }
             let offset = (dst as *mut u8).align_offset(mem::align_of::<AtomicUsize>());
             // Note: align_offset may returns usize::MAX: https://github.com/rust-lang/rust/issues/62420
             if state.remaining() >= offset {

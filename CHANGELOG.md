@@ -10,6 +10,8 @@ Note: In this file, do not use the hard wrap in the middle of a sentence for com
 
 ## [Unreleased]
 
+- Fix compatibility with `-Zmiri-symbolic-alignment-check`.
+
 ## [0.1.1] - 2022-02-13
 
 - Fix "unsupported operation: unable to turn pointer into raw bytes" Miri error. ([#1](https://github.com/taiki-e/atomic-memcpy/pull/1))

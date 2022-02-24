@@ -80,7 +80,7 @@ macro_rules! b {
         let val1 = black_box($v);
         let val2 = black_box($v);
         $b.iter(|| {
-            let v = black_box(SendSync(UnsafeCell::new(val1)));
+            let v = SendSync(UnsafeCell::new(val1));
             $bench_fn(&v, val2);
             v
         });
