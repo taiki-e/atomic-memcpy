@@ -97,17 +97,17 @@ jobs:
       - run: cargo build -v --manifest-path tests/no-std/Cargo.toml --release --target thumbv6m-none-eabi
         if: matrix.target == ''
       - run: cargo build -v --manifest-path tests/no-std/Cargo.toml --target riscv32i-unknown-none-elf
-        if: matrix.target == ''
+        if: matrix.target == '' && matrix.rust != 'stable' # TODO: cfg(target_has_atomic) requires Rust 1.60.
       - run: cargo build -v --manifest-path tests/no-std/Cargo.toml --release --target riscv32i-unknown-none-elf
-        if: matrix.target == ''
+        if: matrix.target == '' && matrix.rust != 'stable' # TODO: cfg(target_has_atomic) requires Rust 1.60.
       - run: cargo build -v --manifest-path tests/no-std/Cargo.toml --target riscv32imc-unknown-none-elf
-        if: matrix.target == ''
+        if: matrix.target == '' && matrix.rust != 'stable' # TODO: cfg(target_has_atomic) requires Rust 1.60.
       - run: cargo build -v --manifest-path tests/no-std/Cargo.toml --release --target riscv32imc-unknown-none-elf
-        if: matrix.target == ''
+        if: matrix.target == '' && matrix.rust != 'stable' # TODO: cfg(target_has_atomic) requires Rust 1.60.
       - run: cargo build -v --manifest-path tests/no-std/Cargo.toml --target riscv32imac-unknown-none-elf
-        if: matrix.target == ''
+        if: matrix.target == '' && matrix.rust != 'stable' # TODO: cfg(target_has_atomic) requires Rust 1.60.
       - run: cargo build -v --manifest-path tests/no-std/Cargo.toml --release --target riscv32imac-unknown-none-elf
-        if: matrix.target == ''
+        if: matrix.target == '' && matrix.rust != 'stable' # TODO: cfg(target_has_atomic) requires Rust 1.60.
       - run: cargo -Z build-std=core build -v --manifest-path tests/no-std/Cargo.toml --target riscv32imc-esp-espidf
         if: matrix.target == '' && startsWith(matrix.rust, 'nightly')
       - run: cargo -Z build-std=core build -v --manifest-path tests/no-std/Cargo.toml --release --target riscv32imc-esp-espidf
