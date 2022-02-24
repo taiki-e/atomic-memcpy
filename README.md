@@ -25,7 +25,7 @@ See [P1478R1][p1478r1] for more.
 - [portable-atomic]: Portable atomic types. Using byte-wise atomic memcpy to implement Seqlock, which is used in the fallback implementation.
 
 [asm-test]: tests/asm-test/asm
-[implementation]: https://github.com/taiki-e/atomic-memcpy/blob/fd3bd1ef0c7377422714399c0d1b84a5be8c0a00/src/lib.rs#L381-L427
+[implementation]: https://github.com/taiki-e/atomic-memcpy/blob/570de7be73b3cb086741cc6cff80dea4c706349c/src/lib.rs#L339-L383
 [p1478r1]: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/p1478r1.html
 [portable-atomic]: https://github.com/taiki-e/portable-atomic
 [rust-lang/rust#69488]: https://github.com/rust-lang/rust/issues/69488

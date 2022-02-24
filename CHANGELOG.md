@@ -10,6 +10,8 @@ Note: In this file, do not use the hard wrap in the middle of a sentence for com
 
 ## [Unreleased]
 
+## [0.1.2] - 2022-02-24
+
 - Fix compatibility with `-Zmiri-symbolic-alignment-check`.
 
 ## [0.1.1] - 2022-02-13
@@ -20,6 +22,7 @@ Note: In this file, do not use the hard wrap in the middle of a sentence for com
 
 Initial release
 
-[Unreleased]: https://github.com/taiki-e/atomic-memcpy/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/taiki-e/atomic-memcpy/compare/v0.1.2...HEAD
+[0.1.2]: https://github.com/taiki-e/atomic-memcpy/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/taiki-e/atomic-memcpy/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/taiki-e/atomic-memcpy/releases/tag/v0.1.0
