@@ -197,11 +197,9 @@ pub unsafe fn atomic_store<T>(dst: *mut T, val: T, order: Ordering) {
 /// Note that the use of `--cfg atomic_memcpy_unsafe_volatile` is
 /// undefined behavior in the multi-threaded environment, since volatile
 /// read/write does not guarantee anything about data race.
-#[cfg(not(any(
-    target_pointer_width = "16",
-    all(target_arch = "riscv32", not(target_feature = "a"), target_os = "none"),
-    atomic_memcpy_unsafe_volatile,
-)))]
+#[cfg(not(any(target_pointer_width = "16", atomic_memcpy_unsafe_volatile)))]
+// Note: riscv_target_feature is not stable, so `not(target_feature = "a")` does not work on stable.
+#[cfg_attr(all(target_arch = "riscv32", target_os = "none"), cfg(target_has_atomic = "ptr"))]
 mod imp {
     #[cfg(not(target_pointer_width = "16"))]
     use core::sync::atomic::AtomicU32;
@@ -977,9 +975,10 @@ mod imp {
 
 #[cfg(any(
     target_pointer_width = "16",
-    all(target_arch = "riscv32", not(target_feature = "a"), target_os = "none"),
-    atomic_memcpy_unsafe_volatile,
+    all(target_arch = "riscv32", target_os = "none"),
+    atomic_memcpy_unsafe_volatile
 ))]
+#[cfg_attr(all(target_arch = "riscv32", target_os = "none"), cfg(not(target_has_atomic = "ptr")))]
 mod imp {
     #[cfg_attr(feature = "inline-always", inline(always))]
     #[cfg_attr(not(feature = "inline-always"), inline)]
