@@ -12,7 +12,7 @@ Note: In this file, do not use the hard wrap in the middle of a sentence for com
 
 ## [0.1.2] - 2022-02-24
 
-- Fix compatibility with `-Zmiri-symbolic-alignment-check`.
+- Fix compatibility with `-Zmiri-symbolic-alignment-check`. ([d7961b8](https://github.com/taiki-e/atomic-memcpy/commit/d7961b845b52fe52549193ff249cba0fe3c97acf))
 
 ## [0.1.1] - 2022-02-13
 
