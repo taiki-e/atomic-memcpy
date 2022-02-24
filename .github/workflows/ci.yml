@@ -61,7 +61,7 @@ jobs:
           target: thumbv7m-none-eabi,thumbv6m-none-eabi,riscv32i-unknown-none-elf,riscv32imc-unknown-none-elf,riscv32imac-unknown-none-elf
       - uses: taiki-e/install-action@cargo-hack
       - uses: taiki-e/install-action@cargo-minimal-versions
-      - uses: taiki-e/setup-cross-toolchain@main
+      - uses: taiki-e/setup-cross-toolchain-action@v1
         with:
           target: ${{ matrix.target }}
         if: matrix.target != ''
@@ -183,28 +183,32 @@ jobs:
         with:
           component: rust-src
       - run: |
+          echo "ASAN_OPTIONS=detect_stack_use_after_return=1" >>"${GITHUB_ENV}"
+          echo "RUSTFLAGS=${RUSTFLAGS} -Z sanitizer=address" >>"${GITHUB_ENV}"
+          echo "RUSTDOCFLAGS=${RUSTDOCFLAGS} -Z sanitizer=address" >>"${GITHUB_ENV}"
+        if: matrix.sanitizer == 'address'
+      - run: |
+          echo "MSAN_OPTIONS=verbosity=2" >>"${GITHUB_ENV}"
+          echo "RUSTFLAGS=${RUSTFLAGS} -Z sanitizer=memory -Z sanitizer-memory-track-origins" >>"${GITHUB_ENV}"
+          echo "RUSTDOCFLAGS=${RUSTDOCFLAGS} -Z sanitizer=memory -Z sanitizer-memory-track-origins" >>"${GITHUB_ENV}"
+        if: matrix.sanitizer == 'memory'
+      - run: |
+          echo "RUSTFLAGS=${RUSTFLAGS} -Z sanitizer=thread" >>"${GITHUB_ENV}"
+          echo "RUSTDOCFLAGS=${RUSTDOCFLAGS} -Z sanitizer=thread" >>"${GITHUB_ENV}"
+        if: matrix.sanitizer == 'thread'
+      - run: |
           cargo -Z build-std test --workspace --target "$(rustc -Vv | grep host | sed 's/host: //')"
-        env:
-          RUSTDOCFLAGS: ${{ env.RUSTDOCFLAGS }} -Z sanitizer=${{ matrix.sanitizer }}
-          RUSTFLAGS: ${{ env.RUSTFLAGS }} -Z sanitizer=${{ matrix.sanitizer }}
       - run: |
           cargo -Z build-std test --workspace --release --target "$(rustc -Vv | grep host | sed 's/host: //')"
-        env:
-          RUSTDOCFLAGS: ${{ env.RUSTDOCFLAGS }} -Z sanitizer=${{ matrix.sanitizer }}
-          RUSTFLAGS: ${{ env.RUSTFLAGS }} -Z sanitizer=${{ matrix.sanitizer }}
       - run: |
           cargo -Z build-std test --workspace --release --target "$(rustc -Vv | grep host | sed 's/host: //')"
         env:
           CARGO_PROFILE_RELEASE_LTO: thin
-          RUSTDOCFLAGS: ${{ env.RUSTDOCFLAGS }} -Z sanitizer=${{ matrix.sanitizer }}
-          RUSTFLAGS: ${{ env.RUSTFLAGS }} -Z sanitizer=${{ matrix.sanitizer }}
       - run: |
           cargo -Z build-std test --workspace --release --target "$(rustc -Vv | grep host | sed 's/host: //')"
         env:
           CARGO_PROFILE_RELEASE_CODEGEN_UNITS: 1
           CARGO_PROFILE_RELEASE_LTO: fat
-          RUSTDOCFLAGS: ${{ env.RUSTDOCFLAGS }} -Z sanitizer=${{ matrix.sanitizer }}
-          RUSTFLAGS: ${{ env.RUSTFLAGS }} -Z sanitizer=${{ matrix.sanitizer }}
 
   valgrind:
     env:
