@@ -59,6 +59,7 @@ use core::sync::atomic::{self, Ordering};
 /// - `src` must be valid for reads.
 /// - `src` must be properly aligned.
 /// - `src` must go through [`UnsafeCell::get`](core::cell::UnsafeCell::get).
+/// - `T` must not contain uninitialized bytes.
 /// - There are no concurrent non-atomic write operations.
 /// - There are no concurrent atomic write operations of different
 ///   granularity. The granularity of atomic operations is an implementation
@@ -126,6 +127,7 @@ pub unsafe fn atomic_load<T>(src: *const T, order: Ordering) -> core::mem::Maybe
 /// - `dst` must be [valid] for writes.
 /// - `dst` must be properly aligned.
 /// - `dst` must go through [`UnsafeCell::get`](core::cell::UnsafeCell::get).
+/// - `T` must not contain uninitialized bytes.
 /// - There are no concurrent non-atomic operations.
 /// - There are no concurrent atomic operations of different
 ///   granularity. The granularity of atomic operations is an implementation
@@ -389,6 +391,7 @@ mod imp {
         // - `src` is valid for atomic reads.
         // - `src` is properly aligned for `T`.
         // - `src` go through `UnsafeCell::get`.
+        // - `T` does not contain uninitialized bytes.
         // - there are no concurrent non-atomic write operations.
         // - there are no concurrent atomic write operations of different granularity.
         // Note that the safety of the code in this function relies on these guarantees,
@@ -627,6 +630,7 @@ mod imp {
         // - `dst` is valid for atomic writes.
         // - `dst` is properly aligned for `T`.
         // - `dst` go through `UnsafeCell::get`.
+        // - `T` does not contain uninitialized bytes.
         // - there are no concurrent non-atomic operations.
         // - there are no concurrent atomic operations of different granularity.
         // - if there are concurrent atomic write operations, `T` is valid for all bit patterns.

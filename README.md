@@ -18,7 +18,7 @@ See [P1478R1][p1478r1] for more.
 - If the alignment of the type being copied is the same as the pointer width, `atomic_load` is possible to produce an assembly roughly equivalent to the case of using volatile read + atomic fence on many platforms. (e.g., [aarch64](https://github.com/taiki-e/atomic-memcpy/blob/HEAD/tests/asm-test/asm/aarch64-unknown-linux-gnu/atomic_memcpy_load_align8), [riscv64](https://github.com/taiki-e/atomic-memcpy/blob/main/tests/asm-test/asm/riscv64gc-unknown-linux-gnu/atomic_memcpy_load_align8). See [`tests/asm-test/asm`][asm-test] directory for more).
 - If the alignment of the type being copied is smaller than the pointer width, there will be some performance degradation. However, it is implemented in such a way that it does not cause extreme performance degradation at least on x86_64. (See [the implementation comments of `atomic_load`][implementation] for more.) It is possible that there is still room for improvement, especially on non-x86_64 platforms.
 - Optimization for the case where the alignment of the type being copied is larger than the pointer width has not yet been fully investigated. It is possible that there is still room for improvement, especially on 32-bit platforms where `AtomicU64` is available.
-- If the type being copied contains uninitialized bytes (e.g., padding), it is incompatible with `-Zmiri-check-number-validity`. This will probably not be resolved until something like `AtomicMaybeUninit` is supported. **Note:** Due to [Miri does not track uninitialized bytes on a per byte basis for partially initialized scalars][rust-lang/rust#69488], Miri may report this case as an access to an uninitialized byte, regardless of whether the uninitialized byte is actually accessed or not.
+- If the type being copied contains uninitialized bytes (e.g., padding) [it is undefined behavior because the copy goes through integers][undefined-behavior]. This problem will probably not be resolved until something like `AtomicMaybeUninit` is supported.
 
 ## Related Projects
 
@@ -28,7 +28,7 @@ See [P1478R1][p1478r1] for more.
 [implementation]: https://github.com/taiki-e/atomic-memcpy/blob/570de7be73b3cb086741cc6cff80dea4c706349c/src/lib.rs#L339-L383
 [p1478r1]: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/p1478r1.html
 [portable-atomic]: https://github.com/taiki-e/portable-atomic
-[rust-lang/rust#69488]: https://github.com/rust-lang/rust/issues/69488
+[undefined-behavior]: https://doc.rust-lang.org/reference/behavior-considered-undefined.html
 
 ## License
 
