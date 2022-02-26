@@ -54,11 +54,6 @@ jobs:
         with:
           toolchain: ${{ matrix.rust }}
           component: rust-src
-          # thumbv7m-none-eabi/riscv32imac-unknown-none-elf/riscv32imc-esp-espidf: supports atomic CAS
-          # thumbv6m-none-eabi: supports atomic load/store, but not atomic CAS
-          # riscv32i-unknown-none-elf/riscv32imc-unknown-none-elf: does not support atomic at all
-          # msp430-none-elf: 16-bit, does not support atomic at all
-          target: thumbv7m-none-eabi,thumbv6m-none-eabi,riscv32i-unknown-none-elf,riscv32imc-unknown-none-elf,riscv32imac-unknown-none-elf
       - uses: taiki-e/install-action@cargo-hack
       - uses: taiki-e/install-action@cargo-minimal-versions
       - uses: taiki-e/setup-cross-toolchain-action@v1
@@ -88,34 +83,8 @@ jobs:
       - run: cargo hack build -vv --workspace --ignore-private --feature-powerset --optional-deps --no-dev-deps
         env:
           RUSTFLAGS: ${{ env.RUSTFLAGS }} --cfg atomic_memcpy_unsafe_volatile
-      - run: cargo build -v --manifest-path tests/no-std/Cargo.toml --target thumbv7m-none-eabi
+      - run: tools/build.sh
         if: matrix.target == ''
-      - run: cargo build -v --manifest-path tests/no-std/Cargo.toml --release --target thumbv7m-none-eabi
-        if: matrix.target == ''
-      - run: cargo build -v --manifest-path tests/no-std/Cargo.toml --target thumbv6m-none-eabi
-        if: matrix.target == ''
-      - run: cargo build -v --manifest-path tests/no-std/Cargo.toml --release --target thumbv6m-none-eabi
-        if: matrix.target == ''
-      - run: cargo build -v --manifest-path tests/no-std/Cargo.toml --target riscv32i-unknown-none-elf
-        if: matrix.target == '' && matrix.rust != 'stable' # TODO: cfg(target_has_atomic) requires Rust 1.60.
-      - run: cargo build -v --manifest-path tests/no-std/Cargo.toml --release --target riscv32i-unknown-none-elf
-        if: matrix.target == '' && matrix.rust != 'stable' # TODO: cfg(target_has_atomic) requires Rust 1.60.
-      - run: cargo build -v --manifest-path tests/no-std/Cargo.toml --target riscv32imc-unknown-none-elf
-        if: matrix.target == '' && matrix.rust != 'stable' # TODO: cfg(target_has_atomic) requires Rust 1.60.
-      - run: cargo build -v --manifest-path tests/no-std/Cargo.toml --release --target riscv32imc-unknown-none-elf
-        if: matrix.target == '' && matrix.rust != 'stable' # TODO: cfg(target_has_atomic) requires Rust 1.60.
-      - run: cargo build -v --manifest-path tests/no-std/Cargo.toml --target riscv32imac-unknown-none-elf
-        if: matrix.target == '' && matrix.rust != 'stable' # TODO: cfg(target_has_atomic) requires Rust 1.60.
-      - run: cargo build -v --manifest-path tests/no-std/Cargo.toml --release --target riscv32imac-unknown-none-elf
-        if: matrix.target == '' && matrix.rust != 'stable' # TODO: cfg(target_has_atomic) requires Rust 1.60.
-      - run: cargo -Z build-std=core build -v --manifest-path tests/no-std/Cargo.toml --target riscv32imc-esp-espidf
-        if: matrix.target == '' && startsWith(matrix.rust, 'nightly')
-      - run: cargo -Z build-std=core build -v --manifest-path tests/no-std/Cargo.toml --release --target riscv32imc-esp-espidf
-        if: matrix.target == '' && startsWith(matrix.rust, 'nightly')
-      - run: cargo -Z build-std=core build -v --manifest-path tests/no-std/Cargo.toml --target msp430-none-elf
-        if: matrix.target == '' && startsWith(matrix.rust, 'nightly')
-      - run: cargo -Z build-std=core build -v --manifest-path tests/no-std/Cargo.toml --release --target msp430-none-elf
-        if: matrix.target == '' && startsWith(matrix.rust, 'nightly')
       - run: cargo minimal-versions build -vv --workspace --all-features --ignore-private
         if: startsWith(matrix.rust, 'nightly')
 

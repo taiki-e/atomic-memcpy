@@ -13,15 +13,11 @@ default_targets=(
     riscv32i-unknown-none-elf
     riscv32imc-unknown-none-elf
 
-    # no atomic CAS (32-bit)
+    # no atomic CAS
     thumbv6m-none-eabi
-    # no atomic CAS (64-bit)
-    bpfel-unknown-none
 
-    # no-std 32-bit
+    # no-std
     thumbv7m-none-eabi
-    # no-std 64-bit
-    x86_64-unknown-none
     # riscv32 with atomic
     riscv32imac-unknown-none-elf
     riscv32imc-esp-espidf
@@ -68,6 +64,13 @@ build() {
         case "${rustc_version}" in
             1.4* | 1.50.* | 1.51.*) ;;
             *) return 0 ;;
+        esac
+    fi
+    if [[ "${target}" == "riscv32"* ]]; then
+        # TODO: cfg(target_has_atomic) requires Rust 1.60.
+        case "${rustc_version}" in
+            1.3* | 1.4* | 1.5*) return 0 ;;
+            *) ;;
         esac
     fi
     args+=(${common_args[@]+"${common_args[@]}"} hack build)
