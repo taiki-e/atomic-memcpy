@@ -36,4 +36,3 @@ inline-always = []
 no-panic = { version = "0.1.11", optional = true }
 
 [dev-dependencies]
-target-spec = "1"
