@@ -17,45 +17,101 @@ asm_test::atomic_memcpy_store_align4::release:
  movaps  xmmword, ptr, [rsp, +, 32], xmm2
  movaps  xmmword, ptr, [rsp, +, 16], xmm1
  movaps  xmmword, ptr, [rsp], xmm0
- test    dil, 7
- je      .LBB10_1
- mov     eax, dword, ptr, [rsp]
+ lea     r8, [rsp, +, 16]
+ lea     rcx, [rsp, +, 32]
+ lea     rdx, [rsp, +, 48]
+ lea     rsi, [rdi, +, 60]
+ lea     rax, [rsp, +, 60]
+ #APP
+ mov     eax, dword, ptr, [rax]
+ mov     dword, ptr, [rsi], eax
+ #NO_APP
+ lea     rax, [rdi, +, 56]
+ lea     rsi, [rsp, +, 56]
+ #APP
+ mov     eax, dword, ptr, [rsi]
+ mov     dword, ptr, [rax], eax
+ #NO_APP
+ lea     rax, [rdi, +, 52]
+ lea     rsi, [rsp, +, 52]
+ #APP
+ mov     eax, dword, ptr, [rsi]
+ mov     dword, ptr, [rax], eax
+ #NO_APP
+ lea     rax, [rdi, +, 48]
+ #APP
+ mov     eax, dword, ptr, [rdx]
+ mov     dword, ptr, [rax], eax
+ #NO_APP
+ lea     rax, [rdi, +, 44]
+ lea     rdx, [rsp, +, 44]
+ #APP
+ mov     eax, dword, ptr, [rdx]
+ mov     dword, ptr, [rax], eax
+ #NO_APP
+ lea     rax, [rdi, +, 40]
+ lea     rdx, [rsp, +, 40]
+ #APP
+ mov     eax, dword, ptr, [rdx]
+ mov     dword, ptr, [rax], eax
+ #NO_APP
+ lea     rax, [rdi, +, 36]
+ lea     rdx, [rsp, +, 36]
+ #APP
+ mov     eax, dword, ptr, [rdx]
+ mov     dword, ptr, [rax], eax
+ #NO_APP
+ lea     rax, [rdi, +, 32]
+ #APP
+ mov     eax, dword, ptr, [rcx]
+ mov     dword, ptr, [rax], eax
+ #NO_APP
+ lea     rax, [rdi, +, 28]
+ lea     rcx, [rsp, +, 28]
+ #APP
+ mov     eax, dword, ptr, [rcx]
+ mov     dword, ptr, [rax], eax
+ #NO_APP
+ lea     rax, [rdi, +, 24]
+ lea     rcx, [rsp, +, 24]
+ #APP
+ mov     eax, dword, ptr, [rcx]
+ mov     dword, ptr, [rax], eax
+ #NO_APP
+ lea     rax, [rdi, +, 20]
+ lea     rcx, [rsp, +, 20]
+ #APP
+ mov     eax, dword, ptr, [rcx]
+ mov     dword, ptr, [rax], eax
+ #NO_APP
+ lea     rax, [rdi, +, 16]
+ #APP
+ mov     eax, dword, ptr, [r8]
+ mov     dword, ptr, [rax], eax
+ #NO_APP
+ lea     rax, [rdi, +, 12]
+ lea     rcx, [rsp, +, 12]
+ #APP
+ mov     eax, dword, ptr, [rcx]
+ mov     dword, ptr, [rax], eax
+ #NO_APP
+ lea     rax, [rdi, +, 8]
+ lea     rcx, [rsp, +, 8]
+ #APP
+ mov     eax, dword, ptr, [rcx]
+ mov     dword, ptr, [rax], eax
+ #NO_APP
+ lea     rax, [rdi, +, 4]
+ lea     rcx, [rsp, +, 4]
+ #APP
+ mov     eax, dword, ptr, [rcx]
+ mov     dword, ptr, [rax], eax
+ #NO_APP
+ mov     rax, rsp
+ #APP
+ mov     eax, dword, ptr, [rax]
  mov     dword, ptr, [rdi], eax
- mov     rax, qword, ptr, [rsp, +, 4]
- mov     qword, ptr, [rdi, +, 4], rax
- mov     rax, qword, ptr, [rsp, +, 12]
- mov     qword, ptr, [rdi, +, 12], rax
- mov     rax, qword, ptr, [rsp, +, 20]
- mov     qword, ptr, [rdi, +, 20], rax
- mov     rax, qword, ptr, [rsp, +, 28]
- mov     qword, ptr, [rdi, +, 28], rax
- mov     rax, qword, ptr, [rsp, +, 36]
- mov     qword, ptr, [rdi, +, 36], rax
- mov     rax, qword, ptr, [rsp, +, 44]
- mov     qword, ptr, [rdi, +, 44], rax
- mov     rax, qword, ptr, [rsp, +, 52]
- mov     qword, ptr, [rdi, +, 52], rax
- mov     eax, dword, ptr, [rsp, +, 60]
- mov     dword, ptr, [rdi, +, 60], eax
- add     rsp, 136
- ret
-.LBB10_1:
- mov     rax, qword, ptr, [rsp]
- mov     qword, ptr, [rdi], rax
- mov     rax, qword, ptr, [rsp, +, 8]
- mov     qword, ptr, [rdi, +, 8], rax
- mov     rax, qword, ptr, [rsp, +, 16]
- mov     qword, ptr, [rdi, +, 16], rax
- mov     rax, qword, ptr, [rsp, +, 24]
- mov     qword, ptr, [rdi, +, 24], rax
- mov     rax, qword, ptr, [rsp, +, 32]
- mov     qword, ptr, [rdi, +, 32], rax
- mov     rax, qword, ptr, [rsp, +, 40]
- mov     qword, ptr, [rdi, +, 40], rax
- mov     rax, qword, ptr, [rsp, +, 48]
- mov     qword, ptr, [rdi, +, 48], rax
- mov     rax, qword, ptr, [rsp, +, 56]
- mov     qword, ptr, [rdi, +, 56], rax
+ #NO_APP
  add     rsp, 136
  ret
 asm_test::atomic_memcpy_store_align4::write_volatile_release_fence:

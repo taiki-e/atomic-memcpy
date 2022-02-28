@@ -5,7 +5,7 @@ edition = "2018"
 publish = false
 
 [features]
-no-panic = ["atomic-memcpy/no-panic"]
+# no-panic = ["atomic-memcpy/no-panic"]
 
 [dependencies]
 atomic-memcpy = { path = "..", features = ["inline-always"] }

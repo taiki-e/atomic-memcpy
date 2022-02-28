@@ -1,22 +1,63 @@
 asm_test::atomic_memcpy_load_align16::acquire:
+ sub     rsp, 72
  mov     rax, rdi
- mov     r8, qword, ptr, [rsi, +, 56]
- mov     r9, qword, ptr, [rsi, +, 48]
- mov     r10, qword, ptr, [rsi, +, 40]
- mov     r11, qword, ptr, [rsi, +, 32]
- mov     rdx, qword, ptr, [rsi, +, 24]
- mov     rdi, qword, ptr, [rsi, +, 16]
- mov     rcx, qword, ptr, [rsi, +, 8]
- mov     rsi, qword, ptr, [rsi]
- mov     qword, ptr, [rax], rsi
- mov     qword, ptr, [rax, +, 8], rcx
- mov     qword, ptr, [rax, +, 16], rdi
- mov     qword, ptr, [rax, +, 24], rdx
- mov     qword, ptr, [rax, +, 32], r11
- mov     qword, ptr, [rax, +, 40], r10
- mov     qword, ptr, [rax, +, 48], r9
- mov     qword, ptr, [rax, +, 56], r8
+ lea     rcx, [rsi, +, 56]
+ lea     rdx, [rsp, +, 56]
+ #APP
+ mov     rax, qword, ptr, [rcx]
+ mov     qword, ptr, [rdx], rax
+ #NO_APP
+ lea     rcx, [rsi, +, 48]
+ lea     rdx, [rsp, +, 48]
+ #APP
+ mov     rax, qword, ptr, [rcx]
+ mov     qword, ptr, [rdx], rax
+ #NO_APP
+ lea     rcx, [rsi, +, 40]
+ lea     rdx, [rsp, +, 40]
+ #APP
+ mov     rax, qword, ptr, [rcx]
+ mov     qword, ptr, [rdx], rax
+ #NO_APP
+ lea     rcx, [rsi, +, 32]
+ lea     rdx, [rsp, +, 32]
+ #APP
+ mov     rax, qword, ptr, [rcx]
+ mov     qword, ptr, [rdx], rax
+ #NO_APP
+ lea     rcx, [rsi, +, 24]
+ lea     rdx, [rsp, +, 24]
+ #APP
+ mov     rax, qword, ptr, [rcx]
+ mov     qword, ptr, [rdx], rax
+ #NO_APP
+ lea     rcx, [rsi, +, 16]
+ lea     rdx, [rsp, +, 16]
+ #APP
+ mov     rax, qword, ptr, [rcx]
+ mov     qword, ptr, [rdx], rax
+ #NO_APP
+ lea     rcx, [rsi, +, 8]
+ lea     rdx, [rsp, +, 8]
+ #APP
+ mov     rax, qword, ptr, [rcx]
+ mov     qword, ptr, [rdx], rax
+ #NO_APP
+ mov     rcx, rsp
+ #APP
+ mov     rax, qword, ptr, [rsi]
+ mov     qword, ptr, [rcx], rax
+ #NO_APP
+ movaps  xmm0, xmmword, ptr, [rsp]
+ movaps  xmm1, xmmword, ptr, [rsp, +, 16]
+ movaps  xmm2, xmmword, ptr, [rsp, +, 32]
+ movaps  xmm3, xmmword, ptr, [rsp, +, 48]
+ movaps  xmmword, ptr, [rdi, +, 48], xmm3
+ movaps  xmmword, ptr, [rdi, +, 32], xmm2
+ movaps  xmmword, ptr, [rdi, +, 16], xmm1
+ movaps  xmmword, ptr, [rdi], xmm0
  #MEMBARRIER
+ add     rsp, 72
  ret
 asm_test::atomic_memcpy_load_align16::read_volatile_acquire_fence:
  mov     rax, rdi

@@ -9,8 +9,8 @@ doctest = false
 doc = false
 
 [features]
-# Note: this will not work unless you build tests with release mode.
-no-panic = ["atomic-memcpy/no-panic"]
+# # Note: this will not work unless you build tests with release mode.
+# no-panic = ["atomic-memcpy/no-panic"]
 
 [dependencies]
 atomic-memcpy = { path = "../.." }

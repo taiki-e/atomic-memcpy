@@ -37,14 +37,14 @@ jobs:
           - rust: stable
           - rust: beta
           - rust: nightly
-          - rust: nightly
-            target: aarch64-unknown-linux-gnu
-          - rust: nightly
-            target: armv5te-unknown-linux-gnueabi
-          - rust: nightly
-            target: i686-unknown-linux-gnu
-          - rust: nightly
-            target: s390x-unknown-linux-gnu
+          # - rust: nightly
+          #   target: aarch64-unknown-linux-gnu
+          # - rust: nightly
+          #   target: armv5te-unknown-linux-gnueabi
+          # - rust: nightly
+          #   target: i686-unknown-linux-gnu
+          # - rust: nightly
+          #   target: s390x-unknown-linux-gnu
     runs-on: ${{ matrix.os || 'ubuntu-latest' }}
     steps:
       - uses: actions/checkout@v2
@@ -60,13 +60,8 @@ jobs:
         with:
           target: ${{ matrix.target }}
         if: matrix.target != ''
-      - run: cargo test -v --workspace --exclude asm-test $DOCTEST_XCOMPILE
-      - run: cargo test -v --workspace --exclude asm-test --release $DOCTEST_XCOMPILE
-      - run: cargo test -v --workspace --exclude asm-test --release --all-features --tests
-      # opt-level=0, opt-level=1, opt-level=s, opt-level=z fail to remove panic.
-      - run: cargo test -v --workspace --exclude asm-test --release --all-features --tests
-        env:
-          RUSTFLAGS: ${{ env.RUSTFLAGS }} -C opt-level=2
+      - run: cargo test -v --workspace --exclude asm-test --all-features $DOCTEST_XCOMPILE
+      - run: cargo test -v --workspace --exclude asm-test --release --all-features $DOCTEST_XCOMPILE
       # Use -Z build-std because the prebuilt libtest seems to be incompatible with LTO, causing miscompilation: https://gist.github.com/taiki-e/9713f8e02e8f9f852ccee8d6f089ec24
       - run: |
           cargo -Z build-std test -v --workspace --exclude asm-test --release --all-features --tests --target "${CARGO_BUILD_TARGET:-"$(rustc -Vv | grep host | sed 's/host: //')"}"
@@ -83,26 +78,26 @@ jobs:
       - run: cargo hack build -vv --workspace --ignore-private --feature-powerset --optional-deps --no-dev-deps
         env:
           RUSTFLAGS: ${{ env.RUSTFLAGS }} --cfg atomic_memcpy_unsafe_volatile
-      - run: tools/build.sh
-        if: matrix.target == ''
+      # - run: tools/build.sh
+      #   if: matrix.target == ''
       - run: cargo minimal-versions build -vv --workspace --all-features --ignore-private
         if: startsWith(matrix.rust, 'nightly')
 
-  msrv:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          persist-credentials: false
-      - uses: taiki-e/install-action@cargo-hack
-      # Make sure this crate can be built with MSRV and all later versions.
-      # However, this takes time, so for PR, set the version interval.
-      - run: cargo hack build --workspace --ignore-private --no-dev-deps --version-range ..
-        if: github.event_name != 'pull_request'
-      - run: cargo hack build --workspace --ignore-private --no-dev-deps --version-range .. --version-step 2
-        if: github.event_name == 'pull_request'
-      # for no-panic
-      - run: cargo hack test --no-run --workspace --release --all-features --ignore-private --version-range 1.54..
+  # msrv:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #       with:
+  #         persist-credentials: false
+  #     - uses: taiki-e/install-action@cargo-hack
+  #     # Make sure this crate can be built with MSRV and all later versions.
+  #     # However, this takes time, so for PR, set the version interval.
+  #     - run: cargo hack build --workspace --ignore-private --no-dev-deps --version-range ..
+  #       if: github.event_name != 'pull_request'
+  #     - run: cargo hack build --workspace --ignore-private --no-dev-deps --version-range .. --version-step 2
+  #       if: github.event_name == 'pull_request'
+  #     # for no-panic
+  #     - run: cargo hack test --no-run --workspace --release --all-features --ignore-private --version-range 1.54..
 
   # TODO
   # asm:
@@ -116,63 +111,64 @@ jobs:
   #     - run: cargo run --manifest-path tests/asm-test/Cargo.toml
   #     - run: git add -N . && git diff --exit-code
 
-  miri:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          persist-credentials: false
-      - uses: taiki-e/github-actions/install-rust@main
-        with:
-          component: miri
-      - run: cargo miri test --workspace --exclude asm-test
-        env:
-          MIRIFLAGS: -Zmiri-check-number-validity -Zmiri-symbolic-alignment-check -Zmiri-tag-raw-pointers -Zmiri-disable-isolation
-          RUSTFLAGS: ${{ env.RUSTFLAGS }} -Z randomize-layout
+  # miri:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #       with:
+  #         persist-credentials: false
+  #     - uses: taiki-e/github-actions/install-rust@main
+  #       with:
+  #         component: miri
+  #     - run: cargo miri test --workspace --exclude asm-test
+  #       env:
+  #         MIRIFLAGS: -Zmiri-check-number-validity -Zmiri-symbolic-alignment-check -Zmiri-tag-raw-pointers -Zmiri-disable-isolation
+  #         RUSTFLAGS: ${{ env.RUSTFLAGS }} -Z randomize-layout
 
-  san:
-    strategy:
-      fail-fast: false
-      matrix:
-        sanitizer:
-          - address
-          - memory
-          - thread
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          persist-credentials: false
-      - uses: taiki-e/github-actions/install-rust@main
-        with:
-          component: rust-src
-      - run: |
-          echo "ASAN_OPTIONS=detect_stack_use_after_return=1" >>"${GITHUB_ENV}"
-          echo "RUSTFLAGS=${RUSTFLAGS} -Z sanitizer=address" >>"${GITHUB_ENV}"
-          echo "RUSTDOCFLAGS=${RUSTDOCFLAGS} -Z sanitizer=address" >>"${GITHUB_ENV}"
-        if: matrix.sanitizer == 'address'
-      - run: |
-          echo "MSAN_OPTIONS=verbosity=2" >>"${GITHUB_ENV}"
-          echo "RUSTFLAGS=${RUSTFLAGS} -Z sanitizer=memory -Z sanitizer-memory-track-origins" >>"${GITHUB_ENV}"
-          echo "RUSTDOCFLAGS=${RUSTDOCFLAGS} -Z sanitizer=memory -Z sanitizer-memory-track-origins" >>"${GITHUB_ENV}"
-        if: matrix.sanitizer == 'memory'
-      - run: |
-          echo "RUSTFLAGS=${RUSTFLAGS} -Z sanitizer=thread" >>"${GITHUB_ENV}"
-          echo "RUSTDOCFLAGS=${RUSTDOCFLAGS} -Z sanitizer=thread" >>"${GITHUB_ENV}"
-        if: matrix.sanitizer == 'thread'
-      - run: |
-          cargo -Z build-std test --workspace --exclude asm-test --target "$(rustc -Vv | grep host | sed 's/host: //')"
-      - run: |
-          cargo -Z build-std test --workspace --exclude asm-test --release --target "$(rustc -Vv | grep host | sed 's/host: //')"
-      - run: |
-          cargo -Z build-std test --workspace --exclude asm-test --release --target "$(rustc -Vv | grep host | sed 's/host: //')"
-        env:
-          CARGO_PROFILE_RELEASE_LTO: thin
-      - run: |
-          cargo -Z build-std test --workspace --exclude asm-test --release --target "$(rustc -Vv | grep host | sed 's/host: //')"
-        env:
-          CARGO_PROFILE_RELEASE_CODEGEN_UNITS: 1
-          CARGO_PROFILE_RELEASE_LTO: fat
+  # https://github.com/google/sanitizers/issues/192
+  # san:
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       sanitizer:
+  #         - address
+  #         - memory
+  #         - thread
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #       with:
+  #         persist-credentials: false
+  #     - uses: taiki-e/github-actions/install-rust@main
+  #       with:
+  #         component: rust-src
+  #     - run: |
+  #         echo "ASAN_OPTIONS=detect_stack_use_after_return=1" >>"${GITHUB_ENV}"
+  #         echo "RUSTFLAGS=${RUSTFLAGS} -Z sanitizer=address" >>"${GITHUB_ENV}"
+  #         echo "RUSTDOCFLAGS=${RUSTDOCFLAGS} -Z sanitizer=address" >>"${GITHUB_ENV}"
+  #       if: matrix.sanitizer == 'address'
+  #     - run: |
+  #         echo "MSAN_OPTIONS=verbosity=2" >>"${GITHUB_ENV}"
+  #         echo "RUSTFLAGS=${RUSTFLAGS} -Z sanitizer=memory -Z sanitizer-memory-track-origins" >>"${GITHUB_ENV}"
+  #         echo "RUSTDOCFLAGS=${RUSTDOCFLAGS} -Z sanitizer=memory -Z sanitizer-memory-track-origins" >>"${GITHUB_ENV}"
+  #       if: matrix.sanitizer == 'memory'
+  #     - run: |
+  #         echo "RUSTFLAGS=${RUSTFLAGS} -Z sanitizer=thread" >>"${GITHUB_ENV}"
+  #         echo "RUSTDOCFLAGS=${RUSTDOCFLAGS} -Z sanitizer=thread" >>"${GITHUB_ENV}"
+  #       if: matrix.sanitizer == 'thread'
+  #     - run: |
+  #         cargo -Z build-std test --workspace --exclude asm-test --all-features --target "$(rustc -Vv | grep host | sed 's/host: //')"
+  #     - run: |
+  #         cargo -Z build-std test --workspace --exclude asm-test --release --all-features --target "$(rustc -Vv | grep host | sed 's/host: //')"
+  #     - run: |
+  #         cargo -Z build-std test --workspace --exclude asm-test --release --all-features --target "$(rustc -Vv | grep host | sed 's/host: //')"
+  #       env:
+  #         CARGO_PROFILE_RELEASE_LTO: thin
+  #     - run: |
+  #         cargo -Z build-std test --workspace --exclude asm-test --release --all-features --target "$(rustc -Vv | grep host | sed 's/host: //')"
+  #       env:
+  #         CARGO_PROFILE_RELEASE_CODEGEN_UNITS: 1
+  #         CARGO_PROFILE_RELEASE_LTO: fat
 
   valgrind:
     env:
@@ -186,68 +182,68 @@ jobs:
         with:
           component: rust-src
       - uses: taiki-e/install-action@valgrind
-      - run: cargo test -v --workspace --exclude asm-test -Z doctest-xcompile
-      - run: cargo test -v --workspace --exclude asm-test --release -Z doctest-xcompile
+      - run: cargo test -v --workspace --exclude asm-test --all-features -Z doctest-xcompile
+      - run: cargo test -v --workspace --exclude asm-test --release --all-features -Z doctest-xcompile
       # Use -Z build-std because the prebuilt libtest seems to be incompatible with LTO, causing miscompilation: https://gist.github.com/taiki-e/9713f8e02e8f9f852ccee8d6f089ec24
       - run: |
-          cargo -Z build-std test -v --workspace --exclude asm-test --release --tests --target "$(rustc -Vv | grep host | sed 's/host: //')"
+          cargo -Z build-std test -v --workspace --exclude asm-test --release --all-features --tests --target "$(rustc -Vv | grep host | sed 's/host: //')"
         env:
           CARGO_PROFILE_RELEASE_LTO: thin
       - run: |
-          cargo -Z build-std test -v --workspace --exclude asm-test --release --tests --target "$(rustc -Vv | grep host | sed 's/host: //')"
+          cargo -Z build-std test -v --workspace --exclude asm-test --release --all-features --tests --target "$(rustc -Vv | grep host | sed 's/host: //')"
         env:
           CARGO_PROFILE_RELEASE_CODEGEN_UNITS: 1
           CARGO_PROFILE_RELEASE_LTO: fat
 
-  cov:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          persist-credentials: false
-      - uses: taiki-e/github-actions/install-rust@main
-        with:
-          component: llvm-tools-preview
-      - uses: taiki-e/install-action@cargo-llvm-cov
-      - run: cargo llvm-cov --workspace --exclude asm-test
-      - run: cargo llvm-cov --workspace --exclude asm-test --text --no-run --hide-instantiations
-      - run: cargo llvm-cov --workspace --exclude asm-test --text --no-run
+  # cov:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #       with:
+  #         persist-credentials: false
+  #     - uses: taiki-e/github-actions/install-rust@main
+  #       with:
+  #         component: llvm-tools-preview
+  #     - uses: taiki-e/install-action@cargo-llvm-cov
+  #     - run: cargo llvm-cov --workspace --exclude asm-test
+  #     - run: cargo llvm-cov --workspace --exclude asm-test --text --no-run --hide-instantiations
+  #     - run: cargo llvm-cov --workspace --exclude asm-test --text --no-run
 
-  codegen:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          persist-credentials: false
-      - uses: taiki-e/github-actions/install-rust@main
-      - run: tools/no_atomic.sh
-      - run: git add -N . && git diff --exit-code
-        if: github.repository_owner != 'taiki-e' || github.event_name != 'schedule' && !(github.event_name == 'push' && github.ref == 'refs/heads/main')
-      - id: diff
-        run: |
-          git config user.name "Taiki Endo"
-          git config user.email "te316e89@gmail.com"
-          git add -N .
-          if ! git diff --exit-code; then
-              git add .
-              git commit -m "Update tools/no_atomic"
-              echo "::set-output name=success::false"
-          fi
-        if: github.repository_owner == 'taiki-e' && (github.event_name == 'schedule' || github.event_name == 'push' && github.ref == 'refs/heads/main')
-      - uses: taiki-e/create-pull-request@v3
-        with:
-          title: Update tools/no_atomic
-          body: |
-            Auto-generated by [create-pull-request][1]
-            [Please close and immediately reopen this pull request to run CI.][2]
+  # codegen:
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     contents: write
+  #     pull-requests: write
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #       with:
+  #         persist-credentials: false
+  #     - uses: taiki-e/github-actions/install-rust@main
+  #     - run: tools/no_atomic.sh
+  #     - run: git add -N . && git diff --exit-code
+  #       if: github.repository_owner != 'taiki-e' || github.event_name != 'schedule' && !(github.event_name == 'push' && github.ref == 'refs/heads/main')
+  #     - id: diff
+  #       run: |
+  #         git config user.name "Taiki Endo"
+  #         git config user.email "te316e89@gmail.com"
+  #         git add -N .
+  #         if ! git diff --exit-code; then
+  #             git add .
+  #             git commit -m "Update tools/no_atomic"
+  #             echo "::set-output name=success::false"
+  #         fi
+  #       if: github.repository_owner == 'taiki-e' && (github.event_name == 'schedule' || github.event_name == 'push' && github.ref == 'refs/heads/main')
+  #     - uses: taiki-e/create-pull-request@v3
+  #       with:
+  #         title: Update tools/no_atomic
+  #         body: |
+  #           Auto-generated by [create-pull-request][1]
+  #           [Please close and immediately reopen this pull request to run CI.][2]
 
-            [1]: https://github.com/peter-evans/create-pull-request
-            [2]: https://github.com/peter-evans/create-pull-request/blob/HEAD/docs/concepts-guidelines.md#workarounds-to-trigger-further-workflow-runs
-          branch: update-no-atomic-rs
-        if: github.repository_owner == 'taiki-e' && (github.event_name == 'schedule' || github.event_name == 'push' && github.ref == 'refs/heads/main') && steps.diff.outputs.success == 'false'
+  #           [1]: https://github.com/peter-evans/create-pull-request
+  #           [2]: https://github.com/peter-evans/create-pull-request/blob/HEAD/docs/concepts-guidelines.md#workarounds-to-trigger-further-workflow-runs
+  #         branch: update-no-atomic-rs
+  #       if: github.repository_owner == 'taiki-e' && (github.event_name == 'schedule' || github.event_name == 'push' && github.ref == 'refs/heads/main') && steps.diff.outputs.success == 'false'
 
   tidy:
     runs-on: ubuntu-latest
@@ -261,7 +257,7 @@ jobs:
       - uses: taiki-e/install-action@shellcheck
       - run: cargo fmt --all --check
         if: always()
-      - run: cargo clippy --workspace --all-targets
+      - run: cargo clippy --workspace --all-features --all-targets
         if: always()
       - run: shellcheck $(git ls-files '*.sh')
         if: always()
@@ -273,7 +269,7 @@ jobs:
         with:
           persist-credentials: false
       - uses: taiki-e/github-actions/install-rust@main
-      - run: cargo doc --workspace --document-private-items
+      - run: cargo doc --workspace --all-features --document-private-items
 
   # This job doesn't actually test anything, but they're used to tell bors the
   # build completed, as there is no practical way to detect when a workflow is
@@ -281,21 +277,21 @@ jobs:
   #
   # ALL THE PREVIOUS JOBS NEEDS TO BE ADDED TO THE `needs` SECTION OF THIS JOB!
 
-  ci-success:
-    name: ci
-    if: github.event_name == 'push' && success()
-    needs:
-      - test
-      - msrv
-      # - asm
-      - miri
-      - san
-      - valgrind
-      - cov
-      - codegen
-      - tidy
-      - docs
-    runs-on: ubuntu-latest
-    steps:
-      - name: Mark the job as a success
-        run: exit 0
+  # ci-success:
+  #   name: ci
+  #   if: github.event_name == 'push' && success()
+  #   needs:
+  #     - test
+  #     - msrv
+  #     # - asm
+  #     - miri
+  #     - san
+  #     - valgrind
+  #     - cov
+  #     - codegen
+  #     - tidy
+  #     - docs
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Mark the job as a success
+  #       run: exit 0

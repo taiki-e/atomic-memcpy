@@ -32,6 +32,20 @@
     clippy::undocumented_unsafe_blocks
 )]
 #![allow(clippy::inline_always, clippy::single_match_else, clippy::too_many_lines)]
+#![cfg_attr(
+    all(
+        feature = "inline-asm",
+        not(any(
+            target_arch = "aarch64",
+            target_arch = "arm",
+            target_arch = "riscv32",
+            target_arch = "riscv64",
+            target_arch = "x86_64",
+            target_arch = "x86",
+        ))
+    ),
+    feature(asm_experimental_arch)
+)]
 
 // This crate should work on targets with power-of-two pointer widths,
 // but it is not clear how it will work on targets without them.
@@ -59,7 +73,7 @@ use core::sync::atomic::{self, Ordering};
 /// - `src` must be valid for reads.
 /// - `src` must be properly aligned.
 /// - `src` must go through [`UnsafeCell::get`](core::cell::UnsafeCell::get).
-/// - `T` must not contain uninitialized bytes.
+/// - If the `inline-asm` feature is not enabled, `T` must not contain uninitialized bytes.
 /// - There are no concurrent non-atomic write operations.
 /// - There are no concurrent atomic write operations of different
 ///   granularity. The granularity of atomic operations is an implementation
@@ -127,7 +141,7 @@ pub unsafe fn atomic_load<T>(src: *const T, order: Ordering) -> core::mem::Maybe
 /// - `dst` must be [valid] for writes.
 /// - `dst` must be properly aligned.
 /// - `dst` must go through [`UnsafeCell::get`](core::cell::UnsafeCell::get).
-/// - `T` must not contain uninitialized bytes.
+/// - If the `inline-asm` feature is not enabled, `T` must not contain uninitialized bytes.
 /// - There are no concurrent non-atomic operations.
 /// - There are no concurrent atomic operations of different
 ///   granularity. The granularity of atomic operations is an implementation
@@ -178,6 +192,11 @@ pub unsafe fn atomic_store<T>(dst: *mut T, val: T, order: Ordering) {
     }
 }
 
+#[cfg(feature = "inline-asm")]
+#[cfg(not(atomic_memcpy_unsafe_volatile))]
+#[path = "asm/mod.rs"]
+mod imp;
+
 /// Since `#[cfg(target_has_atomic_load_store = "ptr")]` is not available on
 /// stable, the following heuristic is used.
 ///
@@ -199,6 +218,7 @@ pub unsafe fn atomic_store<T>(dst: *mut T, val: T, order: Ordering) {
 /// Note that the use of `--cfg atomic_memcpy_unsafe_volatile` is
 /// undefined behavior in the multi-threaded environment, since volatile
 /// read/write does not guarantee anything about data race.
+#[cfg(not(feature = "inline-asm"))]
 #[cfg(not(atomic_memcpy_unsafe_volatile))]
 // Note: riscv_target_feature is not stable, so `target_feature = "a"` does not work on stable.
 #[cfg_attr(

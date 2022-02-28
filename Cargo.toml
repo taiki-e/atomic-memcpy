@@ -22,6 +22,11 @@ members = [
 ]
 
 [features]
+# Use inline assembly.
+#
+# This allows copying of the type that contains uninitialized bytes.
+inline-asm = []
+
 # Use #[inline(always)] instead of #[inline].
 #
 # This is mainly used for asm test.
@@ -29,10 +34,10 @@ members = [
 inline-always = []
 
 [dependencies]
-# Unstable feature flag to test that this crate's functions don't become panic
-# *unless the user passes an invalid ordering*.
-#
-# Note: this will not work unless you build tests or binaries with release mode.
-no-panic = { version = "0.1.11", optional = true }
+# # Unstable feature flag to test that this crate's functions don't become panic
+# # *unless the user passes an invalid ordering*.
+# #
+# # Note: this will not work unless you build tests or binaries with release mode.
+# no-panic = { version = "0.1.11", optional = true }
 
 [dev-dependencies]
