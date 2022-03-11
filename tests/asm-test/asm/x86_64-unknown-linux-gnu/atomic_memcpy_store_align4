@@ -17,45 +17,139 @@ asm_test::atomic_memcpy_store_align4::release:
  movaps  xmmword, ptr, [rsp, +, 32], xmm2
  movaps  xmmword, ptr, [rsp, +, 16], xmm1
  movaps  xmmword, ptr, [rsp], xmm0
- test    dil, 7
- je      .LBB10_1
- mov     eax, dword, ptr, [rsp]
- mov     dword, ptr, [rdi], eax
- mov     rax, qword, ptr, [rsp, +, 4]
- mov     qword, ptr, [rdi, +, 4], rax
- mov     rax, qword, ptr, [rsp, +, 12]
- mov     qword, ptr, [rdi, +, 12], rax
- mov     rax, qword, ptr, [rsp, +, 20]
- mov     qword, ptr, [rdi, +, 20], rax
- mov     rax, qword, ptr, [rsp, +, 28]
- mov     qword, ptr, [rdi, +, 28], rax
- mov     rax, qword, ptr, [rsp, +, 36]
- mov     qword, ptr, [rdi, +, 36], rax
- mov     rax, qword, ptr, [rsp, +, 44]
- mov     qword, ptr, [rdi, +, 44], rax
- mov     rax, qword, ptr, [rsp, +, 52]
- mov     qword, ptr, [rdi, +, 52], rax
+ lea     rcx, [rdi, +, 7]
+ and     rcx, -8
+ mov     rax, rcx
+ sub     rax, rdi
+ cmp     rax, 64
+ jbe     .LBB10_1
  mov     eax, dword, ptr, [rsp, +, 60]
  mov     dword, ptr, [rdi, +, 60], eax
+ mov     eax, dword, ptr, [rsp, +, 56]
+ mov     dword, ptr, [rdi, +, 56], eax
+ mov     eax, dword, ptr, [rsp, +, 52]
+ mov     dword, ptr, [rdi, +, 52], eax
+ mov     eax, dword, ptr, [rsp, +, 48]
+ mov     dword, ptr, [rdi, +, 48], eax
+ mov     eax, dword, ptr, [rsp, +, 44]
+ mov     dword, ptr, [rdi, +, 44], eax
+ mov     eax, dword, ptr, [rsp, +, 40]
+ mov     dword, ptr, [rdi, +, 40], eax
+ mov     eax, dword, ptr, [rsp, +, 36]
+ mov     dword, ptr, [rdi, +, 36], eax
+ mov     eax, dword, ptr, [rsp, +, 32]
+ mov     dword, ptr, [rdi, +, 32], eax
+ mov     eax, dword, ptr, [rsp, +, 28]
+ mov     dword, ptr, [rdi, +, 28], eax
+ mov     eax, dword, ptr, [rsp, +, 24]
+ mov     dword, ptr, [rdi, +, 24], eax
+ mov     eax, dword, ptr, [rsp, +, 20]
+ mov     dword, ptr, [rdi, +, 20], eax
+ mov     eax, dword, ptr, [rsp, +, 16]
+ mov     dword, ptr, [rdi, +, 16], eax
+ mov     eax, dword, ptr, [rsp, +, 12]
+ mov     dword, ptr, [rdi, +, 12], eax
+ mov     eax, dword, ptr, [rsp, +, 8]
+ mov     dword, ptr, [rdi, +, 8], eax
+ mov     eax, dword, ptr, [rsp, +, 4]
+ mov     dword, ptr, [rdi, +, 4], eax
+ mov     eax, dword, ptr, [rsp]
+ mov     dword, ptr, [rdi], eax
  add     rsp, 136
  ret
 .LBB10_1:
- mov     rax, qword, ptr, [rsp]
- mov     qword, ptr, [rdi], rax
- mov     rax, qword, ptr, [rsp, +, 8]
- mov     qword, ptr, [rdi, +, 8], rax
- mov     rax, qword, ptr, [rsp, +, 16]
- mov     qword, ptr, [rdi, +, 16], rax
- mov     rax, qword, ptr, [rsp, +, 24]
- mov     qword, ptr, [rdi, +, 24], rax
- mov     rax, qword, ptr, [rsp, +, 32]
- mov     qword, ptr, [rdi, +, 32], rax
- mov     rax, qword, ptr, [rsp, +, 40]
- mov     qword, ptr, [rdi, +, 40], rax
- mov     rax, qword, ptr, [rsp, +, 48]
- mov     qword, ptr, [rdi, +, 48], rax
- mov     rax, qword, ptr, [rsp, +, 56]
- mov     qword, ptr, [rdi, +, 56], rax
+ test    rax, rax
+ je      .LBB10_2
+ mov     rdx, rdi
+ not     rdx
+ add     rcx, rdx
+ mov     r8d, eax
+ and     r8d, 3
+ cmp     rcx, 3
+ jae     .LBB10_5
+ mov     ecx, 64
+ xor     esi, esi
+ test    r8, r8
+ jne     .LBB10_9
+ jmp     .LBB10_12
+.LBB10_2:
+ mov     ecx, 64
+ jmp     .LBB10_13
+.LBB10_5:
+ mov     rcx, rax
+ and     rcx, -4
+ xor     esi, esi
+.LBB10_6:
+ movzx   edx, byte, ptr, [rsp, +, rsi]
+ mov     byte, ptr, [rdi, +, rsi], dl
+ movzx   edx, byte, ptr, [rsp, +, rsi, +, 1]
+ mov     byte, ptr, [rdi, +, rsi, +, 1], dl
+ movzx   edx, byte, ptr, [rsp, +, rsi, +, 2]
+ mov     byte, ptr, [rdi, +, rsi, +, 2], dl
+ movzx   edx, byte, ptr, [rsp, +, rsi, +, 3]
+ mov     byte, ptr, [rdi, +, rsi, +, 3], dl
+ add     rsi, 4
+ cmp     rcx, rsi
+ jne     .LBB10_6
+ mov     ecx, 64
+ sub     rcx, rsi
+ test    r8, r8
+ je      .LBB10_12
+.LBB10_9:
+ lea     r9, [rdi, +, rsi]
+ lea     r10, [rsp, +, rsi]
+ xor     esi, esi
+.LBB10_10:
+ movzx   edx, byte, ptr, [r10, +, rsi]
+ mov     byte, ptr, [r9, +, rsi], dl
+ add     rsi, 1
+ cmp     r8, rsi
+ jne     .LBB10_10
+ sub     rcx, rsi
+.LBB10_12:
+ cmp     rcx, 8
+ jb      .LBB10_14
+.LBB10_13:
+ mov     rdx, qword, ptr, [rsp, +, rax]
+ mov     qword, ptr, [rdi, +, rax], rdx
+ add     rcx, -8
+ add     rax, 8
+ cmp     rcx, 7
+ ja      .LBB10_13
+.LBB10_14:
+ test    rcx, rcx
+ je      .LBB10_21
+ lea     rdx, [rcx, -, 1]
+ mov     esi, ecx
+ and     esi, 3
+ cmp     rdx, 3
+ jb      .LBB10_18
+ and     rcx, -4
+.LBB10_17:
+ movzx   edx, byte, ptr, [rsp, +, rax]
+ mov     byte, ptr, [rdi, +, rax], dl
+ movzx   edx, byte, ptr, [rsp, +, rax, +, 1]
+ mov     byte, ptr, [rdi, +, rax, +, 1], dl
+ movzx   edx, byte, ptr, [rsp, +, rax, +, 2]
+ mov     byte, ptr, [rdi, +, rax, +, 2], dl
+ movzx   edx, byte, ptr, [rsp, +, rax, +, 3]
+ mov     byte, ptr, [rdi, +, rax, +, 3], dl
+ add     rax, 4
+ add     rcx, -4
+ jne     .LBB10_17
+.LBB10_18:
+ test    rsi, rsi
+ je      .LBB10_21
+ add     rdi, rax
+ add     rax, rsp
+ xor     ecx, ecx
+.LBB10_20:
+ movzx   edx, byte, ptr, [rax, +, rcx]
+ mov     byte, ptr, [rdi, +, rcx], dl
+ add     rcx, 1
+ cmp     rsi, rcx
+ jne     .LBB10_20
+.LBB10_21:
  add     rsp, 136
  ret
 asm_test::atomic_memcpy_store_align4::write_volatile_release_fence:

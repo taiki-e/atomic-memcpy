@@ -1,44 +1,101 @@
 asm_test::atomic_memcpy_load_align2::acquire:
  stwu    1, -48(1)
- andi.   5, 4, 3
- beq     0, .LBB4_2
+ addi    5, 4, 3
+ rlwinm  8, 5, 0, 0, 29
+ sub     5, 8, 4
+ cmplwi  5, 33
+ blt     0, .LBB4_2
  lhz     5, 0(4)
  sth     5, 16(1)
- lwz     5, 2(4)
- stw     5, 18(1)
- lwz     5, 6(4)
- stw     5, 22(1)
- lwz     5, 10(4)
- stw     5, 26(1)
- lwz     5, 14(4)
- stw     5, 30(1)
- lwz     5, 18(4)
- stw     5, 34(1)
- lwz     5, 22(4)
- stw     5, 38(1)
- lwz     5, 26(4)
- stw     5, 42(1)
+ lhz     5, 2(4)
+ sth     5, 18(1)
+ lhz     5, 4(4)
+ sth     5, 20(1)
+ lhz     5, 6(4)
+ sth     5, 22(1)
+ lhz     5, 8(4)
+ sth     5, 24(1)
+ lhz     5, 10(4)
+ sth     5, 26(1)
+ lhz     5, 12(4)
+ sth     5, 28(1)
+ lhz     5, 14(4)
+ sth     5, 30(1)
+ lhz     5, 16(4)
+ sth     5, 32(1)
+ lhz     5, 18(4)
+ sth     5, 34(1)
+ lhz     5, 20(4)
+ sth     5, 36(1)
+ lhz     5, 22(4)
+ sth     5, 38(1)
+ lhz     5, 24(4)
+ sth     5, 40(1)
+ lhz     5, 26(4)
+ sth     5, 42(1)
+ lhz     5, 28(4)
+ sth     5, 44(1)
  lhz     4, 30(4)
  sth     4, 46(1)
- b       .LBB4_3
+ b       .LBB4_14
 .LBB4_2:
- lwz     5, 0(4)
- stw     5, 16(1)
- lwz     5, 4(4)
- stw     5, 20(1)
- lwz     5, 8(4)
- stw     5, 24(1)
- lwz     5, 12(4)
- stw     5, 28(1)
- lwz     5, 16(4)
- stw     5, 32(1)
- lwz     5, 20(4)
- stw     5, 36(1)
- lwz     5, 24(4)
- stw     5, 40(1)
- lwz     4, 28(4)
- stw     4, 44(1)
-.LBB4_3:
+ cmplwi  5, 0
+ addi    6, 1, 16
+ beq     0, .LBB4_6
+ addi    7, 4, -1
+ addi    9, 6, -1
+ mtctr   5
+.LBB4_4:
+ lbz     10, 1(7)
+ addi    7, 7, 1
+ stbu    10, 1(9)
+ bdnz    .LBB4_4
+ sub     7, 4, 8
+ addi    7, 7, 32
+ cmplwi  7, 4
+ bge     0, .LBB4_7
+ b       .LBB4_11
+.LBB4_6:
+ li      7, 32
+.LBB4_7:
+ addi    10, 7, -4
+ li      11, 3
+ cmplwi  10, 3
+ bc      12, 0, .LBB4_9
+ ori     10, 11, 0
+ b       .LBB4_9
+.LBB4_9:
+ sub     9, 8, 4
+ not     10, 10
+ add     8, 8, 6
+ add     10, 10, 7
+ add     9, 9, 4
+ sub     12, 8, 4
+ srwi    10, 10, 2
+ addi    8, 9, -4
+ addi    9, 12, -4
+ addi    10, 10, 1
+ mtctr   10
+.LBB4_10:
+ lwz     10, 4(8)
+ addi    8, 8, 4
+ addi    7, 7, -4
+ addi    5, 5, 4
+ stwu    10, 4(9)
+ bdnz    .LBB4_10
+.LBB4_11:
+ cmplwi  7, 0
+ beq     0, .LBB4_14
+ addi    5, 5, -1
+ add     4, 4, 5
+ add     5, 6, 5
+ mtctr   7
+.LBB4_13:
+ lbz     6, 1(4)
+ addi    4, 4, 1
+ stbu    6, 1(5)
+ bdnz    .LBB4_13
+.LBB4_14:
  lwz     4, 44(1)
  lwz     5, 40(1)
  stw     4, 28(3)

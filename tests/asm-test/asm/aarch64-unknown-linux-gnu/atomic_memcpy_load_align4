@@ -1,40 +1,72 @@
 asm_test::atomic_memcpy_load_align4::acquire:
  sub     sp, sp, #64
- tst     x0, #0x7
- b.eq    .LBB8_2
+ add     x9, x0, #7
+ and     x10, x9, #0xfffffffffffffff8
+ sub     x9, x10, x0
+ cmp     x9, #65
+ b.lo    .LBB8_2
+ ldr     w10, [x0, #60]
+ ldr     w9, [x0, #56]
+ stp     w9, w10, [sp, #56]
+ ldr     w10, [x0, #52]
+ ldr     w9, [x0, #48]
+ stp     w9, w10, [sp, #48]
+ ldr     w10, [x0, #44]
+ ldr     w9, [x0, #40]
+ stp     w9, w10, [sp, #40]
+ ldr     w10, [x0, #36]
+ ldr     w9, [x0, #32]
+ stp     w9, w10, [sp, #32]
+ ldr     w10, [x0, #28]
+ ldr     w9, [x0, #24]
+ stp     w9, w10, [sp, #24]
+ ldr     w10, [x0, #20]
+ ldr     w9, [x0, #16]
+ stp     w9, w10, [sp, #16]
+ ldr     w10, [x0, #12]
+ ldr     w9, [x0, #8]
+ stp     w9, w10, [sp, #8]
+ ldr     w10, [x0, #4]
  ldr     w9, [x0]
- str     w9, [sp]
- ldur    x9, [x0, #4]
- stur    x9, [sp, #4]
- ldur    x9, [x0, #12]
- stur    x9, [sp, #12]
- ldur    x9, [x0, #20]
- stur    x9, [sp, #20]
- ldur    x9, [x0, #28]
- stur    x9, [sp, #28]
- ldur    x9, [x0, #36]
- stur    x9, [sp, #36]
- ldur    x9, [x0, #44]
- stur    x9, [sp, #44]
- ldur    x9, [x0, #52]
- stur    x9, [sp, #52]
- ldr     w9, [x0, #60]
- str     w9, [sp, #60]
- b       .LBB8_3
+ stp     w9, w10, [sp]
+ b       .LBB8_12
 .LBB8_2:
- ldr     x10, [x0]
- ldr     x9, [x0, #8]
- stp     x10, x9, [sp]
- ldr     x10, [x0, #16]
- ldr     x9, [x0, #24]
- stp     x10, x9, [sp, #16]
- ldr     x10, [x0, #32]
- ldr     x9, [x0, #40]
- stp     x10, x9, [sp, #32]
- ldr     x10, [x0, #48]
- ldr     x9, [x0, #56]
- stp     x10, x9, [sp, #48]
-.LBB8_3:
+ cbz     x9, .LBB8_6
+ sub     x10, x0, x10
+ mov     x11, sp
+ mov     x12, x10
+ mov     x13, x0
+.LBB8_4:
+ ldrb    w14, [x13], #1
+ adds    x12, x12, #1
+ strb    w14, [x11], #1
+ b.lo    .LBB8_4
+ add     x10, x10, #64
+ cmp     x10, #8
+ b.hs    .LBB8_7
+ b       .LBB8_9
+.LBB8_6:
+ mov     w10, #64
+.LBB8_7:
+ mov     x11, sp
+.LBB8_8:
+ ldr     x12, [x0, x9]
+ sub     x10, x10, #8
+ cmp     x10, #7
+ str     x12, [x11, x9]
+ add     x9, x9, #8
+ b.hi    .LBB8_8
+.LBB8_9:
+ cbz     x10, .LBB8_12
+ mov     x11, sp
+ add     x11, x11, x9
+ add     x9, x0, x9
+.LBB8_11:
+ ldrb    w12, [x9], #1
+ subs    x10, x10, #1
+ strb    w12, [x11], #1
+ b.ne    .LBB8_11
+.LBB8_12:
  ldp     q0, q1, [sp]
  ldp     q2, q3, [sp, #32]
  stp     q0, q1, [x8]

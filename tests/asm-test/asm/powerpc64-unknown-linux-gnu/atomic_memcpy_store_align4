@@ -1,76 +1,135 @@
 asm_test::atomic_memcpy_store_align4::release:
 .Lfunc_begin10:
  ld      5, 56(4)
+ ld      6, 48(4)
  std     5, -72(1)
- ld      5, 48(4)
- std     5, -80(1)
  ld      5, 40(4)
+ std     6, -80(1)
+ ld      6, 32(4)
  std     5, -88(1)
- ld      5, 32(4)
- std     5, -96(1)
  ld      5, 24(4)
+ std     6, -96(1)
+ ld      6, 16(4)
  std     5, -104(1)
- ld      5, 16(4)
- std     5, -112(1)
  ld      5, 8(4)
  ld      4, 0(4)
+ std     6, -112(1)
  std     5, -120(1)
  std     4, -128(1)
  lwsync
  ld      4, -72(1)
+ ld      6, -88(1)
  ld      5, -80(1)
  std     4, -8(1)
- ld      4, -88(1)
+ ld      4, -96(1)
+ std     6, -24(1)
+ ld      6, -112(1)
  std     5, -16(1)
- ld      5, -96(1)
- std     4, -24(1)
- ld      4, -104(1)
- std     5, -32(1)
- ld      5, -112(1)
- std     4, -40(1)
+ ld      5, -104(1)
+ std     4, -32(1)
  ld      4, -120(1)
- std     5, -48(1)
+ std     6, -48(1)
+ addi    6, 3, 7
+ rldicr  7, 6, 0, 60
+ std     5, -40(1)
  ld      5, -128(1)
  std     4, -56(1)
- andi.   4, 3, 7
+ sub     4, 7, 3
+ cmpldi  4, 64
  std     5, -64(1)
- beq     0, .LBB10_2
+ ble     0, .LBB10_2
  lwz     4, -64(1)
  stw     4, 0(3)
- ld      4, -60(1)
- std     4, 4(3)
- ld      4, -52(1)
- std     4, 12(3)
- ld      4, -44(1)
- std     4, 20(3)
- ld      4, -36(1)
- std     4, 28(3)
- ld      4, -28(1)
- std     4, 36(3)
- ld      4, -20(1)
- std     4, 44(3)
- ld      4, -12(1)
- std     4, 52(3)
+ lwz     4, -60(1)
+ stw     4, 4(3)
+ lwz     4, -56(1)
+ stw     4, 8(3)
+ lwz     4, -52(1)
+ stw     4, 12(3)
+ lwz     4, -48(1)
+ stw     4, 16(3)
+ lwz     4, -44(1)
+ stw     4, 20(3)
+ lwz     4, -40(1)
+ stw     4, 24(3)
+ lwz     4, -36(1)
+ stw     4, 28(3)
+ lwz     4, -32(1)
+ stw     4, 32(3)
+ lwz     4, -28(1)
+ stw     4, 36(3)
+ lwz     4, -24(1)
+ stw     4, 40(3)
+ lwz     4, -20(1)
+ stw     4, 44(3)
+ lwz     4, -16(1)
+ stw     4, 48(3)
+ lwz     4, -12(1)
+ stw     4, 52(3)
+ lwz     4, -8(1)
+ stw     4, 56(3)
  lwz     4, -4(1)
  stw     4, 60(3)
  blr
 .LBB10_2:
- ld      4, -64(1)
- std     4, 0(3)
- ld      4, -56(1)
- std     4, 8(3)
- ld      4, -48(1)
- std     4, 16(3)
- ld      4, -40(1)
- std     4, 24(3)
- ld      4, -32(1)
- std     4, 32(3)
- ld      4, -24(1)
- std     4, 40(3)
- ld      4, -16(1)
- std     4, 48(3)
- ld      4, -8(1)
- std     4, 56(3)
+ cmpldi  4, 0
+ addi    5, 1, -64
+ beq     0, .LBB10_6
+ addi    6, 1, -65
+ addi    8, 3, -1
+ mtctr   4
+.LBB10_4:
+ lbzu    9, 1(6)
+ addi    10, 8, 1
+ stb     9, 1(8)
+ mr      8, 10
+ bdnz    .LBB10_4
+ sub     6, 3, 7
+ addi    6, 6, 64
+ cmpldi  6, 8
+ bge     0, .LBB10_7
+ b       .LBB10_11
+.LBB10_6:
+ li      6, 64
+.LBB10_7:
+ addi    8, 6, -8
+ li      9, 7
+ cmpldi  8, 7
+ sub     7, 7, 3
+ bc      12, 0, .LBB10_9
+ ori     8, 9, 0
+ b       .LBB10_9
+.LBB10_9:
+ not     8, 8
+ add     8, 8, 6
+ addi    9, 7, -8
+ rldicl  8, 8, 61, 3
+ add     7, 5, 9
+ addi    10, 8, 1
+ add     8, 3, 9
+ mtctr   10
+.LBB10_10:
+ ld      9, 8(7)
+ addi    10, 8, 8
+ addi    7, 7, 8
+ addi    6, 6, -8
+ addi    4, 4, 8
+ std     9, 8(8)
+ mr      8, 10
+ bdnz    .LBB10_10
+.LBB10_11:
+ cmpldi  6, 0
+ beqlr   0
+ addi    7, 4, -1
+ add     4, 5, 7
+ add     3, 3, 7
+ mtctr   6
+.LBB10_13:
+ lbzu    5, 1(4)
+ addi    6, 3, 1
+ stb     5, 1(3)
+ mr      3, 6
+ bdnz    .LBB10_13
  blr
 asm_test::atomic_memcpy_store_align4::write_volatile_release_fence:
 .Lfunc_begin11:

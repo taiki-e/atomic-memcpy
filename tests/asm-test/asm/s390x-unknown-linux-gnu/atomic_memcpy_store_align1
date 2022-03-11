@@ -137,7 +137,8 @@ asm_test::atomic_memcpy_store_align1::release:
  stc     %r0, 62(%r2)
  lb      %r0, 287(%r15)
  stc     %r0, 63(%r2)
- j       .LBB2_27
+ lmg     %r12, %r15, 384(%r15)
+ br      %r14
 .LBB2_2:
  cgije   %r1, 0, .LBB2_11
  lgr     %r4, %r2

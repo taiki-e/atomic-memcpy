@@ -9,45 +9,135 @@ asm_test::atomic_memcpy_store_align2::release:
  movaps  xmm1, xmmword, ptr, [esp, +, 48]
  movaps  xmmword, ptr, [esp, +, 16], xmm1
  movaps  xmmword, ptr, [esp], xmm0
- test    dil, 3
- je      .LBB6_1
- movzx   eax, word, ptr, [esp]
- mov     word, ptr, [edi], ax
- mov     eax, dword, ptr, [esp, +, 2]
- mov     dword, ptr, [edi, +, 2], eax
- mov     eax, dword, ptr, [esp, +, 6]
- mov     dword, ptr, [edi, +, 6], eax
- mov     eax, dword, ptr, [esp, +, 10]
- mov     dword, ptr, [edi, +, 10], eax
- mov     eax, dword, ptr, [esp, +, 14]
- mov     dword, ptr, [edi, +, 14], eax
- mov     eax, dword, ptr, [esp, +, 18]
- mov     dword, ptr, [edi, +, 18], eax
- mov     eax, dword, ptr, [esp, +, 22]
- mov     dword, ptr, [edi, +, 22], eax
- mov     eax, dword, ptr, [esp, +, 26]
- mov     dword, ptr, [edi, +, 26], eax
+ lea     r8d, [rdi, +, 3]
+ and     r8d, -4
+ mov     eax, r8d
+ sub     eax, edi
+ cmp     eax, 32
+ jbe     .LBB6_1
  movzx   eax, word, ptr, [esp, +, 30]
  mov     word, ptr, [edi, +, 30], ax
+ movzx   eax, word, ptr, [esp, +, 28]
+ mov     word, ptr, [edi, +, 28], ax
+ movzx   eax, word, ptr, [esp, +, 26]
+ mov     word, ptr, [edi, +, 26], ax
+ movzx   eax, word, ptr, [esp, +, 24]
+ mov     word, ptr, [edi, +, 24], ax
+ movzx   eax, word, ptr, [esp, +, 22]
+ mov     word, ptr, [edi, +, 22], ax
+ movzx   eax, word, ptr, [esp, +, 20]
+ mov     word, ptr, [edi, +, 20], ax
+ movzx   eax, word, ptr, [esp, +, 18]
+ mov     word, ptr, [edi, +, 18], ax
+ movzx   eax, word, ptr, [esp, +, 16]
+ mov     word, ptr, [edi, +, 16], ax
+ movzx   eax, word, ptr, [esp, +, 14]
+ mov     word, ptr, [edi, +, 14], ax
+ movzx   eax, word, ptr, [esp, +, 12]
+ mov     word, ptr, [edi, +, 12], ax
+ movzx   eax, word, ptr, [esp, +, 10]
+ mov     word, ptr, [edi, +, 10], ax
+ movzx   eax, word, ptr, [esp, +, 8]
+ mov     word, ptr, [edi, +, 8], ax
+ movzx   eax, word, ptr, [esp, +, 6]
+ mov     word, ptr, [edi, +, 6], ax
+ movzx   eax, word, ptr, [esp, +, 4]
+ mov     word, ptr, [edi, +, 4], ax
+ movzx   eax, word, ptr, [esp, +, 2]
+ mov     word, ptr, [edi, +, 2], ax
+ movzx   eax, word, ptr, [esp]
+ mov     word, ptr, [edi], ax
  add     esp, 72
  ret
 .LBB6_1:
- mov     eax, dword, ptr, [esp]
- mov     dword, ptr, [edi], eax
- mov     eax, dword, ptr, [esp, +, 4]
- mov     dword, ptr, [edi, +, 4], eax
- mov     eax, dword, ptr, [esp, +, 8]
- mov     dword, ptr, [edi, +, 8], eax
- mov     eax, dword, ptr, [esp, +, 12]
- mov     dword, ptr, [edi, +, 12], eax
- mov     eax, dword, ptr, [esp, +, 16]
- mov     dword, ptr, [edi, +, 16], eax
- mov     eax, dword, ptr, [esp, +, 20]
- mov     dword, ptr, [edi, +, 20], eax
- mov     eax, dword, ptr, [esp, +, 24]
- mov     dword, ptr, [edi, +, 24], eax
- mov     eax, dword, ptr, [esp, +, 28]
- mov     dword, ptr, [edi, +, 28], eax
+ test    eax, eax
+ je      .LBB6_2
+ mov     edx, edi
+ not     edx
+ add     edx, r8d
+ mov     r9d, eax
+ and     r9d, 3
+ xor     ecx, ecx
+ cmp     edx, 3
+ jb      .LBB6_6
+ mov     r10d, eax
+ and     r10d, -4
+ xor     esi, esi
+.LBB6_5:
+ movzx   ecx, byte, ptr, [esp, +, esi]
+ mov     byte, ptr, [edi, +, esi], cl
+ movzx   ecx, byte, ptr, [esp, +, esi, +, 1]
+ mov     byte, ptr, [edi, +, esi, +, 1], cl
+ movzx   ecx, byte, ptr, [esp, +, esi, +, 2]
+ mov     byte, ptr, [edi, +, esi, +, 2], cl
+ lea     ecx, [rsi, +, 4]
+ movzx   edx, byte, ptr, [esp, +, esi, +, 3]
+ mov     byte, ptr, [edi, +, esi, +, 3], dl
+ mov     esi, ecx
+ cmp     r10d, ecx
+ jne     .LBB6_5
+.LBB6_6:
+ test    r9d, r9d
+ je      .LBB6_9
+ lea     r10d, [rdi, +, rcx]
+ add     ecx, esp
+ xor     esi, esi
+.LBB6_8:
+ movzx   edx, byte, ptr, [ecx, +, esi]
+ mov     byte, ptr, [r10d, +, esi], dl
+ add     esi, 1
+ cmp     r9d, esi
+ jne     .LBB6_8
+.LBB6_9:
+ mov     ecx, edi
+ sub     ecx, r8d
+ add     ecx, 32
+ cmp     ecx, 4
+ jae     .LBB6_10
+ jmp     .LBB6_11
+.LBB6_2:
+ mov     ecx, 32
+.LBB6_10:
+ mov     edx, dword, ptr, [esp, +, eax]
+ mov     dword, ptr, [edi, +, eax], edx
+ add     ecx, -4
+ add     eax, 4
+ cmp     ecx, 3
+ ja      .LBB6_10
+.LBB6_11:
+ test    ecx, ecx
+ je      .LBB6_18
+ lea     edx, [rcx, -, 1]
+ mov     esi, ecx
+ and     esi, 3
+ cmp     edx, 3
+ jb      .LBB6_15
+ and     ecx, -4
+.LBB6_14:
+ movzx   edx, byte, ptr, [esp, +, eax]
+ mov     byte, ptr, [edi, +, eax], dl
+ movzx   edx, byte, ptr, [esp, +, eax, +, 1]
+ mov     byte, ptr, [edi, +, eax, +, 1], dl
+ movzx   edx, byte, ptr, [esp, +, eax, +, 2]
+ mov     byte, ptr, [edi, +, eax, +, 2], dl
+ movzx   edx, byte, ptr, [esp, +, eax, +, 3]
+ mov     byte, ptr, [edi, +, eax, +, 3], dl
+ add     eax, 4
+ add     ecx, -4
+ jne     .LBB6_14
+.LBB6_15:
+ test    esi, esi
+ je      .LBB6_18
+ add     edi, eax
+ add     eax, esp
+ xor     ecx, ecx
+.LBB6_17:
+ movzx   edx, byte, ptr, [eax, +, ecx]
+ mov     byte, ptr, [edi, +, ecx], dl
+ add     ecx, 1
+ cmp     esi, ecx
+ jne     .LBB6_17
+.LBB6_18:
  add     esp, 72
  ret
 asm_test::atomic_memcpy_store_align2::write_volatile_release_fence:

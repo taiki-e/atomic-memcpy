@@ -1,6 +1,8 @@
 asm_test::atomic_memcpy_store_align2::release:
+ push    {r4, r5, r7, lr}
  sub     sp, #64
  vld1.16 {d16, d17}, [r1]!
+ add.w   lr, sp, #32
  vld1.16 {d18, d19}, [r1]
  mov     r1, sp
  mov     r2, r1
@@ -8,51 +10,84 @@ asm_test::atomic_memcpy_store_align2::release:
  vst1.64 {d18, d19}, [r2]
  dmb     ish
  vld1.64 {d16, d17}, [r1]
- add     r1, sp, #32
+ mov     r1, lr
  vld1.64 {d18, d19}, [r2]
  vst1.64 {d16, d17}, [r1]!
  vst1.64 {d18, d19}, [r1]
- lsls    r1, r0, #30
- beq     .LBB6_2
- ldrh.w  r1, [sp, #32]
- strh    r1, [r0]
- ldr.w   r1, [sp, #34]
- str.w   r1, [r0, #2]
- ldr.w   r1, [sp, #38]
- str.w   r1, [r0, #6]
- ldr.w   r1, [sp, #42]
- str.w   r1, [r0, #10]
- ldr.w   r1, [sp, #46]
- str.w   r1, [r0, #14]
- ldr.w   r1, [sp, #50]
- str.w   r1, [r0, #18]
- ldr.w   r1, [sp, #54]
- str.w   r1, [r0, #22]
- ldr.w   r1, [sp, #58]
- str.w   r1, [r0, #26]
+ adds    r1, r0, #3
+ bic     r1, r1, #3
+ subs    r2, r1, r0
+ cmp     r2, #32
+ bls     .LBB6_2
  ldrh.w  r1, [sp, #62]
  strh    r1, [r0, #30]
- add     sp, #64
- bx      lr
+ ldrh.w  r1, [sp, #60]
+ strh    r1, [r0, #28]
+ ldrh.w  r1, [sp, #58]
+ strh    r1, [r0, #26]
+ ldrh.w  r1, [sp, #56]
+ strh    r1, [r0, #24]
+ ldrh.w  r1, [sp, #54]
+ strh    r1, [r0, #22]
+ ldrh.w  r1, [sp, #52]
+ strh    r1, [r0, #20]
+ ldrh.w  r1, [sp, #50]
+ strh    r1, [r0, #18]
+ ldrh.w  r1, [sp, #48]
+ strh    r1, [r0, #16]
+ ldrh.w  r1, [sp, #46]
+ strh    r1, [r0, #14]
+ ldrh.w  r1, [sp, #44]
+ strh    r1, [r0, #12]
+ ldrh.w  r1, [sp, #42]
+ strh    r1, [r0, #10]
+ ldrh.w  r1, [sp, #40]
+ strh    r1, [r0, #8]
+ ldrh.w  r1, [sp, #38]
+ strh    r1, [r0, #6]
+ ldrh.w  r1, [sp, #36]
+ strh    r1, [r0, #4]
+ ldrh.w  r1, [sp, #34]
+ strh    r1, [r0, #2]
+ ldrh.w  r1, [sp, #32]
+ strh    r1, [r0]
+ b       .LBB6_11
 .LBB6_2:
- ldr     r1, [sp, #32]
- str     r1, [r0]
- ldr     r1, [sp, #36]
- str     r1, [r0, #4]
- ldr     r1, [sp, #40]
- str     r1, [r0, #8]
- ldr     r1, [sp, #44]
- str     r1, [r0, #12]
- ldr     r1, [sp, #48]
- str     r1, [r0, #16]
- ldr     r1, [sp, #52]
- str     r1, [r0, #20]
- ldr     r1, [sp, #56]
- str     r1, [r0, #24]
- ldr     r1, [sp, #60]
- str     r1, [r0, #28]
+ cbz     r2, .LBB6_6
+ sub.w   r12, r0, r1
+ add     r3, sp, #32
+ mov     r4, r0
+ mov     r1, r12
+.LBB6_4:
+ ldrb    r5, [r3], #1
+ adds    r1, #1
+ strb    r5, [r4], #1
+ blo     .LBB6_4
+ add.w   r3, r12, #32
+ cmp     r3, #4
+ bhs     .LBB6_7
+ b       .LBB6_8
+.LBB6_6:
+ movs    r3, #32
+.LBB6_7:
+ ldr.w   r1, [lr, r2]
+ subs    r3, #4
+ cmp     r3, #3
+ str     r1, [r0, r2]
+ add.w   r2, r2, #4
+ bhi     .LBB6_7
+.LBB6_8:
+ cbz     r3, .LBB6_11
+ add.w   r1, lr, r2
+ add     r0, r2
+.LBB6_10:
+ ldrb    r2, [r1], #1
+ subs    r3, #1
+ strb    r2, [r0], #1
+ bne     .LBB6_10
+.LBB6_11:
  add     sp, #64
- bx      lr
+ pop     {r4, r5, r7, pc}
 asm_test::atomic_memcpy_store_align2::write_volatile_release_fence:
  sub     sp, #32
  dmb     ish

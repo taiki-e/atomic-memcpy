@@ -1,52 +1,88 @@
 asm_test::atomic_memcpy_load_align4::acquire:
  daddiu  $sp, $sp, -64
- andi    $1, $5, 7
- beqz    $1, .LBB8_2
+ daddiu  $1, $5, 7
+ daddiu  $2, $zero, -8
+ and     $1, $1, $2
+ dsubu   $2, $1, $5
+ sltiu   $1, $2, 65
+ bnez    $1, .LBB8_2
  nop
- lw      $1, 0($5)
- sw      $1, 0($sp)
- ld      $1, 4($5)
- sdl     $1, 11($sp)
- sdr     $1, 4($sp)
- ld      $1, 12($5)
- sdl     $1, 19($sp)
- sdr     $1, 12($sp)
- ld      $1, 20($5)
- sdl     $1, 27($sp)
- sdr     $1, 20($sp)
- ld      $1, 28($5)
- sdl     $1, 35($sp)
- sdr     $1, 28($sp)
- ld      $1, 36($5)
- sdl     $1, 43($sp)
- sdr     $1, 36($sp)
- ld      $1, 44($5)
- sdl     $1, 51($sp)
- sdr     $1, 44($sp)
- ld      $1, 52($5)
- sdl     $1, 59($sp)
- sdr     $1, 52($sp)
  lw      $1, 60($5)
- b       .LBB8_3
  sw      $1, 60($sp)
+ lw      $1, 56($5)
+ sw      $1, 56($sp)
+ lw      $1, 52($5)
+ sw      $1, 52($sp)
+ lw      $1, 48($5)
+ sw      $1, 48($sp)
+ lw      $1, 44($5)
+ sw      $1, 44($sp)
+ lw      $1, 40($5)
+ sw      $1, 40($sp)
+ lw      $1, 36($5)
+ sw      $1, 36($sp)
+ lw      $1, 32($5)
+ sw      $1, 32($sp)
+ lw      $1, 28($5)
+ sw      $1, 28($sp)
+ lw      $1, 24($5)
+ sw      $1, 24($sp)
+ lw      $1, 20($5)
+ sw      $1, 20($sp)
+ lw      $1, 16($5)
+ sw      $1, 16($sp)
+ lw      $1, 12($5)
+ sw      $1, 12($sp)
+ lw      $1, 8($5)
+ sw      $1, 8($sp)
+ lw      $1, 4($5)
+ sw      $1, 4($sp)
+ lw      $1, 0($5)
+ b       .LBB8_12
+ sw      $1, 0($sp)
 .LBB8_2:
- ld      $1, 0($5)
- sd      $1, 0($sp)
- ld      $1, 8($5)
- sd      $1, 8($sp)
- ld      $1, 16($5)
- sd      $1, 16($sp)
- ld      $1, 24($5)
- sd      $1, 24($sp)
- ld      $1, 32($5)
- sd      $1, 32($sp)
- ld      $1, 40($5)
- sd      $1, 40($sp)
- ld      $1, 48($5)
- sd      $1, 48($sp)
- ld      $1, 56($5)
- sd      $1, 56($sp)
-.LBB8_3:
+ beqz    $2, .LBB8_7
+ daddiu  $3, $sp, 0
+ daddiu  $6, $zero, 0
+.LBB8_4:
+ daddu   $7, $5, $6
+ daddu   $1, $3, $6
+ daddiu  $6, $6, 1
+ lb      $7, 0($7)
+ bne     $2, $6, .LBB8_4
+ sb      $7, 0($1)
+ daddiu  $1, $zero, 64
+ dsubu   $6, $1, $6
+ sltiu   $1, $6, 8
+ bnez    $1, .LBB8_9
+ nop
+ b       .LBB8_8
+ nop
+.LBB8_7:
+ daddiu  $6, $zero, 64
+.LBB8_8:
+ daddu   $7, $5, $2
+ daddu   $1, $3, $2
+ daddiu  $6, $6, -8
+ ld      $7, 0($7)
+ sdl     $7, 7($1)
+ sdr     $7, 0($1)
+ sltiu   $1, $6, 8
+ beqz    $1, .LBB8_8
+ daddiu  $2, $2, 8
+.LBB8_9:
+ beqz    $6, .LBB8_12
+ nop
+ daddu   $5, $5, $2
+ daddu   $2, $3, $2
+.LBB8_11:
+ lb      $1, 0($5)
+ daddiu  $6, $6, -1
+ daddiu  $5, $5, 1
+ sb      $1, 0($2)
+ bnez    $6, .LBB8_11
+ daddiu  $2, $2, 1
+.LBB8_12:
  ld      $1, 56($sp)
  ld      $2, 24($sp)
  ld      $3, 32($sp)

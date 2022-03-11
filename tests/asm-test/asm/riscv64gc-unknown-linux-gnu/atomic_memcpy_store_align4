@@ -45,78 +45,118 @@ asm_test::atomic_memcpy_store_align4::release:
  ld      a2, 48(sp)
  ld      a3, 40(sp)
  sd      a1, 120(sp)
- ld      a1, 32(sp)
  sd      a2, 112(sp)
  sd      a3, 104(sp)
+ ld      a1, 32(sp)
  ld      a2, 24(sp)
+ ld      a3, 16(sp)
+ ld      a4, 8(sp)
  sd      a1, 96(sp)
- ld      a1, 16(sp)
- ld      a3, 8(sp)
  sd      a2, 88(sp)
- ld      a2, 0(sp)
- sd      a1, 80(sp)
- sd      a3, 72(sp)
- andi    a1, a0, 7
- sd      a2, 64(sp)
- beqz    a1, .LBB10_2
- lw      a1, 64(sp)
- sw      a1, 0(a0)
- lwu     a1, 72(sp)
- lwu     a2, 68(sp)
- slli    a1, a1, 32
- or      a1, a1, a2
- sd      a1, 4(a0)
- lwu     a1, 80(sp)
- lwu     a2, 76(sp)
- slli    a1, a1, 32
- or      a1, a1, a2
- sd      a1, 12(a0)
- lwu     a1, 88(sp)
- lwu     a2, 84(sp)
- slli    a1, a1, 32
- or      a1, a1, a2
- sd      a1, 20(a0)
- lwu     a1, 96(sp)
- lwu     a2, 92(sp)
- slli    a1, a1, 32
- or      a1, a1, a2
- sd      a1, 28(a0)
- lwu     a1, 104(sp)
- lwu     a2, 100(sp)
- slli    a1, a1, 32
- or      a1, a1, a2
- sd      a1, 36(a0)
- lwu     a1, 112(sp)
- lwu     a2, 108(sp)
- slli    a1, a1, 32
- or      a1, a1, a2
- sd      a1, 44(a0)
- lwu     a1, 120(sp)
- lwu     a2, 116(sp)
- slli    a1, a1, 32
- or      a1, a1, a2
- sd      a1, 52(a0)
+ sd      a3, 80(sp)
+ sd      a4, 72(sp)
+ ld      a4, 0(sp)
+ addi    a1, a0, 7
+ andi    a6, a1, -8
+ sub     t2, a6, a0
+ li      a2, 64
+ sd      a4, 64(sp)
+ bgeu    a2, t2, .LBB10_2
  lw      a1, 124(sp)
  sw      a1, 60(a0)
- addi    sp, sp, 128
- ret
+ lw      a1, 120(sp)
+ sw      a1, 56(a0)
+ lw      a1, 116(sp)
+ sw      a1, 52(a0)
+ lw      a1, 112(sp)
+ sw      a1, 48(a0)
+ lw      a1, 108(sp)
+ sw      a1, 44(a0)
+ lw      a1, 104(sp)
+ sw      a1, 40(a0)
+ lw      a1, 100(sp)
+ sw      a1, 36(a0)
+ lw      a1, 96(sp)
+ sw      a1, 32(a0)
+ lw      a1, 92(sp)
+ sw      a1, 28(a0)
+ lw      a1, 88(sp)
+ sw      a1, 24(a0)
+ lw      a1, 84(sp)
+ sw      a1, 20(a0)
+ lw      a1, 80(sp)
+ sw      a1, 16(a0)
+ lw      a1, 76(sp)
+ sw      a1, 12(a0)
+ lw      a1, 72(sp)
+ sw      a1, 8(a0)
+ lw      a1, 68(sp)
+ sw      a1, 4(a0)
+ lw      a1, 64(sp)
+ sw      a1, 0(a0)
+ j       .LBB10_11
 .LBB10_2:
- ld      a1, 64(sp)
- sd      a1, 0(a0)
- ld      a1, 72(sp)
- sd      a1, 8(a0)
- ld      a1, 80(sp)
- sd      a1, 16(a0)
- ld      a1, 88(sp)
- sd      a1, 24(a0)
- ld      a1, 96(sp)
- sd      a1, 32(a0)
- ld      a1, 104(sp)
- sd      a1, 40(a0)
- ld      a1, 112(sp)
- sd      a1, 48(a0)
- ld      a1, 120(sp)
- sd      a1, 56(a0)
+ beqz    t2, .LBB10_6
+ sub     a4, a0, a6
+ addi    a2, sp, 64
+ mv      a5, a0
+.LBB10_4:
+ lb      a7, 0(a2)
+ mv      a3, a4
+ sb      a7, 0(a5)
+ addi    a5, a5, 1
+ addi    a4, a4, 1
+ addi    a2, a2, 1
+ bgeu    a4, a3, .LBB10_4
+ sub     a2, a0, a6
+ addi    a2, a2, 64
+ li      a3, 8
+ bltu    a2, a3, .LBB10_8
+.LBB10_6:
+ addi    a6, sp, 64
+ li      a7, 7
+.LBB10_7:
+ add     a5, a6, t2
+ lbu     t0, 1(a5)
+ lbu     t1, 0(a5)
+ lbu     a3, 3(a5)
+ lbu     a4, 2(a5)
+ slli    a1, t0, 8
+ or      a1, a1, t1
+ slli    a3, a3, 8
+ or      a3, a3, a4
+ slli    a3, a3, 16
+ or      t0, a3, a1
+ lbu     a3, 5(a5)
+ lbu     a4, 4(a5)
+ lbu     a1, 7(a5)
+ lbu     a5, 6(a5)
+ slli    a3, a3, 8
+ or      a3, a3, a4
+ slli    a1, a1, 8
+ or      a1, a1, a5
+ slli    a1, a1, 16
+ or      a1, a1, a3
+ slli    a1, a1, 32
+ or      a1, a1, t0
+ add     a3, a0, t2
+ sd      a1, 0(a3)
+ addi    a2, a2, -8
+ addi    t2, t2, 8
+ bltu    a7, a2, .LBB10_7
+.LBB10_8:
+ beqz    a2, .LBB10_11
+ add     a0, a0, t2
+ addi    a1, sp, 64
+ add     a1, a1, t2
+.LBB10_10:
+ lb      a3, 0(a1)
+ sb      a3, 0(a0)
+ addi    a0, a0, 1
+ addi    a2, a2, -1
+ addi    a1, a1, 1
+ bnez    a2, .LBB10_10
+.LBB10_11:
  addi    sp, sp, 128
  ret
 asm_test::atomic_memcpy_store_align4::write_volatile_release_fence:

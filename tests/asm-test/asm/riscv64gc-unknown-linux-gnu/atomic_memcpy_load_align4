@@ -1,59 +1,102 @@
 asm_test::atomic_memcpy_load_align4::acquire:
  addi    sp, sp, -80
  sd      ra, 72(sp)
- andi    a2, a1, 7
- beqz    a2, .LBB8_2
- lw      a2, 0(a1)
- sw      a2, 8(sp)
- ld      a2, 4(a1)
- sw      a2, 12(sp)
- srli    a2, a2, 32
- sw      a2, 16(sp)
- ld      a2, 12(a1)
- sw      a2, 20(sp)
- srli    a2, a2, 32
- sw      a2, 24(sp)
- ld      a2, 20(a1)
- sw      a2, 28(sp)
- srli    a2, a2, 32
- sw      a2, 32(sp)
- ld      a2, 28(a1)
- sw      a2, 36(sp)
- srli    a2, a2, 32
- sw      a2, 40(sp)
- ld      a2, 36(a1)
- sw      a2, 44(sp)
- srli    a2, a2, 32
- sw      a2, 48(sp)
- ld      a2, 44(a1)
- sw      a2, 52(sp)
- srli    a2, a2, 32
- sw      a2, 56(sp)
- ld      a2, 52(a1)
- sw      a2, 60(sp)
- srli    a2, a2, 32
+ addi    a2, a1, 7
+ andi    a6, a2, -8
+ sub     t0, a6, a1
+ li      a3, 65
+ bltu    t0, a3, .LBB8_2
+ lw      a2, 60(a1)
+ sw      a2, 68(sp)
+ lw      a2, 56(a1)
  sw      a2, 64(sp)
- lw      a1, 60(a1)
- sw      a1, 68(sp)
- j       .LBB8_3
+ lw      a2, 52(a1)
+ sw      a2, 60(sp)
+ lw      a2, 48(a1)
+ sw      a2, 56(sp)
+ lw      a2, 44(a1)
+ sw      a2, 52(sp)
+ lw      a2, 40(a1)
+ sw      a2, 48(sp)
+ lw      a2, 36(a1)
+ sw      a2, 44(sp)
+ lw      a2, 32(a1)
+ sw      a2, 40(sp)
+ lw      a2, 28(a1)
+ sw      a2, 36(sp)
+ lw      a2, 24(a1)
+ sw      a2, 32(sp)
+ lw      a2, 20(a1)
+ sw      a2, 28(sp)
+ lw      a2, 16(a1)
+ sw      a2, 24(sp)
+ lw      a2, 12(a1)
+ sw      a2, 20(sp)
+ lw      a2, 8(a1)
+ sw      a2, 16(sp)
+ lw      a2, 4(a1)
+ sw      a2, 12(sp)
+ lw      a1, 0(a1)
+ sw      a1, 8(sp)
+ j       .LBB8_12
 .LBB8_2:
- ld      a2, 0(a1)
- sd      a2, 8(sp)
- ld      a2, 8(a1)
- sd      a2, 16(sp)
- ld      a2, 16(a1)
- sd      a2, 24(sp)
- ld      a2, 24(a1)
- sd      a2, 32(sp)
- ld      a2, 32(a1)
- sd      a2, 40(sp)
- ld      a2, 40(a1)
- sd      a2, 48(sp)
- ld      a2, 48(a1)
- sd      a2, 56(sp)
- ld      a1, 56(a1)
- sd      a1, 64(sp)
-.LBB8_3:
+ beqz    t0, .LBB8_6
+ sub     a3, a1, a6
+ addi    a4, sp, 8
+ mv      a5, a1
+.LBB8_4:
+ lb      a7, 0(a5)
+ mv      a2, a3
+ sb      a7, 0(a4)
+ addi    a4, a4, 1
+ addi    a3, a3, 1
+ addi    a5, a5, 1
+ bgeu    a3, a2, .LBB8_4
+ sub     a2, a1, a6
+ addi    a3, a2, 64
+ li      a2, 8
+ bgeu    a3, a2, .LBB8_7
+ j       .LBB8_9
+.LBB8_6:
+ li      a3, 64
+.LBB8_7:
+ addi    a6, sp, 8
+ li      a7, 7
+.LBB8_8:
+ add     a2, a1, t0
+ ld      a2, 0(a2)
+ add     a4, a6, t0
+ sb      a2, 0(a4)
+ srli    a5, a2, 56
+ sb      a5, 7(a4)
+ srli    a5, a2, 48
+ sb      a5, 6(a4)
+ srli    a5, a2, 40
+ sb      a5, 5(a4)
+ srli    a5, a2, 32
+ sb      a5, 4(a4)
+ srli    a5, a2, 24
+ sb      a5, 3(a4)
+ srli    a5, a2, 16
+ sb      a5, 2(a4)
+ srli    a2, a2, 8
+ sb      a2, 1(a4)
+ addi    a3, a3, -8
+ addi    t0, t0, 8
+ bltu    a7, a3, .LBB8_8
+.LBB8_9:
+ beqz    a3, .LBB8_12
+ addi    a2, sp, 8
+ add     a4, a2, t0
+ add     a1, a1, t0
+.LBB8_11:
+ lb      a2, 0(a1)
+ sb      a2, 0(a4)
+ addi    a4, a4, 1
+ addi    a3, a3, -1
+ addi    a1, a1, 1
+ bnez    a3, .LBB8_11
+.LBB8_12:
  addi    a1, sp, 8
  li      a2, 64
  call    memcpy@plt
