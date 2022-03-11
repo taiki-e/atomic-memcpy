@@ -42,7 +42,7 @@ if [[ "${rustc_version}" == *"nightly"* ]] || [[ "${rustc_version}" == *"dev"* ]
     case "${rustc_version}" in
         1.4* | 1.50.* | 1.51.*) ;;
         *)
-            export RUSTFLAGS="${RUSTFLAGS:-} -Z unstable-options --check-cfg=names(miri,atomic_memcpy_unsafe_volatile)"
+            export RUSTFLAGS="${RUSTFLAGS:-} -Z unstable-options --check-cfg=names(atomic_memcpy_unsafe_volatile)"
             ;;
     esac
 fi
