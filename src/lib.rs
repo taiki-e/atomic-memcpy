@@ -98,7 +98,6 @@ use core::sync::atomic::{self, Ordering};
 /// // SAFETY: there was no concurrent write operations during load.
 /// assert_eq!(unsafe { result.assume_init() }, [0; 64]);
 /// ```
-#[cfg_attr(all(feature = "no-panic", not(debug_assertions)), no_panic::no_panic)]
 #[cfg_attr(feature = "inline-always", inline(always))]
 #[cfg_attr(not(feature = "inline-always"), inline)]
 pub unsafe fn atomic_load<T>(src: *const T, order: Ordering) -> core::mem::MaybeUninit<T> {
@@ -107,8 +106,6 @@ pub unsafe fn atomic_load<T>(src: *const T, order: Ordering) -> core::mem::Maybe
         Ordering::AcqRel => panic!("there is no such thing as an acquire/release load"),
         _ => {}
     }
-    // clippy bug that does not recognize safety comments inside macros.
-    #[allow(clippy::undocumented_unsafe_blocks)]
     // SAFETY: the caller must uphold the safety contract for `atomic_load`.
     let val = unsafe { imp::atomic_load(src) };
     match order {
@@ -160,7 +157,6 @@ pub unsafe fn atomic_load<T>(src: *const T, order: Ordering) -> core::mem::Maybe
 /// // SAFETY: there was no concurrent write operations during load.
 /// assert_eq!(unsafe { result.assume_init() }, [1; 64]);
 /// ```
-#[cfg_attr(all(feature = "no-panic", not(debug_assertions)), no_panic::no_panic)]
 #[cfg_attr(feature = "inline-always", inline(always))]
 #[cfg_attr(not(feature = "inline-always"), inline)]
 pub unsafe fn atomic_store<T>(dst: *mut T, val: T, order: Ordering) {
@@ -170,8 +166,6 @@ pub unsafe fn atomic_store<T>(dst: *mut T, val: T, order: Ordering) {
         Ordering::Relaxed => { /* no-op */ }
         _ => atomic::fence(order),
     }
-    // clippy bug that does not recognize safety comments inside macros.
-    #[allow(clippy::undocumented_unsafe_blocks)]
     // SAFETY: the caller must uphold the safety contract for `atomic_store`.
     unsafe {
         imp::atomic_store(dst, val);

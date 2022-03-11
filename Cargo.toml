@@ -28,11 +28,4 @@ members = [
 # Note that it is useless to enable this in most cases.
 inline-always = []
 
-[dependencies]
-# Unstable feature flag to test that this crate's functions don't become panic
-# *unless the user passes an invalid ordering*.
-#
-# Note: this will not work unless you build tests or binaries with release mode.
-no-panic = { version = "0.1.11", optional = true }
-
 [dev-dependencies]

@@ -71,7 +71,6 @@ fn basic_ptr() {
     }
 }
 
-#[cfg(not(feature = "no-panic"))]
 #[track_caller]
 fn assert_panic<T: std::fmt::Debug>(f: impl FnOnce() -> T) -> std::string::String {
     let msg = std::panic::catch_unwind(std::panic::AssertUnwindSafe(f)).unwrap_err();
@@ -107,7 +106,6 @@ fn ordering() {
 
     // Miri's panic handling is slow
     if !cfg!(miri) {
-        #[cfg(not(feature = "no-panic"))]
         unsafe {
             assert_eq!(
                 assert_panic(|| {

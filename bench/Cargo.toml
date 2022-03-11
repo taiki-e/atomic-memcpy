@@ -4,9 +4,6 @@ version = "0.0.0"
 edition = "2018"
 publish = false
 
-[features]
-no-panic = ["atomic-memcpy/no-panic"]
-
 [dependencies]
 atomic-memcpy = { path = "..", features = ["inline-always"] }
 
