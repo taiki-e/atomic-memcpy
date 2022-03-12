@@ -22,9 +22,11 @@ See [P1478R1][p1478r1] for more.
 
 ## Related Projects
 
-- [portable-atomic]: Portable atomic types. Using byte-wise atomic memcpy to implement Seqlock, which is used in the fallback implementation.
+- [portable-atomic]: Portable atomic types including extensions such as 128-bit atomics, atomic float, etc. Using byte-wise atomic memcpy to implement Seqlock, which is used in the fallback implementation.
+- [atomic-maybe-uninit]: Atomic operations on potentially uninitialized integers.
 
 [asm-test]: tests/asm-test/asm
+[atomic-maybe-uninit]: https://github.com/taiki-e/atomic-maybe-uninit
 [implementation]: https://github.com/taiki-e/atomic-memcpy/blob/570de7be73b3cb086741cc6cff80dea4c706349c/src/lib.rs#L339-L383
 [p1478r1]: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/p1478r1.html
 [portable-atomic]: https://github.com/taiki-e/portable-atomic
