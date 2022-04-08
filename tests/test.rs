@@ -60,17 +60,6 @@ fn basic_unit() {
     }
 }
 
-#[test]
-fn basic_ptr() {
-    unsafe {
-        let x = UnsafeCell::<*mut u8>::new(ptr::null_mut());
-        assert!(atomic_load(x.get(), Ordering::Relaxed).assume_init().is_null());
-        let mut v = 0u8;
-        atomic_store(x.get(), &mut v, Ordering::Relaxed);
-        assert!(!atomic_load(x.get(), Ordering::Relaxed).assume_init().is_null());
-    }
-}
-
 #[track_caller]
 fn assert_panic<T: std::fmt::Debug>(f: impl FnOnce() -> T) -> std::string::String {
     let msg = std::panic::catch_unwind(std::panic::AssertUnwindSafe(f)).unwrap_err();
