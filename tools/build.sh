@@ -40,8 +40,8 @@ rustc_version=$(rustc ${common_args[@]+"${common_args[@]}"} -Vv | grep 'release:
 if [[ "${rustc_version}" == *"nightly"* ]] || [[ "${rustc_version}" == *"dev"* ]]; then
     rustup ${common_args[@]+"${common_args[@]}"} component add rust-src &>/dev/null
     case "${rustc_version}" in
-        # -Z check-cfg-features requires 1.61.0-nightly
-        1.3* | 1.4* | 1.5* | 1.60.*) ;;
+        # -Z check-cfg requires 1.63.0-nightly
+        1.[0-5]* | 1.6[0-2].*) ;;
         *)
             check_cfg='-Z unstable-options --check-cfg=names(atomic_memcpy_unsafe_volatile)'
             ;;
@@ -83,7 +83,7 @@ build() {
         x rustup ${common_args[@]+"${common_args[@]}"} target add "${target}" &>/dev/null
     elif [[ "${rustc_version}" == *"nightly"* ]] || [[ "${rustc_version}" == *"dev"* ]]; then
         case "${target}" in
-            *-none* | avr-* | riscv32imc-esp-espidf) args+=(-Z build-std=core) ;;
+            *-none* | avr-* | *-esp-espidf) args+=(-Z build-std=core) ;;
             *) args+=(-Z build-std) ;;
         esac
     else
@@ -91,7 +91,7 @@ build() {
         return 0
     fi
     if [[ -n "${check_cfg:-}" ]]; then
-        args+=(-Z check-cfg-features)
+        args+=(-Z check-cfg)
     fi
     args+=(--target "${target}")
 
