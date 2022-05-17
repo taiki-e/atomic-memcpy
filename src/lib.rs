@@ -45,10 +45,12 @@ See [P1478R1][p1478r1] for more.
 #![cfg_attr(test, warn(unsafe_op_in_unsafe_fn))] // unsafe_op_in_unsafe_fn requires Rust 1.52
 #![cfg_attr(not(test), allow(unused_unsafe))]
 #![warn(
+    clippy::default_union_representation,
     clippy::exhaustive_enums,
     clippy::exhaustive_structs,
     clippy::missing_inline_in_public_items,
     clippy::pedantic,
+    clippy::transmute_undefined_repr,
     clippy::undocumented_unsafe_blocks
 )]
 #![allow(clippy::inline_always, clippy::single_match_else, clippy::too_many_lines)]
