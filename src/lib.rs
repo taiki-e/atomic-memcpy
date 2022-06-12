@@ -73,6 +73,7 @@ compile_error!(
 
 use core::sync::atomic::{self, Ordering};
 
+/*
 /// Byte-wise atomic load.
 ///
 /// # Safety
@@ -189,7 +190,7 @@ pub unsafe fn atomic_store<T>(dst: *mut T, val: T, order: Ordering) {
         imp::atomic_store(dst, val);
     }
 }
-
+*/
 /// Byte-wise atomic load.
 ///
 /// # Safety
@@ -216,10 +217,7 @@ pub unsafe fn atomic_store<T>(dst: *mut T, val: T, order: Ordering) {
 #[cfg_attr(docsrs, doc(cfg(feature = "atomic-maybe-uninit")))]
 #[cfg_attr(feature = "inline-always", inline(always))]
 #[cfg_attr(not(feature = "inline-always"), inline)]
-pub unsafe fn atomic_load_maybe_uninit<T>(
-    src: *const T,
-    order: Ordering,
-) -> core::mem::MaybeUninit<T> {
+pub unsafe fn atomic_load<T>(src: *const T, order: Ordering) -> core::mem::MaybeUninit<T> {
     assert_load_ordering(order);
     // SAFETY: the caller must uphold the safety contract for `atomic_load_maybe_uninit`.
     let val = unsafe { maybe_uninit::atomic_load(src) };
@@ -259,7 +257,7 @@ pub unsafe fn atomic_load_maybe_uninit<T>(
 #[cfg_attr(docsrs, doc(cfg(feature = "atomic-maybe-uninit")))]
 #[cfg_attr(feature = "inline-always", inline(always))]
 #[cfg_attr(not(feature = "inline-always"), inline)]
-pub unsafe fn atomic_store_maybe_uninit<T>(dst: *mut T, val: T, order: Ordering) {
+pub unsafe fn atomic_store<T>(dst: *mut T, val: T, order: Ordering) {
     assert_store_ordering(order);
     match order {
         Ordering::Relaxed => { /* no-op */ }
@@ -297,13 +295,9 @@ fn assert_store_ordering(order: Ordering) {
 
 #[cfg(feature = "atomic-maybe-uninit")]
 mod maybe_uninit {
-    use core::{
-        mem::{self, ManuallyDrop, MaybeUninit},
-        ops::Range,
-        sync::atomic::Ordering,
-    };
+    use core::mem::{self, ManuallyDrop, MaybeUninit};
 
-    use atomic_maybe_uninit::raw::{AtomicLoad, AtomicStore};
+    use atomic_maybe_uninit::raw::AtomicMemcpy;
 
     #[cfg_attr(feature = "inline-always", inline(always))]
     #[cfg_attr(not(feature = "inline-always"), inline)]
@@ -329,15 +323,13 @@ mod maybe_uninit {
         // we can read it as a chunk of usize.
         if mem::align_of::<T>() >= mem::align_of::<usize>() {
             let src = src as *const MaybeUninit<usize>;
-            let dst = result.as_mut_ptr() as *mut MaybeUninit<usize>;
-            for i in range(0..mem::size_of::<T>() / mem::size_of::<usize>()) {
-                // SAFETY:
-                // - the caller must guarantee that `src` is properly aligned for `T`.
-                // - `T` has an alignment greater than or equal to usize.
-                // - the remaining bytes is greater than or equal to `size_of::<usize>()`.
-                unsafe {
-                    usize::atomic_load(src.add(i), dst.add(i), Ordering::Relaxed);
-                }
+            let out = result.as_mut_ptr() as *mut MaybeUninit<usize>;
+            // SAFETY:
+            // - the caller must guarantee that `src` is properly aligned for `T`.
+            // - `T` has an alignment greater than or equal to usize.
+            // - the remaining bytes is greater than or equal to `size_of::<usize>()`.
+            unsafe {
+                usize::atomic_load_memcpy(src, out, mem::size_of::<T>() / mem::size_of::<usize>());
             }
             return result;
         }
@@ -346,15 +338,13 @@ mod maybe_uninit {
         // we can read it as a chunk of u32.
         if mem::size_of::<usize>() > 4 && mem::align_of::<T>() >= mem::align_of::<u32>() {
             let src = src as *const MaybeUninit<u32>;
-            let dst = result.as_mut_ptr() as *mut MaybeUninit<u32>;
-            for i in range(0..mem::size_of::<T>() / mem::size_of::<u32>()) {
-                // SAFETY:
-                // - the caller must guarantee that `src` is properly aligned for `T`.
-                // - `T` has an alignment greater than or equal to u32.
-                // - the remaining bytes is greater than or equal to `size_of::<u32>()`.
-                unsafe {
-                    u32::atomic_load(src.add(i), dst.add(i), Ordering::Relaxed);
-                }
+            let out = result.as_mut_ptr() as *mut MaybeUninit<u32>;
+            // SAFETY:
+            // - the caller must guarantee that `src` is properly aligned for `T`.
+            // - `T` has an alignment greater than or equal to u32.
+            // - the remaining bytes is greater than or equal to `size_of::<u32>()`.
+            unsafe {
+                u32::atomic_load_memcpy(src, out, mem::size_of::<T>() / mem::size_of::<u32>());
             }
             return result;
         }
@@ -363,28 +353,24 @@ mod maybe_uninit {
         // we can read it as a chunk of u16.
         if mem::size_of::<usize>() > 2 && mem::align_of::<T>() >= mem::align_of::<u16>() {
             let src = src as *const MaybeUninit<u16>;
-            let dst = result.as_mut_ptr() as *mut MaybeUninit<u16>;
-            for i in range(0..mem::size_of::<T>() / mem::size_of::<u16>()) {
-                // SAFETY:
-                // - the caller must guarantee that `src` is properly aligned for `T`.
-                // - `T` has an alignment greater than or equal to u16.
-                // - the remaining bytes is greater than or equal to `size_of::<u16>()`.
-                unsafe {
-                    u16::atomic_load(src.add(i), dst.add(i), Ordering::Relaxed);
-                }
+            let out = result.as_mut_ptr() as *mut MaybeUninit<u16>;
+            // SAFETY:
+            // - the caller must guarantee that `src` is properly aligned for `T`.
+            // - `T` has an alignment greater than or equal to u16.
+            // - the remaining bytes is greater than or equal to `size_of::<u16>()`.
+            unsafe {
+                u16::atomic_load_memcpy(src, out, mem::size_of::<T>() / mem::size_of::<u16>());
             }
             return result;
         }
 
         // Otherwise, we read it per byte.
         let src = src as *const MaybeUninit<u8>;
-        let dst = result.as_mut_ptr() as *mut MaybeUninit<u8>;
-        for i in range(0..mem::size_of::<T>()) {
-            // SAFETY:
-            // - the remaining bytes is greater than or equal to 1.
-            unsafe {
-                u8::atomic_load(src.add(i), dst.add(i), Ordering::Relaxed);
-            }
+        let out = result.as_mut_ptr() as *mut MaybeUninit<u8>;
+        // SAFETY:
+        // - the remaining bytes is greater than or equal to 1.
+        unsafe {
+            u8::atomic_load_memcpy(src, out, mem::size_of::<T>());
         }
         result
     }
@@ -428,16 +414,14 @@ mod maybe_uninit {
         // If the alignment of `T` is greater than or equal to usize,
         // we can write it as a chunk of usize.
         if mem::align_of::<T>() >= mem::align_of::<usize>() {
-            let src = (&*val as *const T).cast::<MaybeUninit<usize>>();
+            let val = (&*val as *const T).cast::<MaybeUninit<usize>>();
             let dst = dst.cast::<MaybeUninit<usize>>();
-            for i in range(0..mem::size_of::<T>() / mem::size_of::<usize>()) {
-                // SAFETY:
-                // - the caller must guarantee that `dst` is properly aligned for `T`.
-                // - `T` has an alignment greater than or equal to usize.
-                // - the remaining bytes is greater than or equal to `size_of::<usize>()`.
-                unsafe {
-                    usize::atomic_store(dst.add(i), src.add(i), Ordering::Relaxed);
-                }
+            // SAFETY:
+            // - the caller must guarantee that `dst` is properly aligned for `T`.
+            // - `T` has an alignment greater than or equal to usize.
+            // - the remaining bytes is greater than or equal to `size_of::<usize>()`.
+            unsafe {
+                usize::atomic_store_memcpy(dst, val, mem::size_of::<T>() / mem::size_of::<usize>());
             }
             mem::forget(guard);
             return;
@@ -446,16 +430,14 @@ mod maybe_uninit {
         // If the alignment of `T` is greater than or equal to u32,
         // we can write it as a chunk of u32.
         if mem::size_of::<usize>() > 4 && mem::align_of::<T>() >= mem::align_of::<u32>() {
-            let src = (&*val as *const T).cast::<MaybeUninit<u32>>();
+            let val = (&*val as *const T).cast::<MaybeUninit<u32>>();
             let dst = dst.cast::<MaybeUninit<u32>>();
-            for i in range(0..mem::size_of::<T>() / mem::size_of::<u32>()) {
-                // SAFETY:
-                // - the caller must guarantee that `dst` is properly aligned for `T`.
-                // - `T` has an alignment greater than or equal to u32.
-                // - the remaining bytes is greater than or equal to `size_of::<u32>()`.
-                unsafe {
-                    u32::atomic_store(dst.add(i), src.add(i), Ordering::Relaxed);
-                }
+            // SAFETY:
+            // - the caller must guarantee that `dst` is properly aligned for `T`.
+            // - `T` has an alignment greater than or equal to u32.
+            // - the remaining bytes is greater than or equal to `size_of::<u32>()`.
+            unsafe {
+                u32::atomic_store_memcpy(dst, val, mem::size_of::<T>() / mem::size_of::<u32>());
             }
             mem::forget(guard);
             return;
@@ -464,57 +446,31 @@ mod maybe_uninit {
         // If the alignment of `T` is greater than or equal to u16,
         // we can write it as a chunk of u16.
         if mem::size_of::<usize>() > 2 && mem::align_of::<T>() >= mem::align_of::<u16>() {
-            let src = (&*val as *const T).cast::<MaybeUninit<u16>>();
+            let val = (&*val as *const T).cast::<MaybeUninit<u16>>();
             let dst = dst.cast::<MaybeUninit<u16>>();
-            for i in range(0..mem::size_of::<T>() / mem::size_of::<u16>()) {
-                // SAFETY:
-                // - the caller must guarantee that `dst` is properly aligned for `T`.
-                // - `T` has an alignment greater than or equal to u16.
-                // - the remaining bytes is greater than or equal to `size_of::<u16>()`.
-                unsafe {
-                    u16::atomic_store(dst.add(i), src.add(i), Ordering::Relaxed);
-                }
+            // SAFETY:
+            // - the caller must guarantee that `dst` is properly aligned for `T`.
+            // - `T` has an alignment greater than or equal to u16.
+            // - the remaining bytes is greater than or equal to `size_of::<u16>()`.
+            unsafe {
+                u16::atomic_store_memcpy(dst, val, mem::size_of::<T>() / mem::size_of::<u16>());
             }
             mem::forget(guard);
             return;
         }
 
         // Otherwise, we write it per byte.
-        let src = (&*val as *const T).cast::<MaybeUninit<u8>>();
+        let val = (&*val as *const T).cast::<MaybeUninit<u8>>();
         let dst = dst.cast::<MaybeUninit<u8>>();
-        for i in range(0..mem::size_of::<T>()) {
-            // SAFETY:
-            // - the caller must guarantee that `dst` is properly aligned for `T`.
-            // - `T` has an alignment greater than or equal to u16.
-            // - the remaining bytes is greater than or equal to `size_of::<u16>()`.
-            unsafe {
-                u8::atomic_store(dst.add(i), src.add(i), Ordering::Relaxed);
-            }
+        // SAFETY:
+        // - the caller must guarantee that `dst` is properly aligned for `T`.
+        // - `T` has an alignment greater than or equal to u16.
+        // - the remaining bytes is greater than or equal to `size_of::<u16>()`.
+        unsafe {
+            u8::atomic_store_memcpy(dst, val, mem::size_of::<T>());
         }
         mem::forget(guard);
     }
-
-    // This allows read_volatile and atomic_load to be lowered to exactly the
-    // same assembly on little endian platforms such as aarch64, riscv64.
-    #[cfg_attr(feature = "inline-always", inline(always))]
-    #[cfg_attr(not(feature = "inline-always"), inline)]
-    #[cfg(target_endian = "little")]
-    fn range<T>(r: Range<T>) -> core::iter::Rev<Range<T>>
-    where
-        Range<T>: DoubleEndedIterator,
-    {
-        r.rev()
-    }
-    #[cfg_attr(feature = "inline-always", inline(always))]
-    #[cfg_attr(not(feature = "inline-always"), inline)]
-    #[cfg(target_endian = "big")]
-    fn range<T>(r: Range<T>) -> Range<T>
-    where
-        Range<T>: DoubleEndedIterator,
-    {
-        r
-    }
-
     struct PanicGuard;
 
     impl Drop for PanicGuard {

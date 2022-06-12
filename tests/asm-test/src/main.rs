@@ -14,6 +14,8 @@ const DEFAULT_TARGETS: &[&str] = &[
     // tier 1 or tier 2 linux (GNU) target
     "aarch64-unknown-linux-gnu",
     "riscv64gc-unknown-linux-gnu",
+    "armv7-unknown-linux-gnueabi",
+    "armv7-unknown-linux-gnueabihf",
     "i586-unknown-linux-gnu",
     "i686-unknown-linux-gnu",
     "x86_64-unknown-linux-gnu",

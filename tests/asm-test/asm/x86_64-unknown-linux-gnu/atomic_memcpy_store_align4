@@ -4,113 +4,83 @@ asm_test::atomic_memcpy_store_align4::release:
  movups  xmm1, xmmword, ptr, [rsi, +, 16]
  movups  xmm2, xmmword, ptr, [rsi, +, 32]
  movups  xmm3, xmmword, ptr, [rsi, +, 48]
- movaps  xmmword, ptr, [rsp, +, 112], xmm3
- movaps  xmmword, ptr, [rsp, +, 96], xmm2
- movaps  xmmword, ptr, [rsp, +, 80], xmm1
- movaps  xmmword, ptr, [rsp, +, 64], xmm0
- #MEMBARRIER
- movaps  xmm0, xmmword, ptr, [rsp, +, 64]
- movaps  xmm1, xmmword, ptr, [rsp, +, 80]
- movaps  xmm2, xmmword, ptr, [rsp, +, 96]
- movaps  xmm3, xmmword, ptr, [rsp, +, 112]
  movaps  xmmword, ptr, [rsp, +, 48], xmm3
  movaps  xmmword, ptr, [rsp, +, 32], xmm2
  movaps  xmmword, ptr, [rsp, +, 16], xmm1
  movaps  xmmword, ptr, [rsp], xmm0
- lea     r8, [rsp, +, 16]
- lea     r9, [rsp, +, 32]
- lea     rdx, [rsp, +, 48]
- lea     rsi, [rdi, +, 60]
- lea     rax, [rsp, +, 60]
- #APP
- mov     ecx, dword, ptr, [rax]
- mov     dword, ptr, [rsi], ecx
- #NO_APP
- lea     rax, [rdi, +, 56]
- lea     rcx, [rsp, +, 56]
- #APP
- mov     esi, dword, ptr, [rcx]
- mov     dword, ptr, [rax], esi
- #NO_APP
- lea     rax, [rdi, +, 52]
- lea     rcx, [rsp, +, 52]
- #APP
- mov     esi, dword, ptr, [rcx]
- mov     dword, ptr, [rax], esi
- #NO_APP
- lea     rax, [rdi, +, 48]
- #APP
- mov     ecx, dword, ptr, [rdx]
- mov     dword, ptr, [rax], ecx
- #NO_APP
- lea     rax, [rdi, +, 44]
- lea     rcx, [rsp, +, 44]
- #APP
- mov     edx, dword, ptr, [rcx]
- mov     dword, ptr, [rax], edx
- #NO_APP
- lea     rax, [rdi, +, 40]
- lea     rcx, [rsp, +, 40]
- #APP
- mov     edx, dword, ptr, [rcx]
- mov     dword, ptr, [rax], edx
- #NO_APP
- lea     rax, [rdi, +, 36]
- lea     rcx, [rsp, +, 36]
- #APP
- mov     edx, dword, ptr, [rcx]
- mov     dword, ptr, [rax], edx
- #NO_APP
- lea     rax, [rdi, +, 32]
- #APP
- mov     ecx, dword, ptr, [r9]
- mov     dword, ptr, [rax], ecx
- #NO_APP
- lea     rax, [rdi, +, 28]
- lea     rcx, [rsp, +, 28]
- #APP
- mov     edx, dword, ptr, [rcx]
- mov     dword, ptr, [rax], edx
- #NO_APP
- lea     rax, [rdi, +, 24]
- lea     rcx, [rsp, +, 24]
- #APP
- mov     edx, dword, ptr, [rcx]
- mov     dword, ptr, [rax], edx
- #NO_APP
- lea     rax, [rdi, +, 20]
- lea     rcx, [rsp, +, 20]
- #APP
- mov     edx, dword, ptr, [rcx]
- mov     dword, ptr, [rax], edx
- #NO_APP
- lea     rax, [rdi, +, 16]
- #APP
- mov     ecx, dword, ptr, [r8]
- mov     dword, ptr, [rax], ecx
- #NO_APP
- lea     rax, [rdi, +, 12]
- lea     rcx, [rsp, +, 12]
- #APP
- mov     edx, dword, ptr, [rcx]
- mov     dword, ptr, [rax], edx
- #NO_APP
- lea     rax, [rdi, +, 8]
- lea     rcx, [rsp, +, 8]
- #APP
- mov     edx, dword, ptr, [rcx]
- mov     dword, ptr, [rax], edx
- #NO_APP
- lea     rax, [rdi, +, 4]
- lea     rcx, [rsp, +, 4]
- #APP
- mov     edx, dword, ptr, [rcx]
- mov     dword, ptr, [rax], edx
- #NO_APP
- mov     rax, rsp
+ #MEMBARRIER
+ movaps  xmm0, xmmword, ptr, [rsp]
+ movaps  xmm1, xmmword, ptr, [rsp, +, 16]
+ movaps  xmm2, xmmword, ptr, [rsp, +, 32]
+ movaps  xmm3, xmmword, ptr, [rsp, +, 48]
+ movaps  xmmword, ptr, [rsp, +, 112], xmm3
+ movaps  xmmword, ptr, [rsp, +, 96], xmm2
+ movaps  xmmword, ptr, [rsp, +, 80], xmm1
+ movaps  xmmword, ptr, [rsp, +, 64], xmm0
+ lea     rax, [rsp, +, 64]
  #APP
  mov     ecx, dword, ptr, [rax]
  mov     dword, ptr, [rdi], ecx
+ #NO_APP
+ #APP
+ mov     ecx, dword, ptr, [rax, +, 4]
+ mov     dword, ptr, [rdi, +, 4], ecx
+ #NO_APP
+ #APP
+ mov     ecx, dword, ptr, [rax, +, 8]
+ mov     dword, ptr, [rdi, +, 8], ecx
+ #NO_APP
+ #APP
+ mov     ecx, dword, ptr, [rax, +, 12]
+ mov     dword, ptr, [rdi, +, 12], ecx
+ #NO_APP
+ #APP
+ mov     ecx, dword, ptr, [rax, +, 16]
+ mov     dword, ptr, [rdi, +, 16], ecx
+ #NO_APP
+ #APP
+ mov     ecx, dword, ptr, [rax, +, 20]
+ mov     dword, ptr, [rdi, +, 20], ecx
+ #NO_APP
+ #APP
+ mov     ecx, dword, ptr, [rax, +, 24]
+ mov     dword, ptr, [rdi, +, 24], ecx
+ #NO_APP
+ #APP
+ mov     ecx, dword, ptr, [rax, +, 28]
+ mov     dword, ptr, [rdi, +, 28], ecx
+ #NO_APP
+ #APP
+ mov     ecx, dword, ptr, [rax, +, 32]
+ mov     dword, ptr, [rdi, +, 32], ecx
+ #NO_APP
+ #APP
+ mov     ecx, dword, ptr, [rax, +, 36]
+ mov     dword, ptr, [rdi, +, 36], ecx
+ #NO_APP
+ #APP
+ mov     ecx, dword, ptr, [rax, +, 40]
+ mov     dword, ptr, [rdi, +, 40], ecx
+ #NO_APP
+ #APP
+ mov     ecx, dword, ptr, [rax, +, 44]
+ mov     dword, ptr, [rdi, +, 44], ecx
+ #NO_APP
+ #APP
+ mov     ecx, dword, ptr, [rax, +, 48]
+ mov     dword, ptr, [rdi, +, 48], ecx
+ #NO_APP
+ #APP
+ mov     ecx, dword, ptr, [rax, +, 52]
+ mov     dword, ptr, [rdi, +, 52], ecx
+ #NO_APP
+ #APP
+ mov     ecx, dword, ptr, [rax, +, 56]
+ mov     dword, ptr, [rdi, +, 56], ecx
+ #NO_APP
+ #APP
+ mov     ecx, dword, ptr, [rax, +, 60]
+ mov     dword, ptr, [rdi, +, 60], ecx
  #NO_APP
  add     rsp, 136
  ret

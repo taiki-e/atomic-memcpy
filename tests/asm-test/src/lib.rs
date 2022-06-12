@@ -5,7 +5,7 @@
 #![feature(cfg_target_has_atomic, core_intrinsics)]
 #![cfg_attr(target_has_atomic_load_store = "ptr", feature(atomic_mut_ptr))]
 
-type Data = [u8; core::mem::size_of::<usize>() * 8];
+type Data = [u8; core::mem::size_of::<usize>() * 16];
 
 // TODO: Add tests for the case where the pointers are known to be aligned.
 

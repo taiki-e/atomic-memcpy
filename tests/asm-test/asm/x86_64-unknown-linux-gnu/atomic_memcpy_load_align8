@@ -1,81 +1,141 @@
 asm_test::atomic_memcpy_load_align8::acquire:
- sub     rsp, 64
+ sub     rsp, 128
  mov     rax, rdi
- lea     rcx, [rsi, +, 56]
- lea     rdx, [rsp, +, 56]
- #APP
- mov     rdi, qword, ptr, [rcx]
- mov     qword, ptr, [rdx], rdi
- #NO_APP
- lea     rcx, [rsi, +, 48]
- lea     rdx, [rsp, +, 48]
- #APP
- mov     rdi, qword, ptr, [rcx]
- mov     qword, ptr, [rdx], rdi
- #NO_APP
- lea     rcx, [rsi, +, 40]
- lea     rdx, [rsp, +, 40]
- #APP
- mov     rdi, qword, ptr, [rcx]
- mov     qword, ptr, [rdx], rdi
- #NO_APP
- lea     rcx, [rsi, +, 32]
- lea     rdx, [rsp, +, 32]
- #APP
- mov     rdi, qword, ptr, [rcx]
- mov     qword, ptr, [rdx], rdi
- #NO_APP
- lea     rcx, [rsi, +, 24]
- lea     rdx, [rsp, +, 24]
- #APP
- mov     rdi, qword, ptr, [rcx]
- mov     qword, ptr, [rdx], rdi
- #NO_APP
- lea     rcx, [rsi, +, 16]
- lea     rdx, [rsp, +, 16]
- #APP
- mov     rdi, qword, ptr, [rcx]
- mov     qword, ptr, [rdx], rdi
- #NO_APP
- lea     rcx, [rsi, +, 8]
- lea     rdx, [rsp, +, 8]
- #APP
- mov     rdi, qword, ptr, [rcx]
- mov     qword, ptr, [rdx], rdi
- #NO_APP
  mov     rcx, rsp
  #APP
  mov     rdx, qword, ptr, [rsi]
  mov     qword, ptr, [rcx], rdx
  #NO_APP
+ #APP
+ mov     rdx, qword, ptr, [rsi, +, 8]
+ mov     qword, ptr, [rcx, +, 8], rdx
+ #NO_APP
+ #APP
+ mov     rdx, qword, ptr, [rsi, +, 16]
+ mov     qword, ptr, [rcx, +, 16], rdx
+ #NO_APP
+ #APP
+ mov     rdx, qword, ptr, [rsi, +, 24]
+ mov     qword, ptr, [rcx, +, 24], rdx
+ #NO_APP
+ #APP
+ mov     rdx, qword, ptr, [rsi, +, 32]
+ mov     qword, ptr, [rcx, +, 32], rdx
+ #NO_APP
+ #APP
+ mov     rdx, qword, ptr, [rsi, +, 40]
+ mov     qword, ptr, [rcx, +, 40], rdx
+ #NO_APP
+ #APP
+ mov     rdx, qword, ptr, [rsi, +, 48]
+ mov     qword, ptr, [rcx, +, 48], rdx
+ #NO_APP
+ #APP
+ mov     rdx, qword, ptr, [rsi, +, 56]
+ mov     qword, ptr, [rcx, +, 56], rdx
+ #NO_APP
+ #APP
+ mov     rdx, qword, ptr, [rsi, +, 64]
+ mov     qword, ptr, [rcx, +, 64], rdx
+ #NO_APP
+ #APP
+ mov     rdx, qword, ptr, [rsi, +, 72]
+ mov     qword, ptr, [rcx, +, 72], rdx
+ #NO_APP
+ #APP
+ mov     rdx, qword, ptr, [rsi, +, 80]
+ mov     qword, ptr, [rcx, +, 80], rdx
+ #NO_APP
+ #APP
+ mov     rdx, qword, ptr, [rsi, +, 88]
+ mov     qword, ptr, [rcx, +, 88], rdx
+ #NO_APP
+ #APP
+ mov     rdx, qword, ptr, [rsi, +, 96]
+ mov     qword, ptr, [rcx, +, 96], rdx
+ #NO_APP
+ #APP
+ mov     rdx, qword, ptr, [rsi, +, 104]
+ mov     qword, ptr, [rcx, +, 104], rdx
+ #NO_APP
+ #APP
+ mov     rdx, qword, ptr, [rsi, +, 112]
+ mov     qword, ptr, [rcx, +, 112], rdx
+ #NO_APP
+ #APP
+ mov     rdx, qword, ptr, [rsi, +, 120]
+ mov     qword, ptr, [rcx, +, 120], rdx
+ #NO_APP
  movups  xmm0, xmmword, ptr, [rsp]
  movups  xmm1, xmmword, ptr, [rsp, +, 16]
  movups  xmm2, xmmword, ptr, [rsp, +, 32]
  movups  xmm3, xmmword, ptr, [rsp, +, 48]
- movups  xmmword, ptr, [rax], xmm0
- movups  xmmword, ptr, [rax, +, 16], xmm1
- movups  xmmword, ptr, [rax, +, 32], xmm2
- movups  xmmword, ptr, [rax, +, 48], xmm3
+ movups  xmmword, ptr, [rdi], xmm0
+ movups  xmmword, ptr, [rdi, +, 16], xmm1
+ movups  xmmword, ptr, [rdi, +, 32], xmm2
+ movups  xmmword, ptr, [rdi, +, 48], xmm3
+ movups  xmm0, xmmword, ptr, [rsp, +, 64]
+ movups  xmmword, ptr, [rdi, +, 64], xmm0
+ movups  xmm0, xmmword, ptr, [rsp, +, 80]
+ movups  xmmword, ptr, [rdi, +, 80], xmm0
+ movups  xmm0, xmmword, ptr, [rsp, +, 96]
+ movups  xmmword, ptr, [rdi, +, 96], xmm0
+ movups  xmm0, xmmword, ptr, [rsp, +, 112]
+ movups  xmmword, ptr, [rdi, +, 112], xmm0
  #MEMBARRIER
- add     rsp, 64
+ add     rsp, 128
  ret
 asm_test::atomic_memcpy_load_align8::read_volatile_acquire_fence:
+ push    rbp
+ push    r15
+ push    r14
+ push    r13
+ push    r12
+ push    rbx
+ sub     rsp, 16
  mov     rax, rdi
- mov     r8, qword, ptr, [rsi, +, 56]
- mov     r9, qword, ptr, [rsi, +, 48]
- mov     r10, qword, ptr, [rsi, +, 40]
- mov     r11, qword, ptr, [rsi, +, 32]
- mov     rdx, qword, ptr, [rsi, +, 24]
- mov     rdi, qword, ptr, [rsi, +, 16]
+ mov     rcx, qword, ptr, [rsi, +, 120]
+ mov     qword, ptr, [rsp, +, 8], rcx
+ mov     rcx, qword, ptr, [rsi, +, 112]
+ mov     qword, ptr, [rsp], rcx
+ mov     r10, qword, ptr, [rsi, +, 104]
+ mov     r11, qword, ptr, [rsi, +, 96]
+ mov     r14, qword, ptr, [rsi, +, 88]
+ mov     r15, qword, ptr, [rsi, +, 80]
+ mov     r12, qword, ptr, [rsi, +, 72]
+ mov     r13, qword, ptr, [rsi, +, 64]
+ mov     r9, qword, ptr, [rsi, +, 56]
+ mov     r8, qword, ptr, [rsi, +, 48]
+ mov     rdi, qword, ptr, [rsi, +, 40]
+ mov     rbx, qword, ptr, [rsi, +, 32]
+ mov     rbp, qword, ptr, [rsi, +, 24]
+ mov     rdx, qword, ptr, [rsi, +, 16]
  mov     rcx, qword, ptr, [rsi]
  mov     rsi, qword, ptr, [rsi, +, 8]
  mov     qword, ptr, [rax], rcx
  mov     qword, ptr, [rax, +, 8], rsi
- mov     qword, ptr, [rax, +, 16], rdi
- mov     qword, ptr, [rax, +, 24], rdx
- mov     qword, ptr, [rax, +, 32], r11
- mov     qword, ptr, [rax, +, 40], r10
- mov     qword, ptr, [rax, +, 48], r9
- mov     qword, ptr, [rax, +, 56], r8
+ mov     qword, ptr, [rax, +, 16], rdx
+ mov     qword, ptr, [rax, +, 24], rbp
+ mov     qword, ptr, [rax, +, 32], rbx
+ mov     qword, ptr, [rax, +, 40], rdi
+ mov     qword, ptr, [rax, +, 48], r8
+ mov     qword, ptr, [rax, +, 56], r9
+ mov     qword, ptr, [rax, +, 64], r13
+ mov     qword, ptr, [rax, +, 72], r12
+ mov     qword, ptr, [rax, +, 80], r15
+ mov     qword, ptr, [rax, +, 88], r14
+ mov     qword, ptr, [rax, +, 96], r11
+ mov     qword, ptr, [rax, +, 104], r10
+ mov     rcx, qword, ptr, [rsp]
+ mov     qword, ptr, [rax, +, 112], rcx
+ mov     rcx, qword, ptr, [rsp, +, 8]
+ mov     qword, ptr, [rax, +, 120], rcx
  #MEMBARRIER
+ add     rsp, 16
+ pop     rbx
+ pop     r12
+ pop     r13
+ pop     r14
+ pop     r15
+ pop     rbp
  ret

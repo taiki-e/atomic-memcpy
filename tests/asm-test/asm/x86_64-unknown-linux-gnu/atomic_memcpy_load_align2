@@ -1,206 +1,176 @@
 asm_test::atomic_memcpy_load_align2::acquire:
  sub     rsp, 64
- lea     rcx, [rsi, +, 62]
- lea     rdx, [rsp, +, 62]
- #APP
- mov     ax, word, ptr, [rcx]
- mov     word, ptr, [rdx], ax
- #NO_APP
- lea     rcx, [rsi, +, 60]
- lea     rdx, [rsp, +, 60]
- #APP
- mov     ax, word, ptr, [rcx]
- mov     word, ptr, [rdx], ax
- #NO_APP
- lea     rcx, [rsi, +, 58]
- lea     rdx, [rsp, +, 58]
- #APP
- mov     ax, word, ptr, [rcx]
- mov     word, ptr, [rdx], ax
- #NO_APP
- lea     rcx, [rsi, +, 56]
- lea     rdx, [rsp, +, 56]
- #APP
- mov     ax, word, ptr, [rcx]
- mov     word, ptr, [rdx], ax
- #NO_APP
- lea     rcx, [rsi, +, 54]
- lea     rdx, [rsp, +, 54]
- #APP
- mov     ax, word, ptr, [rcx]
- mov     word, ptr, [rdx], ax
- #NO_APP
- lea     rcx, [rsi, +, 52]
- lea     rdx, [rsp, +, 52]
- #APP
- mov     ax, word, ptr, [rcx]
- mov     word, ptr, [rdx], ax
- #NO_APP
- lea     rcx, [rsi, +, 50]
- lea     rdx, [rsp, +, 50]
- #APP
- mov     ax, word, ptr, [rcx]
- mov     word, ptr, [rdx], ax
- #NO_APP
- lea     rcx, [rsi, +, 48]
- lea     rdx, [rsp, +, 48]
- #APP
- mov     ax, word, ptr, [rcx]
- mov     word, ptr, [rdx], ax
- #NO_APP
- lea     rcx, [rsi, +, 46]
- lea     rdx, [rsp, +, 46]
- #APP
- mov     ax, word, ptr, [rcx]
- mov     word, ptr, [rdx], ax
- #NO_APP
- lea     rcx, [rsi, +, 44]
- lea     rdx, [rsp, +, 44]
- #APP
- mov     ax, word, ptr, [rcx]
- mov     word, ptr, [rdx], ax
- #NO_APP
- lea     rcx, [rsi, +, 42]
- lea     rdx, [rsp, +, 42]
- #APP
- mov     ax, word, ptr, [rcx]
- mov     word, ptr, [rdx], ax
- #NO_APP
- lea     rcx, [rsi, +, 40]
- lea     rdx, [rsp, +, 40]
- #APP
- mov     ax, word, ptr, [rcx]
- mov     word, ptr, [rdx], ax
- #NO_APP
- lea     rcx, [rsi, +, 38]
- lea     rdx, [rsp, +, 38]
- #APP
- mov     ax, word, ptr, [rcx]
- mov     word, ptr, [rdx], ax
- #NO_APP
- lea     rcx, [rsi, +, 36]
- lea     rdx, [rsp, +, 36]
- #APP
- mov     ax, word, ptr, [rcx]
- mov     word, ptr, [rdx], ax
- #NO_APP
- lea     rcx, [rsi, +, 34]
- lea     rdx, [rsp, +, 34]
- #APP
- mov     ax, word, ptr, [rcx]
- mov     word, ptr, [rdx], ax
- #NO_APP
- lea     rcx, [rsi, +, 32]
- lea     rdx, [rsp, +, 32]
- #APP
- mov     ax, word, ptr, [rcx]
- mov     word, ptr, [rdx], ax
- #NO_APP
- lea     rcx, [rsi, +, 30]
- lea     rdx, [rsp, +, 30]
- #APP
- mov     ax, word, ptr, [rcx]
- mov     word, ptr, [rdx], ax
- #NO_APP
- lea     rcx, [rsi, +, 28]
- lea     rdx, [rsp, +, 28]
- #APP
- mov     ax, word, ptr, [rcx]
- mov     word, ptr, [rdx], ax
- #NO_APP
- lea     rcx, [rsi, +, 26]
- lea     rdx, [rsp, +, 26]
- #APP
- mov     ax, word, ptr, [rcx]
- mov     word, ptr, [rdx], ax
- #NO_APP
- lea     rcx, [rsi, +, 24]
- lea     rdx, [rsp, +, 24]
- #APP
- mov     ax, word, ptr, [rcx]
- mov     word, ptr, [rdx], ax
- #NO_APP
- lea     rcx, [rsi, +, 22]
- lea     rdx, [rsp, +, 22]
- #APP
- mov     ax, word, ptr, [rcx]
- mov     word, ptr, [rdx], ax
- #NO_APP
- lea     rcx, [rsi, +, 20]
- lea     rdx, [rsp, +, 20]
- #APP
- mov     ax, word, ptr, [rcx]
- mov     word, ptr, [rdx], ax
- #NO_APP
- lea     rcx, [rsi, +, 18]
- lea     rdx, [rsp, +, 18]
- #APP
- mov     ax, word, ptr, [rcx]
- mov     word, ptr, [rdx], ax
- #NO_APP
- lea     rcx, [rsi, +, 16]
- lea     rdx, [rsp, +, 16]
- #APP
- mov     ax, word, ptr, [rcx]
- mov     word, ptr, [rdx], ax
- #NO_APP
- lea     rcx, [rsi, +, 14]
- lea     rdx, [rsp, +, 14]
- #APP
- mov     ax, word, ptr, [rcx]
- mov     word, ptr, [rdx], ax
- #NO_APP
- lea     rcx, [rsi, +, 12]
- lea     rdx, [rsp, +, 12]
- #APP
- mov     ax, word, ptr, [rcx]
- mov     word, ptr, [rdx], ax
- #NO_APP
- lea     rcx, [rsi, +, 10]
- lea     rdx, [rsp, +, 10]
- #APP
- mov     ax, word, ptr, [rcx]
- mov     word, ptr, [rdx], ax
- #NO_APP
- lea     rcx, [rsi, +, 8]
- lea     rdx, [rsp, +, 8]
- #APP
- mov     ax, word, ptr, [rcx]
- mov     word, ptr, [rdx], ax
- #NO_APP
- lea     rcx, [rsi, +, 6]
- lea     rdx, [rsp, +, 6]
- #APP
- mov     ax, word, ptr, [rcx]
- mov     word, ptr, [rdx], ax
- #NO_APP
- lea     rcx, [rsi, +, 4]
- lea     rdx, [rsp, +, 4]
- #APP
- mov     ax, word, ptr, [rcx]
- mov     word, ptr, [rdx], ax
- #NO_APP
- lea     rcx, [rsi, +, 2]
- lea     rdx, [rsp, +, 2]
- #APP
- mov     ax, word, ptr, [rcx]
- mov     word, ptr, [rdx], ax
- #NO_APP
+ mov     rax, rdi
+ xor     edx, edx
  mov     rcx, rsp
  #APP
- mov     ax, word, ptr, [rsi]
- mov     word, ptr, [rcx], ax
+ mov     di, word, ptr, [rsi, +, 2*rdx]
+ mov     word, ptr, [rcx, +, 2*rdx], di
+ #NO_APP
+ mov     edx, 1
+ #APP
+ mov     di, word, ptr, [rsi, +, 2*rdx]
+ mov     word, ptr, [rcx, +, 2*rdx], di
+ #NO_APP
+ mov     edx, 2
+ #APP
+ mov     di, word, ptr, [rsi, +, 2*rdx]
+ mov     word, ptr, [rcx, +, 2*rdx], di
+ #NO_APP
+ mov     edx, 3
+ #APP
+ mov     di, word, ptr, [rsi, +, 2*rdx]
+ mov     word, ptr, [rcx, +, 2*rdx], di
+ #NO_APP
+ mov     edx, 4
+ #APP
+ mov     di, word, ptr, [rsi, +, 2*rdx]
+ mov     word, ptr, [rcx, +, 2*rdx], di
+ #NO_APP
+ mov     edx, 5
+ #APP
+ mov     di, word, ptr, [rsi, +, 2*rdx]
+ mov     word, ptr, [rcx, +, 2*rdx], di
+ #NO_APP
+ mov     edx, 6
+ #APP
+ mov     di, word, ptr, [rsi, +, 2*rdx]
+ mov     word, ptr, [rcx, +, 2*rdx], di
+ #NO_APP
+ mov     edx, 7
+ #APP
+ mov     di, word, ptr, [rsi, +, 2*rdx]
+ mov     word, ptr, [rcx, +, 2*rdx], di
+ #NO_APP
+ mov     edx, 8
+ #APP
+ mov     di, word, ptr, [rsi, +, 2*rdx]
+ mov     word, ptr, [rcx, +, 2*rdx], di
+ #NO_APP
+ mov     edx, 9
+ #APP
+ mov     di, word, ptr, [rsi, +, 2*rdx]
+ mov     word, ptr, [rcx, +, 2*rdx], di
+ #NO_APP
+ mov     edx, 10
+ #APP
+ mov     di, word, ptr, [rsi, +, 2*rdx]
+ mov     word, ptr, [rcx, +, 2*rdx], di
+ #NO_APP
+ mov     edx, 11
+ #APP
+ mov     di, word, ptr, [rsi, +, 2*rdx]
+ mov     word, ptr, [rcx, +, 2*rdx], di
+ #NO_APP
+ mov     edx, 12
+ #APP
+ mov     di, word, ptr, [rsi, +, 2*rdx]
+ mov     word, ptr, [rcx, +, 2*rdx], di
+ #NO_APP
+ mov     edx, 13
+ #APP
+ mov     di, word, ptr, [rsi, +, 2*rdx]
+ mov     word, ptr, [rcx, +, 2*rdx], di
+ #NO_APP
+ mov     edx, 14
+ #APP
+ mov     di, word, ptr, [rsi, +, 2*rdx]
+ mov     word, ptr, [rcx, +, 2*rdx], di
+ #NO_APP
+ mov     edx, 15
+ #APP
+ mov     di, word, ptr, [rsi, +, 2*rdx]
+ mov     word, ptr, [rcx, +, 2*rdx], di
+ #NO_APP
+ mov     edx, 16
+ #APP
+ mov     di, word, ptr, [rsi, +, 2*rdx]
+ mov     word, ptr, [rcx, +, 2*rdx], di
+ #NO_APP
+ mov     edx, 17
+ #APP
+ mov     di, word, ptr, [rsi, +, 2*rdx]
+ mov     word, ptr, [rcx, +, 2*rdx], di
+ #NO_APP
+ mov     edx, 18
+ #APP
+ mov     di, word, ptr, [rsi, +, 2*rdx]
+ mov     word, ptr, [rcx, +, 2*rdx], di
+ #NO_APP
+ mov     edx, 19
+ #APP
+ mov     di, word, ptr, [rsi, +, 2*rdx]
+ mov     word, ptr, [rcx, +, 2*rdx], di
+ #NO_APP
+ mov     edx, 20
+ #APP
+ mov     di, word, ptr, [rsi, +, 2*rdx]
+ mov     word, ptr, [rcx, +, 2*rdx], di
+ #NO_APP
+ mov     edx, 21
+ #APP
+ mov     di, word, ptr, [rsi, +, 2*rdx]
+ mov     word, ptr, [rcx, +, 2*rdx], di
+ #NO_APP
+ mov     edx, 22
+ #APP
+ mov     di, word, ptr, [rsi, +, 2*rdx]
+ mov     word, ptr, [rcx, +, 2*rdx], di
+ #NO_APP
+ mov     edx, 23
+ #APP
+ mov     di, word, ptr, [rsi, +, 2*rdx]
+ mov     word, ptr, [rcx, +, 2*rdx], di
+ #NO_APP
+ mov     edx, 24
+ #APP
+ mov     di, word, ptr, [rsi, +, 2*rdx]
+ mov     word, ptr, [rcx, +, 2*rdx], di
+ #NO_APP
+ mov     edx, 25
+ #APP
+ mov     di, word, ptr, [rsi, +, 2*rdx]
+ mov     word, ptr, [rcx, +, 2*rdx], di
+ #NO_APP
+ mov     edx, 26
+ #APP
+ mov     di, word, ptr, [rsi, +, 2*rdx]
+ mov     word, ptr, [rcx, +, 2*rdx], di
+ #NO_APP
+ mov     edx, 27
+ #APP
+ mov     di, word, ptr, [rsi, +, 2*rdx]
+ mov     word, ptr, [rcx, +, 2*rdx], di
+ #NO_APP
+ mov     edx, 28
+ #APP
+ mov     di, word, ptr, [rsi, +, 2*rdx]
+ mov     word, ptr, [rcx, +, 2*rdx], di
+ #NO_APP
+ mov     edx, 29
+ #APP
+ mov     di, word, ptr, [rsi, +, 2*rdx]
+ mov     word, ptr, [rcx, +, 2*rdx], di
+ #NO_APP
+ mov     edx, 30
+ #APP
+ mov     di, word, ptr, [rsi, +, 2*rdx]
+ mov     word, ptr, [rcx, +, 2*rdx], di
+ #NO_APP
+ mov     edx, 31
+ #APP
+ mov     di, word, ptr, [rsi, +, 2*rdx]
+ mov     word, ptr, [rcx, +, 2*rdx], di
  #NO_APP
  movups  xmm0, xmmword, ptr, [rsp]
  movups  xmm1, xmmword, ptr, [rsp, +, 16]
  movups  xmm2, xmmword, ptr, [rsp, +, 32]
  movups  xmm3, xmmword, ptr, [rsp, +, 48]
- movups  xmmword, ptr, [rdi], xmm0
- movups  xmmword, ptr, [rdi, +, 16], xmm1
- movups  xmmword, ptr, [rdi, +, 32], xmm2
- movups  xmmword, ptr, [rdi, +, 48], xmm3
+ movups  xmmword, ptr, [rax], xmm0
+ movups  xmmword, ptr, [rax, +, 16], xmm1
+ movups  xmmword, ptr, [rax, +, 32], xmm2
+ movups  xmmword, ptr, [rax, +, 48], xmm3
  #MEMBARRIER
- mov     rax, rdi
  add     rsp, 64
  ret
 asm_test::atomic_memcpy_load_align2::read_volatile_acquire_fence:
