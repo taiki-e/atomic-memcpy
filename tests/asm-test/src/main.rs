@@ -8,6 +8,21 @@ use fs_err as fs;
 use indexmap::{IndexMap, IndexSet};
 use lexopt::prelude::*;
 
+// https://github.com/taiki-e/atomic-maybe-uninit#platform-support
+#[cfg(feature = "atomic-maybe-uninit")]
+const DEFAULT_TARGETS: &[&str] = &[
+    // tier 1 or tier 2 linux (GNU) target
+    "aarch64-unknown-linux-gnu",
+    "riscv64gc-unknown-linux-gnu",
+    "i586-unknown-linux-gnu",
+    "i686-unknown-linux-gnu",
+    "x86_64-unknown-linux-gnu",
+    // Other targets
+    "riscv32i-unknown-none-elf",
+    "riscv32imac-unknown-none-elf",
+    "riscv32imc-unknown-none-elf",
+];
+#[cfg(not(feature = "atomic-maybe-uninit"))]
 const DEFAULT_TARGETS: &[&str] = &[
     // All tier 1 or tier 2 linux (GNU) target
     // rustup target list | grep -e '-linux-gnu' | sed 's/ .*$//g' | sed 's/^/"/g' | sed 's/$/",/g'
@@ -120,12 +135,26 @@ fn main() -> Result<()> {
             println!("  {}", m);
             let mut out = String::new();
             for func in functions {
+                #[cfg(not(feature = "atomic-maybe-uninit"))]
                 let mut cmd = cmd!(
                     "cargo",
                     "asm",
                     "--no-color",
                     "--lib",
                     "--no-default-features",
+                    "--target",
+                    target,
+                    func
+                );
+                #[cfg(feature = "atomic-maybe-uninit")]
+                let mut cmd = cmd!(
+                    "cargo",
+                    "asm",
+                    "--no-color",
+                    "--lib",
+                    "--no-default-features",
+                    "--features",
+                    "atomic-maybe-uninit",
                     "--target",
                     target,
                     func

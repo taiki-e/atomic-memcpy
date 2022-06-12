@@ -1,100 +1,117 @@
 asm_test::atomic_memcpy_load_align2::acquire:
- push    ebx
  push    edi
  push    esi
- sub     esp, 32
- mov     ecx, dword, ptr, [esp, +, 52]
- mov     eax, dword, ptr, [esp, +, 48]
- lea     edi, [ecx, +, 3]
- and     edi, -4
- mov     edx, edi
- sub     edx, ecx
- cmp     edx, 33
- jb      .LBB4_2
- movzx   edx, word, ptr, [ecx, +, 30]
- mov     word, ptr, [esp, +, 30], dx
- movzx   edx, word, ptr, [ecx, +, 28]
- mov     word, ptr, [esp, +, 28], dx
- movzx   edx, word, ptr, [ecx, +, 26]
- mov     word, ptr, [esp, +, 26], dx
- movzx   edx, word, ptr, [ecx, +, 24]
- mov     word, ptr, [esp, +, 24], dx
- movzx   edx, word, ptr, [ecx, +, 22]
- mov     word, ptr, [esp, +, 22], dx
- movzx   edx, word, ptr, [ecx, +, 20]
- mov     word, ptr, [esp, +, 20], dx
- movzx   edx, word, ptr, [ecx, +, 18]
- mov     word, ptr, [esp, +, 18], dx
- movzx   edx, word, ptr, [ecx, +, 16]
- mov     word, ptr, [esp, +, 16], dx
- movzx   edx, word, ptr, [ecx, +, 14]
- mov     word, ptr, [esp, +, 14], dx
- movzx   edx, word, ptr, [ecx, +, 12]
- mov     word, ptr, [esp, +, 12], dx
- movzx   edx, word, ptr, [ecx, +, 10]
- mov     word, ptr, [esp, +, 10], dx
- movzx   edx, word, ptr, [ecx, +, 8]
- mov     word, ptr, [esp, +, 8], dx
- movzx   edx, word, ptr, [ecx, +, 6]
- mov     word, ptr, [esp, +, 6], dx
- movzx   edx, word, ptr, [ecx, +, 4]
- mov     word, ptr, [esp, +, 4], dx
- movzx   edx, word, ptr, [ecx, +, 2]
- mov     word, ptr, [esp, +, 2], dx
- movzx   ecx, word, ptr, [ecx]
- mov     word, ptr, [esp], cx
- jmp     .LBB4_11
-.LBB4_2:
- test    edx, edx
- je      .LBB4_3
- xor     esi, esi
-.LBB4_5:
- movzx   ebx, byte, ptr, [ecx, +, esi]
- mov     byte, ptr, [esp, +, esi], bl
- inc     esi
- cmp     edx, esi
- jne     .LBB4_5
- mov     esi, ecx
- sub     esi, edi
- add     esi, 32
- cmp     esi, 4
- jae     .LBB4_7
- jmp     .LBB4_8
-.LBB4_3:
- mov     esi, 32
-.LBB4_7:
- mov     edi, dword, ptr, [ecx, +, edx]
- add     esi, -4
- mov     dword, ptr, [esp, +, edx], edi
- add     edx, 4
- cmp     esi, 3
- ja      .LBB4_7
-.LBB4_8:
- test    esi, esi
- je      .LBB4_11
- lea     edi, [esp, +, edx]
- add     ecx, edx
- xor     edx, edx
-.LBB4_10:
- movzx   ebx, byte, ptr, [ecx, +, edx]
- mov     byte, ptr, [edi, +, edx], bl
- inc     edx
- cmp     esi, edx
- jne     .LBB4_10
-.LBB4_11:
- movsd   xmm1, qword, ptr, [esp, +, 16]
- movsd   xmm0, qword, ptr, [esp, +, 24]
- movsd   xmm2, qword, ptr, [esp]
- movsd   qword, ptr, [eax, +, 16], xmm1
+ sub     esp, 36
+ mov     edx, dword, ptr, [esp, +, 52]
+ lea     edi, [esp, +, 30]
+ mov     ecx, dword, ptr, [esp, +, 48]
+ lea     esi, [edx, +, 30]
+ #APP
+ mov     ax, word, ptr, [esi]
+ mov     word, ptr, [edi], ax
+ #NO_APP
+ lea     esi, [edx, +, 28]
+ lea     edi, [esp, +, 28]
+ #APP
+ mov     ax, word, ptr, [esi]
+ mov     word, ptr, [edi], ax
+ #NO_APP
+ lea     esi, [edx, +, 26]
+ lea     edi, [esp, +, 26]
+ #APP
+ mov     ax, word, ptr, [esi]
+ mov     word, ptr, [edi], ax
+ #NO_APP
+ lea     esi, [edx, +, 24]
+ lea     edi, [esp, +, 24]
+ #APP
+ mov     ax, word, ptr, [esi]
+ mov     word, ptr, [edi], ax
+ #NO_APP
+ lea     esi, [edx, +, 22]
+ lea     edi, [esp, +, 22]
+ #APP
+ mov     ax, word, ptr, [esi]
+ mov     word, ptr, [edi], ax
+ #NO_APP
+ lea     esi, [edx, +, 20]
+ lea     edi, [esp, +, 20]
+ #APP
+ mov     ax, word, ptr, [esi]
+ mov     word, ptr, [edi], ax
+ #NO_APP
+ lea     esi, [edx, +, 18]
+ lea     edi, [esp, +, 18]
+ #APP
+ mov     ax, word, ptr, [esi]
+ mov     word, ptr, [edi], ax
+ #NO_APP
+ lea     esi, [edx, +, 16]
+ lea     edi, [esp, +, 16]
+ #APP
+ mov     ax, word, ptr, [esi]
+ mov     word, ptr, [edi], ax
+ #NO_APP
+ lea     esi, [edx, +, 14]
+ lea     edi, [esp, +, 14]
+ #APP
+ mov     ax, word, ptr, [esi]
+ mov     word, ptr, [edi], ax
+ #NO_APP
+ lea     esi, [edx, +, 12]
+ lea     edi, [esp, +, 12]
+ #APP
+ mov     ax, word, ptr, [esi]
+ mov     word, ptr, [edi], ax
+ #NO_APP
+ lea     esi, [edx, +, 10]
+ lea     edi, [esp, +, 10]
+ #APP
+ mov     ax, word, ptr, [esi]
+ mov     word, ptr, [edi], ax
+ #NO_APP
+ lea     esi, [edx, +, 8]
+ lea     edi, [esp, +, 8]
+ #APP
+ mov     ax, word, ptr, [esi]
+ mov     word, ptr, [edi], ax
+ #NO_APP
+ lea     esi, [edx, +, 6]
+ lea     edi, [esp, +, 6]
+ #APP
+ mov     ax, word, ptr, [esi]
+ mov     word, ptr, [edi], ax
+ #NO_APP
+ lea     esi, [edx, +, 4]
+ lea     edi, [esp, +, 4]
+ #APP
+ mov     ax, word, ptr, [esi]
+ mov     word, ptr, [edi], ax
+ #NO_APP
+ lea     esi, [edx, +, 2]
+ lea     edi, [esp, +, 2]
+ #APP
+ mov     ax, word, ptr, [esi]
+ mov     word, ptr, [edi], ax
+ #NO_APP
+ mov     esi, esp
+ #APP
+ mov     ax, word, ptr, [edx]
+ mov     word, ptr, [esi], ax
+ #NO_APP
+ mov     eax, ecx
  movsd   xmm1, qword, ptr, [esp, +, 8]
- movsd   qword, ptr, [eax, +, 24], xmm0
- movsd   qword, ptr, [eax], xmm2
- movsd   qword, ptr, [eax, +, 8], xmm1
+ movsd   xmm0, qword, ptr, [esp]
+ movsd   xmm2, qword, ptr, [esp, +, 16]
+ movsd   qword, ptr, [ecx, +, 8], xmm1
+ movsd   xmm1, qword, ptr, [esp, +, 24]
+ movsd   qword, ptr, [ecx], xmm0
+ movsd   qword, ptr, [ecx, +, 16], xmm2
+ movsd   qword, ptr, [ecx, +, 24], xmm1
  #MEMBARRIER
- add     esp, 32
+ add     esp, 36
  pop     esi
  pop     edi
- pop     ebx
  ret     4
 asm_test::atomic_memcpy_load_align2::read_volatile_acquire_fence:
  push    ebp
