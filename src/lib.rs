@@ -243,8 +243,6 @@ fn assert_store_ordering(order: Ordering) {
 mod imp {
     #[cfg(not(target_pointer_width = "16"))]
     use core::sync::atomic::AtomicU32;
-    #[cfg(not(any(target_pointer_width = "16", target_pointer_width = "32")))]
-    use core::sync::atomic::AtomicU64;
     use core::{
         mem::{self, ManuallyDrop, MaybeUninit},
         ops::Range,
@@ -400,10 +398,10 @@ mod imp {
 
     Branch | Granularity of atomic operations | Conditions
     ------ | -------------------------------- | ----------
-    1      | u8 ..., usize ..., u8 ...        | `size_of::<T>() >= size_of::<usize>() * 4`, `align_of::<T>() < align_of::<usize>()`
-    2      | usize ...                        | `align_of::<T>() >= align_of::<usize>()`
-    3      | u32 ...                          | `align_of::<T>() >= align_of::<u32>()`, 64-bit or higher
-    4      | u16 ...                          | `align_of::<T>() >= align_of::<u16>()`, 32-bit or higher
+    1      | u8 ..., usize ..., u8 ...        | `size_of::<T>() >= size_of::<usize>() * 4`, `align_of::<T>() < align_of::<AtomicUsize>()`
+    2      | usize ...                        | `align_of::<T>() >= align_of::<AtomicUsize>()`
+    3      | u32 ...                          | `align_of::<T>() >= align_of::<AtomicU32>()`, 64-bit or higher
+    4      | u16 ...                          | `align_of::<T>() >= align_of::<AtomicU16>()`, 32-bit or higher
     5      | u8 ...                           |
 
     - Branch 1: If the alignment of `T` is less than usize, but `T` can be read as at least a few numbers of usize, compute the align offset and read it like `(&[AtomicU8], &[AtomicUsize], &[AtomicU8])`.
@@ -436,7 +434,6 @@ mod imp {
         // whether or not they are explicitly mentioned in the each safety comment.
         debug_assert!(!src.is_null());
         debug_assert!(src as usize % mem::align_of::<T>() == 0);
-        static_assert_atomic_alignment();
 
         let mut result = MaybeUninit::<T>::uninit();
 
@@ -676,7 +673,6 @@ mod imp {
         // whether or not they are explicitly mentioned in the each safety comment.
         debug_assert!(!dst.is_null());
         debug_assert!(dst as usize % mem::align_of::<T>() == 0);
-        static_assert_atomic_alignment();
 
         //　In atomic_store, the panic *after* the first store operation is unsound
         // because dst may become an invalid bit pattern.
@@ -818,29 +814,6 @@ mod imp {
         Range<T>: DoubleEndedIterator,
     {
         r
-    }
-
-    // Atomic integers larger than the pointer size often does not have the
-    // same alignment as the corresponding integer types.
-    //
-    // ```console
-    // $ rustc --print cfg --target x86_64-apple-darwin | grep -E 'target_has_atomic_.*(64|128)'
-    // target_has_atomic_equal_alignment="64"
-    // target_has_atomic_load_store="128"
-    // target_has_atomic_load_store="64"
-    // ```
-    //
-    // It's unlikely that the same thing will happen with an atomic type
-    // less than or equal to the pointer size, but we'll check just in case.
-    #[cfg_attr(feature = "inline-always", inline(always))]
-    #[cfg_attr(not(feature = "inline-always"), inline)]
-    fn static_assert_atomic_alignment() {
-        let [] = [(); mem::align_of::<usize>() - mem::align_of::<AtomicUsize>()];
-        #[cfg(not(any(target_pointer_width = "16", target_pointer_width = "32")))]
-        let [] = [(); mem::align_of::<u64>() - mem::align_of::<AtomicU64>()];
-        #[cfg(not(target_pointer_width = "16"))]
-        let [] = [(); mem::align_of::<u32>() - mem::align_of::<AtomicU32>()];
-        let [] = [(); mem::align_of::<u16>() - mem::align_of::<AtomicU16>()];
     }
 
     struct PanicGuard;
