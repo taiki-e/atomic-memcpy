@@ -62,7 +62,17 @@ fn basic_unit() {
 
 #[track_caller]
 fn assert_panic<T: std::fmt::Debug>(f: impl FnOnce() -> T) -> std::string::String {
-    let msg = std::panic::catch_unwind(std::panic::AssertUnwindSafe(f)).unwrap_err();
+    let backtrace = std::env::var_os("RUST_BACKTRACE");
+    let hook = std::panic::take_hook();
+    std::env::set_var("RUST_BACKTRACE", "0"); // Suppress backtrace
+    std::panic::set_hook(std::boxed::Box::new(|_| {})); // Suppress panic msg
+    let res = std::panic::catch_unwind(std::panic::AssertUnwindSafe(f));
+    std::panic::set_hook(hook);
+    match backtrace {
+        Some(v) => std::env::set_var("RUST_BACKTRACE", v),
+        None => std::env::remove_var("RUST_BACKTRACE"),
+    }
+    let msg = res.unwrap_err();
     msg.downcast_ref::<std::string::String>()
         .cloned()
         .unwrap_or_else(|| msg.downcast_ref::<&'static str>().copied().unwrap().into())
