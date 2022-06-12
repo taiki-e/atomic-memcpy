@@ -155,6 +155,7 @@ jobs:
         with:
           component: rust-src
       - uses: taiki-e/install-action@valgrind
+      # -Z doctest-xcompile is needed to apply CARGO_TARGET_*_RUNNER to doctest.
       - run: cargo test -v --workspace --exclude asm-test -Z doctest-xcompile
       - run: cargo test -v --workspace --exclude asm-test --release -Z doctest-xcompile
       - run: cargo test -v --workspace --exclude asm-test --release -Z doctest-xcompile
