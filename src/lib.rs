@@ -189,7 +189,7 @@ pub unsafe fn atomic_store<T>(dst: *mut T, val: T, order: Ordering) {
     }
 }
 
-// https://github.com/rust-lang/rust/blob/1.59.0/library/core/src/sync/atomic.rs#L2359
+// https://github.com/rust-lang/rust/blob/1.61.0/library/core/src/sync/atomic.rs#L2566
 #[cfg_attr(feature = "inline-always", inline(always))]
 #[cfg_attr(not(feature = "inline-always"), inline)]
 fn assert_load_ordering(order: Ordering) {
@@ -201,7 +201,7 @@ fn assert_load_ordering(order: Ordering) {
     }
 }
 
-// https://github.com/rust-lang/rust/blob/1.59.0/library/core/src/sync/atomic.rs#L2345
+// https://github.com/rust-lang/rust/blob/1.61.0/library/core/src/sync/atomic.rs#L2552
 #[cfg_attr(feature = "inline-always", inline(always))]
 #[cfg_attr(not(feature = "inline-always"), inline)]
 fn assert_store_ordering(order: Ordering) {
@@ -218,11 +218,11 @@ fn assert_store_ordering(order: Ordering) {
 ///
 /// - 16-bit targets (e.g., avr, msp430) don't support atomic load/store.
 /// 　　　　msp430 can actually support atomic load/store, but the LLVM backend does not support it yet.
-///   - <https://github.com/rust-lang/rust/blob/788b1fe5b79a8b74215022f9df49b0eae68a50b9/compiler/rustc_target/src/spec/msp430_none_elf.rs#L22-L30>
+///   - <https://github.com/rust-lang/rust/blob/1.61.0/compiler/rustc_target/src/spec/msp430_none_elf.rs#L22-L30>
 ///   - <https://github.com/rust-lang/rust/issues/45085#issuecomment-385090816>
 ///   - <https://github.com/rust-lang/rust/pull/55450>
 /// - riscv32 targets without the A extension (e.g., riscv32i, riscv32imc) don't support atomic load/store.
-///   However, if OS is available, atomic operations are supported: <https://github.com/rust-lang/rust/blob/788b1fe5b79a8b74215022f9df49b0eae68a50b9/compiler/rustc_target/src/spec/riscv32imc_esp_espidf.rs#L20-L26>
+///   However, if OS is available, atomic operations are supported: <https://github.com/rust-lang/rust/blob/1.61.0/compiler/rustc_target/src/spec/riscv32imc_esp_espidf.rs#L20-L26>
 ///
 /// This heuristic is based on a list of builtin targets that currently do no support
 /// atomic load/store, so it should be quite accurate, at least for builtin targets.
