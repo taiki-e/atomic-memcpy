@@ -118,7 +118,7 @@ fn ordering() {
                     let x = UnsafeCell::new(0u8);
                     atomic_load(x.get(), Ordering::AcqRel)
                 }),
-                "there is no such thing as an acquire/release load"
+                "there is no such thing as an acquire-release load"
             );
             assert_eq!(
                 assert_panic(|| {
@@ -132,7 +132,7 @@ fn ordering() {
                     let x = UnsafeCell::new(0u8);
                     atomic_store(x.get(), 1, Ordering::AcqRel)
                 }),
-                "there is no such thing as an acquire/release store"
+                "there is no such thing as an acquire-release store"
             );
         }
     }
