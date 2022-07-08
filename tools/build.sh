@@ -37,7 +37,7 @@ fi
 rustup_target_list=$(rustup ${pre_args[@]+"${pre_args[@]}"} target list)
 rustc_target_list=$(rustc ${pre_args[@]+"${pre_args[@]}"} --print target-list)
 rustc_version=$(rustc ${pre_args[@]+"${pre_args[@]}"} -Vv | grep 'release: ' | sed 's/release: //')
-subcmd=build
+base_args=(${pre_args[@]+"${pre_args[@]}"} hack build)
 nightly=''
 if [[ "${rustc_version}" == *"nightly"* ]] || [[ "${rustc_version}" == *"dev"* ]]; then
     nightly=1
@@ -46,7 +46,9 @@ if [[ "${rustc_version}" == *"nightly"* ]] || [[ "${rustc_version}" == *"dev"* ]
         # -Z check-cfg requires 1.63.0-nightly
         1.[0-5]* | 1.6[0-2].*) ;;
         *)
-            check_cfg='-Z unstable-options --check-cfg=names(atomic_memcpy_unsafe_volatile)'
+            check_cfg="-Z unstable-options --check-cfg=names(atomic_memcpy_unsafe_volatile)"
+            rustup ${pre_args[@]+"${pre_args[@]}"} component add clippy &>/dev/null
+            base_args=(${pre_args[@]+"${pre_args[@]}"} hack clippy -Z check-cfg="names,values,output,features")
             ;;
     esac
 fi
@@ -63,7 +65,7 @@ x() {
 build() {
     local target="$1"
     shift
-    local args=()
+    local args=("${base_args[@]}" --target "${target}")
     local target_rustflags="${RUSTFLAGS:-} ${check_cfg:-}"
     if ! grep <<<"${rustc_target_list}" -Eq "^${target}$"; then
         echo "target '${target}' not available on ${rustc_version}"
@@ -80,22 +82,17 @@ build() {
             *) ;;
         esac
     fi
-    args+=(${pre_args[@]+"${pre_args[@]}"} hack "${subcmd}")
     if grep <<<"${rustup_target_list}" -Eq "^${target}( |$)"; then
         x rustup ${pre_args[@]+"${pre_args[@]}"} target add "${target}" &>/dev/null
     elif [[ -n "${nightly}" ]]; then
         case "${target}" in
-            *-none* | avr-* | *-esp-espidf) args+=(-Z build-std=core) ;;
+            *-none* | avr-* | *-esp-espidf) args+=(-Z build-std="core") ;;
             *) args+=(-Z build-std) ;;
         esac
     else
         echo "target '${target}' requires nightly compiler"
         return 0
     fi
-    if [[ -n "${check_cfg:-}" ]]; then
-        args+=(-Z check-cfg)
-    fi
-    args+=(--target "${target}")
 
     RUSTFLAGS="${target_rustflags}" \
         x cargo "${args[@]}" --manifest-path tests/no-std/Cargo.toml
