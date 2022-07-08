@@ -21,6 +21,17 @@ See [P1478R1][p1478r1] for more.
 - If the type being copied contains pointers it is not compatible with strict provenance because the copy does ptr-to-int transmutes.
 - If the type being copied contains uninitialized bytes (e.g., padding) [it is undefined behavior because the copy goes through integers][undefined-behavior]. This problem will probably not be resolved until something like `AtomicMaybeUninit` is supported.
 
+## Optional features
+
+- **`atomic-maybe-uninit`**
+
+  Support copying types containing uninitialized bytes.
+
+  Note:
+  - This feature is only available on some platforms. See [the documentation of atomic-maybe-uninit](https://github.com/taiki-e/atomic-maybe-uninit#platform-support) crate for more.
+  - Enabling this feature increases the MSRV to Rust 1.59.
+  - This feature is not compatible with [Miri](https://github.com/rust-lang/miri/issues/1045) or [Sanitizer](https://github.com/google/sanitizers/issues/192) as of 2022-03-11 since it uses an inline assembly.
+
 ## Related Projects
 
 - [portable-atomic]: Portable atomic types including support for 128-bit atomics, atomic float, etc. Using byte-wise atomic memcpy to implement Seqlock, which is used in the fallback implementation.
