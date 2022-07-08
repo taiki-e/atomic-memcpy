@@ -424,7 +424,7 @@ pub mod atomic_u128_load {
     }
     #[inline(never)]
     pub unsafe fn acquire(a: A) -> T {
-        unsafe { intrinsics::atomic_load_acq(a) }
+        unsafe { intrinsics::atomic_load_acquire(a) }
     }
     #[inline(never)]
     pub unsafe fn unordered_seq_cst_fence(a: A) -> T {
@@ -440,6 +440,6 @@ pub mod atomic_u128_load {
     }
     #[inline(never)]
     pub unsafe fn seq_cst(a: A) -> T {
-        unsafe { intrinsics::atomic_load(a) }
+        unsafe { intrinsics::atomic_load_seqcst(a) }
     }
 }
