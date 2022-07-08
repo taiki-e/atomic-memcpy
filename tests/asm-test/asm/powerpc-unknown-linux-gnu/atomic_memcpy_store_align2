@@ -37,7 +37,25 @@ asm_test::atomic_memcpy_store_align2::release:
  sub     4, 7, 3
  cmplwi  4, 32
  stw     6, 48(1)
- ble     0, .LBB6_2
+ bgt     0, .LBB6_5
+ cmplwi  4, 0
+ addi    5, 1, 48
+ beq     0, .LBB6_6
+ addi    6, 3, 32
+ addi    8, 1, 47
+ addi    9, 3, -1
+ mtctr   4
+.LBB6_3:
+ lbzu    10, 1(8)
+ addi    11, 9, 1
+ stb     10, 1(9)
+ mr      9, 11
+ bdnz    .LBB6_3
+ sub     6, 6, 7
+ cmplwi  6, 4
+ bge     0, .LBB6_7
+ b       .LBB6_11
+.LBB6_5:
  lhz     4, 48(1)
  sth     4, 0(3)
  lhz     4, 50(1)
@@ -71,24 +89,6 @@ asm_test::atomic_memcpy_store_align2::release:
  lhz     4, 78(1)
  sth     4, 30(3)
  b       .LBB6_14
-.LBB6_2:
- cmplwi  4, 0
- addi    5, 1, 48
- beq     0, .LBB6_6
- addi    6, 1, 47
- addi    8, 3, -1
- mtctr   4
-.LBB6_4:
- lbzu    9, 1(6)
- addi    10, 8, 1
- stb     9, 1(8)
- mr      8, 10
- bdnz    .LBB6_4
- sub     6, 3, 7
- addi    6, 6, 32
- cmplwi  6, 4
- bge     0, .LBB6_7
- b       .LBB6_11
 .LBB6_6:
  li      6, 32
 .LBB6_7:

@@ -1,8 +1,7 @@
 asm_test::atomic_memcpy_store_align2::release:
- push    {r4, r5, r7, lr}
+ push    {r4, r5, r6, lr}
  sub     sp, #64
  vld1.16 {d16, d17}, [r1]!
- add.w   lr, sp, #32
  vld1.16 {d18, d19}, [r1]
  mov     r1, sp
  mov     r2, r1
@@ -10,15 +9,32 @@ asm_test::atomic_memcpy_store_align2::release:
  vst1.64 {d18, d19}, [r2]
  dmb     ish
  vld1.64 {d16, d17}, [r1]
- mov     r1, lr
+ add     r1, sp, #32
  vld1.64 {d18, d19}, [r2]
- vst1.64 {d16, d17}, [r1]!
- vst1.64 {d18, d19}, [r1]
- adds    r1, r0, #3
- bic     r1, r1, #3
- subs    r2, r1, r0
+ mov     r2, r1
+ vst1.64 {d16, d17}, [r2]!
+ vst1.64 {d18, d19}, [r2]
+ adds    r2, r0, #3
+ bic     lr, r2, #3
+ sub.w   r2, lr, r0
  cmp     r2, #32
- bls     .LBB6_2
+ bhi     .LBB6_5
+ cmp     r2, #0
+ beq     .LBB6_6
+ sub.w   r3, r0, lr
+ add.w   r12, r0, #32
+ add     r4, sp, #32
+ mov     r5, r0
+.LBB6_3:
+ ldrb    r6, [r4], #1
+ adds    r3, #1
+ strb    r6, [r5], #1
+ blo     .LBB6_3
+ sub.w   r3, r12, lr
+ cmp     r3, #4
+ bhs     .LBB6_7
+ b       .LBB6_8
+.LBB6_5:
  ldrh.w  r1, [sp, #62]
  strh    r1, [r0, #30]
  ldrh.w  r1, [sp, #60]
@@ -52,33 +68,18 @@ asm_test::atomic_memcpy_store_align2::release:
  ldrh.w  r1, [sp, #32]
  strh    r1, [r0]
  b       .LBB6_11
-.LBB6_2:
- cbz     r2, .LBB6_6
- sub.w   r12, r0, r1
- add     r3, sp, #32
- mov     r4, r0
- mov     r1, r12
-.LBB6_4:
- ldrb    r5, [r3], #1
- adds    r1, #1
- strb    r5, [r4], #1
- blo     .LBB6_4
- add.w   r3, r12, #32
- cmp     r3, #4
- bhs     .LBB6_7
- b       .LBB6_8
 .LBB6_6:
  movs    r3, #32
 .LBB6_7:
- ldr.w   r1, [lr, r2]
+ ldr     r6, [r1, r2]
  subs    r3, #4
  cmp     r3, #3
- str     r1, [r0, r2]
+ str     r6, [r0, r2]
  add.w   r2, r2, #4
  bhi     .LBB6_7
 .LBB6_8:
  cbz     r3, .LBB6_11
- add.w   r1, lr, r2
+ add     r1, r2
  add     r0, r2
 .LBB6_10:
  ldrb    r2, [r1], #1
@@ -87,7 +88,7 @@ asm_test::atomic_memcpy_store_align2::release:
  bne     .LBB6_10
 .LBB6_11:
  add     sp, #64
- pop     {r4, r5, r7, pc}
+ pop     {r4, r5, r6, pc}
 asm_test::atomic_memcpy_store_align2::write_volatile_release_fence:
  sub     sp, #32
  dmb     ish

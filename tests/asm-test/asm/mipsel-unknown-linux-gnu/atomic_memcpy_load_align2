@@ -5,8 +5,30 @@ asm_test::atomic_memcpy_load_align2::acquire:
  and     $3, $1, $2
  subu    $2, $3, $5
  sltiu   $1, $2, 33
- bnez    $1, $BB4_2
+ beqz    $1, $BB4_6
  nop
+ beqz    $2, $BB4_7
+ nop
+ addiu   $6, $sp, 0
+ subu    $8, $5, $3
+ addiu   $7, $5, 32
+ move    $9, $5
+$BB4_3:
+ lb      $1, 0($9)
+ addiu   $9, $9, 1
+ sb      $1, 0($6)
+ addiu   $1, $8, 1
+ addiu   $6, $6, 1
+ sltu    $10, $1, $8
+ beqz    $10, $BB4_3
+ move    $8, $1
+ subu    $3, $7, $3
+ sltiu   $1, $3, 4
+ bnez    $1, $BB4_10
+ nop
+ b       $BB4_8
+ nop
+$BB4_6:
  lh      $1, 30($5)
  sh      $1, 30($sp)
  lh      $1, 28($5)
@@ -40,28 +62,6 @@ asm_test::atomic_memcpy_load_align2::acquire:
  lh      $1, 0($5)
  b       $BB4_13
  sh      $1, 0($sp)
-$BB4_2:
- beqz    $2, $BB4_7
- nop
- addiu   $6, $sp, 0
- subu    $8, $5, $3
- move    $7, $5
-$BB4_4:
- lb      $1, 0($7)
- addiu   $7, $7, 1
- sb      $1, 0($6)
- addiu   $1, $8, 1
- addiu   $6, $6, 1
- sltu    $9, $1, $8
- beqz    $9, $BB4_4
- move    $8, $1
- subu    $1, $5, $3
- addiu   $3, $1, 32
- sltiu   $1, $3, 4
- bnez    $1, $BB4_10
- nop
- b       $BB4_8
- nop
 $BB4_7:
  addiu   $3, $zero, 32
 $BB4_8:
@@ -84,8 +84,8 @@ $BB4_10:
  addu    $2, $1, $2
 $BB4_12:
  lb      $1, 0($5)
- addiu   $3, $3, -1
  addiu   $5, $5, 1
+ addiu   $3, $3, -1
  sb      $1, 0($2)
  bnez    $3, $BB4_12
  addiu   $2, $2, 1

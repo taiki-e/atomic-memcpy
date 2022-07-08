@@ -1,79 +1,95 @@
 asm_test::atomic_memcpy_load_align1::acquire:
+ push    ebp
  push    ebx
  push    edi
  push    esi
- sub     esp, 32
- mov     ecx, dword, ptr, [esp, +, 52]
- mov     eax, dword, ptr, [esp, +, 48]
- lea     edi, [ecx, +, 3]
+ sub     esp, 36
+ mov     ebp, dword, ptr, [esp, +, 60]
+ mov     eax, dword, ptr, [esp, +, 56]
+ lea     edi, [ebp, +, 3]
  and     edi, -4
- mov     edx, edi
- sub     edx, ecx
- cmp     edx, 33
- jb      .LBB0_2
- mov     dl, byte, ptr, [ecx]
+ mov     esi, edi
+ sub     esi, ebp
+ cmp     esi, 33
+ jae     .LBB0_1
+ test    esi, esi
+ je      .LBB0_4
+ lea     edx, [ebp, +, 32]
+ xor     ebx, ebx
+.LBB0_12:
+ movzx   ecx, byte, ptr, [ebp, +, ebx]
+ mov     byte, ptr, [esp, +, ebx], cl
+ inc     ebx
+ cmp     esi, ebx
+ jne     .LBB0_12
+ sub     edx, edi
+ cmp     edx, 4
+ jae     .LBB0_5
+ jmp     .LBB0_7
+.LBB0_1:
+ mov     dl, byte, ptr, [ebp]
  mov     byte, ptr, [esp], dl
- mov     dl, byte, ptr, [ecx, +, 1]
+ mov     dl, byte, ptr, [ebp, +, 1]
  mov     byte, ptr, [esp, +, 1], dl
- mov     dl, byte, ptr, [ecx, +, 2]
+ mov     dl, byte, ptr, [ebp, +, 2]
  mov     byte, ptr, [esp, +, 2], dl
- mov     dl, byte, ptr, [ecx, +, 3]
+ mov     dl, byte, ptr, [ebp, +, 3]
  mov     byte, ptr, [esp, +, 3], dl
- mov     dl, byte, ptr, [ecx, +, 4]
+ mov     dl, byte, ptr, [ebp, +, 4]
  mov     byte, ptr, [esp, +, 4], dl
- mov     dl, byte, ptr, [ecx, +, 5]
+ mov     dl, byte, ptr, [ebp, +, 5]
  mov     byte, ptr, [esp, +, 5], dl
- mov     dl, byte, ptr, [ecx, +, 6]
+ mov     dl, byte, ptr, [ebp, +, 6]
  mov     byte, ptr, [esp, +, 6], dl
- mov     dl, byte, ptr, [ecx, +, 7]
+ mov     dl, byte, ptr, [ebp, +, 7]
  mov     byte, ptr, [esp, +, 7], dl
- mov     dl, byte, ptr, [ecx, +, 8]
+ mov     dl, byte, ptr, [ebp, +, 8]
  mov     byte, ptr, [esp, +, 8], dl
- mov     dl, byte, ptr, [ecx, +, 9]
+ mov     dl, byte, ptr, [ebp, +, 9]
  mov     byte, ptr, [esp, +, 9], dl
- mov     dl, byte, ptr, [ecx, +, 10]
+ mov     dl, byte, ptr, [ebp, +, 10]
  mov     byte, ptr, [esp, +, 10], dl
- mov     dl, byte, ptr, [ecx, +, 11]
+ mov     dl, byte, ptr, [ebp, +, 11]
  mov     byte, ptr, [esp, +, 11], dl
- mov     dl, byte, ptr, [ecx, +, 12]
+ mov     dl, byte, ptr, [ebp, +, 12]
  mov     byte, ptr, [esp, +, 12], dl
- mov     dl, byte, ptr, [ecx, +, 13]
+ mov     dl, byte, ptr, [ebp, +, 13]
  mov     byte, ptr, [esp, +, 13], dl
- mov     dl, byte, ptr, [ecx, +, 14]
+ mov     dl, byte, ptr, [ebp, +, 14]
  mov     byte, ptr, [esp, +, 14], dl
- mov     dl, byte, ptr, [ecx, +, 15]
+ mov     dl, byte, ptr, [ebp, +, 15]
  mov     byte, ptr, [esp, +, 15], dl
- mov     dl, byte, ptr, [ecx, +, 16]
+ mov     dl, byte, ptr, [ebp, +, 16]
  mov     byte, ptr, [esp, +, 16], dl
- mov     dl, byte, ptr, [ecx, +, 17]
+ mov     dl, byte, ptr, [ebp, +, 17]
  mov     byte, ptr, [esp, +, 17], dl
- mov     dl, byte, ptr, [ecx, +, 18]
+ mov     dl, byte, ptr, [ebp, +, 18]
  mov     byte, ptr, [esp, +, 18], dl
- mov     dl, byte, ptr, [ecx, +, 19]
+ mov     dl, byte, ptr, [ebp, +, 19]
  mov     byte, ptr, [esp, +, 19], dl
- mov     dl, byte, ptr, [ecx, +, 20]
+ mov     dl, byte, ptr, [ebp, +, 20]
  mov     byte, ptr, [esp, +, 20], dl
- mov     dl, byte, ptr, [ecx, +, 21]
+ mov     dl, byte, ptr, [ebp, +, 21]
  mov     byte, ptr, [esp, +, 21], dl
- mov     dl, byte, ptr, [ecx, +, 22]
+ mov     dl, byte, ptr, [ebp, +, 22]
  mov     byte, ptr, [esp, +, 22], dl
- mov     dl, byte, ptr, [ecx, +, 23]
+ mov     dl, byte, ptr, [ebp, +, 23]
  mov     byte, ptr, [esp, +, 23], dl
- mov     dl, byte, ptr, [ecx, +, 24]
+ mov     dl, byte, ptr, [ebp, +, 24]
  mov     byte, ptr, [esp, +, 24], dl
- mov     dl, byte, ptr, [ecx, +, 25]
+ mov     dl, byte, ptr, [ebp, +, 25]
  mov     byte, ptr, [esp, +, 25], dl
- mov     dl, byte, ptr, [ecx, +, 26]
+ mov     dl, byte, ptr, [ebp, +, 26]
  mov     byte, ptr, [esp, +, 26], dl
- mov     dl, byte, ptr, [ecx, +, 27]
+ mov     dl, byte, ptr, [ebp, +, 27]
  mov     byte, ptr, [esp, +, 27], dl
- mov     dl, byte, ptr, [ecx, +, 28]
+ mov     dl, byte, ptr, [ebp, +, 28]
  mov     byte, ptr, [esp, +, 28], dl
- mov     dl, byte, ptr, [ecx, +, 29]
+ mov     dl, byte, ptr, [ebp, +, 29]
  mov     byte, ptr, [esp, +, 29], dl
- mov     dl, byte, ptr, [ecx, +, 30]
+ mov     dl, byte, ptr, [ebp, +, 30]
  mov     byte, ptr, [esp, +, 30], dl
- mov     cl, byte, ptr, [ecx, +, 31]
+ mov     cl, byte, ptr, [ebp, +, 31]
  mov     byte, ptr, [esp, +, 31], cl
  movsd   xmm1, qword, ptr, [esp, +, 8]
  movsd   xmm0, qword, ptr, [esp, +, 16]
@@ -83,45 +99,29 @@ asm_test::atomic_memcpy_load_align1::acquire:
  movsd   qword, ptr, [eax, +, 16], xmm0
  movsd   qword, ptr, [eax], xmm2
  movsd   qword, ptr, [eax, +, 24], xmm1
- jmp     .LBB0_12
-.LBB0_2:
- test    edx, edx
- je      .LBB0_3
- xor     esi, esi
+ jmp     .LBB0_2
+.LBB0_4:
+ mov     edx, 32
 .LBB0_5:
- movzx   ebx, byte, ptr, [ecx, +, esi]
- mov     byte, ptr, [esp, +, esi], bl
+ mov     ecx, dword, ptr, [ebp, +, esi]
+ add     edx, -4
+ mov     dword, ptr, [esp, +, esi], ecx
+ add     esi, 4
+ cmp     edx, 3
+ ja      .LBB0_5
+.LBB0_7:
+ test    edx, edx
+ je      .LBB0_10
+ lea     edi, [esp, +, esi]
+ add     ebp, esi
+ xor     esi, esi
+.LBB0_9:
+ movzx   ecx, byte, ptr, [ebp, +, esi]
+ mov     byte, ptr, [edi, +, esi], cl
  inc     esi
  cmp     edx, esi
- jne     .LBB0_5
- mov     esi, ecx
- sub     esi, edi
- add     esi, 32
- cmp     esi, 4
- jae     .LBB0_7
- jmp     .LBB0_8
-.LBB0_3:
- mov     esi, 32
-.LBB0_7:
- mov     edi, dword, ptr, [ecx, +, edx]
- add     esi, -4
- mov     dword, ptr, [esp, +, edx], edi
- add     edx, 4
- cmp     esi, 3
- ja      .LBB0_7
-.LBB0_8:
- test    esi, esi
- je      .LBB0_11
- lea     edi, [esp, +, edx]
- add     ecx, edx
- xor     edx, edx
+ jne     .LBB0_9
 .LBB0_10:
- movzx   ebx, byte, ptr, [ecx, +, edx]
- mov     byte, ptr, [edi, +, edx], bl
- inc     edx
- cmp     esi, edx
- jne     .LBB0_10
-.LBB0_11:
  movsd   xmm1, qword, ptr, [esp, +, 16]
  movsd   xmm0, qword, ptr, [esp, +, 24]
  movsd   xmm2, qword, ptr, [esp]
@@ -130,12 +130,13 @@ asm_test::atomic_memcpy_load_align1::acquire:
  movsd   qword, ptr, [eax, +, 24], xmm0
  movsd   qword, ptr, [eax], xmm2
  movsd   qword, ptr, [eax, +, 8], xmm1
-.LBB0_12:
+.LBB0_2:
  #MEMBARRIER
- add     esp, 32
+ add     esp, 36
  pop     esi
  pop     edi
  pop     ebx
+ pop     ebp
  ret     4
 asm_test::atomic_memcpy_load_align1::read_volatile_acquire_fence:
  push    ebx
