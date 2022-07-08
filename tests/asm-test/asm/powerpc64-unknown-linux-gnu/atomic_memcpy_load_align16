@@ -1,22 +1,71 @@
 asm_test::atomic_memcpy_load_align16::acquire:
 .Lfunc_begin16:
- ld      5, 0(4)
- ld      6, 8(4)
- ld      7, 16(4)
- ld      8, 24(4)
- ld      9, 32(4)
- ld      10, 40(4)
- ld      11, 48(4)
- ld      4, 56(4)
- std     5, 0(3)
- std     6, 8(3)
- std     7, 16(3)
- std     8, 24(3)
- std     9, 32(3)
- std     10, 40(3)
- std     11, 48(3)
- std     4, 56(3)
+ addi    5, 1, -96
+ std     28, -32(1)
+ addi    6, 1, -88
+ addi    7, 1, -80
+ addi    8, 1, -72
+ std     29, -24(1)
+ addi    29, 4, 8
+ addi    9, 1, -64
+ std     30, -16(1)
+ mr      30, 5
+ addi    10, 1, -56
+ #APP
+ ld      28, 0(4)
+ std     28, 0(30)
+ #NO_APP
+ #APP
+ ld      30, 0(29)
+ std     30, 0(6)
+ #NO_APP
+ addi    11, 1, -48
+ addi    12, 1, -40
+ addi    6, 4, 16
+ #APP
+ ld      6, 0(6)
+ std     6, 0(7)
+ #NO_APP
+ addi    6, 4, 24
+ #APP
+ ld      6, 0(6)
+ std     6, 0(8)
+ #NO_APP
+ addi    6, 4, 32
+ #APP
+ ld      6, 0(6)
+ std     6, 0(9)
+ #NO_APP
+ addi    6, 4, 40
+ #APP
+ ld      6, 0(6)
+ std     6, 0(10)
+ #NO_APP
+ addi    6, 4, 48
+ addi    4, 4, 56
+ #APP
+ ld      6, 0(6)
+ std     6, 0(11)
+ #NO_APP
+ li      6, 16
+ #APP
+ ld      4, 0(4)
+ std     4, 0(12)
+ #NO_APP
+ lvx     2, 5, 6
+ li      4, 32
+ stvx    2, 3, 6
+ lvx     2, 5, 4
+ stvx    2, 3, 4
+ li      4, 48
+ lvx     2, 5, 4
+ stvx    2, 3, 4
+ lvx     2, 0, 5
+ stvx    2, 0, 3
  lwsync
+ ld      30, -16(1)
+ ld      29, -24(1)
+ ld      28, -32(1)
  blr
 asm_test::atomic_memcpy_load_align16::read_volatile_acquire_fence:
 .Lfunc_begin17:

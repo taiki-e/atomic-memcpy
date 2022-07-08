@@ -1,120 +1,133 @@
 asm_test::atomic_memcpy_load_align4::acquire:
 .Lfunc_begin8:
- addi    5, 4, 7
- rldicr  8, 5, 0, 60
- sub     5, 8, 4
- cmpldi  5, 64
- bgt     0, .LBB8_5
- cmpldi  5, 0
- addi    6, 1, -64
- beq     0, .LBB8_6
- addi    7, 4, 64
- addi    9, 4, -1
- addi    10, 6, -1
- mtctr   5
-.LBB8_3:
- lbz     11, 1(9)
- addi    9, 9, 1
- stbu    11, 1(10)
- bdnz    .LBB8_3
- sub     7, 7, 8
- cmpldi  7, 8
- bge     0, .LBB8_7
- b       .LBB8_11
-.LBB8_5:
- lwz     5, 0(4)
- stw     5, -64(1)
- lwz     5, 4(4)
- stw     5, -60(1)
- lwz     5, 8(4)
- stw     5, -56(1)
- lwz     5, 12(4)
- stw     5, -52(1)
- lwz     5, 16(4)
- stw     5, -48(1)
- lwz     5, 20(4)
- stw     5, -44(1)
- lwz     5, 24(4)
- stw     5, -40(1)
- lwz     5, 28(4)
- stw     5, -36(1)
- lwz     5, 32(4)
- stw     5, -32(1)
- lwz     5, 36(4)
- stw     5, -28(1)
- lwz     5, 40(4)
- stw     5, -24(1)
- lwz     5, 44(4)
- stw     5, -20(1)
- lwz     5, 48(4)
- stw     5, -16(1)
- lwz     5, 52(4)
- stw     5, -12(1)
- lwz     5, 56(4)
- stw     5, -8(1)
- lwz     4, 60(4)
- stw     4, -4(1)
- b       .LBB8_14
-.LBB8_6:
- li      7, 64
-.LBB8_7:
- addi    9, 7, -8
- li      11, 7
- cmpldi  9, 7
- sub     10, 8, 4
- bc      12, 0, .LBB8_9
- ori     9, 11, 0
- b       .LBB8_9
-.LBB8_9:
- not     9, 9
- add     8, 8, 6
- add     9, 9, 7
- add     10, 10, 4
- sub     11, 8, 4
- rldicl  9, 9, 61, 3
- addi    8, 10, -8
- addi    10, 9, 1
- addi    9, 11, -8
- mtctr   10
-.LBB8_10:
- ld      10, 8(8)
- addi    11, 9, 8
- addi    8, 8, 8
- addi    7, 7, -8
- addi    5, 5, 8
- std     10, 8(9)
- mr      9, 11
- bdnz    .LBB8_10
-.LBB8_11:
- cmpldi  7, 0
- beq     0, .LBB8_14
- addi    5, 5, -1
- add     4, 4, 5
- add     5, 6, 5
- mtctr   7
-.LBB8_13:
- lbz     6, 1(4)
- addi    4, 4, 1
- stbu    6, 1(5)
- bdnz    .LBB8_13
-.LBB8_14:
- ld      4, -8(1)
- std     4, 56(3)
- ld      4, -16(1)
- std     4, 48(3)
- ld      4, -24(1)
- std     4, 40(3)
- ld      4, -32(1)
- std     4, 32(3)
- ld      4, -40(1)
- std     4, 24(3)
- ld      4, -48(1)
- std     4, 16(3)
- ld      4, -56(1)
- std     4, 8(3)
- ld      4, -64(1)
+ std     23, -72(1)
+ addi    5, 1, -136
+ addi    6, 1, -132
+ addi    7, 1, -128
+ addi    8, 1, -124
+ std     24, -64(1)
+ addi    9, 1, -120
+ addi    10, 1, -116
+ std     25, -56(1)
+ addi    11, 1, -112
+ addi    12, 1, -108
+ addi    25, 1, -84
+ addi    24, 1, -80
+ std     26, -48(1)
+ addi    26, 1, -88
+ std     27, -40(1)
+ addi    27, 1, -92
+ std     28, -32(1)
+ addi    28, 1, -96
+ std     29, -24(1)
+ addi    29, 1, -100
+ std     30, -16(1)
+ addi    30, 1, -104
+ #APP
+ lwz     23, 0(4)
+ stw     23, 0(5)
+ #NO_APP
+ addi    5, 4, 4
+ addi    23, 4, 8
+ #APP
+ lwz     5, 0(5)
+ stw     5, 0(6)
+ #NO_APP
+ addi    5, 4, 12
+ #APP
+ lwz     6, 0(23)
+ stw     6, 0(7)
+ #NO_APP
+ addi    6, 4, 16
+ #APP
+ lwz     5, 0(5)
+ stw     5, 0(8)
+ #NO_APP
+ addi    5, 4, 20
+ #APP
+ lwz     6, 0(6)
+ stw     6, 0(9)
+ #NO_APP
+ addi    6, 4, 24
+ #APP
+ lwz     5, 0(5)
+ stw     5, 0(10)
+ #NO_APP
+ addi    5, 4, 28
+ #APP
+ lwz     6, 0(6)
+ stw     6, 0(11)
+ #NO_APP
+ addi    6, 4, 32
+ #APP
+ lwz     5, 0(5)
+ stw     5, 0(12)
+ #NO_APP
+ addi    5, 4, 36
+ #APP
+ lwz     6, 0(6)
+ stw     6, 0(30)
+ #NO_APP
+ addi    6, 4, 40
+ #APP
+ lwz     5, 0(5)
+ stw     5, 0(29)
+ #NO_APP
+ addi    5, 4, 44
+ #APP
+ lwz     6, 0(6)
+ stw     6, 0(28)
+ #NO_APP
+ addi    6, 4, 48
+ #APP
+ lwz     5, 0(5)
+ stw     5, 0(27)
+ #NO_APP
+ addi    5, 4, 52
+ #APP
+ lwz     6, 0(6)
+ stw     6, 0(26)
+ #NO_APP
+ addi    6, 4, 56
+ #APP
+ lwz     5, 0(5)
+ stw     5, 0(25)
+ #NO_APP
+ addi    5, 1, -76
+ #APP
+ lwz     6, 0(6)
+ stw     6, 0(24)
+ #NO_APP
+ addi    4, 4, 60
+ #APP
+ lwz     4, 0(4)
+ stw     4, 0(5)
+ #NO_APP
+ ld      4, -136(1)
+ ld      5, -128(1)
+ ld      6, -120(1)
+ ld      7, -112(1)
  std     4, 0(3)
+ ld      4, -104(1)
+ std     5, 8(3)
+ ld      5, -96(1)
+ std     6, 16(3)
+ ld      6, -88(1)
+ std     7, 24(3)
+ ld      7, -80(1)
+ std     4, 32(3)
+ std     5, 40(3)
+ std     6, 48(3)
+ std     7, 56(3)
  lwsync
+ ld      30, -16(1)
+ ld      29, -24(1)
+ ld      28, -32(1)
+ ld      27, -40(1)
+ ld      26, -48(1)
+ ld      25, -56(1)
+ ld      24, -64(1)
+ ld      23, -72(1)
  blr
 asm_test::atomic_memcpy_load_align4::read_volatile_acquire_fence:
 .Lfunc_begin9:

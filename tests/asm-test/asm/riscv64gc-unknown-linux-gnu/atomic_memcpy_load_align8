@@ -1,21 +1,70 @@
 asm_test::atomic_memcpy_load_align8::acquire:
- ld      a6, 56(a1)
- ld      a7, 48(a1)
- ld      t0, 40(a1)
- ld      a5, 32(a1)
- ld      a2, 24(a1)
- ld      a3, 16(a1)
- ld      a4, 8(a1)
+ addi    sp, sp, -64
+ addi    a2, a1, 56
+ addi    a3, sp, 56
+ #APP
+ ld      a2, 0(a2)
+ sd      a2, 0(a3)
+ #NO_APP
+ addi    a2, a1, 48
+ addi    a3, sp, 48
+ #APP
+ ld      a2, 0(a2)
+ sd      a2, 0(a3)
+ #NO_APP
+ addi    a2, a1, 40
+ addi    a3, sp, 40
+ #APP
+ ld      a2, 0(a2)
+ sd      a2, 0(a3)
+ #NO_APP
+ addi    a2, a1, 32
+ addi    a3, sp, 32
+ #APP
+ ld      a2, 0(a2)
+ sd      a2, 0(a3)
+ #NO_APP
+ addi    a2, a1, 24
+ addi    a3, sp, 24
+ #APP
+ ld      a2, 0(a2)
+ sd      a2, 0(a3)
+ #NO_APP
+ addi    a2, a1, 16
+ addi    a3, sp, 16
+ #APP
+ ld      a2, 0(a2)
+ sd      a2, 0(a3)
+ #NO_APP
+ addi    a2, a1, 8
+ addi    a3, sp, 8
+ #APP
+ ld      a2, 0(a2)
+ sd      a2, 0(a3)
+ #NO_APP
+ mv      a2, sp
+ #APP
  ld      a1, 0(a1)
+ sd      a1, 0(a2)
+ #NO_APP
+ ld      a1, 0(sp)
+ ld      a2, 8(sp)
+ ld      a3, 16(sp)
+ ld      a4, 24(sp)
  sd      a1, 0(a0)
- sd      a4, 8(a0)
+ sd      a2, 8(a0)
  sd      a3, 16(a0)
- sd      a2, 24(a0)
- sd      a5, 32(a0)
- sd      t0, 40(a0)
- sd      a7, 48(a0)
- sd      a6, 56(a0)
+ sd      a4, 24(a0)
+ ld      a1, 32(sp)
+ ld      a2, 40(sp)
+ ld      a3, 48(sp)
+ ld      a4, 56(sp)
+ sd      a1, 32(a0)
+ sd      a2, 40(a0)
+ sd      a3, 48(a0)
+ sd      a4, 56(a0)
  fence   r, rw
+ addi    sp, sp, 64
  ret
 asm_test::atomic_memcpy_load_align8::read_volatile_acquire_fence:
  ld      a6, 56(a1)

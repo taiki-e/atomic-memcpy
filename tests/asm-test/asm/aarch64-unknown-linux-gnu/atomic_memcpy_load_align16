@@ -1,17 +1,58 @@
 asm_test::atomic_memcpy_load_align16::acquire:
- ldr     x9, [x0, #56]
- ldr     x10, [x0, #48]
- ldr     x11, [x0, #40]
- ldr     x12, [x0, #32]
- ldr     x13, [x0, #24]
- ldr     x14, [x0, #16]
- ldr     x15, [x0, #8]
- ldr     x16, [x0]
- stp     x12, x11, [x8, #32]
- stp     x14, x13, [x8, #16]
- stp     x10, x9, [x8, #48]
- stp     x16, x15, [x8]
+ sub     sp, sp, #64
+ mov     x9, sp
+ add     x10, x0, #56
+ add     x11, x9, #56
+ add     x12, x0, #48
+ add     x13, x9, #48
+ //APP
+ ldr     x10, [x10]
+ str     x10, [x11]
+ //NO_APP
+ add     x15, x9, #40
+ //APP
+ ldr     x12, [x12]
+ str     x12, [x13]
+ //NO_APP
+ add     x14, x0, #40
+ add     x10, x0, #32
+ add     x11, x9, #32
+ //APP
+ ldr     x12, [x14]
+ str     x12, [x15]
+ //NO_APP
+ //APP
+ ldr     x10, [x10]
+ str     x10, [x11]
+ //NO_APP
+ add     x12, x0, #24
+ add     x10, x9, #24
+ add     x13, x9, #16
+ //APP
+ ldr     x12, [x12]
+ str     x12, [x10]
+ //NO_APP
+ add     x11, x0, #16
+ orr     x15, x9, #0x8
+ //APP
+ ldr     x10, [x11]
+ str     x10, [x13]
+ //NO_APP
+ add     x14, x0, #8
+ //APP
+ ldr     x10, [x14]
+ str     x10, [x15]
+ //NO_APP
+ //APP
+ ldr     x10, [x0]
+ str     x10, [x9]
+ //NO_APP
+ ldp     q0, q1, [sp]
+ ldp     q2, q3, [sp, #32]
+ stp     q0, q1, [x8]
+ stp     q2, q3, [x8, #32]
  dmb     ishld
+ add     sp, sp, #64
  ret
 asm_test::atomic_memcpy_load_align16::read_volatile_acquire_fence:
  ldr     x9, [x0, #56]

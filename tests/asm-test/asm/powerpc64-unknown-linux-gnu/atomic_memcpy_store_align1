@@ -1,231 +1,537 @@
 asm_test::atomic_memcpy_store_align1::release:
 .Lfunc_begin2:
- ld      5, 56(4)
+ stdu    1, -624(1)
+ mr      5, 3
+ ld      3, 56(4)
+ addi    12, 5, 62
  ld      6, 48(4)
- std     5, -72(1)
- ld      5, 40(4)
- std     6, -80(1)
- ld      6, 32(4)
- std     5, -88(1)
- ld      5, 24(4)
- std     6, -96(1)
- ld      6, 16(4)
- std     5, -104(1)
- ld      5, 8(4)
+ ld      7, 40(4)
+ ld      8, 32(4)
+ ld      9, 24(4)
+ ld      10, 16(4)
+ ld      11, 8(4)
  ld      4, 0(4)
- std     6, -112(1)
- std     5, -120(1)
- std     4, -128(1)
+ std     14, 480(1)
+ addi    14, 5, 52
+ std     15, 488(1)
+ addi    15, 5, 51
+ std     16, 496(1)
+ addi    16, 5, 50
+ std     17, 504(1)
+ addi    17, 5, 49
+ std     18, 512(1)
+ addi    18, 5, 48
+ std     19, 520(1)
+ addi    19, 5, 47
+ std     20, 528(1)
+ addi    20, 5, 46
+ std     21, 536(1)
+ addi    21, 5, 45
+ std     22, 544(1)
+ addi    22, 5, 44
+ std     23, 552(1)
+ addi    23, 5, 43
+ std     24, 560(1)
+ addi    24, 5, 42
+ std     25, 568(1)
+ addi    25, 5, 41
+ std     26, 576(1)
+ addi    26, 5, 40
+ std     27, 584(1)
+ addi    27, 5, 39
+ std     28, 592(1)
+ std     29, 600(1)
+ addi    29, 1, 416
+ std     30, 608(1)
+ addi    30, 5, 54
+ std     31, 616(1)
+ addi    31, 5, 53
+ std     3, 408(1)
+ addi    3, 5, 1
+ std     6, 400(1)
+ addi    6, 5, 21
+ std     7, 392(1)
+ std     8, 384(1)
+ addi    8, 5, 58
+ std     9, 376(1)
+ addi    9, 5, 59
+ std     10, 368(1)
+ addi    10, 5, 60
+ std     11, 360(1)
+ addi    11, 5, 61
+ std     4, 352(1)
  lwsync
- ld      4, -72(1)
- ld      6, -88(1)
- ld      5, -80(1)
- std     4, -8(1)
- ld      4, -96(1)
- std     6, -24(1)
- ld      6, -112(1)
- std     5, -16(1)
- ld      5, -104(1)
- std     4, -32(1)
- ld      4, -120(1)
- std     6, -48(1)
- addi    6, 3, 7
- rldicr  7, 6, 0, 60
- std     5, -40(1)
- ld      5, -128(1)
- std     4, -56(1)
- sub     4, 7, 3
- cmpldi  4, 65
- std     5, -64(1)
- bge     0, .LBB2_5
- cmpldi  4, 0
- addi    5, 1, -64
- beq     0, .LBB2_6
- addi    6, 3, 64
- addi    8, 1, -65
- addi    9, 3, -1
- mtctr   4
-.LBB2_3:
- lbzu    10, 1(8)
- addi    11, 9, 1
- stb     10, 1(9)
- mr      9, 11
- bdnz    .LBB2_3
- sub     6, 6, 7
- cmpldi  6, 8
- bge     0, .LBB2_7
- b       .LBB2_11
-.LBB2_5:
- lbz     4, -64(1)
+ std     3, 344(1)
+ addi    3, 5, 2
+ std     3, 336(1)
+ addi    3, 5, 3
+ std     3, 328(1)
+ addi    3, 5, 4
+ std     3, 320(1)
+ addi    3, 5, 5
+ std     3, 312(1)
+ addi    3, 5, 6
+ std     3, 304(1)
+ addi    3, 5, 7
+ std     3, 296(1)
+ addi    3, 5, 8
+ std     3, 288(1)
+ addi    3, 5, 9
+ std     3, 280(1)
+ addi    3, 5, 10
+ std     3, 272(1)
+ addi    3, 5, 11
+ std     3, 264(1)
+ addi    3, 5, 12
+ std     3, 256(1)
+ addi    3, 5, 13
+ std     3, 248(1)
+ addi    3, 5, 14
+ std     3, 240(1)
+ addi    3, 5, 15
+ std     3, 232(1)
+ addi    3, 5, 16
+ std     3, 224(1)
+ addi    3, 5, 17
+ std     3, 216(1)
+ addi    3, 5, 18
+ std     3, 208(1)
+ addi    3, 5, 19
+ ld      4, 408(1)
+ std     3, 200(1)
+ addi    3, 5, 20
+ std     3, 192(1)
+ ld      3, 400(1)
+ std     4, 472(1)
+ addi    4, 5, 25
+ std     4, 152(1)
+ addi    4, 5, 26
+ std     4, 144(1)
+ std     3, 464(1)
+ addi    3, 5, 27
+ ld      4, 392(1)
+ std     3, 136(1)
+ addi    3, 5, 28
+ std     3, 128(1)
+ addi    3, 5, 29
+ std     3, 120(1)
+ addi    3, 5, 30
+ std     4, 456(1)
+ ld      4, 384(1)
+ std     3, 112(1)
+ addi    3, 5, 31
+ std     3, 104(1)
+ addi    3, 5, 32
+ std     3, 96(1)
+ addi    3, 5, 33
+ std     4, 448(1)
+ ld      4, 376(1)
+ std     3, 88(1)
+ addi    3, 5, 34
+ std     3, 80(1)
+ addi    3, 5, 35
+ std     6, 184(1)
+ addi    6, 5, 22
+ std     3, 72(1)
+ addi    3, 5, 36
+ std     4, 440(1)
+ ld      4, 368(1)
+ ld      7, 360(1)
+ ld      0, 352(1)
+ std     6, 176(1)
+ addi    6, 5, 23
+ std     3, 64(1)
+ addi    3, 5, 37
+ std     6, 168(1)
+ addi    6, 5, 24
+ std     3, 56(1)
+ addi    3, 5, 38
+ std     6, 160(1)
+ addi    6, 5, 56
+ std     3, 48(1)
+ mr      3, 5
+ std     4, 432(1)
+ addi    4, 5, 55
+ std     7, 424(1)
+ addi    7, 5, 57
+ std     0, 416(1)
+ #APP
+ lbz     29, 0(29)
+ stb     29, 0(3)
+ #NO_APP
+ addi    3, 1, 417
+ addi    29, 1, 418
+ ld      28, 344(1)
+ #APP
+ lbz     3, 0(3)
+ stb     3, 0(28)
+ #NO_APP
+ ld      28, 336(1)
+ #APP
+ lbz     3, 0(29)
+ stb     3, 0(28)
+ #NO_APP
+ addi    29, 1, 420
+ addi    3, 1, 419
+ ld      28, 328(1)
+ #APP
+ lbz     3, 0(3)
+ stb     3, 0(28)
+ #NO_APP
+ ld      28, 320(1)
+ #APP
+ lbz     3, 0(29)
+ stb     3, 0(28)
+ #NO_APP
+ addi    29, 1, 422
+ addi    3, 1, 421
+ ld      28, 312(1)
+ #APP
+ lbz     3, 0(3)
+ stb     3, 0(28)
+ #NO_APP
+ ld      28, 304(1)
+ #APP
+ lbz     3, 0(29)
+ stb     3, 0(28)
+ #NO_APP
+ addi    29, 1, 423
+ addi    3, 1, 424
+ ld      28, 296(1)
+ #APP
+ lbz     29, 0(29)
+ stb     29, 0(28)
+ #NO_APP
+ ld      29, 288(1)
+ #APP
+ lbz     3, 0(3)
+ stb     3, 0(29)
+ #NO_APP
+ addi    3, 1, 425
+ addi    29, 1, 426
+ ld      28, 280(1)
+ #APP
+ lbz     3, 0(3)
+ stb     3, 0(28)
+ #NO_APP
+ ld      28, 272(1)
+ #APP
+ lbz     3, 0(29)
+ stb     3, 0(28)
+ #NO_APP
+ addi    29, 1, 428
+ addi    3, 1, 427
+ ld      28, 264(1)
+ #APP
+ lbz     3, 0(3)
+ stb     3, 0(28)
+ #NO_APP
+ ld      28, 256(1)
+ #APP
+ lbz     3, 0(29)
+ stb     3, 0(28)
+ #NO_APP
+ addi    29, 1, 430
+ addi    3, 1, 429
+ ld      28, 248(1)
+ #APP
+ lbz     3, 0(3)
+ stb     3, 0(28)
+ #NO_APP
+ ld      28, 240(1)
+ #APP
+ lbz     3, 0(29)
+ stb     3, 0(28)
+ #NO_APP
+ addi    29, 1, 431
+ addi    3, 1, 432
+ ld      28, 232(1)
+ #APP
+ lbz     29, 0(29)
+ stb     29, 0(28)
+ #NO_APP
+ ld      29, 224(1)
+ #APP
+ lbz     3, 0(3)
+ stb     3, 0(29)
+ #NO_APP
+ addi    3, 1, 433
+ addi    29, 1, 434
+ ld      28, 216(1)
+ #APP
+ lbz     3, 0(3)
+ stb     3, 0(28)
+ #NO_APP
+ ld      28, 208(1)
+ #APP
+ lbz     3, 0(29)
+ stb     3, 0(28)
+ #NO_APP
+ addi    29, 1, 436
+ addi    3, 1, 435
+ ld      28, 200(1)
+ #APP
+ lbz     3, 0(3)
+ stb     3, 0(28)
+ #NO_APP
+ ld      28, 192(1)
+ #APP
+ lbz     3, 0(29)
+ stb     3, 0(28)
+ #NO_APP
+ addi    29, 1, 438
+ addi    3, 1, 437
+ ld      28, 184(1)
+ #APP
+ lbz     3, 0(3)
+ stb     3, 0(28)
+ #NO_APP
+ ld      28, 176(1)
+ #APP
+ lbz     3, 0(29)
+ stb     3, 0(28)
+ #NO_APP
+ addi    29, 1, 439
+ addi    3, 1, 440
+ ld      28, 168(1)
+ #APP
+ lbz     29, 0(29)
+ stb     29, 0(28)
+ #NO_APP
+ ld      29, 160(1)
+ #APP
+ lbz     3, 0(3)
+ stb     3, 0(29)
+ #NO_APP
+ addi    3, 1, 441
+ addi    29, 1, 442
+ ld      28, 152(1)
+ #APP
+ lbz     3, 0(3)
+ stb     3, 0(28)
+ #NO_APP
+ ld      28, 144(1)
+ #APP
+ lbz     3, 0(29)
+ stb     3, 0(28)
+ #NO_APP
+ addi    29, 1, 444
+ addi    3, 1, 443
+ ld      28, 136(1)
+ #APP
+ lbz     3, 0(3)
+ stb     3, 0(28)
+ #NO_APP
+ ld      28, 128(1)
+ #APP
+ lbz     3, 0(29)
+ stb     3, 0(28)
+ #NO_APP
+ addi    29, 1, 446
+ addi    3, 1, 445
+ ld      28, 120(1)
+ #APP
+ lbz     3, 0(3)
+ stb     3, 0(28)
+ #NO_APP
+ ld      28, 112(1)
+ #APP
+ lbz     3, 0(29)
+ stb     3, 0(28)
+ #NO_APP
+ addi    29, 1, 447
+ addi    3, 1, 448
+ ld      28, 104(1)
+ #APP
+ lbz     29, 0(29)
+ stb     29, 0(28)
+ #NO_APP
+ ld      29, 96(1)
+ #APP
+ lbz     3, 0(3)
+ stb     3, 0(29)
+ #NO_APP
+ addi    3, 1, 449
+ addi    29, 1, 450
+ ld      28, 88(1)
+ #APP
+ lbz     3, 0(3)
+ stb     3, 0(28)
+ #NO_APP
+ ld      28, 80(1)
+ #APP
+ lbz     3, 0(29)
+ stb     3, 0(28)
+ #NO_APP
+ addi    29, 1, 452
+ addi    3, 1, 451
+ ld      28, 72(1)
+ #APP
+ lbz     3, 0(3)
+ stb     3, 0(28)
+ #NO_APP
+ ld      28, 64(1)
+ #APP
+ lbz     3, 0(29)
+ stb     3, 0(28)
+ #NO_APP
+ addi    29, 1, 454
+ addi    3, 1, 453
+ ld      28, 56(1)
+ #APP
+ lbz     3, 0(3)
+ stb     3, 0(28)
+ #NO_APP
+ addi    3, 1, 456
+ ld      28, 48(1)
+ #APP
+ lbz     29, 0(29)
+ stb     29, 0(28)
+ #NO_APP
+ addi    29, 1, 455
+ #APP
+ lbz     29, 0(29)
+ stb     29, 0(27)
+ #NO_APP
+ #APP
+ lbz     3, 0(3)
+ stb     3, 0(26)
+ #NO_APP
+ addi    29, 1, 458
+ addi    3, 1, 457
+ #APP
+ lbz     3, 0(3)
+ stb     3, 0(25)
+ #NO_APP
+ #APP
+ lbz     3, 0(29)
+ stb     3, 0(24)
+ #NO_APP
+ addi    29, 1, 460
+ addi    3, 1, 459
+ #APP
+ lbz     3, 0(3)
+ stb     3, 0(23)
+ #NO_APP
+ #APP
+ lbz     3, 0(29)
+ stb     3, 0(22)
+ #NO_APP
+ addi    29, 1, 462
+ addi    3, 1, 461
+ #APP
+ lbz     3, 0(3)
+ stb     3, 0(21)
+ #NO_APP
+ #APP
+ lbz     29, 0(29)
+ stb     29, 0(20)
+ #NO_APP
+ addi    3, 1, 464
+ addi    29, 1, 463
+ #APP
+ lbz     29, 0(29)
+ stb     29, 0(19)
+ #NO_APP
+ #APP
+ lbz     3, 0(3)
+ stb     3, 0(18)
+ #NO_APP
+ addi    29, 1, 466
+ addi    3, 1, 465
+ #APP
+ lbz     3, 0(3)
+ stb     3, 0(17)
+ #NO_APP
+ #APP
+ lbz     3, 0(29)
+ stb     3, 0(16)
+ #NO_APP
+ addi    29, 1, 468
+ addi    3, 1, 467
+ #APP
+ lbz     3, 0(3)
+ stb     3, 0(15)
+ #NO_APP
+ #APP
+ lbz     3, 0(29)
+ stb     3, 0(14)
+ #NO_APP
+ addi    29, 1, 470
+ addi    3, 1, 469
+ #APP
+ lbz     3, 0(3)
+ stb     3, 0(31)
+ #NO_APP
+ #APP
+ lbz     29, 0(29)
+ stb     29, 0(30)
+ #NO_APP
+ addi    3, 1, 472
+ addi    30, 1, 471
+ #APP
+ lbz     30, 0(30)
+ stb     30, 0(4)
+ #NO_APP
+ #APP
+ lbz     3, 0(3)
+ stb     3, 0(6)
+ #NO_APP
+ addi    4, 1, 474
+ addi    3, 1, 473
+ #APP
+ lbz     3, 0(3)
+ stb     3, 0(7)
+ #NO_APP
+ #APP
+ lbz     3, 0(4)
+ stb     3, 0(8)
+ #NO_APP
+ addi    4, 1, 476
+ addi    3, 1, 475
+ #APP
+ lbz     3, 0(3)
+ stb     3, 0(9)
+ #NO_APP
+ #APP
+ lbz     3, 0(4)
+ stb     3, 0(10)
+ #NO_APP
+ addi    4, 1, 478
+ addi    3, 1, 477
+ #APP
+ lbz     3, 0(3)
+ stb     3, 0(11)
+ #NO_APP
+ #APP
+ lbz     4, 0(4)
+ stb     4, 0(12)
+ #NO_APP
+ addi    3, 5, 63
+ addi    4, 1, 479
+ #APP
+ lbz     4, 0(4)
  stb     4, 0(3)
- lbz     4, -63(1)
- stb     4, 1(3)
- lbz     4, -62(1)
- stb     4, 2(3)
- lbz     4, -61(1)
- stb     4, 3(3)
- lbz     4, -60(1)
- stb     4, 4(3)
- lbz     4, -59(1)
- stb     4, 5(3)
- lbz     4, -58(1)
- stb     4, 6(3)
- lbz     4, -57(1)
- stb     4, 7(3)
- lbz     4, -56(1)
- stb     4, 8(3)
- lbz     4, -55(1)
- stb     4, 9(3)
- lbz     4, -54(1)
- stb     4, 10(3)
- lbz     4, -53(1)
- stb     4, 11(3)
- lbz     4, -52(1)
- stb     4, 12(3)
- lbz     4, -51(1)
- stb     4, 13(3)
- lbz     4, -50(1)
- stb     4, 14(3)
- lbz     4, -49(1)
- stb     4, 15(3)
- lbz     4, -48(1)
- stb     4, 16(3)
- lbz     4, -47(1)
- stb     4, 17(3)
- lbz     4, -46(1)
- stb     4, 18(3)
- lbz     4, -45(1)
- stb     4, 19(3)
- lbz     4, -44(1)
- stb     4, 20(3)
- lbz     4, -43(1)
- stb     4, 21(3)
- lbz     4, -42(1)
- stb     4, 22(3)
- lbz     4, -41(1)
- stb     4, 23(3)
- lbz     4, -40(1)
- stb     4, 24(3)
- lbz     4, -39(1)
- stb     4, 25(3)
- lbz     4, -38(1)
- stb     4, 26(3)
- lbz     4, -37(1)
- stb     4, 27(3)
- lbz     4, -36(1)
- stb     4, 28(3)
- lbz     4, -35(1)
- stb     4, 29(3)
- lbz     4, -34(1)
- stb     4, 30(3)
- lbz     4, -33(1)
- stb     4, 31(3)
- lbz     4, -32(1)
- stb     4, 32(3)
- lbz     4, -31(1)
- stb     4, 33(3)
- lbz     4, -30(1)
- stb     4, 34(3)
- lbz     4, -29(1)
- stb     4, 35(3)
- lbz     4, -28(1)
- stb     4, 36(3)
- lbz     4, -27(1)
- stb     4, 37(3)
- lbz     4, -26(1)
- stb     4, 38(3)
- lbz     4, -25(1)
- stb     4, 39(3)
- lbz     4, -24(1)
- stb     4, 40(3)
- lbz     4, -23(1)
- stb     4, 41(3)
- lbz     4, -22(1)
- stb     4, 42(3)
- lbz     4, -21(1)
- stb     4, 43(3)
- lbz     4, -20(1)
- stb     4, 44(3)
- lbz     4, -19(1)
- stb     4, 45(3)
- lbz     4, -18(1)
- stb     4, 46(3)
- lbz     4, -17(1)
- stb     4, 47(3)
- lbz     4, -16(1)
- stb     4, 48(3)
- lbz     4, -15(1)
- stb     4, 49(3)
- lbz     4, -14(1)
- stb     4, 50(3)
- lbz     4, -13(1)
- stb     4, 51(3)
- lbz     4, -12(1)
- stb     4, 52(3)
- lbz     4, -11(1)
- stb     4, 53(3)
- lbz     4, -10(1)
- stb     4, 54(3)
- lbz     4, -9(1)
- stb     4, 55(3)
- lbz     4, -8(1)
- stb     4, 56(3)
- lbz     4, -7(1)
- stb     4, 57(3)
- lbz     4, -6(1)
- stb     4, 58(3)
- lbz     4, -5(1)
- stb     4, 59(3)
- lbz     4, -4(1)
- stb     4, 60(3)
- lbz     4, -3(1)
- stb     4, 61(3)
- lbz     4, -2(1)
- stb     4, 62(3)
- lbz     4, -1(1)
- stb     4, 63(3)
- blr
-.LBB2_6:
- li      6, 64
-.LBB2_7:
- addi    8, 6, -8
- li      9, 7
- cmpldi  8, 7
- sub     7, 7, 3
- bc      12, 0, .LBB2_9
- ori     8, 9, 0
- b       .LBB2_9
-.LBB2_9:
- not     8, 8
- add     8, 8, 6
- addi    9, 7, -8
- rldicl  8, 8, 61, 3
- add     7, 5, 9
- addi    10, 8, 1
- add     8, 3, 9
- mtctr   10
-.LBB2_10:
- ld      9, 8(7)
- addi    10, 8, 8
- addi    7, 7, 8
- addi    6, 6, -8
- addi    4, 4, 8
- std     9, 8(8)
- mr      8, 10
- bdnz    .LBB2_10
-.LBB2_11:
- cmpldi  6, 0
- beqlr   0
- addi    7, 4, -1
- add     4, 5, 7
- add     3, 3, 7
- mtctr   6
-.LBB2_13:
- lbzu    5, 1(4)
- addi    6, 3, 1
- stb     5, 1(3)
- mr      3, 6
- bdnz    .LBB2_13
+ #NO_APP
+ ld      31, 616(1)
+ ld      30, 608(1)
+ ld      29, 600(1)
+ ld      28, 592(1)
+ ld      27, 584(1)
+ ld      26, 576(1)
+ ld      25, 568(1)
+ ld      24, 560(1)
+ ld      23, 552(1)
+ ld      22, 544(1)
+ ld      21, 536(1)
+ ld      20, 528(1)
+ ld      19, 520(1)
+ ld      18, 512(1)
+ ld      17, 504(1)
+ ld      16, 496(1)
+ ld      15, 488(1)
+ ld      14, 480(1)
+ addi    1, 1, 624
  blr
 asm_test::atomic_memcpy_store_align1::write_volatile_release_fence:
 .Lfunc_begin3:

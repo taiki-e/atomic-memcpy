@@ -1,81 +1,18 @@
 asm_test::atomic_memcpy_load_align1::acquire:
  addi    sp, sp, -80
  sd      ra, 72(sp)
- addi    a2, a1, 7
- andi    a7, a2, -8
- sub     t1, a7, a1
- li      a3, 65
- bgeu    t1, a3, .LBB0_5
- beqz    t1, .LBB0_7
- addi    a6, a1, 64
- sub     a3, a1, a7
- addi    a5, sp, 8
- mv      a4, a1
-.LBB0_3:
- lb      t0, 0(a4)
- mv      a2, a3
- sb      t0, 0(a5)
- addi    a5, a5, 1
- addi    a3, a3, 1
- addi    a4, a4, 1
- bgeu    a3, a2, .LBB0_3
- sub     a3, a6, a7
- li      a4, 8
- bgeu    a3, a4, .LBB0_8
- j       .LBB0_10
-.LBB0_5:
- li      a4, 0
+ li      a2, 63
  addi    a6, sp, 8
- li      a3, 64
-.LBB0_6:
- add     a5, a1, a4
+ li      a4, -1
+.LBB0_1:
+ add     a5, a1, a2
+ add     a3, a6, a2
+ #APP
  lb      a5, 0(a5)
- addi    a2, a4, 1
- add     a4, a4, a6
- sb      a5, 0(a4)
- mv      a4, a2
- bne     a2, a3, .LBB0_6
- j       .LBB0_13
-.LBB0_7:
- li      a3, 64
-.LBB0_8:
- addi    a6, sp, 8
- li      a7, 7
-.LBB0_9:
- add     a2, a1, t1
- ld      a2, 0(a2)
- add     a4, a6, t1
- sb      a2, 0(a4)
- srli    a5, a2, 56
- sb      a5, 7(a4)
- srli    a5, a2, 48
- sb      a5, 6(a4)
- srli    a5, a2, 40
- sb      a5, 5(a4)
- srli    a5, a2, 32
- sb      a5, 4(a4)
- srli    a5, a2, 24
- sb      a5, 3(a4)
- srli    a5, a2, 16
- sb      a5, 2(a4)
- srli    a2, a2, 8
- sb      a2, 1(a4)
- addi    a3, a3, -8
- addi    t1, t1, 8
- bltu    a7, a3, .LBB0_9
-.LBB0_10:
- beqz    a3, .LBB0_13
- addi    a2, sp, 8
- add     a4, a2, t1
- add     a1, a1, t1
-.LBB0_12:
- lb      a2, 0(a1)
- sb      a2, 0(a4)
- addi    a3, a3, -1
- addi    a4, a4, 1
- addi    a1, a1, 1
- bnez    a3, .LBB0_12
-.LBB0_13:
+ sb      a5, 0(a3)
+ #NO_APP
+ addi    a2, a2, -1
+ bne     a2, a4, .LBB0_1
  addi    a1, sp, 8
  li      a2, 64
  call    memcpy@plt

@@ -1,72 +1,100 @@
 asm_test::atomic_memcpy_load_align4::acquire:
  sub     sp, sp, #64
- add     x9, x0, #7
- and     x10, x9, #0xfffffffffffffff8
- sub     x9, x10, x0
- cmp     x9, #64
- b.hi    .LBB8_5
- cbz     x9, .LBB8_6
- add     x11, x0, #64
- sub     x12, x0, x10
- mov     x13, sp
- mov     x14, x0
-.LBB8_3:
- ldrb    w15, [x14], #1
- adds    x12, x12, #1
- strb    w15, [x13], #1
- b.lo    .LBB8_3
- sub     x10, x11, x10
- cmp     x10, #7
- b.hi    .LBB8_7
- b       .LBB8_9
-.LBB8_5:
- ldr     w10, [x0, #60]
- ldr     w9, [x0, #56]
- stp     w9, w10, [sp, #56]
- ldr     w10, [x0, #52]
- ldr     w9, [x0, #48]
- stp     w9, w10, [sp, #48]
- ldr     w10, [x0, #44]
- ldr     w9, [x0, #40]
- stp     w9, w10, [sp, #40]
- ldr     w10, [x0, #36]
- ldr     w9, [x0, #32]
- stp     w9, w10, [sp, #32]
- ldr     w10, [x0, #28]
- ldr     w9, [x0, #24]
- stp     w9, w10, [sp, #24]
- ldr     w10, [x0, #20]
- ldr     w9, [x0, #16]
- stp     w9, w10, [sp, #16]
- ldr     w10, [x0, #12]
- ldr     w9, [x0, #8]
- stp     w9, w10, [sp, #8]
- ldr     w10, [x0, #4]
- ldr     w9, [x0]
- stp     w9, w10, [sp]
- b       .LBB8_12
-.LBB8_6:
- mov     w10, #64
-.LBB8_7:
- mov     x11, sp
-.LBB8_8:
- ldr     x12, [x0, x9]
- sub     x10, x10, #8
- cmp     x10, #7
- str     x12, [x11, x9]
- add     x9, x9, #8
- b.hi    .LBB8_8
-.LBB8_9:
- cbz     x10, .LBB8_12
- mov     x11, sp
- add     x11, x11, x9
- add     x9, x0, x9
-.LBB8_11:
- ldrb    w12, [x9], #1
- subs    x10, x10, #1
- strb    w12, [x11], #1
- b.ne    .LBB8_11
-.LBB8_12:
+ mov     x9, sp
+ add     x10, x0, #60
+ add     x11, x9, #60
+ add     x13, x9, #56
+ //APP
+ ldr     w10, [x10]
+ str     w10, [x11]
+ //NO_APP
+ add     x12, x0, #56
+ add     x15, x9, #52
+ //APP
+ ldr     w11, [x12]
+ str     w11, [x13]
+ //NO_APP
+ add     x14, x0, #52
+ add     x10, x0, #48
+ add     x11, x9, #48
+ //APP
+ ldr     w12, [x14]
+ str     w12, [x15]
+ //NO_APP
+ add     x13, x9, #44
+ //APP
+ ldr     w10, [x10]
+ str     w10, [x11]
+ //NO_APP
+ add     x12, x0, #44
+ add     x15, x9, #40
+ //APP
+ ldr     w10, [x12]
+ str     w10, [x13]
+ //NO_APP
+ add     x14, x0, #40
+ //APP
+ ldr     w10, [x14]
+ str     w10, [x15]
+ //NO_APP
+ add     x11, x9, #36
+ add     x10, x0, #36
+ add     x13, x9, #32
+ //APP
+ ldr     w10, [x10]
+ str     w10, [x11]
+ //NO_APP
+ add     x12, x0, #32
+ add     x15, x9, #28
+ //APP
+ ldr     w10, [x12]
+ str     w10, [x13]
+ //NO_APP
+ add     x14, x0, #28
+ //APP
+ ldr     w10, [x14]
+ str     w10, [x15]
+ //NO_APP
+ add     x10, x0, #24
+ add     x11, x9, #24
+ add     x13, x9, #20
+ //APP
+ ldr     w10, [x10]
+ str     w10, [x11]
+ //NO_APP
+ add     x12, x0, #20
+ add     x15, x9, #16
+ //APP
+ ldr     w10, [x12]
+ str     w10, [x13]
+ //NO_APP
+ add     x14, x0, #16
+ //APP
+ ldr     w10, [x14]
+ str     w10, [x15]
+ //NO_APP
+ add     x11, x9, #12
+ add     x10, x0, #12
+ add     x13, x9, #8
+ //APP
+ ldr     w10, [x10]
+ str     w10, [x11]
+ //NO_APP
+ add     x12, x0, #8
+ orr     x15, x9, #0x4
+ //APP
+ ldr     w10, [x12]
+ str     w10, [x13]
+ //NO_APP
+ add     x14, x0, #4
+ //APP
+ ldr     w10, [x14]
+ str     w10, [x15]
+ //NO_APP
+ //APP
+ ldr     w10, [x0]
+ str     w10, [x9]
+ //NO_APP
  ldp     q0, q1, [sp]
  ldp     q2, q3, [sp, #32]
  stp     q0, q1, [x8]

@@ -1,182 +1,389 @@
 asm_test::atomic_memcpy_load_align1::acquire:
  sub     sp, sp, #64
- add     x9, x0, #7
- and     x10, x9, #0xfffffffffffffff8
- sub     x9, x10, x0
- cmp     x9, #65
- b.hs    .LBB0_5
- cbz     x9, .LBB0_6
- add     x11, x0, #64
- sub     x12, x0, x10
- mov     x13, sp
- mov     x14, x0
-.LBB0_3:
- ldrb    w15, [x14], #1
- adds    x12, x12, #1
- strb    w15, [x13], #1
- b.lo    .LBB0_3
- sub     x10, x11, x10
- cmp     x10, #7
- b.hi    .LBB0_7
- b       .LBB0_9
-.LBB0_5:
- ldrb    w9, [x0]
- strb    w9, [sp]
- ldrb    w9, [x0, #1]
- strb    w9, [sp, #1]
- ldrb    w9, [x0, #2]
- strb    w9, [sp, #2]
- ldrb    w9, [x0, #3]
- strb    w9, [sp, #3]
- ldrb    w9, [x0, #4]
- strb    w9, [sp, #4]
- ldrb    w9, [x0, #5]
- strb    w9, [sp, #5]
- ldrb    w9, [x0, #6]
- strb    w9, [sp, #6]
- ldrb    w9, [x0, #7]
- strb    w9, [sp, #7]
- ldrb    w9, [x0, #8]
- strb    w9, [sp, #8]
- ldrb    w9, [x0, #9]
- strb    w9, [sp, #9]
- ldrb    w9, [x0, #10]
- strb    w9, [sp, #10]
- ldrb    w9, [x0, #11]
- strb    w9, [sp, #11]
- ldrb    w9, [x0, #12]
- strb    w9, [sp, #12]
- ldrb    w9, [x0, #13]
- strb    w9, [sp, #13]
- ldrb    w9, [x0, #14]
- strb    w9, [sp, #14]
- ldrb    w9, [x0, #15]
- strb    w9, [sp, #15]
- ldrb    w9, [x0, #16]
- strb    w9, [sp, #16]
- ldrb    w9, [x0, #17]
- strb    w9, [sp, #17]
- ldrb    w9, [x0, #18]
- strb    w9, [sp, #18]
- ldrb    w9, [x0, #19]
- strb    w9, [sp, #19]
- ldrb    w9, [x0, #20]
- strb    w9, [sp, #20]
- ldrb    w9, [x0, #21]
- strb    w9, [sp, #21]
- ldrb    w9, [x0, #22]
- strb    w9, [sp, #22]
- ldrb    w9, [x0, #23]
- strb    w9, [sp, #23]
- ldrb    w9, [x0, #24]
- strb    w9, [sp, #24]
- ldrb    w9, [x0, #25]
- strb    w9, [sp, #25]
- ldrb    w9, [x0, #26]
- strb    w9, [sp, #26]
- ldrb    w9, [x0, #27]
- strb    w9, [sp, #27]
- ldrb    w9, [x0, #28]
- strb    w9, [sp, #28]
- ldrb    w9, [x0, #29]
- strb    w9, [sp, #29]
- ldrb    w9, [x0, #30]
- strb    w9, [sp, #30]
- ldrb    w9, [x0, #31]
- strb    w9, [sp, #31]
- ldrb    w9, [x0, #32]
- strb    w9, [sp, #32]
- ldrb    w9, [x0, #33]
- strb    w9, [sp, #33]
- ldrb    w9, [x0, #34]
- strb    w9, [sp, #34]
- ldrb    w9, [x0, #35]
- strb    w9, [sp, #35]
- ldrb    w9, [x0, #36]
- strb    w9, [sp, #36]
- ldrb    w9, [x0, #37]
- strb    w9, [sp, #37]
- ldrb    w9, [x0, #38]
- strb    w9, [sp, #38]
- ldrb    w9, [x0, #39]
- strb    w9, [sp, #39]
- ldrb    w9, [x0, #40]
- strb    w9, [sp, #40]
- ldrb    w9, [x0, #41]
- strb    w9, [sp, #41]
- ldrb    w9, [x0, #42]
- strb    w9, [sp, #42]
- ldrb    w9, [x0, #43]
- strb    w9, [sp, #43]
- ldrb    w9, [x0, #44]
- strb    w9, [sp, #44]
- ldrb    w9, [x0, #45]
- strb    w9, [sp, #45]
- ldrb    w9, [x0, #46]
- strb    w9, [sp, #46]
- ldrb    w9, [x0, #47]
- strb    w9, [sp, #47]
- ldrb    w9, [x0, #48]
- strb    w9, [sp, #48]
- ldrb    w9, [x0, #49]
- strb    w9, [sp, #49]
- ldrb    w9, [x0, #50]
- strb    w9, [sp, #50]
- ldrb    w9, [x0, #51]
- strb    w9, [sp, #51]
- ldrb    w9, [x0, #52]
- strb    w9, [sp, #52]
- ldrb    w9, [x0, #53]
- strb    w9, [sp, #53]
- ldrb    w9, [x0, #54]
- strb    w9, [sp, #54]
- ldrb    w9, [x0, #55]
- strb    w9, [sp, #55]
- ldrb    w9, [x0, #56]
- strb    w9, [sp, #56]
- ldrb    w9, [x0, #57]
- strb    w9, [sp, #57]
- ldrb    w9, [x0, #58]
- strb    w9, [sp, #58]
- ldrb    w9, [x0, #59]
- strb    w9, [sp, #59]
- ldrb    w9, [x0, #60]
- strb    w9, [sp, #60]
- ldrb    w9, [x0, #61]
- strb    w9, [sp, #61]
- ldrb    w9, [x0, #62]
- strb    w9, [sp, #62]
- ldrb    w9, [x0, #63]
- ldp     q0, q1, [sp]
- strb    w9, [sp, #63]
- ldp     q2, q3, [sp, #32]
- stp     q0, q1, [x8]
- stp     q2, q3, [x8, #32]
- dmb     ishld
- add     sp, sp, #64
- ret
-.LBB0_6:
- mov     w10, #64
-.LBB0_7:
- mov     x11, sp
-.LBB0_8:
- ldr     x12, [x0, x9]
- sub     x10, x10, #8
- cmp     x10, #7
- str     x12, [x11, x9]
- add     x9, x9, #8
- b.hi    .LBB0_8
-.LBB0_9:
- cbz     x10, .LBB0_12
- mov     x11, sp
- add     x11, x11, x9
- add     x9, x0, x9
-.LBB0_11:
- ldrb    w12, [x9], #1
- subs    x10, x10, #1
- strb    w12, [x11], #1
- b.ne    .LBB0_11
-.LBB0_12:
+ mov     x9, sp
+ add     x10, x0, #63
+ add     x11, x9, #63
+ add     x13, x9, #62
+ //APP
+ ldrb    w10, [x10]
+ strb    w10, [x11]
+ //NO_APP
+ add     x12, x0, #62
+ add     x15, x9, #61
+ //APP
+ ldrb    w11, [x12]
+ strb    w11, [x13]
+ //NO_APP
+ add     x14, x0, #61
+ add     x10, x0, #60
+ add     x11, x9, #60
+ //APP
+ ldrb    w12, [x14]
+ strb    w12, [x15]
+ //NO_APP
+ add     x13, x9, #59
+ //APP
+ ldrb    w10, [x10]
+ strb    w10, [x11]
+ //NO_APP
+ add     x12, x0, #59
+ add     x15, x9, #58
+ //APP
+ ldrb    w10, [x12]
+ strb    w10, [x13]
+ //NO_APP
+ add     x14, x0, #58
+ //APP
+ ldrb    w10, [x14]
+ strb    w10, [x15]
+ //NO_APP
+ add     x11, x9, #57
+ add     x10, x0, #57
+ add     x13, x9, #56
+ //APP
+ ldrb    w10, [x10]
+ strb    w10, [x11]
+ //NO_APP
+ add     x12, x0, #56
+ add     x15, x9, #55
+ //APP
+ ldrb    w10, [x12]
+ strb    w10, [x13]
+ //NO_APP
+ add     x14, x0, #55
+ //APP
+ ldrb    w10, [x14]
+ strb    w10, [x15]
+ //NO_APP
+ add     x10, x0, #54
+ add     x11, x9, #54
+ add     x13, x9, #53
+ //APP
+ ldrb    w10, [x10]
+ strb    w10, [x11]
+ //NO_APP
+ add     x12, x0, #53
+ add     x15, x9, #52
+ //APP
+ ldrb    w10, [x12]
+ strb    w10, [x13]
+ //NO_APP
+ add     x14, x0, #52
+ //APP
+ ldrb    w10, [x14]
+ strb    w10, [x15]
+ //NO_APP
+ add     x11, x9, #51
+ add     x10, x0, #51
+ add     x13, x9, #50
+ //APP
+ ldrb    w10, [x10]
+ strb    w10, [x11]
+ //NO_APP
+ add     x12, x0, #50
+ add     x15, x9, #49
+ //APP
+ ldrb    w10, [x12]
+ strb    w10, [x13]
+ //NO_APP
+ add     x14, x0, #49
+ //APP
+ ldrb    w10, [x14]
+ strb    w10, [x15]
+ //NO_APP
+ add     x10, x0, #48
+ add     x11, x9, #48
+ add     x13, x9, #47
+ //APP
+ ldrb    w10, [x10]
+ strb    w10, [x11]
+ //NO_APP
+ add     x12, x0, #47
+ add     x15, x9, #46
+ //APP
+ ldrb    w10, [x12]
+ strb    w10, [x13]
+ //NO_APP
+ add     x14, x0, #46
+ //APP
+ ldrb    w10, [x14]
+ strb    w10, [x15]
+ //NO_APP
+ add     x11, x9, #45
+ add     x10, x0, #45
+ add     x13, x9, #44
+ //APP
+ ldrb    w10, [x10]
+ strb    w10, [x11]
+ //NO_APP
+ add     x12, x0, #44
+ add     x15, x9, #43
+ //APP
+ ldrb    w10, [x12]
+ strb    w10, [x13]
+ //NO_APP
+ add     x14, x0, #43
+ //APP
+ ldrb    w10, [x14]
+ strb    w10, [x15]
+ //NO_APP
+ add     x10, x0, #42
+ add     x11, x9, #42
+ add     x13, x9, #41
+ //APP
+ ldrb    w10, [x10]
+ strb    w10, [x11]
+ //NO_APP
+ add     x12, x0, #41
+ add     x15, x9, #40
+ //APP
+ ldrb    w10, [x12]
+ strb    w10, [x13]
+ //NO_APP
+ add     x14, x0, #40
+ //APP
+ ldrb    w10, [x14]
+ strb    w10, [x15]
+ //NO_APP
+ add     x11, x9, #39
+ add     x10, x0, #39
+ add     x13, x9, #38
+ //APP
+ ldrb    w10, [x10]
+ strb    w10, [x11]
+ //NO_APP
+ add     x12, x0, #38
+ add     x15, x9, #37
+ //APP
+ ldrb    w10, [x12]
+ strb    w10, [x13]
+ //NO_APP
+ add     x14, x0, #37
+ //APP
+ ldrb    w10, [x14]
+ strb    w10, [x15]
+ //NO_APP
+ add     x10, x0, #36
+ add     x11, x9, #36
+ add     x13, x9, #35
+ //APP
+ ldrb    w10, [x10]
+ strb    w10, [x11]
+ //NO_APP
+ add     x12, x0, #35
+ add     x15, x9, #34
+ //APP
+ ldrb    w10, [x12]
+ strb    w10, [x13]
+ //NO_APP
+ add     x14, x0, #34
+ //APP
+ ldrb    w10, [x14]
+ strb    w10, [x15]
+ //NO_APP
+ add     x11, x9, #33
+ add     x10, x0, #33
+ add     x13, x9, #32
+ //APP
+ ldrb    w10, [x10]
+ strb    w10, [x11]
+ //NO_APP
+ add     x12, x0, #32
+ add     x15, x9, #31
+ //APP
+ ldrb    w10, [x12]
+ strb    w10, [x13]
+ //NO_APP
+ add     x14, x0, #31
+ //APP
+ ldrb    w10, [x14]
+ strb    w10, [x15]
+ //NO_APP
+ add     x10, x0, #30
+ add     x11, x9, #30
+ add     x13, x9, #29
+ //APP
+ ldrb    w10, [x10]
+ strb    w10, [x11]
+ //NO_APP
+ add     x12, x0, #29
+ add     x15, x9, #28
+ //APP
+ ldrb    w10, [x12]
+ strb    w10, [x13]
+ //NO_APP
+ add     x14, x0, #28
+ //APP
+ ldrb    w10, [x14]
+ strb    w10, [x15]
+ //NO_APP
+ add     x11, x9, #27
+ add     x10, x0, #27
+ add     x13, x9, #26
+ //APP
+ ldrb    w10, [x10]
+ strb    w10, [x11]
+ //NO_APP
+ add     x12, x0, #26
+ add     x15, x9, #25
+ //APP
+ ldrb    w10, [x12]
+ strb    w10, [x13]
+ //NO_APP
+ add     x14, x0, #25
+ //APP
+ ldrb    w10, [x14]
+ strb    w10, [x15]
+ //NO_APP
+ add     x10, x0, #24
+ add     x11, x9, #24
+ add     x13, x9, #23
+ //APP
+ ldrb    w10, [x10]
+ strb    w10, [x11]
+ //NO_APP
+ add     x12, x0, #23
+ add     x15, x9, #22
+ //APP
+ ldrb    w10, [x12]
+ strb    w10, [x13]
+ //NO_APP
+ add     x14, x0, #22
+ //APP
+ ldrb    w10, [x14]
+ strb    w10, [x15]
+ //NO_APP
+ add     x11, x9, #21
+ add     x10, x0, #21
+ add     x13, x9, #20
+ //APP
+ ldrb    w10, [x10]
+ strb    w10, [x11]
+ //NO_APP
+ add     x12, x0, #20
+ add     x15, x9, #19
+ //APP
+ ldrb    w10, [x12]
+ strb    w10, [x13]
+ //NO_APP
+ add     x14, x0, #19
+ //APP
+ ldrb    w10, [x14]
+ strb    w10, [x15]
+ //NO_APP
+ add     x10, x0, #18
+ add     x11, x9, #18
+ add     x13, x9, #17
+ //APP
+ ldrb    w10, [x10]
+ strb    w10, [x11]
+ //NO_APP
+ add     x12, x0, #17
+ add     x15, x9, #16
+ //APP
+ ldrb    w10, [x12]
+ strb    w10, [x13]
+ //NO_APP
+ add     x14, x0, #16
+ //APP
+ ldrb    w10, [x14]
+ strb    w10, [x15]
+ //NO_APP
+ add     x11, x9, #15
+ add     x10, x0, #15
+ add     x13, x9, #14
+ //APP
+ ldrb    w10, [x10]
+ strb    w10, [x11]
+ //NO_APP
+ add     x12, x0, #14
+ add     x15, x9, #13
+ //APP
+ ldrb    w10, [x12]
+ strb    w10, [x13]
+ //NO_APP
+ add     x14, x0, #13
+ //APP
+ ldrb    w10, [x14]
+ strb    w10, [x15]
+ //NO_APP
+ add     x10, x0, #12
+ add     x11, x9, #12
+ add     x13, x9, #11
+ //APP
+ ldrb    w10, [x10]
+ strb    w10, [x11]
+ //NO_APP
+ add     x12, x0, #11
+ add     x15, x9, #10
+ //APP
+ ldrb    w10, [x12]
+ strb    w10, [x13]
+ //NO_APP
+ add     x14, x0, #10
+ //APP
+ ldrb    w10, [x14]
+ strb    w10, [x15]
+ //NO_APP
+ add     x11, x9, #9
+ add     x10, x0, #9
+ add     x13, x9, #8
+ //APP
+ ldrb    w10, [x10]
+ strb    w10, [x11]
+ //NO_APP
+ add     x12, x0, #8
+ orr     x15, x9, #0x7
+ //APP
+ ldrb    w10, [x12]
+ strb    w10, [x13]
+ //NO_APP
+ add     x14, x0, #7
+ //APP
+ ldrb    w10, [x14]
+ strb    w10, [x15]
+ //NO_APP
+ add     x10, x0, #6
+ orr     x11, x9, #0x6
+ mov     w12, #5
+ //APP
+ ldrb    w10, [x10]
+ strb    w10, [x11]
+ //NO_APP
+ orr     x12, x9, x12
+ add     x13, x0, #5
+ orr     x15, x9, #0x4
+ //APP
+ ldrb    w10, [x13]
+ strb    w10, [x12]
+ //NO_APP
+ add     x14, x0, #4
+ //APP
+ ldrb    w10, [x14]
+ strb    w10, [x15]
+ //NO_APP
+ add     x10, x0, #3
+ orr     x11, x9, #0x3
+ orr     x13, x9, #0x2
+ //APP
+ ldrb    w10, [x10]
+ strb    w10, [x11]
+ //NO_APP
+ add     x12, x0, #2
+ orr     x15, x9, #0x1
+ //APP
+ ldrb    w10, [x12]
+ strb    w10, [x13]
+ //NO_APP
+ add     x14, x0, #1
+ //APP
+ ldrb    w10, [x14]
+ strb    w10, [x15]
+ //NO_APP
+ //APP
+ ldrb    w10, [x0]
+ strb    w10, [x9]
+ //NO_APP
  ldp     q0, q1, [sp]
  ldp     q2, q3, [sp, #32]
  stp     q0, q1, [x8]

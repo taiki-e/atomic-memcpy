@@ -1,24 +1,72 @@
 asm_test::atomic_memcpy_load_align8::acquire:
- lw      $1, 28($5)
- lw      $2, 24($5)
- lw      $3, 20($5)
- lw      $6, 16($5)
- lw      $7, 12($5)
- lw      $8, 8($5)
- lw      $9, 4($5)
- lw      $5, 0($5)
- sw      $1, 28($4)
- sw      $2, 24($4)
+ addiu   $sp, $sp, -32
+ addiu   $2, $sp, 0
+ addiu   $1, $5, 28
+ addiu   $3, $2, 28
+ #APP
+ lw      $6, 0($1)
+ sw      $6, 0($3)
+ #NO_APP
+ addiu   $1, $5, 24
+ addiu   $7, $2, 8
+ addiu   $3, $2, 24
+ #APP
+ lw      $6, 0($1)
+ sw      $6, 0($3)
+ #NO_APP
+ addiu   $1, $5, 20
+ addiu   $3, $2, 20
+ #APP
+ lw      $6, 0($1)
+ sw      $6, 0($3)
+ #NO_APP
+ addiu   $1, $5, 16
+ addiu   $3, $2, 16
+ #APP
+ lw      $6, 0($1)
+ sw      $6, 0($3)
+ #NO_APP
+ addiu   $1, $5, 12
+ addiu   $3, $2, 12
+ #APP
+ lw      $6, 0($1)
+ sw      $6, 0($3)
+ #NO_APP
+ addiu   $1, $5, 4
+ addiu   $6, $5, 8
+ #APP
+ lw      $8, 0($6)
+ sw      $8, 0($7)
+ #NO_APP
+ ori     $3, $2, 4
+ #APP
+ lw      $6, 0($1)
+ sw      $6, 0($3)
+ #NO_APP
+ #APP
+ lw      $1, 0($5)
+ sw      $1, 0($2)
+ #NO_APP
+ lw      $1, 16($sp)
+ lw      $2, 12($sp)
+ lw      $3, 8($sp)
+ lw      $5, 4($sp)
+ lw      $6, 0($sp)
+ sw      $1, 16($4)
+ lw      $1, 20($sp)
+ sw      $2, 12($4)
+ sw      $6, 0($4)
+ sw      $5, 4($4)
+ sw      $3, 8($4)
  move    $2, $4
- sw      $3, 20($4)
- sw      $6, 16($4)
- sw      $7, 12($4)
- sw      $8, 8($4)
- sw      $9, 4($4)
- sw      $5, 0($4)
+ sw      $1, 20($4)
+ lw      $1, 24($sp)
+ sw      $1, 24($4)
+ lw      $1, 28($sp)
+ sw      $1, 28($4)
  sync
  jr      $ra
- nop
+ addiu   $sp, $sp, 32
 $func_end12:
 asm_test::atomic_memcpy_load_align8::read_volatile_acquire_fence:
  lw      $1, 4($5)

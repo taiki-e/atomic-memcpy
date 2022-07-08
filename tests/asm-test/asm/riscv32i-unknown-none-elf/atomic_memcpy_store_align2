@@ -43,159 +43,112 @@ asm_test::atomic_memcpy_store_align2::release:
  lw      a1, 28(sp)
  lw      a2, 24(sp)
  lw      a3, 20(sp)
+ lw      a4, 16(sp)
  sw      a1, 60(sp)
  sw      a2, 56(sp)
  sw      a3, 52(sp)
- lw      a1, 16(sp)
- lw      a2, 12(sp)
- lw      a3, 8(sp)
- lw      a4, 4(sp)
- sw      a1, 48(sp)
- sw      a2, 44(sp)
- sw      a3, 40(sp)
- sw      a4, 36(sp)
+ sw      a4, 48(sp)
+ lw      a1, 12(sp)
+ lw      a2, 8(sp)
+ lw      a3, 4(sp)
  lw      a4, 0(sp)
- addi    a1, a0, 3
- andi    a3, a1, -4
- sub     a1, a3, a0
- li      a2, 32
+ sw      a1, 44(sp)
+ sw      a2, 40(sp)
+ sw      a3, 36(sp)
  sw      a4, 32(sp)
- bltu    a2, a1, .LBB6_11
- beqz    a1, .LBB6_5
- addi    a2, a0, 32
- sub     a6, a0, a3
- addi    a4, sp, 32
- mv      a5, a0
-.LBB6_3:
- lbu     a7, 0(a4)
- mv      t0, a6
+ addi    a1, sp, 36
+ addi    a2, sp, 40
+ addi    a3, sp, 44
+ addi    a4, sp, 48
+ addi    a5, sp, 52
+ addi    a6, sp, 56
+ addi    a7, sp, 60
+ addi    t0, a0, 30
+ addi    t1, sp, 62
  #APP
- sb      a7, 0(a5)
+ lh      t1, 0(t1)
+ sh      t1, 0(t0)
  #NO_APP
- addi    a5, a5, 1
- addi    a6, a6, 1
- addi    a4, a4, 1
- bgeu    a6, t0, .LBB6_3
- sub     a2, a2, a3
- li      a3, 4
- bltu    a2, a3, .LBB6_7
-.LBB6_5:
- addi    a3, sp, 32
- li      a4, 3
-.LBB6_6:
- add     a5, a3, a1
- lbu     a6, 1(a5)
- lbu     a7, 0(a5)
- lbu     t0, 3(a5)
- lbu     a5, 2(a5)
- slli    a6, a6, 8
- or      a6, a6, a7
- slli    a7, t0, 8
- or      a5, a7, a5
- slli    a5, a5, 16
- or      a5, a5, a6
- add     a6, a0, a1
+ addi    t0, a0, 28
  #APP
- sw      a5, 0(a6)
+ lh      a7, 0(a7)
+ sh      a7, 0(t0)
  #NO_APP
- addi    a2, a2, -4
- addi    a1, a1, 4
- bltu    a4, a2, .LBB6_6
-.LBB6_7:
- beqz    a2, .LBB6_10
- add     a0, a0, a1
- addi    a3, sp, 32
- add     a1, a3, a1
-.LBB6_9:
- lbu     a3, 0(a1)
+ addi    a7, a0, 26
+ addi    t0, sp, 58
  #APP
- sb      a3, 0(a0)
+ lh      t0, 0(t0)
+ sh      t0, 0(a7)
  #NO_APP
- addi    a2, a2, -1
- addi    a0, a0, 1
- addi    a1, a1, 1
- bnez    a2, .LBB6_9
-.LBB6_10:
- addi    sp, sp, 64
- ret
-.LBB6_11:
- lhu     a1, 62(sp)
- addi    a2, a0, 30
+ addi    a7, a0, 24
  #APP
- sh      a1, 0(a2)
+ lh      a6, 0(a6)
+ sh      a6, 0(a7)
  #NO_APP
- lhu     a1, 60(sp)
- addi    a2, a0, 28
+ addi    a6, a0, 22
+ addi    a7, sp, 54
  #APP
- sh      a1, 0(a2)
+ lh      a7, 0(a7)
+ sh      a7, 0(a6)
  #NO_APP
- lhu     a1, 58(sp)
- addi    a2, a0, 26
+ addi    a6, a0, 20
  #APP
- sh      a1, 0(a2)
+ lh      a5, 0(a5)
+ sh      a5, 0(a6)
  #NO_APP
- lhu     a1, 56(sp)
- addi    a2, a0, 24
+ addi    a5, a0, 18
+ addi    a6, sp, 50
  #APP
- sh      a1, 0(a2)
+ lh      a6, 0(a6)
+ sh      a6, 0(a5)
  #NO_APP
- lhu     a1, 54(sp)
- addi    a2, a0, 22
+ addi    a5, a0, 16
  #APP
- sh      a1, 0(a2)
+ lh      a4, 0(a4)
+ sh      a4, 0(a5)
  #NO_APP
- lhu     a1, 52(sp)
- addi    a2, a0, 20
+ addi    a4, a0, 14
+ addi    a5, sp, 46
  #APP
- sh      a1, 0(a2)
+ lh      a5, 0(a5)
+ sh      a5, 0(a4)
  #NO_APP
- lhu     a1, 50(sp)
- addi    a2, a0, 18
+ addi    a4, a0, 12
  #APP
- sh      a1, 0(a2)
+ lh      a3, 0(a3)
+ sh      a3, 0(a4)
  #NO_APP
- lhu     a1, 48(sp)
- addi    a2, a0, 16
+ addi    a3, a0, 10
+ addi    a4, sp, 42
  #APP
- sh      a1, 0(a2)
+ lh      a4, 0(a4)
+ sh      a4, 0(a3)
  #NO_APP
- lhu     a1, 46(sp)
- addi    a2, a0, 14
+ addi    a3, a0, 8
  #APP
- sh      a1, 0(a2)
+ lh      a2, 0(a2)
+ sh      a2, 0(a3)
  #NO_APP
- lhu     a1, 44(sp)
- addi    a2, a0, 12
- #APP
- sh      a1, 0(a2)
- #NO_APP
- lhu     a1, 42(sp)
- addi    a2, a0, 10
- #APP
- sh      a1, 0(a2)
- #NO_APP
- lhu     a1, 40(sp)
- addi    a2, a0, 8
- #APP
- sh      a1, 0(a2)
- #NO_APP
- lhu     a1, 38(sp)
  addi    a2, a0, 6
+ addi    a3, sp, 38
  #APP
- sh      a1, 0(a2)
+ lh      a3, 0(a3)
+ sh      a3, 0(a2)
  #NO_APP
- lhu     a1, 36(sp)
  addi    a2, a0, 4
  #APP
+ lh      a1, 0(a1)
  sh      a1, 0(a2)
  #NO_APP
- lhu     a1, 34(sp)
- addi    a2, a0, 2
+ addi    a1, a0, 2
+ addi    a2, sp, 34
  #APP
- sh      a1, 0(a2)
+ lh      a2, 0(a2)
+ sh      a2, 0(a1)
  #NO_APP
- lhu     a1, 32(sp)
+ addi    a1, sp, 32
  #APP
+ lh      a1, 0(a1)
  sh      a1, 0(a0)
  #NO_APP
  addi    sp, sp, 64

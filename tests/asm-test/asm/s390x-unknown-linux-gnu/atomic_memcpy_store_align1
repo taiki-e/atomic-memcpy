@@ -1,256 +1,392 @@
 asm_test::atomic_memcpy_store_align1::release:
- stmg    %r12, %r15, 96(%r15)
  aghi    %r15, -288
  mvc     160(64, %r15), 0(%r3)
  #MEMBARRIER
- la      %r0, 7(%r2)
- nill    %r0, 65528
  mvc     224(64, %r15), 160(%r15)
- lgr     %r1, %r0
- sgr     %r1, %r2
- clgijhe %r1, 65, .LBB2_10
- cgije   %r1, 0, .LBB2_11
- lgr     %r3, %r2
- xihf    %r3, 4294967295
- xilf    %r3, 4294967295
- agr     %r3, %r0
- risbg   %r4, %r1, 62, 191, 0
- lghi    %r14, 0
- clgijl  %r3, 3, .LBB2_6
- risbg   %r3, %r1, 0, 189, 0
- lcgr    %r5, %r3
- lghi    %r3, 0
- la      %r14, 224(%r15)
- lgr     %r13, %r2
-.LBB2_4:
- lb      %r12, 0(%r14)
- stc     %r12, 0(%r13)
- lb      %r12, 1(%r14)
- stc     %r12, 1(%r13)
- lb      %r12, 2(%r14)
- stc     %r12, 2(%r13)
- lb      %r12, 3(%r14)
- stc     %r12, 3(%r13)
- aghi    %r3, -4
- la      %r13, 4(%r13)
- la      %r14, 4(%r14)
- cgrjlh  %r5, %r3, .LBB2_4
- lcgr    %r14, %r3
-.LBB2_6:
- la      %r3, 64(%r2)
- cgije   %r4, 0, .LBB2_9
- lgr     %r5, %r2
- agr     %r5, %r14
- la      %r14, 224(%r14, %r15)
-.LBB2_8:
- lb      %r13, 0(%r14)
- stc     %r13, 0(%r5)
- la      %r5, 1(%r5)
- la      %r14, 1(%r14)
- brctg   %r4, .LBB2_8
-.LBB2_9:
- sgr     %r3, %r0
- clgijhe %r3, 8, .LBB2_12
- j       .LBB2_19
-.LBB2_10:
- lb      %r0, 224(%r15)
- stc     %r0, 0(%r2)
- lb      %r0, 225(%r15)
- stc     %r0, 1(%r2)
- lb      %r0, 226(%r15)
- stc     %r0, 2(%r2)
- lb      %r0, 227(%r15)
- stc     %r0, 3(%r2)
- lb      %r0, 228(%r15)
- stc     %r0, 4(%r2)
- lb      %r0, 229(%r15)
- stc     %r0, 5(%r2)
- lb      %r0, 230(%r15)
- stc     %r0, 6(%r2)
- lb      %r0, 231(%r15)
- stc     %r0, 7(%r2)
- lb      %r0, 232(%r15)
- stc     %r0, 8(%r2)
- lb      %r0, 233(%r15)
- stc     %r0, 9(%r2)
- lb      %r0, 234(%r15)
- stc     %r0, 10(%r2)
- lb      %r0, 235(%r15)
- stc     %r0, 11(%r2)
- lb      %r0, 236(%r15)
- stc     %r0, 12(%r2)
- lb      %r0, 237(%r15)
- stc     %r0, 13(%r2)
- lb      %r0, 238(%r15)
- stc     %r0, 14(%r2)
- lb      %r0, 239(%r15)
- stc     %r0, 15(%r2)
- lb      %r0, 240(%r15)
- stc     %r0, 16(%r2)
- lb      %r0, 241(%r15)
- stc     %r0, 17(%r2)
- lb      %r0, 242(%r15)
- stc     %r0, 18(%r2)
- lb      %r0, 243(%r15)
- stc     %r0, 19(%r2)
- lb      %r0, 244(%r15)
- stc     %r0, 20(%r2)
- lb      %r0, 245(%r15)
- stc     %r0, 21(%r2)
- lb      %r0, 246(%r15)
- stc     %r0, 22(%r2)
- lb      %r0, 247(%r15)
- stc     %r0, 23(%r2)
- lb      %r0, 248(%r15)
- stc     %r0, 24(%r2)
- lb      %r0, 249(%r15)
- stc     %r0, 25(%r2)
- lb      %r0, 250(%r15)
- stc     %r0, 26(%r2)
- lb      %r0, 251(%r15)
- stc     %r0, 27(%r2)
- lb      %r0, 252(%r15)
- stc     %r0, 28(%r2)
- lb      %r0, 253(%r15)
- stc     %r0, 29(%r2)
- lb      %r0, 254(%r15)
- stc     %r0, 30(%r2)
- lb      %r0, 255(%r15)
- stc     %r0, 31(%r2)
- lb      %r0, 256(%r15)
- stc     %r0, 32(%r2)
- lb      %r0, 257(%r15)
- stc     %r0, 33(%r2)
- lb      %r0, 258(%r15)
- stc     %r0, 34(%r2)
- lb      %r0, 259(%r15)
- stc     %r0, 35(%r2)
- lb      %r0, 260(%r15)
- stc     %r0, 36(%r2)
- lb      %r0, 261(%r15)
- stc     %r0, 37(%r2)
- lb      %r0, 262(%r15)
- stc     %r0, 38(%r2)
- lb      %r0, 263(%r15)
- stc     %r0, 39(%r2)
- lb      %r0, 264(%r15)
- stc     %r0, 40(%r2)
- lb      %r0, 265(%r15)
- stc     %r0, 41(%r2)
- lb      %r0, 266(%r15)
- stc     %r0, 42(%r2)
- lb      %r0, 267(%r15)
- stc     %r0, 43(%r2)
- lb      %r0, 268(%r15)
- stc     %r0, 44(%r2)
- lb      %r0, 269(%r15)
- stc     %r0, 45(%r2)
- lb      %r0, 270(%r15)
- stc     %r0, 46(%r2)
- lb      %r0, 271(%r15)
- stc     %r0, 47(%r2)
- lb      %r0, 272(%r15)
- stc     %r0, 48(%r2)
- lb      %r0, 273(%r15)
- stc     %r0, 49(%r2)
- lb      %r0, 274(%r15)
- stc     %r0, 50(%r2)
- lb      %r0, 275(%r15)
- stc     %r0, 51(%r2)
- lb      %r0, 276(%r15)
- stc     %r0, 52(%r2)
- lb      %r0, 277(%r15)
- stc     %r0, 53(%r2)
- lb      %r0, 278(%r15)
- stc     %r0, 54(%r2)
- lb      %r0, 279(%r15)
- stc     %r0, 55(%r2)
- lb      %r0, 280(%r15)
- stc     %r0, 56(%r2)
- lb      %r0, 281(%r15)
- stc     %r0, 57(%r2)
- lb      %r0, 282(%r15)
- stc     %r0, 58(%r2)
- lb      %r0, 283(%r15)
- stc     %r0, 59(%r2)
- lb      %r0, 284(%r15)
- stc     %r0, 60(%r2)
- lb      %r0, 285(%r15)
- stc     %r0, 61(%r2)
- lb      %r0, 286(%r15)
- stc     %r0, 62(%r2)
- lb      %r0, 287(%r15)
- stc     %r0, 63(%r2)
- j       .LBB2_26
-.LBB2_11:
- lghi    %r3, 64
-.LBB2_12:
- lghi    %r0, 7
- sgr     %r0, %r3
- lghi    %r4, -8
- clgrjh  %r0, %r4, .LBB2_14
- lghi    %r0, -8
-.LBB2_14:
- agr     %r0, %r3
- srlg    %r4, %r0, 3
- la      %r4, 1(%r4)
- tmll    %r4, 3
- je      .LBB2_17
- risbg   %r4, %r4, 62, 191, 0
-.LBB2_16:
- lg      %r5, 224(%r1, %r15)
- stg     %r5, 0(%r1, %r2)
- aghi    %r3, -8
- la      %r1, 8(%r1)
- brctg   %r4, .LBB2_16
-.LBB2_17:
- clgijl  %r0, 24, .LBB2_19
-.LBB2_18:
- lg      %r0, 224(%r1, %r15)
- stg     %r0, 0(%r1, %r2)
- lg      %r0, 232(%r1, %r15)
- stg     %r0, 8(%r1, %r2)
- lg      %r0, 240(%r1, %r15)
- stg     %r0, 16(%r1, %r2)
- lg      %r0, 248(%r1, %r15)
- stg     %r0, 24(%r1, %r2)
- aghi    %r3, -32
- la      %r1, 32(%r1)
- clgijh  %r3, 7, .LBB2_18
-.LBB2_19:
- cgije   %r3, 0, .LBB2_26
- tmll    %r3, 3
- lay     %r0, -1(%r3)
- lgr     %r4, %r1
- je      .LBB2_23
- risbg   %r5, %r3, 62, 191, 0
- lgr     %r4, %r1
-.LBB2_22:
- lb      %r14, 224(%r4, %r15)
- stc     %r14, 0(%r4, %r2)
- la      %r4, 1(%r4)
- brctg   %r5, .LBB2_22
-.LBB2_23:
- clgijl  %r0, 3, .LBB2_26
- agr     %r3, %r1
- sgr     %r3, %r4
- agr     %r2, %r4
- la      %r1, 224(%r4, %r15)
-.LBB2_25:
+ la      %r1, 224(%r15)
+ #APP
  lb      %r0, 0(%r1)
  stc     %r0, 0(%r2)
- lb      %r0, 1(%r1)
- stc     %r0, 1(%r2)
- lb      %r0, 2(%r1)
- stc     %r0, 2(%r2)
- lb      %r0, 3(%r1)
- stc     %r0, 3(%r2)
- aghi    %r3, -4
- la      %r2, 4(%r2)
- la      %r1, 4(%r1)
- jne     .LBB2_25
-.LBB2_26:
- lmg     %r12, %r15, 384(%r15)
+ #NO_APP
+ la      %r1, 1(%r2)
+ la      %r3, 225(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 2(%r2)
+ la      %r3, 226(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 3(%r2)
+ la      %r3, 227(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 4(%r2)
+ la      %r3, 228(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 5(%r2)
+ la      %r3, 229(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 6(%r2)
+ la      %r3, 230(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 7(%r2)
+ la      %r3, 231(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 8(%r2)
+ la      %r3, 232(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 9(%r2)
+ la      %r3, 233(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 10(%r2)
+ la      %r3, 234(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 11(%r2)
+ la      %r3, 235(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 12(%r2)
+ la      %r3, 236(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 13(%r2)
+ la      %r3, 237(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 14(%r2)
+ la      %r3, 238(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 15(%r2)
+ la      %r3, 239(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 16(%r2)
+ la      %r3, 240(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 17(%r2)
+ la      %r3, 241(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 18(%r2)
+ la      %r3, 242(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 19(%r2)
+ la      %r3, 243(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 20(%r2)
+ la      %r3, 244(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 21(%r2)
+ la      %r3, 245(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 22(%r2)
+ la      %r3, 246(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 23(%r2)
+ la      %r3, 247(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 24(%r2)
+ la      %r3, 248(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 25(%r2)
+ la      %r3, 249(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 26(%r2)
+ la      %r3, 250(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 27(%r2)
+ la      %r3, 251(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 28(%r2)
+ la      %r3, 252(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 29(%r2)
+ la      %r3, 253(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 30(%r2)
+ la      %r3, 254(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 31(%r2)
+ la      %r3, 255(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 32(%r2)
+ la      %r3, 256(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 33(%r2)
+ la      %r3, 257(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 34(%r2)
+ la      %r3, 258(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 35(%r2)
+ la      %r3, 259(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 36(%r2)
+ la      %r3, 260(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 37(%r2)
+ la      %r3, 261(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 38(%r2)
+ la      %r3, 262(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 39(%r2)
+ la      %r3, 263(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 40(%r2)
+ la      %r3, 264(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 41(%r2)
+ la      %r3, 265(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 42(%r2)
+ la      %r3, 266(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 43(%r2)
+ la      %r3, 267(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 44(%r2)
+ la      %r3, 268(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 45(%r2)
+ la      %r3, 269(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 46(%r2)
+ la      %r3, 270(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 47(%r2)
+ la      %r3, 271(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 48(%r2)
+ la      %r3, 272(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 49(%r2)
+ la      %r3, 273(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 50(%r2)
+ la      %r3, 274(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 51(%r2)
+ la      %r3, 275(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 52(%r2)
+ la      %r3, 276(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 53(%r2)
+ la      %r3, 277(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 54(%r2)
+ la      %r3, 278(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 55(%r2)
+ la      %r3, 279(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 56(%r2)
+ la      %r3, 280(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 57(%r2)
+ la      %r3, 281(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 58(%r2)
+ la      %r3, 282(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 59(%r2)
+ la      %r3, 283(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 60(%r2)
+ la      %r3, 284(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 61(%r2)
+ la      %r3, 285(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 62(%r2)
+ la      %r3, 286(%r15)
+ #APP
+ lb      %r0, 0(%r3)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 63(%r2)
+ la      %r2, 287(%r15)
+ #APP
+ lb      %r0, 0(%r2)
+ stc     %r0, 0(%r1)
+ #NO_APP
+ aghi    %r15, 288
  br      %r14
 asm_test::atomic_memcpy_store_align1::write_volatile_release_fence:
  stmg    %r14, %r15, 112(%r15)

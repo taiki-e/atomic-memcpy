@@ -5,18 +5,18 @@ asm_test::atomic_memcpy_store_align1::release:
  sub     esp, 64
  mov     ecx, dword, ptr, [esp, +, 84]
  mov     eax, dword, ptr, [esp, +, 80]
+ lea     ebx, [esp, +, 31]
+ lea     esi, [esp, +, 24]
+ lea     edx, [esp, +, 16]
  movsd   xmm1, qword, ptr, [ecx, +, 16]
  movsd   xmm0, qword, ptr, [ecx, +, 24]
  movsd   xmm3, qword, ptr, [ecx]
- lea     esi, [eax, +, 3]
- and     esi, -4
- mov     edx, esi
- sub     edx, eax
+ lea     edi, [eax, +, 31]
  movsd   qword, ptr, [esp, +, 48], xmm1
  movsd   xmm1, qword, ptr, [ecx, +, 8]
  movsd   qword, ptr, [esp, +, 56], xmm0
  movsd   qword, ptr, [esp, +, 32], xmm3
- cmp     edx, 33
+ lea     ecx, [esp, +, 8]
  movsd   qword, ptr, [esp, +, 40], xmm1
  #MEMBARRIER
  movsd   xmm2, qword, ptr, [esp, +, 56]
@@ -27,109 +27,192 @@ asm_test::atomic_memcpy_store_align1::release:
  movsd   xmm1, qword, ptr, [esp, +, 40]
  movsd   qword, ptr, [esp, +, 8], xmm1
  movsd   qword, ptr, [esp], xmm2
- jae     .LBB2_1
- test    edx, edx
- je      .LBB2_4
- lea     ecx, [eax, +, 32]
- xor     edi, edi
-.LBB2_11:
- movzx   ebx, byte, ptr, [esp, +, edi]
- mov     byte, ptr, [eax, +, edi], bl
- inc     edi
- cmp     edx, edi
- jne     .LBB2_11
- sub     ecx, esi
- cmp     ecx, 4
- jae     .LBB2_5
- jmp     .LBB2_7
-.LBB2_1:
- mov     cl, byte, ptr, [esp]
+ #APP
+ mov     bl, byte, ptr, [ebx]
+ mov     byte, ptr, [edi], bl
+ #NO_APP
+ lea     edi, [eax, +, 30]
+ lea     ebx, [esp, +, 30]
+ #APP
+ mov     bl, byte, ptr, [ebx]
+ mov     byte, ptr, [edi], bl
+ #NO_APP
+ lea     edi, [eax, +, 29]
+ lea     ebx, [esp, +, 29]
+ #APP
+ mov     bl, byte, ptr, [ebx]
+ mov     byte, ptr, [edi], bl
+ #NO_APP
+ lea     edi, [eax, +, 28]
+ lea     ebx, [esp, +, 28]
+ #APP
+ mov     bl, byte, ptr, [ebx]
+ mov     byte, ptr, [edi], bl
+ #NO_APP
+ lea     edi, [eax, +, 27]
+ lea     ebx, [esp, +, 27]
+ #APP
+ mov     bl, byte, ptr, [ebx]
+ mov     byte, ptr, [edi], bl
+ #NO_APP
+ lea     edi, [eax, +, 26]
+ lea     ebx, [esp, +, 26]
+ #APP
+ mov     bl, byte, ptr, [ebx]
+ mov     byte, ptr, [edi], bl
+ #NO_APP
+ lea     edi, [eax, +, 25]
+ lea     ebx, [esp, +, 25]
+ #APP
+ mov     bl, byte, ptr, [ebx]
+ mov     byte, ptr, [edi], bl
+ #NO_APP
+ lea     edi, [eax, +, 24]
+ #APP
+ mov     bl, byte, ptr, [esi]
+ mov     byte, ptr, [edi], bl
+ #NO_APP
+ lea     esi, [eax, +, 23]
+ lea     edi, [esp, +, 23]
+ #APP
+ mov     bl, byte, ptr, [edi]
+ mov     byte, ptr, [esi], bl
+ #NO_APP
+ lea     esi, [eax, +, 22]
+ lea     edi, [esp, +, 22]
+ #APP
+ mov     bl, byte, ptr, [edi]
+ mov     byte, ptr, [esi], bl
+ #NO_APP
+ lea     esi, [eax, +, 21]
+ lea     edi, [esp, +, 21]
+ #APP
+ mov     bl, byte, ptr, [edi]
+ mov     byte, ptr, [esi], bl
+ #NO_APP
+ lea     esi, [eax, +, 20]
+ lea     edi, [esp, +, 20]
+ #APP
+ mov     bl, byte, ptr, [edi]
+ mov     byte, ptr, [esi], bl
+ #NO_APP
+ lea     esi, [eax, +, 19]
+ lea     edi, [esp, +, 19]
+ #APP
+ mov     bl, byte, ptr, [edi]
+ mov     byte, ptr, [esi], bl
+ #NO_APP
+ lea     esi, [eax, +, 18]
+ lea     edi, [esp, +, 18]
+ #APP
+ mov     bl, byte, ptr, [edi]
+ mov     byte, ptr, [esi], bl
+ #NO_APP
+ lea     esi, [eax, +, 17]
+ lea     edi, [esp, +, 17]
+ #APP
+ mov     bl, byte, ptr, [edi]
+ mov     byte, ptr, [esi], bl
+ #NO_APP
+ lea     esi, [eax, +, 16]
+ #APP
+ mov     dl, byte, ptr, [edx]
+ mov     byte, ptr, [esi], dl
+ #NO_APP
+ lea     edx, [eax, +, 15]
+ lea     esi, [esp, +, 15]
+ #APP
+ mov     bl, byte, ptr, [esi]
+ mov     byte, ptr, [edx], bl
+ #NO_APP
+ lea     edx, [eax, +, 14]
+ lea     esi, [esp, +, 14]
+ #APP
+ mov     bl, byte, ptr, [esi]
+ mov     byte, ptr, [edx], bl
+ #NO_APP
+ lea     edx, [eax, +, 13]
+ lea     esi, [esp, +, 13]
+ #APP
+ mov     bl, byte, ptr, [esi]
+ mov     byte, ptr, [edx], bl
+ #NO_APP
+ lea     edx, [eax, +, 12]
+ lea     esi, [esp, +, 12]
+ #APP
+ mov     bl, byte, ptr, [esi]
+ mov     byte, ptr, [edx], bl
+ #NO_APP
+ lea     edx, [eax, +, 11]
+ lea     esi, [esp, +, 11]
+ #APP
+ mov     bl, byte, ptr, [esi]
+ mov     byte, ptr, [edx], bl
+ #NO_APP
+ lea     edx, [eax, +, 10]
+ lea     esi, [esp, +, 10]
+ #APP
+ mov     bl, byte, ptr, [esi]
+ mov     byte, ptr, [edx], bl
+ #NO_APP
+ lea     edx, [eax, +, 9]
+ lea     esi, [esp, +, 9]
+ #APP
+ mov     bl, byte, ptr, [esi]
+ mov     byte, ptr, [edx], bl
+ #NO_APP
+ lea     edx, [eax, +, 8]
+ #APP
+ mov     cl, byte, ptr, [ecx]
+ mov     byte, ptr, [edx], cl
+ #NO_APP
+ lea     ecx, [eax, +, 7]
+ lea     edx, [esp, +, 7]
+ #APP
+ mov     dl, byte, ptr, [edx]
+ mov     byte, ptr, [ecx], dl
+ #NO_APP
+ lea     ecx, [eax, +, 6]
+ lea     edx, [esp, +, 6]
+ #APP
+ mov     dl, byte, ptr, [edx]
+ mov     byte, ptr, [ecx], dl
+ #NO_APP
+ lea     ecx, [eax, +, 5]
+ lea     edx, [esp, +, 5]
+ #APP
+ mov     dl, byte, ptr, [edx]
+ mov     byte, ptr, [ecx], dl
+ #NO_APP
+ lea     ecx, [eax, +, 4]
+ lea     edx, [esp, +, 4]
+ #APP
+ mov     dl, byte, ptr, [edx]
+ mov     byte, ptr, [ecx], dl
+ #NO_APP
+ lea     ecx, [eax, +, 3]
+ lea     edx, [esp, +, 3]
+ #APP
+ mov     dl, byte, ptr, [edx]
+ mov     byte, ptr, [ecx], dl
+ #NO_APP
+ lea     ecx, [eax, +, 2]
+ lea     edx, [esp, +, 2]
+ #APP
+ mov     dl, byte, ptr, [edx]
+ mov     byte, ptr, [ecx], dl
+ #NO_APP
+ lea     ecx, [eax, +, 1]
+ lea     edx, [esp, +, 1]
+ #APP
+ mov     dl, byte, ptr, [edx]
+ mov     byte, ptr, [ecx], dl
+ #NO_APP
+ mov     ecx, esp
+ #APP
+ mov     cl, byte, ptr, [ecx]
  mov     byte, ptr, [eax], cl
- mov     cl, byte, ptr, [esp, +, 1]
- mov     byte, ptr, [eax, +, 1], cl
- mov     cl, byte, ptr, [esp, +, 2]
- mov     byte, ptr, [eax, +, 2], cl
- mov     cl, byte, ptr, [esp, +, 3]
- mov     byte, ptr, [eax, +, 3], cl
- mov     cl, byte, ptr, [esp, +, 4]
- mov     byte, ptr, [eax, +, 4], cl
- mov     cl, byte, ptr, [esp, +, 5]
- mov     byte, ptr, [eax, +, 5], cl
- mov     cl, byte, ptr, [esp, +, 6]
- mov     byte, ptr, [eax, +, 6], cl
- mov     cl, byte, ptr, [esp, +, 7]
- mov     byte, ptr, [eax, +, 7], cl
- mov     cl, byte, ptr, [esp, +, 8]
- mov     byte, ptr, [eax, +, 8], cl
- mov     cl, byte, ptr, [esp, +, 9]
- mov     byte, ptr, [eax, +, 9], cl
- mov     cl, byte, ptr, [esp, +, 10]
- mov     byte, ptr, [eax, +, 10], cl
- mov     cl, byte, ptr, [esp, +, 11]
- mov     byte, ptr, [eax, +, 11], cl
- mov     cl, byte, ptr, [esp, +, 12]
- mov     byte, ptr, [eax, +, 12], cl
- mov     cl, byte, ptr, [esp, +, 13]
- mov     byte, ptr, [eax, +, 13], cl
- mov     cl, byte, ptr, [esp, +, 14]
- mov     byte, ptr, [eax, +, 14], cl
- mov     cl, byte, ptr, [esp, +, 15]
- mov     byte, ptr, [eax, +, 15], cl
- mov     cl, byte, ptr, [esp, +, 16]
- mov     byte, ptr, [eax, +, 16], cl
- mov     cl, byte, ptr, [esp, +, 17]
- mov     byte, ptr, [eax, +, 17], cl
- mov     cl, byte, ptr, [esp, +, 18]
- mov     byte, ptr, [eax, +, 18], cl
- mov     cl, byte, ptr, [esp, +, 19]
- mov     byte, ptr, [eax, +, 19], cl
- mov     cl, byte, ptr, [esp, +, 20]
- mov     byte, ptr, [eax, +, 20], cl
- mov     cl, byte, ptr, [esp, +, 21]
- mov     byte, ptr, [eax, +, 21], cl
- mov     cl, byte, ptr, [esp, +, 22]
- mov     byte, ptr, [eax, +, 22], cl
- mov     cl, byte, ptr, [esp, +, 23]
- mov     byte, ptr, [eax, +, 23], cl
- mov     cl, byte, ptr, [esp, +, 24]
- mov     byte, ptr, [eax, +, 24], cl
- mov     cl, byte, ptr, [esp, +, 25]
- mov     byte, ptr, [eax, +, 25], cl
- mov     cl, byte, ptr, [esp, +, 26]
- mov     byte, ptr, [eax, +, 26], cl
- mov     cl, byte, ptr, [esp, +, 27]
- mov     byte, ptr, [eax, +, 27], cl
- mov     cl, byte, ptr, [esp, +, 28]
- mov     byte, ptr, [eax, +, 28], cl
- mov     cl, byte, ptr, [esp, +, 29]
- mov     byte, ptr, [eax, +, 29], cl
- mov     cl, byte, ptr, [esp, +, 30]
- mov     byte, ptr, [eax, +, 30], cl
- mov     cl, byte, ptr, [esp, +, 31]
- mov     byte, ptr, [eax, +, 31], cl
- jmp     .LBB2_2
-.LBB2_4:
- mov     ecx, 32
-.LBB2_5:
- mov     esi, dword, ptr, [esp, +, edx]
- add     ecx, -4
- mov     dword, ptr, [eax, +, edx], esi
- add     edx, 4
- cmp     ecx, 3
- ja      .LBB2_5
-.LBB2_7:
- test    ecx, ecx
- je      .LBB2_2
- add     eax, edx
- add     edx, esp
- xor     esi, esi
-.LBB2_9:
- movzx   ebx, byte, ptr, [edx, +, esi]
- mov     byte, ptr, [eax, +, esi], bl
- inc     esi
- cmp     ecx, esi
- jne     .LBB2_9
-.LBB2_2:
+ #NO_APP
  add     esp, 64
  pop     esi
  pop     edi

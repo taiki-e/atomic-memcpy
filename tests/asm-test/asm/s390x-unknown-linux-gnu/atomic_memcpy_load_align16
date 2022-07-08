@@ -1,23 +1,61 @@
 asm_test::atomic_memcpy_load_align16::acquire:
- stmg    %r12, %r15, 96(%r15)
+ stmg    %r11, %r15, 88(%r15)
+ aghi    %r15, -160
+ lgr     %r11, %r15
+ lgr     %r4, %r15
+ aghi    %r4, -72
+ la      %r1, 168(%r4)
+ nill    %r1, 65520
+ lgr     %r15, %r4
+ #APP
  lg      %r0, 0(%r3)
- lg      %r1, 8(%r3)
- lg      %r4, 16(%r3)
- lg      %r5, 24(%r3)
- lg      %r14, 32(%r3)
- lg      %r13, 40(%r3)
- lg      %r12, 48(%r3)
- lg      %r3, 56(%r3)
- stg     %r0, 0(%r2)
- stg     %r1, 8(%r2)
- stg     %r4, 16(%r2)
- stg     %r5, 24(%r2)
- stg     %r14, 32(%r2)
- stg     %r13, 40(%r2)
- stg     %r12, 48(%r2)
- stg     %r3, 56(%r2)
+ stg     %r0, 0(%r1)
+ #NO_APP
+ la      %r4, 8(%r3)
+ la      %r5, 8(%r1)
+ #APP
+ lg      %r0, 0(%r4)
+ stg     %r0, 0(%r5)
+ #NO_APP
+ la      %r4, 16(%r3)
+ la      %r5, 16(%r1)
+ #APP
+ lg      %r0, 0(%r4)
+ stg     %r0, 0(%r5)
+ #NO_APP
+ la      %r4, 24(%r3)
+ la      %r5, 24(%r1)
+ #APP
+ lg      %r0, 0(%r4)
+ stg     %r0, 0(%r5)
+ #NO_APP
+ la      %r4, 32(%r3)
+ la      %r5, 32(%r1)
+ #APP
+ lg      %r0, 0(%r4)
+ stg     %r0, 0(%r5)
+ #NO_APP
+ la      %r4, 40(%r3)
+ la      %r5, 40(%r1)
+ #APP
+ lg      %r0, 0(%r4)
+ stg     %r0, 0(%r5)
+ #NO_APP
+ la      %r4, 48(%r3)
+ la      %r5, 48(%r1)
+ #APP
+ lg      %r0, 0(%r4)
+ stg     %r0, 0(%r5)
+ #NO_APP
+ la      %r3, 56(%r3)
+ la      %r4, 56(%r1)
+ #APP
+ lg      %r0, 0(%r3)
+ stg     %r0, 0(%r4)
+ #NO_APP
+ mvc     0(64, %r2), 0(%r1)
  #MEMBARRIER
- lmg     %r12, %r15, 96(%r15)
+ lmg     %r11, %r15, 248(%r11)
  br      %r14
 asm_test::atomic_memcpy_load_align16::read_volatile_acquire_fence:
  stmg    %r12, %r15, 96(%r15)

@@ -1,193 +1,200 @@
 asm_test::atomic_memcpy_store_align2::release:
- stmg    %r12, %r15, 96(%r15)
  aghi    %r15, -288
  mvc     160(64, %r15), 0(%r3)
  #MEMBARRIER
- la      %r0, 7(%r2)
- nill    %r0, 65528
  mvc     224(64, %r15), 160(%r15)
- lgr     %r1, %r0
- sgr     %r1, %r2
- clgijh  %r1, 64, .LBB6_10
- cgije   %r1, 0, .LBB6_11
- lgr     %r3, %r2
- xihf    %r3, 4294967295
- xilf    %r3, 4294967295
- agr     %r3, %r0
- risbg   %r4, %r1, 62, 191, 0
- lghi    %r14, 0
- clgijl  %r3, 3, .LBB6_6
- risbg   %r3, %r1, 0, 189, 0
- lcgr    %r5, %r3
- lghi    %r3, 0
- la      %r14, 224(%r15)
- lgr     %r13, %r2
-.LBB6_4:
- lb      %r12, 0(%r14)
- stc     %r12, 0(%r13)
- lb      %r12, 1(%r14)
- stc     %r12, 1(%r13)
- lb      %r12, 2(%r14)
- stc     %r12, 2(%r13)
- lb      %r12, 3(%r14)
- stc     %r12, 3(%r13)
- aghi    %r3, -4
- la      %r13, 4(%r13)
- la      %r14, 4(%r14)
- cgrjlh  %r5, %r3, .LBB6_4
- lcgr    %r14, %r3
-.LBB6_6:
- la      %r3, 64(%r2)
- cgije   %r4, 0, .LBB6_9
- lgr     %r5, %r2
- agr     %r5, %r14
- la      %r14, 224(%r14, %r15)
-.LBB6_8:
- lb      %r13, 0(%r14)
- stc     %r13, 0(%r5)
- la      %r5, 1(%r5)
- la      %r14, 1(%r14)
- brctg   %r4, .LBB6_8
-.LBB6_9:
- sgr     %r3, %r0
- clgijhe %r3, 8, .LBB6_12
- j       .LBB6_19
-.LBB6_10:
- lh      %r0, 224(%r15)
+ la      %r1, 224(%r15)
+ #APP
+ lh      %r0, 0(%r1)
  sth     %r0, 0(%r2)
- lh      %r0, 226(%r15)
- sth     %r0, 2(%r2)
- lh      %r0, 228(%r15)
- sth     %r0, 4(%r2)
- lh      %r0, 230(%r15)
- sth     %r0, 6(%r2)
- lh      %r0, 232(%r15)
- sth     %r0, 8(%r2)
- lh      %r0, 234(%r15)
- sth     %r0, 10(%r2)
- lh      %r0, 236(%r15)
- sth     %r0, 12(%r2)
- lh      %r0, 238(%r15)
- sth     %r0, 14(%r2)
- lh      %r0, 240(%r15)
- sth     %r0, 16(%r2)
- lh      %r0, 242(%r15)
- sth     %r0, 18(%r2)
- lh      %r0, 244(%r15)
- sth     %r0, 20(%r2)
- lh      %r0, 246(%r15)
- sth     %r0, 22(%r2)
- lh      %r0, 248(%r15)
- sth     %r0, 24(%r2)
- lh      %r0, 250(%r15)
- sth     %r0, 26(%r2)
- lh      %r0, 252(%r15)
- sth     %r0, 28(%r2)
- lh      %r0, 254(%r15)
- sth     %r0, 30(%r2)
- lh      %r0, 256(%r15)
- sth     %r0, 32(%r2)
- lh      %r0, 258(%r15)
- sth     %r0, 34(%r2)
- lh      %r0, 260(%r15)
- sth     %r0, 36(%r2)
- lh      %r0, 262(%r15)
- sth     %r0, 38(%r2)
- lh      %r0, 264(%r15)
- sth     %r0, 40(%r2)
- lh      %r0, 266(%r15)
- sth     %r0, 42(%r2)
- lh      %r0, 268(%r15)
- sth     %r0, 44(%r2)
- lh      %r0, 270(%r15)
- sth     %r0, 46(%r2)
- lh      %r0, 272(%r15)
- sth     %r0, 48(%r2)
- lh      %r0, 274(%r15)
- sth     %r0, 50(%r2)
- lh      %r0, 276(%r15)
- sth     %r0, 52(%r2)
- lh      %r0, 278(%r15)
- sth     %r0, 54(%r2)
- lh      %r0, 280(%r15)
- sth     %r0, 56(%r2)
- lh      %r0, 282(%r15)
- sth     %r0, 58(%r2)
- lh      %r0, 284(%r15)
- sth     %r0, 60(%r2)
- lh      %r0, 286(%r15)
- sth     %r0, 62(%r2)
- lmg     %r12, %r15, 384(%r15)
- br      %r14
-.LBB6_11:
- lghi    %r3, 64
-.LBB6_12:
- lghi    %r0, 7
- sgr     %r0, %r3
- lghi    %r4, -8
- clgrjh  %r0, %r4, .LBB6_14
- lghi    %r0, -8
-.LBB6_14:
- agr     %r0, %r3
- srlg    %r4, %r0, 3
- la      %r4, 1(%r4)
- tmll    %r4, 3
- je      .LBB6_17
- risbg   %r4, %r4, 62, 191, 0
-.LBB6_16:
- lg      %r5, 224(%r1, %r15)
- stg     %r5, 0(%r1, %r2)
- aghi    %r3, -8
- la      %r1, 8(%r1)
- brctg   %r4, .LBB6_16
-.LBB6_17:
- clgijl  %r0, 24, .LBB6_19
-.LBB6_18:
- lg      %r0, 224(%r1, %r15)
- stg     %r0, 0(%r1, %r2)
- lg      %r0, 232(%r1, %r15)
- stg     %r0, 8(%r1, %r2)
- lg      %r0, 240(%r1, %r15)
- stg     %r0, 16(%r1, %r2)
- lg      %r0, 248(%r1, %r15)
- stg     %r0, 24(%r1, %r2)
- aghi    %r3, -32
- la      %r1, 32(%r1)
- clgijh  %r3, 7, .LBB6_18
-.LBB6_19:
- cgije   %r3, 0, .LBB6_26
- tmll    %r3, 3
- lay     %r0, -1(%r3)
- lgr     %r4, %r1
- je      .LBB6_23
- risbg   %r5, %r3, 62, 191, 0
- lgr     %r4, %r1
-.LBB6_22:
- lb      %r14, 224(%r4, %r15)
- stc     %r14, 0(%r4, %r2)
- la      %r4, 1(%r4)
- brctg   %r5, .LBB6_22
-.LBB6_23:
- clgijl  %r0, 3, .LBB6_26
- agr     %r3, %r1
- sgr     %r3, %r4
- agr     %r2, %r4
- la      %r1, 224(%r4, %r15)
-.LBB6_25:
- lb      %r0, 0(%r1)
- stc     %r0, 0(%r2)
- lb      %r0, 1(%r1)
- stc     %r0, 1(%r2)
- lb      %r0, 2(%r1)
- stc     %r0, 2(%r2)
- lb      %r0, 3(%r1)
- stc     %r0, 3(%r2)
- aghi    %r3, -4
- la      %r2, 4(%r2)
- la      %r1, 4(%r1)
- jne     .LBB6_25
-.LBB6_26:
- lmg     %r12, %r15, 384(%r15)
+ #NO_APP
+ la      %r1, 2(%r2)
+ la      %r3, 226(%r15)
+ #APP
+ lh      %r0, 0(%r3)
+ sth     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 4(%r2)
+ la      %r3, 228(%r15)
+ #APP
+ lh      %r0, 0(%r3)
+ sth     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 6(%r2)
+ la      %r3, 230(%r15)
+ #APP
+ lh      %r0, 0(%r3)
+ sth     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 8(%r2)
+ la      %r3, 232(%r15)
+ #APP
+ lh      %r0, 0(%r3)
+ sth     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 10(%r2)
+ la      %r3, 234(%r15)
+ #APP
+ lh      %r0, 0(%r3)
+ sth     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 12(%r2)
+ la      %r3, 236(%r15)
+ #APP
+ lh      %r0, 0(%r3)
+ sth     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 14(%r2)
+ la      %r3, 238(%r15)
+ #APP
+ lh      %r0, 0(%r3)
+ sth     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 16(%r2)
+ la      %r3, 240(%r15)
+ #APP
+ lh      %r0, 0(%r3)
+ sth     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 18(%r2)
+ la      %r3, 242(%r15)
+ #APP
+ lh      %r0, 0(%r3)
+ sth     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 20(%r2)
+ la      %r3, 244(%r15)
+ #APP
+ lh      %r0, 0(%r3)
+ sth     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 22(%r2)
+ la      %r3, 246(%r15)
+ #APP
+ lh      %r0, 0(%r3)
+ sth     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 24(%r2)
+ la      %r3, 248(%r15)
+ #APP
+ lh      %r0, 0(%r3)
+ sth     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 26(%r2)
+ la      %r3, 250(%r15)
+ #APP
+ lh      %r0, 0(%r3)
+ sth     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 28(%r2)
+ la      %r3, 252(%r15)
+ #APP
+ lh      %r0, 0(%r3)
+ sth     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 30(%r2)
+ la      %r3, 254(%r15)
+ #APP
+ lh      %r0, 0(%r3)
+ sth     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 32(%r2)
+ la      %r3, 256(%r15)
+ #APP
+ lh      %r0, 0(%r3)
+ sth     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 34(%r2)
+ la      %r3, 258(%r15)
+ #APP
+ lh      %r0, 0(%r3)
+ sth     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 36(%r2)
+ la      %r3, 260(%r15)
+ #APP
+ lh      %r0, 0(%r3)
+ sth     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 38(%r2)
+ la      %r3, 262(%r15)
+ #APP
+ lh      %r0, 0(%r3)
+ sth     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 40(%r2)
+ la      %r3, 264(%r15)
+ #APP
+ lh      %r0, 0(%r3)
+ sth     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 42(%r2)
+ la      %r3, 266(%r15)
+ #APP
+ lh      %r0, 0(%r3)
+ sth     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 44(%r2)
+ la      %r3, 268(%r15)
+ #APP
+ lh      %r0, 0(%r3)
+ sth     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 46(%r2)
+ la      %r3, 270(%r15)
+ #APP
+ lh      %r0, 0(%r3)
+ sth     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 48(%r2)
+ la      %r3, 272(%r15)
+ #APP
+ lh      %r0, 0(%r3)
+ sth     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 50(%r2)
+ la      %r3, 274(%r15)
+ #APP
+ lh      %r0, 0(%r3)
+ sth     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 52(%r2)
+ la      %r3, 276(%r15)
+ #APP
+ lh      %r0, 0(%r3)
+ sth     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 54(%r2)
+ la      %r3, 278(%r15)
+ #APP
+ lh      %r0, 0(%r3)
+ sth     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 56(%r2)
+ la      %r3, 280(%r15)
+ #APP
+ lh      %r0, 0(%r3)
+ sth     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 58(%r2)
+ la      %r3, 282(%r15)
+ #APP
+ lh      %r0, 0(%r3)
+ sth     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 60(%r2)
+ la      %r3, 284(%r15)
+ #APP
+ lh      %r0, 0(%r3)
+ sth     %r0, 0(%r1)
+ #NO_APP
+ la      %r1, 62(%r2)
+ la      %r2, 286(%r15)
+ #APP
+ lh      %r0, 0(%r2)
+ sth     %r0, 0(%r1)
+ #NO_APP
+ aghi    %r15, 288
  br      %r14
 asm_test::atomic_memcpy_store_align2::write_volatile_release_fence:
  stmg    %r14, %r15, 112(%r15)

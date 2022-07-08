@@ -1,21 +1,62 @@
 asm_test::atomic_memcpy_store_align16::release:
- mov     r8d, dword, ptr, [esi]
- mov     r9d, dword, ptr, [esi, +, 4]
- mov     r10d, dword, ptr, [esi, +, 8]
- mov     r11d, dword, ptr, [esi, +, 12]
- mov     ecx, dword, ptr, [esi, +, 16]
- mov     edx, dword, ptr, [esi, +, 20]
- mov     eax, dword, ptr, [esi, +, 24]
- mov     esi, dword, ptr, [esi, +, 28]
+ sub     esp, 72
+ movaps  xmm0, xmmword, ptr, [esi]
+ movaps  xmm1, xmmword, ptr, [esi, +, 16]
+ movaps  xmmword, ptr, [esp, +, 48], xmm1
+ movaps  xmmword, ptr, [esp, +, 32], xmm0
  #MEMBARRIER
- mov     dword, ptr, [edi, +, 28], esi
- mov     dword, ptr, [edi, +, 24], eax
- mov     dword, ptr, [edi, +, 20], edx
- mov     dword, ptr, [edi, +, 16], ecx
- mov     dword, ptr, [edi, +, 12], r11d
- mov     dword, ptr, [edi, +, 8], r10d
- mov     dword, ptr, [edi, +, 4], r9d
- mov     dword, ptr, [edi], r8d
+ movaps  xmm0, xmmword, ptr, [esp, +, 32]
+ movaps  xmm1, xmmword, ptr, [esp, +, 48]
+ movaps  xmmword, ptr, [esp, +, 16], xmm1
+ movaps  xmmword, ptr, [esp], xmm0
+ lea     eax, [rsp, +, 16]
+ lea     ecx, [rdi, +, 28]
+ lea     edx, [rsp, +, 28]
+ #APP
+ mov     edx, dword, ptr, [edx]
+ mov     dword, ptr, [ecx], edx
+ #NO_APP
+ lea     ecx, [rdi, +, 24]
+ lea     edx, [rsp, +, 24]
+ #APP
+ mov     edx, dword, ptr, [edx]
+ mov     dword, ptr, [ecx], edx
+ #NO_APP
+ lea     ecx, [rdi, +, 20]
+ lea     edx, [rsp, +, 20]
+ #APP
+ mov     edx, dword, ptr, [edx]
+ mov     dword, ptr, [ecx], edx
+ #NO_APP
+ lea     ecx, [rdi, +, 16]
+ #APP
+ mov     eax, dword, ptr, [eax]
+ mov     dword, ptr, [ecx], eax
+ #NO_APP
+ lea     eax, [rdi, +, 12]
+ lea     ecx, [rsp, +, 12]
+ #APP
+ mov     ecx, dword, ptr, [ecx]
+ mov     dword, ptr, [eax], ecx
+ #NO_APP
+ lea     eax, [rdi, +, 8]
+ lea     ecx, [rsp, +, 8]
+ #APP
+ mov     ecx, dword, ptr, [ecx]
+ mov     dword, ptr, [eax], ecx
+ #NO_APP
+ lea     eax, [rdi, +, 4]
+ lea     ecx, [rsp, +, 4]
+ #APP
+ mov     ecx, dword, ptr, [ecx]
+ mov     dword, ptr, [eax], ecx
+ #NO_APP
+ mov     eax, esp
+ #APP
+ mov     eax, dword, ptr, [eax]
+ mov     dword, ptr, [edi], eax
+ #NO_APP
+ add     esp, 72
  ret
 asm_test::atomic_memcpy_store_align16::write_volatile_release_fence:
  sub     esp, 40

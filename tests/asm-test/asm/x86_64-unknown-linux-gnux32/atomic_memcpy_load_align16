@@ -1,22 +1,59 @@
 asm_test::atomic_memcpy_load_align16::acquire:
+ sub     esp, 40
  mov     rax, rdi
- mov     r8d, dword, ptr, [esi, +, 28]
- mov     r9d, dword, ptr, [esi, +, 24]
- mov     r10d, dword, ptr, [esi, +, 20]
- mov     r11d, dword, ptr, [esi, +, 16]
- mov     edx, dword, ptr, [esi, +, 12]
- mov     edi, dword, ptr, [esi, +, 8]
- mov     ecx, dword, ptr, [esi, +, 4]
- mov     esi, dword, ptr, [esi]
- mov     dword, ptr, [eax], esi
- mov     dword, ptr, [eax, +, 4], ecx
- mov     dword, ptr, [eax, +, 8], edi
- mov     dword, ptr, [eax, +, 12], edx
- mov     dword, ptr, [eax, +, 16], r11d
- mov     dword, ptr, [eax, +, 20], r10d
- mov     dword, ptr, [eax, +, 24], r9d
- mov     dword, ptr, [eax, +, 28], r8d
+ lea     ecx, [rsi, +, 28]
+ lea     edx, [rsp, +, 28]
+ #APP
+ mov     ecx, dword, ptr, [ecx]
+ mov     dword, ptr, [edx], ecx
+ #NO_APP
+ lea     ecx, [rsi, +, 24]
+ lea     edx, [rsp, +, 24]
+ #APP
+ mov     ecx, dword, ptr, [ecx]
+ mov     dword, ptr, [edx], ecx
+ #NO_APP
+ lea     ecx, [rsi, +, 20]
+ lea     edx, [rsp, +, 20]
+ #APP
+ mov     ecx, dword, ptr, [ecx]
+ mov     dword, ptr, [edx], ecx
+ #NO_APP
+ lea     ecx, [rsi, +, 16]
+ lea     edx, [rsp, +, 16]
+ #APP
+ mov     ecx, dword, ptr, [ecx]
+ mov     dword, ptr, [edx], ecx
+ #NO_APP
+ lea     ecx, [rsi, +, 12]
+ lea     edx, [rsp, +, 12]
+ #APP
+ mov     ecx, dword, ptr, [ecx]
+ mov     dword, ptr, [edx], ecx
+ #NO_APP
+ lea     ecx, [rsi, +, 8]
+ lea     edx, [rsp, +, 8]
+ #APP
+ mov     ecx, dword, ptr, [ecx]
+ mov     dword, ptr, [edx], ecx
+ #NO_APP
+ lea     ecx, [rsi, +, 4]
+ lea     edx, [rsp, +, 4]
+ #APP
+ mov     ecx, dword, ptr, [ecx]
+ mov     dword, ptr, [edx], ecx
+ #NO_APP
+ mov     ecx, esp
+ #APP
+ mov     edx, dword, ptr, [esi]
+ mov     dword, ptr, [ecx], edx
+ #NO_APP
+ movaps  xmm0, xmmword, ptr, [esp]
+ movaps  xmm1, xmmword, ptr, [esp, +, 16]
+ movaps  xmmword, ptr, [eax], xmm0
+ movaps  xmmword, ptr, [eax, +, 16], xmm1
  #MEMBARRIER
+ add     esp, 40
  ret
 asm_test::atomic_memcpy_load_align16::read_volatile_acquire_fence:
  mov     rax, rdi

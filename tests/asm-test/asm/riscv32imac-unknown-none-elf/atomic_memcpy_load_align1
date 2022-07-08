@@ -1,409 +1,202 @@
 asm_test::atomic_memcpy_load_align1::acquire:
  sw      ra, 44(sp)
+ addi    a2, a1, 31
+ addi    a3, sp, 39
+ #APP
+ lb      a2, 0(a2)
+ sb      a2, 0(a3)
+ #NO_APP
+ addi    a2, a1, 30
+ addi    a3, sp, 38
+ #APP
+ lb      a2, 0(a2)
+ sb      a2, 0(a3)
+ #NO_APP
+ addi    a2, a1, 29
+ addi    a3, sp, 37
+ #APP
+ lb      a2, 0(a2)
+ sb      a2, 0(a3)
+ #NO_APP
+ addi    a2, a1, 28
+ addi    a3, sp, 36
+ #APP
+ lb      a2, 0(a2)
+ sb      a2, 0(a3)
+ #NO_APP
+ addi    a2, a1, 27
+ addi    a3, sp, 35
+ #APP
+ lb      a2, 0(a2)
+ sb      a2, 0(a3)
+ #NO_APP
+ addi    a2, a1, 26
+ addi    a3, sp, 34
+ #APP
+ lb      a2, 0(a2)
+ sb      a2, 0(a3)
+ #NO_APP
+ addi    a2, a1, 25
+ addi    a3, sp, 33
+ #APP
+ lb      a2, 0(a2)
+ sb      a2, 0(a3)
+ #NO_APP
+ addi    a2, a1, 24
+ addi    a3, sp, 32
+ #APP
+ lb      a2, 0(a2)
+ sb      a2, 0(a3)
+ #NO_APP
+ addi    a2, a1, 23
+ addi    a3, sp, 31
+ #APP
+ lb      a2, 0(a2)
+ sb      a2, 0(a3)
+ #NO_APP
+ addi    a2, a1, 22
+ addi    a3, sp, 30
+ #APP
+ lb      a2, 0(a2)
+ sb      a2, 0(a3)
+ #NO_APP
+ addi    a2, a1, 21
+ addi    a3, sp, 29
+ #APP
+ lb      a2, 0(a2)
+ sb      a2, 0(a3)
+ #NO_APP
+ addi    a2, a1, 20
+ addi    a3, sp, 28
+ #APP
+ lb      a2, 0(a2)
+ sb      a2, 0(a3)
+ #NO_APP
+ addi    a2, a1, 19
+ addi    a3, sp, 27
+ #APP
+ lb      a2, 0(a2)
+ sb      a2, 0(a3)
+ #NO_APP
+ addi    a2, a1, 18
+ addi    a3, sp, 26
+ #APP
+ lb      a2, 0(a2)
+ sb      a2, 0(a3)
+ #NO_APP
+ addi    a2, a1, 17
+ addi    a3, sp, 25
+ #APP
+ lb      a2, 0(a2)
+ sb      a2, 0(a3)
+ #NO_APP
+ addi    a2, a1, 16
+ addi    a3, sp, 24
+ #APP
+ lb      a2, 0(a2)
+ sb      a2, 0(a3)
+ #NO_APP
+ addi    a2, a1, 15
+ addi    a3, sp, 23
+ #APP
+ lb      a2, 0(a2)
+ sb      a2, 0(a3)
+ #NO_APP
+ addi    a2, a1, 14
+ addi    a3, sp, 22
+ #APP
+ lb      a2, 0(a2)
+ sb      a2, 0(a3)
+ #NO_APP
+ addi    a2, a1, 13
+ addi    a3, sp, 21
+ #APP
+ lb      a2, 0(a2)
+ sb      a2, 0(a3)
+ #NO_APP
+ addi    a2, a1, 12
+ addi    a3, sp, 20
+ #APP
+ lb      a2, 0(a2)
+ sb      a2, 0(a3)
+ #NO_APP
+ addi    a2, a1, 11
+ addi    a3, sp, 19
+ #APP
+ lb      a2, 0(a2)
+ sb      a2, 0(a3)
+ #NO_APP
+ addi    a2, a1, 10
+ addi    a3, sp, 18
+ #APP
+ lb      a2, 0(a2)
+ sb      a2, 0(a3)
+ #NO_APP
+ addi    a2, a1, 9
+ addi    a3, sp, 17
+ #APP
+ lb      a2, 0(a2)
+ sb      a2, 0(a3)
+ #NO_APP
+ addi    a2, a1, 8
+ addi    a3, sp, 16
+ #APP
+ lb      a2, 0(a2)
+ sb      a2, 0(a3)
+ #NO_APP
+ addi    a2, a1, 7
+ addi    a3, sp, 15
+ #APP
+ lb      a2, 0(a2)
+ sb      a2, 0(a3)
+ #NO_APP
+ addi    a2, a1, 6
+ addi    a3, sp, 14
+ #APP
+ lb      a2, 0(a2)
+ sb      a2, 0(a3)
+ #NO_APP
+ addi    a2, a1, 5
+ addi    a3, sp, 13
+ #APP
+ lb      a2, 0(a2)
+ sb      a2, 0(a3)
+ #NO_APP
+ addi    a2, a1, 4
+ addi    a3, sp, 12
+ #APP
+ lb      a2, 0(a2)
+ sb      a2, 0(a3)
+ #NO_APP
  addi    a2, a1, 3
- andi    a7, a2, -4
- sub     t1, a7, a1
- li      a3, 33
- bgeu    t1, a3, .LBB0_5
- beqz    t1, .LBB0_6
- addi    a6, a1, 32
- sub     a3, a1, a7
- addi    a5, sp, 8
- mv      a4, a1
-.LBB0_3:
- lb      t0, 0(a4)
- mv      a2, a3
- sb      t0, 0(a5)
- addi    a5, a5, 1
- addi    a3, a3, 1
- addi    a4, a4, 1
- bgeu    a3, a2, .LBB0_3
- sub     a3, a6, a7
- li      a4, 4
- bgeu    a3, a4, .LBB0_7
- j       .LBB0_9
-.LBB0_5:
- lb      a2, 0(a1)
- sb      a2, 8(sp)
- lb      a2, 1(a1)
- sb      a2, 9(sp)
- lb      a2, 2(a1)
- sb      a2, 10(sp)
- lb      a2, 3(a1)
- sb      a2, 11(sp)
- lb      a2, 4(a1)
- sb      a2, 12(sp)
- lb      a2, 5(a1)
- sb      a2, 13(sp)
- lb      a2, 6(a1)
- sb      a2, 14(sp)
- lb      a2, 7(a1)
- sb      a2, 15(sp)
- lb      a2, 8(a1)
- sb      a2, 16(sp)
- lb      a2, 9(a1)
- sb      a2, 17(sp)
- lb      a2, 10(a1)
- sb      a2, 18(sp)
- lb      a2, 11(a1)
- sb      a2, 19(sp)
- lb      a2, 12(a1)
- sb      a2, 20(sp)
- lb      a2, 13(a1)
- sb      a2, 21(sp)
- lb      a2, 14(a1)
- sb      a2, 22(sp)
- lb      a2, 15(a1)
- sb      a2, 23(sp)
- lb      a2, 16(a1)
- sb      a2, 24(sp)
- lb      a2, 17(a1)
- sb      a2, 25(sp)
- lb      a2, 18(a1)
- sb      a2, 26(sp)
- lb      a2, 19(a1)
- sb      a2, 27(sp)
- lb      a2, 20(a1)
- sb      a2, 28(sp)
- lb      a2, 21(a1)
- sb      a2, 29(sp)
- lb      a2, 22(a1)
- sb      a2, 30(sp)
- lb      a2, 23(a1)
- sb      a2, 31(sp)
- lb      a2, 24(a1)
- sb      a2, 32(sp)
- lb      a2, 25(a1)
- sb      a2, 33(sp)
- lb      a2, 26(a1)
- sb      a2, 34(sp)
- lb      a2, 27(a1)
- sb      a2, 35(sp)
- lb      a2, 28(a1)
- sb      a2, 36(sp)
- lb      a2, 29(a1)
- sb      a2, 37(sp)
- lb      a2, 30(a1)
- sb      a2, 38(sp)
- lb      a1, 31(a1)
- sb      a1, 39(sp)
- j       .LBB0_12
-.LBB0_6:
- li      a3, 32
-.LBB0_7:
- addi    a6, sp, 8
- li      a7, 3
-.LBB0_8:
- add     a2, a1, t1
- lw      a2, 0(a2)
- add     a4, a6, t1
- sb      a2, 0(a4)
- srli    a5, a2, 24
- sb      a5, 3(a4)
- srli    a5, a2, 16
- sb      a5, 2(a4)
- srli    a2, a2, 8
- sb      a2, 1(a4)
- addi    a3, a3, -4
- addi    t1, t1, 4
- bltu    a7, a3, .LBB0_8
-.LBB0_9:
- beqz    a3, .LBB0_12
+ addi    a3, sp, 11
+ #APP
+ lb      a2, 0(a2)
+ sb      a2, 0(a3)
+ #NO_APP
+ addi    a2, a1, 2
+ addi    a3, sp, 10
+ #APP
+ lb      a2, 0(a2)
+ sb      a2, 0(a3)
+ #NO_APP
+ addi    a2, a1, 1
+ addi    a3, sp, 9
+ #APP
+ lb      a2, 0(a2)
+ sb      a2, 0(a3)
+ #NO_APP
  addi    a2, sp, 8
- add     a4, a2, t1
- add     a1, a1, t1
-.LBB0_11:
- lb      a2, 0(a1)
- sb      a2, 0(a4)
- addi    a3, a3, -1
- addi    a4, a4, 1
- addi    a1, a1, 1
- bnez    a3, .LBB0_11
-.LBB0_12:
+ #APP
+ lb      a1, 0(a1)
+ sb      a1, 0(a2)
+ #NO_APP
  addi    a1, sp, 8
  li      a2, 32
  call    memcpy@plt
  fence   r, rw
  lw      ra, 44(sp)
  addi    sp, sp, 48
- ret
-.LBB2_3:
- lb      t0, 0(a4)
- mv      a2, a5
- sb      t0, 0(a3)
- addi    a3, a3, 1
- addi    a5, a5, 1
- addi    a4, a4, 1
- bgeu    a5, a2, .LBB2_3
- sub     a2, a6, a7
- li      a3, 4
- bgeu    a2, a3, .LBB2_7
- j       .LBB2_9
-.LBB2_5:
- lb      a1, 32(sp)
- sb      a1, 0(a0)
- lb      a1, 33(sp)
- sb      a1, 1(a0)
- lb      a1, 34(sp)
- sb      a1, 2(a0)
- lb      a1, 35(sp)
- sb      a1, 3(a0)
- lb      a1, 36(sp)
- sb      a1, 4(a0)
- lb      a1, 37(sp)
- sb      a1, 5(a0)
- lb      a1, 38(sp)
- sb      a1, 6(a0)
- lb      a1, 39(sp)
- sb      a1, 7(a0)
- lb      a1, 40(sp)
- sb      a1, 8(a0)
- lb      a1, 41(sp)
- sb      a1, 9(a0)
- lb      a1, 42(sp)
- sb      a1, 10(a0)
- lb      a1, 43(sp)
- sb      a1, 11(a0)
- lb      a1, 44(sp)
- sb      a1, 12(a0)
- lb      a1, 45(sp)
- sb      a1, 13(a0)
- lb      a1, 46(sp)
- sb      a1, 14(a0)
- lb      a1, 47(sp)
- sb      a1, 15(a0)
- lb      a1, 48(sp)
- sb      a1, 16(a0)
- lb      a1, 49(sp)
- sb      a1, 17(a0)
- lb      a1, 50(sp)
- sb      a1, 18(a0)
- lb      a1, 51(sp)
- sb      a1, 19(a0)
- lb      a1, 52(sp)
- sb      a1, 20(a0)
- lb      a1, 53(sp)
- sb      a1, 21(a0)
- lb      a1, 54(sp)
- sb      a1, 22(a0)
- lb      a1, 55(sp)
- sb      a1, 23(a0)
- lb      a1, 56(sp)
- sb      a1, 24(a0)
- lb      a1, 57(sp)
- sb      a1, 25(a0)
- lb      a1, 58(sp)
- sb      a1, 26(a0)
- lb      a1, 59(sp)
- sb      a1, 27(a0)
- lb      a1, 60(sp)
- sb      a1, 28(a0)
- lb      a1, 61(sp)
- sb      a1, 29(a0)
- lb      a1, 62(sp)
- sb      a1, 30(a0)
- lb      a1, 63(sp)
- sb      a1, 31(a0)
- j       .LBB2_12
-.LBB2_6:
- li      a2, 32
-.LBB2_7:
- addi    a6, sp, 32
- li      a7, 3
-.LBB2_8:
- add     a5, a6, a1
- lbu     t0, 1(a5)
- lbu     t1, 0(a5)
- lbu     a3, 3(a5)
- lbu     a5, 2(a5)
- slli    a4, t0, 8
- or      a4, a4, t1
- slli    a3, a3, 8
- or      a3, a3, a5
- slli    a3, a3, 16
- or      a3, a3, a4
- add     a4, a0, a1
- sw      a3, 0(a4)
- addi    a2, a2, -4
- addi    a1, a1, 4
- bltu    a7, a2, .LBB2_8
-.LBB2_9:
- beqz    a2, .LBB2_12
- add     a0, a0, a1
- addi    a3, sp, 32
- add     a1, a1, a3
-.LBB2_11:
- lb      a3, 0(a1)
- sb      a3, 0(a0)
- addi    a2, a2, -1
- addi    a0, a0, 1
- addi    a1, a1, 1
- bnez    a2, .LBB2_11
-.LBB2_12:
- addi    sp, sp, 64
- ret
-.LBB4_3:
- lb      t0, 0(a3)
- mv      a2, a4
- sb      t0, 0(a5)
- addi    a5, a5, 1
- addi    a4, a4, 1
- addi    a3, a3, 1
- bgeu    a4, a2, .LBB4_3
- sub     a3, a6, a7
- li      a4, 4
- bltu    a3, a4, .LBB4_7
-.LBB4_5:
- addi    a6, sp, 8
- li      a7, 3
-.LBB4_6:
- add     a2, a1, t1
- lw      a2, 0(a2)
- add     a4, a6, t1
- sb      a2, 0(a4)
- srli    a5, a2, 24
- sb      a5, 3(a4)
- srli    a5, a2, 16
- sb      a5, 2(a4)
- srli    a2, a2, 8
- sb      a2, 1(a4)
- addi    a3, a3, -4
- addi    t1, t1, 4
- bltu    a7, a3, .LBB4_6
-.LBB4_7:
- beqz    a3, .LBB4_11
- addi    a2, sp, 8
- add     a4, a2, t1
- add     a1, a1, t1
-.LBB4_9:
- lb      a2, 0(a1)
- sb      a2, 0(a4)
- addi    a3, a3, -1
- addi    a4, a4, 1
- addi    a1, a1, 1
- bnez    a3, .LBB4_9
- j       .LBB4_11
-.LBB4_10:
- lh      a2, 30(a1)
- sh      a2, 38(sp)
- lh      a2, 28(a1)
- sh      a2, 36(sp)
- lh      a2, 26(a1)
- sh      a2, 34(sp)
- lh      a2, 24(a1)
- sh      a2, 32(sp)
- lh      a2, 22(a1)
- sh      a2, 30(sp)
- lh      a2, 20(a1)
- sh      a2, 28(sp)
- lh      a2, 18(a1)
- sh      a2, 26(sp)
- lh      a2, 16(a1)
- sh      a2, 24(sp)
- lh      a2, 14(a1)
- sh      a2, 22(sp)
- lh      a2, 12(a1)
- sh      a2, 20(sp)
- lh      a2, 10(a1)
- sh      a2, 18(sp)
- lh      a2, 8(a1)
- sh      a2, 16(sp)
- lh      a2, 6(a1)
- sh      a2, 14(sp)
- lh      a2, 4(a1)
- sh      a2, 12(sp)
- lh      a2, 2(a1)
- sh      a2, 10(sp)
- lh      a1, 0(a1)
- sh      a1, 8(sp)
-.LBB4_11:
- addi    a1, sp, 8
- li      a2, 32
- call    memcpy@plt
- fence   r, rw
- lw      ra, 44(sp)
- addi    sp, sp, 48
- ret
-.LBB6_3:
- lb      t0, 0(a4)
- mv      a3, a5
- sb      t0, 0(a2)
- addi    a2, a2, 1
- addi    a5, a5, 1
- addi    a4, a4, 1
- bgeu    a5, a3, .LBB6_3
- sub     a2, a6, a7
- li      a3, 4
- bltu    a2, a3, .LBB6_7
-.LBB6_5:
- addi    a6, sp, 32
- li      a7, 3
-.LBB6_6:
- add     a5, a6, a1
- lbu     t0, 1(a5)
- lbu     t1, 0(a5)
- lbu     a3, 3(a5)
- lbu     a5, 2(a5)
- slli    a4, t0, 8
- or      a4, a4, t1
- slli    a3, a3, 8
- or      a3, a3, a5
- slli    a3, a3, 16
- or      a3, a3, a4
- add     a4, a0, a1
- sw      a3, 0(a4)
- addi    a2, a2, -4
- addi    a1, a1, 4
- bltu    a7, a2, .LBB6_6
-.LBB6_7:
- beqz    a2, .LBB6_10
- add     a0, a0, a1
- addi    a3, sp, 32
- add     a1, a1, a3
-.LBB6_9:
- lb      a3, 0(a1)
- sb      a3, 0(a0)
- addi    a2, a2, -1
- addi    a0, a0, 1
- addi    a1, a1, 1
- bnez    a2, .LBB6_9
-.LBB6_10:
- addi    sp, sp, 64
- ret
-.LBB6_11:
- lh      a1, 62(sp)
- sh      a1, 30(a0)
- lh      a1, 60(sp)
- sh      a1, 28(a0)
- lh      a1, 58(sp)
- sh      a1, 26(a0)
- lh      a1, 56(sp)
- sh      a1, 24(a0)
- lh      a1, 54(sp)
- sh      a1, 22(a0)
- lh      a1, 52(sp)
- sh      a1, 20(a0)
- lh      a1, 50(sp)
- sh      a1, 18(a0)
- lh      a1, 48(sp)
- sh      a1, 16(a0)
- lh      a1, 46(sp)
- sh      a1, 14(a0)
- lh      a1, 44(sp)
- sh      a1, 12(a0)
- lh      a1, 42(sp)
- sh      a1, 10(a0)
- lh      a1, 40(sp)
- sh      a1, 8(a0)
- lh      a1, 38(sp)
- sh      a1, 6(a0)
- lh      a1, 36(sp)
- sh      a1, 4(a0)
- lh      a1, 34(sp)
- sh      a1, 2(a0)
- lh      a1, 32(sp)
- sh      a1, 0(a0)
- addi    sp, sp, 64
  ret
 asm_test::atomic_memcpy_load_align1::read_volatile_acquire_fence:
  sw      ra, 76(sp)
@@ -508,282 +301,4 @@ asm_test::atomic_memcpy_load_align1::read_volatile_acquire_fence:
  lw      s10, 32(sp)
  lw      s11, 28(sp)
  addi    sp, sp, 80
- ret
-.LBB2_3:
- lb      t0, 0(a4)
- mv      a2, a5
- sb      t0, 0(a3)
- addi    a3, a3, 1
- addi    a5, a5, 1
- addi    a4, a4, 1
- bgeu    a5, a2, .LBB2_3
- sub     a2, a6, a7
- li      a3, 4
- bgeu    a2, a3, .LBB2_7
- j       .LBB2_9
-.LBB2_5:
- lb      a1, 32(sp)
- sb      a1, 0(a0)
- lb      a1, 33(sp)
- sb      a1, 1(a0)
- lb      a1, 34(sp)
- sb      a1, 2(a0)
- lb      a1, 35(sp)
- sb      a1, 3(a0)
- lb      a1, 36(sp)
- sb      a1, 4(a0)
- lb      a1, 37(sp)
- sb      a1, 5(a0)
- lb      a1, 38(sp)
- sb      a1, 6(a0)
- lb      a1, 39(sp)
- sb      a1, 7(a0)
- lb      a1, 40(sp)
- sb      a1, 8(a0)
- lb      a1, 41(sp)
- sb      a1, 9(a0)
- lb      a1, 42(sp)
- sb      a1, 10(a0)
- lb      a1, 43(sp)
- sb      a1, 11(a0)
- lb      a1, 44(sp)
- sb      a1, 12(a0)
- lb      a1, 45(sp)
- sb      a1, 13(a0)
- lb      a1, 46(sp)
- sb      a1, 14(a0)
- lb      a1, 47(sp)
- sb      a1, 15(a0)
- lb      a1, 48(sp)
- sb      a1, 16(a0)
- lb      a1, 49(sp)
- sb      a1, 17(a0)
- lb      a1, 50(sp)
- sb      a1, 18(a0)
- lb      a1, 51(sp)
- sb      a1, 19(a0)
- lb      a1, 52(sp)
- sb      a1, 20(a0)
- lb      a1, 53(sp)
- sb      a1, 21(a0)
- lb      a1, 54(sp)
- sb      a1, 22(a0)
- lb      a1, 55(sp)
- sb      a1, 23(a0)
- lb      a1, 56(sp)
- sb      a1, 24(a0)
- lb      a1, 57(sp)
- sb      a1, 25(a0)
- lb      a1, 58(sp)
- sb      a1, 26(a0)
- lb      a1, 59(sp)
- sb      a1, 27(a0)
- lb      a1, 60(sp)
- sb      a1, 28(a0)
- lb      a1, 61(sp)
- sb      a1, 29(a0)
- lb      a1, 62(sp)
- sb      a1, 30(a0)
- lb      a1, 63(sp)
- sb      a1, 31(a0)
- j       .LBB2_12
-.LBB2_6:
- li      a2, 32
-.LBB2_7:
- addi    a6, sp, 32
- li      a7, 3
-.LBB2_8:
- add     a5, a6, a1
- lbu     t0, 1(a5)
- lbu     t1, 0(a5)
- lbu     a3, 3(a5)
- lbu     a5, 2(a5)
- slli    a4, t0, 8
- or      a4, a4, t1
- slli    a3, a3, 8
- or      a3, a3, a5
- slli    a3, a3, 16
- or      a3, a3, a4
- add     a4, a0, a1
- sw      a3, 0(a4)
- addi    a2, a2, -4
- addi    a1, a1, 4
- bltu    a7, a2, .LBB2_8
-.LBB2_9:
- beqz    a2, .LBB2_12
- add     a0, a0, a1
- addi    a3, sp, 32
- add     a1, a1, a3
-.LBB2_11:
- lb      a3, 0(a1)
- sb      a3, 0(a0)
- addi    a2, a2, -1
- addi    a0, a0, 1
- addi    a1, a1, 1
- bnez    a2, .LBB2_11
-.LBB2_12:
- addi    sp, sp, 64
- ret
-.LBB4_3:
- lb      t0, 0(a3)
- mv      a2, a4
- sb      t0, 0(a5)
- addi    a5, a5, 1
- addi    a4, a4, 1
- addi    a3, a3, 1
- bgeu    a4, a2, .LBB4_3
- sub     a3, a6, a7
- li      a4, 4
- bltu    a3, a4, .LBB4_7
-.LBB4_5:
- addi    a6, sp, 8
- li      a7, 3
-.LBB4_6:
- add     a2, a1, t1
- lw      a2, 0(a2)
- add     a4, a6, t1
- sb      a2, 0(a4)
- srli    a5, a2, 24
- sb      a5, 3(a4)
- srli    a5, a2, 16
- sb      a5, 2(a4)
- srli    a2, a2, 8
- sb      a2, 1(a4)
- addi    a3, a3, -4
- addi    t1, t1, 4
- bltu    a7, a3, .LBB4_6
-.LBB4_7:
- beqz    a3, .LBB4_11
- addi    a2, sp, 8
- add     a4, a2, t1
- add     a1, a1, t1
-.LBB4_9:
- lb      a2, 0(a1)
- sb      a2, 0(a4)
- addi    a3, a3, -1
- addi    a4, a4, 1
- addi    a1, a1, 1
- bnez    a3, .LBB4_9
- j       .LBB4_11
-.LBB4_10:
- lh      a2, 30(a1)
- sh      a2, 38(sp)
- lh      a2, 28(a1)
- sh      a2, 36(sp)
- lh      a2, 26(a1)
- sh      a2, 34(sp)
- lh      a2, 24(a1)
- sh      a2, 32(sp)
- lh      a2, 22(a1)
- sh      a2, 30(sp)
- lh      a2, 20(a1)
- sh      a2, 28(sp)
- lh      a2, 18(a1)
- sh      a2, 26(sp)
- lh      a2, 16(a1)
- sh      a2, 24(sp)
- lh      a2, 14(a1)
- sh      a2, 22(sp)
- lh      a2, 12(a1)
- sh      a2, 20(sp)
- lh      a2, 10(a1)
- sh      a2, 18(sp)
- lh      a2, 8(a1)
- sh      a2, 16(sp)
- lh      a2, 6(a1)
- sh      a2, 14(sp)
- lh      a2, 4(a1)
- sh      a2, 12(sp)
- lh      a2, 2(a1)
- sh      a2, 10(sp)
- lh      a1, 0(a1)
- sh      a1, 8(sp)
-.LBB4_11:
- addi    a1, sp, 8
- li      a2, 32
- call    memcpy@plt
- fence   r, rw
- lw      ra, 44(sp)
- addi    sp, sp, 48
- ret
-.LBB6_3:
- lb      t0, 0(a4)
- mv      a3, a5
- sb      t0, 0(a2)
- addi    a2, a2, 1
- addi    a5, a5, 1
- addi    a4, a4, 1
- bgeu    a5, a3, .LBB6_3
- sub     a2, a6, a7
- li      a3, 4
- bltu    a2, a3, .LBB6_7
-.LBB6_5:
- addi    a6, sp, 32
- li      a7, 3
-.LBB6_6:
- add     a5, a6, a1
- lbu     t0, 1(a5)
- lbu     t1, 0(a5)
- lbu     a3, 3(a5)
- lbu     a5, 2(a5)
- slli    a4, t0, 8
- or      a4, a4, t1
- slli    a3, a3, 8
- or      a3, a3, a5
- slli    a3, a3, 16
- or      a3, a3, a4
- add     a4, a0, a1
- sw      a3, 0(a4)
- addi    a2, a2, -4
- addi    a1, a1, 4
- bltu    a7, a2, .LBB6_6
-.LBB6_7:
- beqz    a2, .LBB6_10
- add     a0, a0, a1
- addi    a3, sp, 32
- add     a1, a1, a3
-.LBB6_9:
- lb      a3, 0(a1)
- sb      a3, 0(a0)
- addi    a2, a2, -1
- addi    a0, a0, 1
- addi    a1, a1, 1
- bnez    a2, .LBB6_9
-.LBB6_10:
- addi    sp, sp, 64
- ret
-.LBB6_11:
- lh      a1, 62(sp)
- sh      a1, 30(a0)
- lh      a1, 60(sp)
- sh      a1, 28(a0)
- lh      a1, 58(sp)
- sh      a1, 26(a0)
- lh      a1, 56(sp)
- sh      a1, 24(a0)
- lh      a1, 54(sp)
- sh      a1, 22(a0)
- lh      a1, 52(sp)
- sh      a1, 20(a0)
- lh      a1, 50(sp)
- sh      a1, 18(a0)
- lh      a1, 48(sp)
- sh      a1, 16(a0)
- lh      a1, 46(sp)
- sh      a1, 14(a0)
- lh      a1, 44(sp)
- sh      a1, 12(a0)
- lh      a1, 42(sp)
- sh      a1, 10(a0)
- lh      a1, 40(sp)
- sh      a1, 8(a0)
- lh      a1, 38(sp)
- sh      a1, 6(a0)
- lh      a1, 36(sp)
- sh      a1, 4(a0)
- lh      a1, 34(sp)
- sh      a1, 2(a0)
- lh      a1, 32(sp)
- sh      a1, 0(a0)
- addi    sp, sp, 64
  ret
