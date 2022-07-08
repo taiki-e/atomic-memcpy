@@ -1,22 +1,87 @@
 asm_test::atomic_memcpy_store_align8::release:
+ daddiu  $sp, $sp, -128
+ ld      $1, 24($5)
+ ld      $2, 32($5)
+ ld      $3, 40($5)
+ ld      $6, 48($5)
+ ld      $7, 56($5)
+ daddiu  $11, $4, 40
+ daddiu  $9, $4, 32
+ sd      $1, 24($sp)
+ ld      $1, 16($5)
+ sd      $7, 56($sp)
+ sd      $6, 48($sp)
+ sd      $3, 40($sp)
+ sd      $2, 32($sp)
+ sd      $1, 16($sp)
+ ld      $1, 8($5)
+ sd      $1, 8($sp)
  ld      $1, 0($5)
- ld      $2, 8($5)
- ld      $3, 16($5)
- ld      $6, 24($5)
- ld      $7, 32($5)
- ld      $8, 40($5)
- ld      $9, 48($5)
- ld      $5, 56($5)
+ sd      $1, 0($sp)
  sync
- sd      $5, 56($4)
- sd      $9, 48($4)
- sd      $8, 40($4)
- sd      $7, 32($4)
- sd      $6, 24($4)
- sd      $3, 16($4)
- sd      $2, 8($4)
- jr      $ra
+ ld      $1, 8($sp)
+ ld      $2, 16($sp)
+ ld      $3, 24($sp)
+ ld      $5, 32($sp)
+ ld      $6, 40($sp)
+ ld      $7, 48($sp)
+ ld      $8, 56($sp)
+ sd      $1, 72($sp)
+ ld      $1, 0($sp)
+ sd      $7, 112($sp)
+ sd      $2, 80($sp)
+ daddiu  $2, $sp, 64
+ sd      $8, 120($sp)
+ sd      $6, 104($sp)
+ sd      $3, 88($sp)
+ sd      $5, 96($sp)
+ daddiu  $7, $4, 24
+ daddiu  $3, $2, 56
+ daddiu  $12, $2, 40
+ daddiu  $10, $2, 32
+ daddiu  $8, $2, 24
+ daddiu  $6, $2, 16
+ sd      $1, 64($sp)
+ daddiu  $1, $4, 56
+ #APP
+ ld      $5, 0($3)
+ sd      $5, 0($1)
+ #NO_APP
+ daddiu  $1, $4, 48
+ daddiu  $3, $2, 48
+ #APP
+ ld      $5, 0($3)
+ sd      $5, 0($1)
+ #NO_APP
+ daddiu  $1, $4, 8
+ daddiu  $3, $2, 8
+ #APP
+ ld      $13, 0($12)
+ sd      $13, 0($11)
+ #NO_APP
+ daddiu  $5, $4, 16
+ #APP
+ ld      $11, 0($10)
+ sd      $11, 0($9)
+ #NO_APP
+ #APP
+ ld      $9, 0($8)
+ sd      $9, 0($7)
+ #NO_APP
+ #APP
+ ld      $7, 0($6)
+ sd      $7, 0($5)
+ #NO_APP
+ #APP
+ ld      $5, 0($3)
+ sd      $5, 0($1)
+ #NO_APP
+ #APP
+ ld      $1, 0($2)
  sd      $1, 0($4)
+ #NO_APP
+ jr      $ra
+ daddiu  $sp, $sp, 128
 asm_test::atomic_memcpy_store_align8::write_volatile_release_fence:
  daddiu  $sp, $sp, -64
  sync
