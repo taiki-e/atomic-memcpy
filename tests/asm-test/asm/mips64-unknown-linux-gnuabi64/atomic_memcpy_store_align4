@@ -45,8 +45,26 @@ asm_test::atomic_memcpy_store_align4::release:
  and     $1, $1, $2
  dsubu   $2, $1, $4
  sltiu   $1, $2, 65
- bnez    $1, .LBB10_2
+ beqz    $1, .LBB10_6
  sd      $3, 80($sp)
+ beqz    $2, .LBB10_7
+ daddiu  $5, $sp, 64
+ daddiu  $3, $zero, 0
+.LBB10_3:
+ daddu   $6, $5, $3
+ daddu   $1, $4, $3
+ daddiu  $3, $3, 1
+ lbu     $6, 0($6)
+ bne     $2, $3, .LBB10_3
+ sb      $6, 0($1)
+ daddiu  $1, $zero, 64
+ dsubu   $3, $1, $3
+ sltiu   $1, $3, 8
+ bnez    $1, .LBB10_9
+ nop
+ b       .LBB10_8
+ nop
+.LBB10_6:
  lw      $1, 64($sp)
  sw      $1, 0($4)
  lw      $1, 68($sp)
@@ -80,26 +98,9 @@ asm_test::atomic_memcpy_store_align4::release:
  lw      $1, 124($sp)
  b       .LBB10_12
  sw      $1, 60($4)
-.LBB10_2:
- beqz    $2, .LBB10_7
- daddiu  $5, $sp, 64
- daddiu  $3, $zero, 0
-.LBB10_4:
- daddu   $6, $5, $3
- daddu   $1, $4, $3
- daddiu  $3, $3, 1
- lbu     $6, 0($6)
- bne     $2, $3, .LBB10_4
- sb      $6, 0($1)
- daddiu  $1, $zero, 64
- dsubu   $3, $1, $3
- sltiu   $1, $3, 8
- bnez    $1, .LBB10_9
- nop
- b       .LBB10_8
- nop
 .LBB10_7:
  daddiu  $3, $zero, 64
+ daddiu  $2, $zero, 0
 .LBB10_8:
  daddu   $1, $5, $2
  daddiu  $3, $3, -8
@@ -117,8 +118,8 @@ asm_test::atomic_memcpy_store_align4::release:
  daddu   $2, $4, $2
 .LBB10_11:
  lbu     $1, 0($5)
- daddiu  $3, $3, -1
  daddiu  $5, $5, 1
+ daddiu  $3, $3, -1
  sb      $1, 0($2)
  bnez    $3, .LBB10_11
  daddiu  $2, $2, 1

@@ -3,8 +3,25 @@ asm_test::atomic_memcpy_load_align4::acquire:
  addi    5, 4, 7
  rldicr  8, 5, 0, 60
  sub     5, 8, 4
- cmpldi  5, 65
- blt     0, .LBB8_2
+ cmpldi  5, 64
+ bgt     0, .LBB8_5
+ cmpldi  5, 0
+ addi    6, 1, -64
+ beq     0, .LBB8_6
+ addi    7, 4, 64
+ addi    9, 4, -1
+ addi    10, 6, -1
+ mtctr   5
+.LBB8_3:
+ lbz     11, 1(9)
+ addi    9, 9, 1
+ stbu    11, 1(10)
+ bdnz    .LBB8_3
+ sub     7, 7, 8
+ cmpldi  7, 8
+ bge     0, .LBB8_7
+ b       .LBB8_11
+.LBB8_5:
  lwz     5, 0(4)
  stw     5, -64(1)
  lwz     5, 4(4)
@@ -38,23 +55,6 @@ asm_test::atomic_memcpy_load_align4::acquire:
  lwz     4, 60(4)
  stw     4, -4(1)
  b       .LBB8_14
-.LBB8_2:
- cmpldi  5, 0
- addi    6, 1, -64
- beq     0, .LBB8_6
- addi    7, 4, -1
- addi    9, 6, -1
- mtctr   5
-.LBB8_4:
- lbz     10, 1(7)
- addi    7, 7, 1
- stbu    10, 1(9)
- bdnz    .LBB8_4
- sub     7, 4, 8
- addi    7, 7, 64
- cmpldi  7, 8
- bge     0, .LBB8_7
- b       .LBB8_11
 .LBB8_6:
  li      7, 64
 .LBB8_7:

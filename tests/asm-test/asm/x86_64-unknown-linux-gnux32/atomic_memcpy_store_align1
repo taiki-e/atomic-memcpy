@@ -11,10 +11,55 @@ asm_test::atomic_memcpy_store_align1::release:
  movaps  xmmword, ptr, [esp], xmm0
  lea     r8d, [rdi, +, 3]
  and     r8d, -4
- mov     eax, r8d
- sub     eax, edi
- cmp     eax, 33
- jb      .LBB2_2
+ mov     r11d, r8d
+ sub     r11d, edi
+ cmp     r11d, 33
+ jae     .LBB2_1
+ test    r11d, r11d
+ je      .LBB2_3
+ mov     ecx, edi
+ not     ecx
+ add     ecx, r8d
+ mov     r9d, r11d
+ and     r9d, 3
+ xor     esi, esi
+ cmp     ecx, 3
+ jb      .LBB2_8
+ mov     ecx, r11d
+ and     ecx, -4
+ xor     edx, edx
+.LBB2_7:
+ movzx   eax, byte, ptr, [esp, +, edx]
+ mov     byte, ptr, [edi, +, edx], al
+ movzx   eax, byte, ptr, [esp, +, edx, +, 1]
+ mov     byte, ptr, [edi, +, edx, +, 1], al
+ movzx   eax, byte, ptr, [esp, +, edx, +, 2]
+ mov     byte, ptr, [edi, +, edx, +, 2], al
+ lea     esi, [rdx, +, 4]
+ movzx   eax, byte, ptr, [esp, +, edx, +, 3]
+ mov     byte, ptr, [edi, +, edx, +, 3], al
+ mov     edx, esi
+ cmp     ecx, esi
+ jne     .LBB2_7
+.LBB2_8:
+ lea     ecx, [rdi, +, 32]
+ test    r9d, r9d
+ je      .LBB2_11
+ lea     r10d, [rdi, +, rsi]
+ add     esi, esp
+ xor     edx, edx
+.LBB2_10:
+ movzx   eax, byte, ptr, [esi, +, edx]
+ mov     byte, ptr, [r10d, +, edx], al
+ add     edx, 1
+ cmp     r9d, edx
+ jne     .LBB2_10
+.LBB2_11:
+ sub     ecx, r8d
+ cmp     ecx, 4
+ jae     .LBB2_4
+ jmp     .LBB2_12
+.LBB2_1:
  mov     al, byte, ptr, [esp]
  mov     byte, ptr, [edi], al
  mov     al, byte, ptr, [esp, +, 1]
@@ -81,93 +126,45 @@ asm_test::atomic_memcpy_store_align1::release:
  mov     byte, ptr, [edi, +, 31], al
  add     esp, 72
  ret
-.LBB2_2:
- test    eax, eax
- je      .LBB2_3
- mov     edx, edi
- not     edx
- add     edx, r8d
- mov     r9d, eax
- and     r9d, 3
- xor     ecx, ecx
- cmp     edx, 3
- jb      .LBB2_7
- mov     r10d, eax
- and     r10d, -4
- xor     esi, esi
-.LBB2_6:
- movzx   ecx, byte, ptr, [esp, +, esi]
- mov     byte, ptr, [edi, +, esi], cl
- movzx   ecx, byte, ptr, [esp, +, esi, +, 1]
- mov     byte, ptr, [edi, +, esi, +, 1], cl
- movzx   ecx, byte, ptr, [esp, +, esi, +, 2]
- mov     byte, ptr, [edi, +, esi, +, 2], cl
- lea     ecx, [rsi, +, 4]
- movzx   edx, byte, ptr, [esp, +, esi, +, 3]
- mov     byte, ptr, [edi, +, esi, +, 3], dl
- mov     esi, ecx
- cmp     r10d, ecx
- jne     .LBB2_6
-.LBB2_7:
- test    r9d, r9d
- je      .LBB2_10
- lea     r10d, [rdi, +, rcx]
- add     ecx, esp
- xor     esi, esi
-.LBB2_9:
- movzx   edx, byte, ptr, [ecx, +, esi]
- mov     byte, ptr, [r10d, +, esi], dl
- add     esi, 1
- cmp     r9d, esi
- jne     .LBB2_9
-.LBB2_10:
- mov     ecx, edi
- sub     ecx, r8d
- add     ecx, 32
- cmp     ecx, 4
- jae     .LBB2_11
- jmp     .LBB2_12
 .LBB2_3:
  mov     ecx, 32
-.LBB2_11:
- mov     edx, dword, ptr, [esp, +, eax]
- mov     dword, ptr, [edi, +, eax], edx
+.LBB2_4:
+ mov     eax, dword, ptr, [esp, +, r11d]
+ mov     dword, ptr, [edi, +, r11d], eax
  add     ecx, -4
- add     eax, 4
+ add     r11d, 4
  cmp     ecx, 3
- ja      .LBB2_11
+ ja      .LBB2_4
 .LBB2_12:
  test    ecx, ecx
  je      .LBB2_19
- lea     edx, [rcx, -, 1]
+ lea     r8d, [rcx, -, 1]
  mov     esi, ecx
+ mov     edx, r11d
  and     esi, 3
- cmp     edx, 3
- jb      .LBB2_16
- and     ecx, -4
+ je      .LBB2_16
+ mov     edx, r11d
 .LBB2_15:
- movzx   edx, byte, ptr, [esp, +, eax]
- mov     byte, ptr, [edi, +, eax], dl
- movzx   edx, byte, ptr, [esp, +, eax, +, 1]
- mov     byte, ptr, [edi, +, eax, +, 1], dl
- movzx   edx, byte, ptr, [esp, +, eax, +, 2]
- mov     byte, ptr, [edi, +, eax, +, 2], dl
- movzx   edx, byte, ptr, [esp, +, eax, +, 3]
- mov     byte, ptr, [edi, +, eax, +, 3], dl
- add     eax, 4
- add     ecx, -4
+ movzx   eax, byte, ptr, [esp, +, edx]
+ mov     byte, ptr, [edi, +, edx], al
+ add     edx, 1
+ add     esi, -1
  jne     .LBB2_15
 .LBB2_16:
- test    esi, esi
- je      .LBB2_19
- add     edi, eax
- add     eax, esp
- xor     ecx, ecx
+ cmp     r8d, 3
+ jb      .LBB2_19
+ add     ecx, r11d
 .LBB2_18:
- movzx   edx, byte, ptr, [eax, +, ecx]
- mov     byte, ptr, [edi, +, ecx], dl
- add     ecx, 1
- cmp     esi, ecx
+ movzx   eax, byte, ptr, [esp, +, edx]
+ mov     byte, ptr, [edi, +, edx], al
+ movzx   eax, byte, ptr, [esp, +, edx, +, 1]
+ mov     byte, ptr, [edi, +, edx, +, 1], al
+ movzx   eax, byte, ptr, [esp, +, edx, +, 2]
+ mov     byte, ptr, [edi, +, edx, +, 2], al
+ movzx   eax, byte, ptr, [esp, +, edx, +, 3]
+ mov     byte, ptr, [edi, +, edx, +, 3], al
+ add     edx, 4
+ cmp     ecx, edx
  jne     .LBB2_18
 .LBB2_19:
  add     esp, 72
