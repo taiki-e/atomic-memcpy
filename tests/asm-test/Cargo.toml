@@ -10,6 +10,7 @@ doc = false
 
 [features]
 default = ["anyhow", "duct", "fs-err", "indexmap", "lexopt", "rustc-demangle", "syn"]
+atomic-maybe-uninit = ["atomic-memcpy/atomic-maybe-uninit"]
 
 [dependencies]
 atomic-memcpy = { path = "../..", features = ["inline-always"] }
