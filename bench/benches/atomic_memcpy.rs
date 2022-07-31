@@ -4,10 +4,10 @@ use std::{
     cell::UnsafeCell,
     mem,
     sync::{atomic::Ordering, Barrier},
+    thread,
 };
 
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
-use crossbeam_utils::thread;
 
 const WRITER_THREADS: usize = 1;
 const READER_THREADS: usize = 2;
@@ -34,7 +34,7 @@ fn bench_concurrent_load_store<T: Copy + Send + Sync>(v: &SendSync<T>, val: T) {
     let barrier = Barrier::new(WRITER_THREADS + READER_THREADS);
     thread::scope(|s| {
         for _ in 0..READER_THREADS {
-            s.spawn(|_| {
+            s.spawn(|| {
                 barrier.wait();
                 for _ in 0..N {
                     unsafe {
@@ -46,7 +46,7 @@ fn bench_concurrent_load_store<T: Copy + Send + Sync>(v: &SendSync<T>, val: T) {
             });
         }
         for _ in 0..WRITER_THREADS {
-            s.spawn(|_| {
+            s.spawn(|| {
                 barrier.wait();
                 for _ in 0..N {
                     unsafe {
@@ -55,8 +55,7 @@ fn bench_concurrent_load_store<T: Copy + Send + Sync>(v: &SendSync<T>, val: T) {
                 }
             });
         }
-    })
-    .unwrap();
+    });
 }
 
 #[derive(Clone, Copy, Default)]
