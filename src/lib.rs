@@ -60,7 +60,12 @@ See [P1478R1][p1478r1] for more.
     // misc
     clippy::missing_inline_in_public_items,
 )]
-#![allow(clippy::inline_always, clippy::single_match_else, clippy::too_many_lines)]
+#![allow(
+    clippy::doc_markdown,
+    clippy::inline_always,
+    clippy::single_match_else,
+    clippy::too_many_lines
+)]
 
 // This crate should work on targets with power-of-two pointer widths,
 // but it is not clear how it will work on targets without them.
@@ -77,7 +82,12 @@ compile_error!(
      please submit an issue at <https://github.com/taiki-e/atomic-memcpy>"
 );
 
-use core::sync::atomic::{self, Ordering};
+#[cfg(not(target_os = "none"))]
+use core::sync::atomic;
+use core::sync::atomic::Ordering;
+
+#[cfg(target_os = "none")]
+use portable_atomic as atomic;
 
 /// Byte-wise atomic load.
 ///
@@ -220,41 +230,21 @@ fn assert_store_ordering(order: Ordering) {
     }
 }
 
-/// Since `#[cfg(target_has_atomic_load_store = "ptr")]` is not available on
-/// stable, the following heuristic is used.
-///
-/// - 16-bit targets (e.g., avr, msp430) don't support atomic load/store.
-/// 　　　　msp430 can actually support atomic load/store, but the LLVM backend does not support it yet.
-///   - <https://github.com/rust-lang/rust/blob/1.62.0/compiler/rustc_target/src/spec/msp430_none_elf.rs#L22-L30>
-///   - <https://github.com/rust-lang/rust/issues/45085#issuecomment-385090816>
-///   - <https://github.com/rust-lang/rust/pull/55450>
-/// - riscv32 targets without the A extension (e.g., riscv32i, riscv32imc) don't support atomic load/store.
-///   However, if OS is available, atomic operations are supported: <https://github.com/rust-lang/rust/blob/1.62.0/compiler/rustc_target/src/spec/riscv32imc_esp_espidf.rs#L20-L26>
-///
-/// This heuristic is based on a list of builtin targets that currently do no support
-/// atomic load/store, so it should be quite accurate, at least for builtin targets.
-/// The addition of new builtin targets that do not support atomic load/store is
-/// being tracked by CI. See `tools/no_atomic.sh` for more.
-///
-/// In addition to the above cfg, there is `cfg(atomic_memcpy_unsafe_volatile)`
-/// to force the use of volatile read/write instead of atomic load/store.
+/// There is `cfg(atomic_memcpy_unsafe_volatile)` to force the use of volatile
+/// read/write instead of atomic load/store.
 /// Note that the use of `--cfg atomic_memcpy_unsafe_volatile` is
-/// undefined behavior in the multi-threaded environment, since volatile
+/// undefined behavior in the multi-core environment, since volatile
 /// read/write does not guarantee anything about data race.
 #[cfg(not(atomic_memcpy_unsafe_volatile))]
-// Note: riscv_target_feature is not stable, so `target_feature = "a"` does not work on stable.
-#[cfg_attr(
-    any(target_pointer_width = "16", all(target_arch = "riscv32", target_os = "none")),
-    cfg(target_has_atomic = "ptr")
-)]
 mod imp {
-    #[cfg(not(target_pointer_width = "16"))]
-    use core::sync::atomic::AtomicU32;
     use core::{
         mem::{self, ManuallyDrop, MaybeUninit},
         ops::Range,
-        sync::atomic::{AtomicU16, AtomicUsize, Ordering},
     };
+
+    #[cfg(not(target_pointer_width = "16"))]
+    use crate::atomic::AtomicU32;
+    use crate::atomic::{AtomicU16, AtomicUsize, Ordering};
 
     // Boundary to make the fields of LoadState private.
     //
@@ -263,10 +253,9 @@ mod imp {
     //
     // [1]: https://www.ralfj.de/blog/2016/01/09/the-scope-of-unsafe.html
     mod load {
-        use core::{
-            mem,
-            sync::atomic::{AtomicU8, AtomicUsize, Ordering},
-        };
+        use core::mem;
+
+        use crate::atomic::{AtomicU8, AtomicUsize, Ordering};
 
         // Invariant: `src` and `result` will never change.
         // Invariant: Only the `advance` method can advance offset and counter.
@@ -399,7 +388,7 @@ mod imp {
     - When performing an atomic operation as a type with alignment greater than 1, the pointer must be properly aligned.
 
     The caller of `atomic_load` guarantees that the `src` is properly aligned.
-    So, we can avoid calling align_offset or read at a granularity greater than u8 in some cases.
+    So, we can avoid calling `align_offset` or read at a granularity greater than u8 in some cases.
 
     The following is what this implementation is currently `atomic_load` using (Note: `atomic_store` also uses exactly the same way to determine the granularity of atomic operations):
 
@@ -547,10 +536,9 @@ mod imp {
     // Note that this is not a complete safe/unsafe boundary, since it is still
     // possible to pass an invalid pointer to the constructor.
     mod store {
-        use core::{
-            mem,
-            sync::atomic::{AtomicU8, AtomicUsize, Ordering},
-        };
+        use core::mem;
+
+        use crate::atomic::{AtomicU8, AtomicUsize, Ordering};
 
         // Invariant: `src` and `dst` will never change.
         // Invariant: Only the `advance` method can advance offset and counter.
@@ -834,25 +822,13 @@ mod imp {
     }
 }
 
-#[cfg(any(
-    target_pointer_width = "16",
-    all(target_arch = "riscv32", target_os = "none"),
-    atomic_memcpy_unsafe_volatile
-))]
-#[cfg_attr(
-    any(target_pointer_width = "16", all(target_arch = "riscv32", target_os = "none")),
-    cfg(not(target_has_atomic = "ptr"))
-)]
+#[cfg(atomic_memcpy_unsafe_volatile)]
 mod imp {
     #[cfg_attr(feature = "inline-always", inline(always))]
     #[cfg_attr(not(feature = "inline-always"), inline)]
     pub(crate) unsafe fn atomic_load<T>(src: *const T) -> core::mem::MaybeUninit<T> {
         // SAFETY: the user who explicitly specified the `--cfg atomic_memcpy_unsafe_volatile`
         // must guarantees that the volatile read would not cause data races.
-        //
-        // HACK: Using volatile read/write instead of atomic load/store on single-threaded platforms where
-        // LLVM does not support atomic is normally considered to be an okay workaround.
-        // <https://github.com/rust-lang/compiler-builtins/commit/e0187f17dbcbf9dc026d379b2af8d866300596a5>
         unsafe { (src as *const core::mem::MaybeUninit<T>).read_volatile() }
     }
 
@@ -861,10 +837,6 @@ mod imp {
     pub(crate) unsafe fn atomic_store<T>(dst: *mut T, src: T) {
         // SAFETY: the user who explicitly specified the `--cfg atomic_memcpy_unsafe_volatile`
         // must guarantees that the volatile write would not cause data races.
-        //
-        // HACK: Using volatile read/write instead of atomic load/store on single-threaded platforms where
-        // LLVM does not support atomic is normally considered to be an okay workaround.
-        // <https://github.com/rust-lang/compiler-builtins/commit/e0187f17dbcbf9dc026d379b2af8d866300596a5>
         unsafe {
             dst.write_volatile(src);
         }

@@ -75,13 +75,6 @@ build() {
         # https://github.com/rust-lang/rust/issues/88252
         target_rustflags="${target_rustflags} -C opt-level=s"
     fi
-    if [[ "${target}" == "riscv32"* ]]; then
-        # TODO: cfg(target_has_atomic) requires Rust 1.60.
-        case "${rustc_version}" in
-            1.[0-5]*) return 0 ;;
-            *) ;;
-        esac
-    fi
     if grep <<<"${rustup_target_list}" -Eq "^${target}( |$)"; then
         x rustup ${pre_args[@]+"${pre_args[@]}"} target add "${target}" &>/dev/null
     elif [[ -n "${nightly}" ]]; then
