@@ -8,6 +8,38 @@ use fs_err as fs;
 use indexmap::{IndexMap, IndexSet};
 use lexopt::prelude::*;
 
+// https://github.com/taiki-e/atomic-maybe-uninit#platform-support
+#[cfg(feature = "atomic-maybe-uninit")]
+const DEFAULT_TARGETS: &[&str] = &[
+    // All tier 1 or tier 2 linux (GNU) target
+    // rustup target list | grep -e '-linux-gnu' | sed 's/ .*$//g' | sed 's/^/"/g' | sed 's/$/",/g'
+    "aarch64-unknown-linux-gnu",
+    "arm-unknown-linux-gnueabi",
+    "arm-unknown-linux-gnueabihf",
+    // "armv5te-unknown-linux-gnueabi",
+    "armv7-unknown-linux-gnueabi",
+    "armv7-unknown-linux-gnueabihf",
+    "i586-unknown-linux-gnu",
+    "i686-unknown-linux-gnu",
+    "mips-unknown-linux-gnu",
+    "mips64-unknown-linux-gnuabi64",
+    "mips64el-unknown-linux-gnuabi64",
+    "mipsel-unknown-linux-gnu",
+    "powerpc-unknown-linux-gnu",
+    "powerpc64-unknown-linux-gnu",
+    // "powerpc64le-unknown-linux-gnu", // TODO: cargo-asm panic "thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: ParseIntError { kind: InvalidDigit }', src/asm/ast.rs:172:44"
+    "riscv64gc-unknown-linux-gnu",
+    "s390x-unknown-linux-gnu",
+    // "sparc64-unknown-linux-gnu",
+    "thumbv7neon-unknown-linux-gnueabihf",
+    "x86_64-unknown-linux-gnu",
+    "x86_64-unknown-linux-gnux32",
+    // Other targets
+    "riscv32i-unknown-none-elf",
+    "riscv32imac-unknown-none-elf",
+    "riscv32imc-unknown-none-elf",
+];
+#[cfg(not(feature = "atomic-maybe-uninit"))]
 const DEFAULT_TARGETS: &[&str] = &[
     // All tier 1 or tier 2 linux (GNU) target
     // rustup target list | grep -e '-linux-gnu' | sed 's/ .*$//g' | sed 's/^/"/g' | sed 's/$/",/g'
@@ -120,12 +152,26 @@ fn main() -> Result<()> {
             println!("  {}", m);
             let mut out = String::new();
             for func in functions {
+                #[cfg(not(feature = "atomic-maybe-uninit"))]
                 let mut cmd = cmd!(
                     "cargo",
                     "asm",
                     "--no-color",
                     "--lib",
                     "--no-default-features",
+                    "--target",
+                    target,
+                    func
+                );
+                #[cfg(feature = "atomic-maybe-uninit")]
+                let mut cmd = cmd!(
+                    "cargo",
+                    "asm",
+                    "--no-color",
+                    "--lib",
+                    "--no-default-features",
+                    "--features",
+                    "atomic-maybe-uninit",
                     "--target",
                     target,
                     func

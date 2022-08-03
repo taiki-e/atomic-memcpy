@@ -1,135 +1,154 @@
 asm_test::atomic_memcpy_store_align2::release:
- stwu    1, -80(1)
- lwz     5, 28(4)
- lwz     6, 24(4)
- stw     5, 44(1)
- lwz     5, 20(4)
- stw     6, 40(1)
- lwz     6, 16(4)
- stw     5, 36(1)
- lwz     5, 12(4)
- stw     6, 32(1)
- lwz     6, 8(4)
- stw     5, 28(1)
- lwz     5, 4(4)
+ stwu    1, -112(1)
+ lwz     6, 28(4)
+ addi    5, 1, 40
+ lwz     7, 24(4)
+ lwz     8, 20(4)
+ lwz     9, 16(4)
+ lwz     10, 12(4)
+ lwz     11, 8(4)
+ lwz     12, 4(4)
  lwz     4, 0(4)
- stw     6, 24(1)
- stw     5, 20(1)
- stw     4, 16(1)
+ stw     22, 72(1)
+ mr      22, 3
+ stw     23, 76(1)
+ addi    23, 3, 24
+ stw     24, 80(1)
+ addi    24, 3, 12
+ stw     25, 84(1)
+ stw     26, 88(1)
+ addi    26, 3, 10
+ stw     27, 92(1)
+ stw     28, 96(1)
+ addi    28, 3, 8
+ stw     29, 100(1)
+ addi    29, 3, 6
+ stw     6, 36(1)
+ stw     7, 32(1)
+ li      7, 2
+ stw     8, 28(1)
+ rlwimi  7, 5, 0, 31, 29
+ stw     9, 24(1)
+ addi    9, 3, 2
+ stw     10, 20(1)
+ stw     11, 16(1)
+ addi    11, 3, 4
+ stw     12, 12(1)
+ stw     4, 8(1)
  lwsync
- lwz     4, 44(1)
- lwz     5, 40(1)
- lwz     6, 36(1)
- stw     4, 76(1)
- lwz     4, 32(1)
- stw     5, 72(1)
- lwz     5, 28(1)
- stw     6, 68(1)
- lwz     6, 24(1)
- stw     4, 64(1)
- lwz     4, 20(1)
- stw     5, 60(1)
- addi    5, 3, 3
- stw     6, 56(1)
- rlwinm  7, 5, 0, 0, 29
- lwz     6, 16(1)
- stw     4, 52(1)
- sub     4, 7, 3
- cmplwi  4, 32
- stw     6, 48(1)
- bgt     0, .LBB6_5
- cmplwi  4, 0
+ lwz     4, 36(1)
+ lwz     6, 32(1)
+ lwz     8, 28(1)
+ lwz     10, 24(1)
+ lwz     12, 20(1)
+ lwz     0, 16(1)
+ lwz     27, 12(1)
+ lwz     25, 8(1)
+ stw     4, 68(1)
+ addi    4, 3, 14
+ stw     6, 64(1)
+ addi    6, 3, 16
+ stw     8, 60(1)
+ addi    8, 3, 18
+ stw     10, 56(1)
+ addi    10, 3, 20
+ stw     12, 52(1)
+ addi    12, 3, 22
+ stw     0, 48(1)
+ stw     27, 44(1)
+ addi    27, 3, 26
+ stw     25, 40(1)
+ #APP
+ lhz     25, 0(5)
+ sth     25, 0(22)
+ #NO_APP
+ #APP
+ lhz     7, 0(7)
+ sth     7, 0(9)
+ #NO_APP
+ addi    25, 3, 28
+ li      7, 4
+ li      9, 6
+ rlwimi  7, 5, 0, 30, 28
+ rlwimi  9, 5, 0, 31, 28
+ #APP
+ lhz     5, 0(7)
+ sth     5, 0(11)
+ #NO_APP
+ addi    3, 3, 30
  addi    5, 1, 48
- beq     0, .LBB6_6
- addi    6, 3, 32
- addi    8, 1, 47
- addi    9, 3, -1
- mtctr   4
-.LBB6_3:
- lbzu    10, 1(8)
- addi    11, 9, 1
- stb     10, 1(9)
- mr      9, 11
- bdnz    .LBB6_3
- sub     6, 6, 7
- cmplwi  6, 4
- bge     0, .LBB6_7
- b       .LBB6_11
-.LBB6_5:
- lhz     4, 48(1)
+ #APP
+ lhz     7, 0(9)
+ sth     7, 0(29)
+ #NO_APP
+ addi    7, 1, 50
+ #APP
+ lhz     5, 0(5)
+ sth     5, 0(28)
+ #NO_APP
+ addi    5, 1, 52
+ #APP
+ lhz     7, 0(7)
+ sth     7, 0(26)
+ #NO_APP
+ addi    7, 1, 54
+ #APP
+ lhz     5, 0(5)
+ sth     5, 0(24)
+ #NO_APP
+ addi    5, 1, 56
+ #APP
+ lhz     7, 0(7)
+ sth     7, 0(4)
+ #NO_APP
+ addi    4, 1, 58
+ #APP
+ lhz     5, 0(5)
+ sth     5, 0(6)
+ #NO_APP
+ addi    5, 1, 60
+ #APP
+ lhz     4, 0(4)
+ sth     4, 0(8)
+ #NO_APP
+ addi    4, 1, 62
+ #APP
+ lhz     5, 0(5)
+ sth     5, 0(10)
+ #NO_APP
+ addi    5, 1, 64
+ #APP
+ lhz     4, 0(4)
+ sth     4, 0(12)
+ #NO_APP
+ addi    4, 1, 66
+ #APP
+ lhz     5, 0(5)
+ sth     5, 0(23)
+ #NO_APP
+ #APP
+ lhz     4, 0(4)
+ sth     4, 0(27)
+ #NO_APP
+ addi    5, 1, 68
+ #APP
+ lhz     4, 0(5)
+ sth     4, 0(25)
+ #NO_APP
+ addi    4, 1, 70
+ #APP
+ lhz     4, 0(4)
  sth     4, 0(3)
- lhz     4, 50(1)
- sth     4, 2(3)
- lhz     4, 52(1)
- sth     4, 4(3)
- lhz     4, 54(1)
- sth     4, 6(3)
- lhz     4, 56(1)
- sth     4, 8(3)
- lhz     4, 58(1)
- sth     4, 10(3)
- lhz     4, 60(1)
- sth     4, 12(3)
- lhz     4, 62(1)
- sth     4, 14(3)
- lhz     4, 64(1)
- sth     4, 16(3)
- lhz     4, 66(1)
- sth     4, 18(3)
- lhz     4, 68(1)
- sth     4, 20(3)
- lhz     4, 70(1)
- sth     4, 22(3)
- lhz     4, 72(1)
- sth     4, 24(3)
- lhz     4, 74(1)
- sth     4, 26(3)
- lhz     4, 76(1)
- sth     4, 28(3)
- lhz     4, 78(1)
- sth     4, 30(3)
- b       .LBB6_14
-.LBB6_6:
- li      6, 32
-.LBB6_7:
- addi    9, 6, -4
- li      10, 3
- cmplwi  9, 3
- bc      12, 0, .LBB6_9
- ori     9, 10, 0
- b       .LBB6_9
-.LBB6_9:
- sub     7, 7, 3
- not     9, 9
- add     9, 9, 6
- addi    8, 7, -4
- srwi    9, 9, 2
- add     7, 5, 8
- add     8, 3, 8
- addi    9, 9, 1
- mtctr   9
-.LBB6_10:
- lwzu    9, 4(7)
- addi    6, 6, -4
- addi    4, 4, 4
- stw     9, 4(8)
- addi    8, 8, 4
- bdnz    .LBB6_10
-.LBB6_11:
- cmplwi  6, 0
- beq     0, .LBB6_14
- addi    7, 4, -1
- add     4, 5, 7
- add     3, 3, 7
- mtctr   6
-.LBB6_13:
- lbzu    5, 1(4)
- addi    6, 3, 1
- stb     5, 1(3)
- mr      3, 6
- bdnz    .LBB6_13
-.LBB6_14:
- addi    1, 1, 80
+ #NO_APP
+ lwz     29, 100(1)
+ lwz     28, 96(1)
+ lwz     27, 92(1)
+ lwz     26, 88(1)
+ lwz     25, 84(1)
+ lwz     24, 80(1)
+ lwz     23, 76(1)
+ lwz     22, 72(1)
+ addi    1, 1, 112
  blr
 asm_test::atomic_memcpy_store_align2::write_volatile_release_fence:
  stwu    1, -48(1)

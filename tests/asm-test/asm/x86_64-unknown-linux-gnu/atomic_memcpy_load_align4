@@ -1,157 +1,109 @@
 asm_test::atomic_memcpy_load_align4::acquire:
  sub     rsp, 64
  mov     rax, rdi
- lea     rcx, [rsi, +, 7]
- and     rcx, -8
- mov     r9, rcx
- sub     r9, rsi
- cmp     r9, 64
- ja      .LBB8_6
- test    r9, r9
- je      .LBB8_2
- mov     rdx, rsi
- not     rdx
- add     rcx, rdx
- mov     r8d, r9d
- and     r8d, 3
- cmp     rcx, 3
- jae     .LBB8_21
- mov     r11d, 64
- xor     edi, edi
- test    r8, r8
- jne     .LBB8_10
- jmp     .LBB8_13
-.LBB8_6:
- mov     ecx, dword, ptr, [rsi, +, 60]
- mov     dword, ptr, [rsp, +, 60], ecx
- mov     ecx, dword, ptr, [rsi, +, 56]
- mov     dword, ptr, [rsp, +, 56], ecx
- mov     ecx, dword, ptr, [rsi, +, 52]
- mov     dword, ptr, [rsp, +, 52], ecx
- mov     ecx, dword, ptr, [rsi, +, 48]
- mov     dword, ptr, [rsp, +, 48], ecx
- mov     ecx, dword, ptr, [rsi, +, 44]
- mov     dword, ptr, [rsp, +, 44], ecx
- mov     ecx, dword, ptr, [rsi, +, 40]
- mov     dword, ptr, [rsp, +, 40], ecx
- mov     ecx, dword, ptr, [rsi, +, 36]
- mov     dword, ptr, [rsp, +, 36], ecx
- mov     ecx, dword, ptr, [rsi, +, 32]
- mov     dword, ptr, [rsp, +, 32], ecx
- mov     ecx, dword, ptr, [rsi, +, 28]
- mov     dword, ptr, [rsp, +, 28], ecx
- mov     ecx, dword, ptr, [rsi, +, 24]
- mov     dword, ptr, [rsp, +, 24], ecx
- mov     ecx, dword, ptr, [rsi, +, 20]
- mov     dword, ptr, [rsp, +, 20], ecx
- mov     ecx, dword, ptr, [rsi, +, 16]
- mov     dword, ptr, [rsp, +, 16], ecx
- mov     ecx, dword, ptr, [rsi, +, 12]
- mov     dword, ptr, [rsp, +, 12], ecx
- mov     ecx, dword, ptr, [rsi, +, 8]
- mov     dword, ptr, [rsp, +, 8], ecx
- mov     ecx, dword, ptr, [rsi, +, 4]
- mov     dword, ptr, [rsp, +, 4], ecx
- mov     ecx, dword, ptr, [rsi]
- mov     dword, ptr, [rsp], ecx
- jmp     .LBB8_7
-.LBB8_2:
- mov     r11d, 64
- xor     r9d, r9d
- jmp     .LBB8_3
-.LBB8_21:
- mov     rcx, r9
- and     rcx, -4
- xor     edi, edi
-.LBB8_22:
- movzx   edx, byte, ptr, [rsi, +, rdi]
- mov     byte, ptr, [rsp, +, rdi], dl
- movzx   edx, byte, ptr, [rsi, +, rdi, +, 1]
- mov     byte, ptr, [rsp, +, rdi, +, 1], dl
- movzx   edx, byte, ptr, [rsi, +, rdi, +, 2]
- mov     byte, ptr, [rsp, +, rdi, +, 2], dl
- movzx   edx, byte, ptr, [rsi, +, rdi, +, 3]
- mov     byte, ptr, [rsp, +, rdi, +, 3], dl
- add     rdi, 4
- cmp     rcx, rdi
- jne     .LBB8_22
- mov     r11d, 64
- sub     r11, rdi
- test    r8, r8
- je      .LBB8_13
-.LBB8_10:
- lea     r10, [rsp, +, rdi]
- add     rdi, rsi
- xor     edx, edx
-.LBB8_11:
- movzx   ecx, byte, ptr, [rdi, +, rdx]
- mov     byte, ptr, [r10, +, rdx], cl
- add     rdx, 1
- cmp     r8, rdx
- jne     .LBB8_11
- sub     r11, rdx
-.LBB8_13:
- cmp     r11, 8
- jb      .LBB8_14
-.LBB8_3:
- mov     rcx, qword, ptr, [rsi, +, r9]
- mov     qword, ptr, [rsp, +, r9], rcx
- add     r11, -8
- add     r9, 8
- cmp     r11, 7
- ja      .LBB8_3
-.LBB8_14:
- test    r11, r11
- je      .LBB8_7
- lea     r8, [r11, -, 1]
- mov     rdx, r11
- mov     rdi, r9
- and     rdx, 3
- je      .LBB8_18
- mov     rdi, r9
-.LBB8_17:
- movzx   ecx, byte, ptr, [rsi, +, rdi]
- mov     byte, ptr, [rsp, +, rdi], cl
- add     rdi, 1
- add     rdx, -1
- jne     .LBB8_17
-.LBB8_18:
- cmp     r8, 3
- jb      .LBB8_7
- add     r11, r9
-.LBB8_20:
- movzx   ecx, byte, ptr, [rsi, +, rdi]
- mov     byte, ptr, [rsp, +, rdi], cl
- movzx   ecx, byte, ptr, [rsi, +, rdi, +, 1]
- mov     byte, ptr, [rsp, +, rdi, +, 1], cl
- movzx   ecx, byte, ptr, [rsi, +, rdi, +, 2]
- mov     byte, ptr, [rsp, +, rdi, +, 2], cl
- movzx   ecx, byte, ptr, [rsi, +, rdi, +, 3]
- mov     byte, ptr, [rsp, +, rdi, +, 3], cl
- add     rdi, 4
- cmp     r11, rdi
- jne     .LBB8_20
-.LBB8_7:
- mov     r8d, dword, ptr, [rsp]
- mov     r9d, dword, ptr, [rsp, +, 4]
- mov     r10d, dword, ptr, [rsp, +, 8]
- mov     r11d, dword, ptr, [rsp, +, 12]
- mov     ecx, dword, ptr, [rsp, +, 16]
- mov     edx, dword, ptr, [rsp, +, 20]
- mov     esi, dword, ptr, [rsp, +, 24]
- mov     edi, dword, ptr, [rsp, +, 28]
- movups  xmm0, xmmword, ptr, [rsp, +, 32]
- movups  xmm1, xmmword, ptr, [rsp, +, 48]
- movups  xmmword, ptr, [rax, +, 48], xmm1
- movups  xmmword, ptr, [rax, +, 32], xmm0
- mov     dword, ptr, [rax, +, 16], ecx
- mov     dword, ptr, [rax, +, 20], edx
- mov     dword, ptr, [rax, +, 24], esi
- mov     dword, ptr, [rax, +, 28], edi
- mov     dword, ptr, [rax], r8d
- mov     dword, ptr, [rax, +, 4], r9d
- mov     dword, ptr, [rax, +, 8], r10d
- mov     dword, ptr, [rax, +, 12], r11d
+ lea     rcx, [rsi, +, 60]
+ lea     rdx, [rsp, +, 60]
+ #APP
+ mov     ecx, dword, ptr, [rcx]
+ mov     dword, ptr, [rdx], ecx
+ #NO_APP
+ lea     rcx, [rsi, +, 56]
+ lea     rdx, [rsp, +, 56]
+ #APP
+ mov     ecx, dword, ptr, [rcx]
+ mov     dword, ptr, [rdx], ecx
+ #NO_APP
+ lea     rcx, [rsi, +, 52]
+ lea     rdx, [rsp, +, 52]
+ #APP
+ mov     ecx, dword, ptr, [rcx]
+ mov     dword, ptr, [rdx], ecx
+ #NO_APP
+ lea     rcx, [rsi, +, 48]
+ lea     rdx, [rsp, +, 48]
+ #APP
+ mov     ecx, dword, ptr, [rcx]
+ mov     dword, ptr, [rdx], ecx
+ #NO_APP
+ lea     rcx, [rsi, +, 44]
+ lea     rdx, [rsp, +, 44]
+ #APP
+ mov     ecx, dword, ptr, [rcx]
+ mov     dword, ptr, [rdx], ecx
+ #NO_APP
+ lea     rcx, [rsi, +, 40]
+ lea     rdx, [rsp, +, 40]
+ #APP
+ mov     ecx, dword, ptr, [rcx]
+ mov     dword, ptr, [rdx], ecx
+ #NO_APP
+ lea     rcx, [rsi, +, 36]
+ lea     rdx, [rsp, +, 36]
+ #APP
+ mov     ecx, dword, ptr, [rcx]
+ mov     dword, ptr, [rdx], ecx
+ #NO_APP
+ lea     rcx, [rsi, +, 32]
+ lea     rdx, [rsp, +, 32]
+ #APP
+ mov     ecx, dword, ptr, [rcx]
+ mov     dword, ptr, [rdx], ecx
+ #NO_APP
+ lea     rcx, [rsi, +, 28]
+ lea     rdx, [rsp, +, 28]
+ #APP
+ mov     ecx, dword, ptr, [rcx]
+ mov     dword, ptr, [rdx], ecx
+ #NO_APP
+ lea     rcx, [rsi, +, 24]
+ lea     rdx, [rsp, +, 24]
+ #APP
+ mov     ecx, dword, ptr, [rcx]
+ mov     dword, ptr, [rdx], ecx
+ #NO_APP
+ lea     rcx, [rsi, +, 20]
+ lea     rdx, [rsp, +, 20]
+ #APP
+ mov     ecx, dword, ptr, [rcx]
+ mov     dword, ptr, [rdx], ecx
+ #NO_APP
+ lea     rcx, [rsi, +, 16]
+ lea     rdx, [rsp, +, 16]
+ #APP
+ mov     ecx, dword, ptr, [rcx]
+ mov     dword, ptr, [rdx], ecx
+ #NO_APP
+ lea     rcx, [rsi, +, 12]
+ lea     rdx, [rsp, +, 12]
+ #APP
+ mov     ecx, dword, ptr, [rcx]
+ mov     dword, ptr, [rdx], ecx
+ #NO_APP
+ lea     rcx, [rsi, +, 8]
+ lea     rdx, [rsp, +, 8]
+ #APP
+ mov     ecx, dword, ptr, [rcx]
+ mov     dword, ptr, [rdx], ecx
+ #NO_APP
+ lea     rcx, [rsi, +, 4]
+ lea     rdx, [rsp, +, 4]
+ #APP
+ mov     ecx, dword, ptr, [rcx]
+ mov     dword, ptr, [rdx], ecx
+ #NO_APP
+ mov     rcx, rsp
+ #APP
+ mov     edx, dword, ptr, [rsi]
+ mov     dword, ptr, [rcx], edx
+ #NO_APP
+ movups  xmm0, xmmword, ptr, [rsp]
+ movups  xmm1, xmmword, ptr, [rsp, +, 16]
+ movups  xmm2, xmmword, ptr, [rsp, +, 32]
+ movups  xmm3, xmmword, ptr, [rsp, +, 48]
+ movups  xmmword, ptr, [rdi], xmm0
+ movups  xmmword, ptr, [rdi, +, 16], xmm1
+ movups  xmmword, ptr, [rdi, +, 32], xmm2
+ movups  xmmword, ptr, [rdi, +, 48], xmm3
  #MEMBARRIER
  add     rsp, 64
  ret

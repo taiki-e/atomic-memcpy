@@ -1,169 +1,263 @@
 asm_test::atomic_memcpy_store_align1::release:
- addiu   $sp, $sp, -64
+ addiu   $sp, $sp, -112
+ sw      $ra, 108($sp)
+ sw      $fp, 104($sp)
+ sw      $23, 100($sp)
+ sw      $22, 96($sp)
+ sw      $21, 92($sp)
+ sw      $20, 88($sp)
+ sw      $19, 84($sp)
+ sw      $18, 80($sp)
+ sw      $17, 76($sp)
+ sw      $16, 72($sp)
  lwl     $1, 20($5)
  lwl     $2, 16($5)
  lwl     $3, 12($5)
  lwl     $6, 8($5)
  lwl     $7, 24($5)
  lwl     $8, 28($5)
+ addiu   $25, $4, 1
+ addiu   $24, $4, 2
+ addiu   $11, $4, 3
+ addiu   $13, $4, 4
+ addiu   $18, $4, 5
+ addiu   $17, $4, 6
+ addiu   $16, $4, 7
+ addiu   $gp, $4, 8
+ addiu   $23, $4, 9
+ addiu   $22, $4, 10
+ addiu   $21, $4, 11
+ addiu   $20, $4, 12
+ addiu   $19, $4, 13
+ addiu   $ra, $4, 15
+ addiu   $fp, $4, 16
+ addiu   $9, $4, 25
  lwr     $1, 23($5)
  lwr     $6, 11($5)
  lwr     $3, 15($5)
  lwr     $2, 19($5)
  lwr     $7, 27($5)
  lwr     $8, 31($5)
- sw      $1, 20($sp)
+ sw      $1, 28($sp)
  lwl     $1, 4($5)
- sw      $8, 28($sp)
- sw      $7, 24($sp)
- sw      $2, 16($sp)
- sw      $3, 12($sp)
- sw      $6, 8($sp)
+ sw      $8, 36($sp)
+ sw      $7, 32($sp)
+ sw      $2, 24($sp)
+ sw      $3, 20($sp)
+ sw      $6, 16($sp)
+ addiu   $8, $4, 26
  lwr     $1, 7($5)
- sw      $1, 4($sp)
+ sw      $1, 12($sp)
  lwl     $1, 0($5)
  lwr     $1, 3($5)
- sw      $1, 0($sp)
+ sw      $1, 8($sp)
  sync
  lw      $1, 16($sp)
  lw      $2, 20($sp)
  lw      $3, 24($sp)
- lw      $5, 0($sp)
- lw      $6, 4($sp)
- lw      $7, 8($sp)
- lw      $8, 12($sp)
- lw      $9, 28($sp)
- sw      $2, 52($sp)
+ lw      $5, 28($sp)
+ lw      $6, 32($sp)
+ lw      $7, 36($sp)
  sw      $1, 48($sp)
- addiu   $1, $4, 3
- addiu   $2, $zero, -4
+ lw      $1, 12($sp)
+ sw      $7, 68($sp)
+ sw      $6, 64($sp)
+ sw      $5, 60($sp)
  sw      $3, 56($sp)
- sw      $9, 60($sp)
- sw      $8, 44($sp)
- sw      $7, 40($sp)
- sw      $6, 36($sp)
- and     $3, $1, $2
- subu    $2, $3, $4
- sltiu   $1, $2, 33
- beqz    $1, $BB2_6
- sw      $5, 32($sp)
- beqz    $2, $BB2_7
- nop
- addiu   $5, $sp, 32
- subu    $7, $4, $3
- addiu   $6, $4, 32
- move    $8, $4
-$BB2_3:
- lbu     $1, 0($5)
- addiu   $5, $5, 1
+ sw      $2, 52($sp)
+ addiu   $3, $4, 31
+ addiu   $5, $4, 29
+ addiu   $6, $4, 28
+ addiu   $7, $4, 27
+ sw      $1, 44($sp)
+ lw      $1, 8($sp)
+ sw      $1, 40($sp)
+ addiu   $1, $sp, 40
+ #APP
+ lbu     $2, 0($1)
+ sb      $2, 0($4)
+ #NO_APP
+ sw      $3, 4($sp)
+ addiu   $3, $4, 30
+ ori     $10, $1, 1
+ ori     $12, $1, 2
+ ori     $15, $1, 3
+ ori     $14, $1, 4
+ sw      $3, 0($sp)
+ addiu   $2, $4, 14
+ #APP
+ lbu     $3, 0($10)
+ sb      $3, 0($25)
+ #NO_APP
+ addiu   $10, $4, 24
+ #APP
+ lbu     $25, 0($12)
+ sb      $25, 0($24)
+ #NO_APP
+ addiu   $3, $4, 23
+ addiu   $12, $4, 22
+ addiu   $24, $4, 21
+ #APP
+ lbu     $25, 0($15)
+ sb      $25, 0($11)
+ #NO_APP
+ addiu   $11, $4, 20
+ addiu   $15, $4, 19
+ #APP
+ lbu     $25, 0($14)
+ sb      $25, 0($13)
+ #NO_APP
+ ori     $14, $1, 5
+ addiu   $13, $4, 18
+ addiu   $4, $4, 17
+ #APP
+ lbu     $25, 0($14)
+ sb      $25, 0($18)
+ #NO_APP
+ addiu   $14, $1, 8
+ ori     $25, $1, 6
+ #APP
+ lbu     $18, 0($25)
+ sb      $18, 0($17)
+ #NO_APP
+ addiu   $17, $1, 14
+ ori     $25, $1, 7
+ #APP
+ lbu     $18, 0($25)
+ sb      $18, 0($16)
+ #NO_APP
+ addiu   $16, $1, 12
+ #APP
+ lbu     $18, 0($14)
+ sb      $18, 0($gp)
+ #NO_APP
+ addiu   $gp, $1, 9
+ addiu   $14, $1, 11
+ addiu   $25, $1, 13
+ #APP
+ lbu     $18, 0($gp)
+ sb      $18, 0($23)
+ #NO_APP
+ addiu   $gp, $1, 10
+ #APP
+ lbu     $23, 0($gp)
+ sb      $23, 0($22)
+ #NO_APP
+ addiu   $gp, $1, 15
+ addiu   $18, $1, 16
+ addiu   $22, $1, 31
+ #APP
+ lbu     $23, 0($14)
+ sb      $23, 0($21)
+ #NO_APP
+ addiu   $14, $1, 30
+ addiu   $21, $1, 29
+ #APP
+ lbu     $23, 0($16)
+ sb      $23, 0($20)
+ #NO_APP
+ addiu   $16, $1, 28
+ addiu   $20, $1, 27
+ #APP
+ lbu     $23, 0($25)
+ sb      $23, 0($19)
+ #NO_APP
+ addiu   $25, $1, 26
+ addiu   $19, $1, 25
+ #APP
+ lbu     $23, 0($17)
+ sb      $23, 0($2)
+ #NO_APP
+ addiu   $2, $1, 24
+ addiu   $17, $1, 23
+ #APP
+ lbu     $23, 0($gp)
+ sb      $23, 0($ra)
+ #NO_APP
+ addiu   $gp, $1, 22
+ #APP
+ lbu     $ra, 0($18)
+ sb      $ra, 0($fp)
+ #NO_APP
+ addiu   $fp, $1, 17
+ addiu   $23, $1, 21
+ addiu   $18, $1, 20
+ #APP
+ lbu     $ra, 0($fp)
+ sb      $ra, 0($4)
+ #NO_APP
+ addiu   $4, $1, 19
+ addiu   $1, $1, 18
+ #APP
+ lbu     $fp, 0($1)
+ sb      $fp, 0($13)
+ #NO_APP
+ #APP
+ lbu     $1, 0($4)
+ sb      $1, 0($15)
+ #NO_APP
+ #APP
+ lbu     $1, 0($18)
+ sb      $1, 0($11)
+ #NO_APP
+ #APP
+ lbu     $1, 0($23)
+ sb      $1, 0($24)
+ #NO_APP
+ #APP
+ lbu     $1, 0($gp)
+ sb      $1, 0($12)
+ #NO_APP
+ #APP
+ lbu     $1, 0($17)
+ sb      $1, 0($3)
+ #NO_APP
+ #APP
+ lbu     $1, 0($2)
+ sb      $1, 0($10)
+ #NO_APP
+ #APP
+ lbu     $1, 0($19)
+ sb      $1, 0($9)
+ #NO_APP
+ #APP
+ lbu     $1, 0($25)
  sb      $1, 0($8)
- addiu   $1, $7, 1
- addiu   $8, $8, 1
- sltu    $9, $1, $7
- beqz    $9, $BB2_3
- move    $7, $1
- subu    $3, $6, $3
- sltiu   $1, $3, 4
- bnez    $1, $BB2_10
- nop
- b       $BB2_8
- nop
-$BB2_6:
- lbu     $1, 32($sp)
- sb      $1, 0($4)
- lbu     $1, 33($sp)
- sb      $1, 1($4)
- lbu     $1, 34($sp)
- sb      $1, 2($4)
- lbu     $1, 35($sp)
- sb      $1, 3($4)
- lbu     $1, 36($sp)
- sb      $1, 4($4)
- lbu     $1, 37($sp)
- sb      $1, 5($4)
- lbu     $1, 38($sp)
- sb      $1, 6($4)
- lbu     $1, 39($sp)
- sb      $1, 7($4)
- lbu     $1, 40($sp)
- sb      $1, 8($4)
- lbu     $1, 41($sp)
- sb      $1, 9($4)
- lbu     $1, 42($sp)
- sb      $1, 10($4)
- lbu     $1, 43($sp)
- sb      $1, 11($4)
- lbu     $1, 44($sp)
- sb      $1, 12($4)
- lbu     $1, 45($sp)
- sb      $1, 13($4)
- lbu     $1, 46($sp)
- sb      $1, 14($4)
- lbu     $1, 47($sp)
- sb      $1, 15($4)
- lbu     $1, 48($sp)
- sb      $1, 16($4)
- lbu     $1, 49($sp)
- sb      $1, 17($4)
- lbu     $1, 50($sp)
- sb      $1, 18($4)
- lbu     $1, 51($sp)
- sb      $1, 19($4)
- lbu     $1, 52($sp)
- sb      $1, 20($4)
- lbu     $1, 53($sp)
- sb      $1, 21($4)
- lbu     $1, 54($sp)
- sb      $1, 22($4)
- lbu     $1, 55($sp)
- sb      $1, 23($4)
- lbu     $1, 56($sp)
- sb      $1, 24($4)
- lbu     $1, 57($sp)
- sb      $1, 25($4)
- lbu     $1, 58($sp)
- sb      $1, 26($4)
- lbu     $1, 59($sp)
- sb      $1, 27($4)
- lbu     $1, 60($sp)
- sb      $1, 28($4)
- lbu     $1, 61($sp)
- sb      $1, 29($4)
- lbu     $1, 62($sp)
- sb      $1, 30($4)
- lbu     $1, 63($sp)
- b       $BB2_13
- sb      $1, 31($4)
-$BB2_7:
- addiu   $3, $zero, 32
-$BB2_8:
- addiu   $5, $sp, 32
-$BB2_9:
- addu    $1, $5, $2
- addiu   $3, $3, -4
- lwl     $6, 0($1)
- lwr     $6, 3($1)
- addu    $1, $4, $2
- sw      $6, 0($1)
- sltiu   $1, $3, 4
- beqz    $1, $BB2_9
- addiu   $2, $2, 4
-$BB2_10:
- beqz    $3, $BB2_13
- nop
- addiu   $1, $sp, 32
- addu    $5, $1, $2
- addu    $2, $4, $2
-$BB2_12:
- lbu     $1, 0($5)
- addiu   $5, $5, 1
- addiu   $3, $3, -1
+ #NO_APP
+ #APP
+ lbu     $1, 0($20)
+ sb      $1, 0($7)
+ #NO_APP
+ #APP
+ lbu     $1, 0($16)
+ sb      $1, 0($6)
+ #NO_APP
+ #APP
+ lbu     $1, 0($21)
+ sb      $1, 0($5)
+ #NO_APP
+ lw      $2, 0($sp)
+ #APP
+ lbu     $1, 0($14)
  sb      $1, 0($2)
- bnez    $3, $BB2_12
- addiu   $2, $2, 1
-$BB2_13:
+ #NO_APP
+ lw      $2, 4($sp)
+ #APP
+ lbu     $1, 0($22)
+ sb      $1, 0($2)
+ #NO_APP
+ lw      $16, 72($sp)
+ lw      $17, 76($sp)
+ lw      $18, 80($sp)
+ lw      $19, 84($sp)
+ lw      $20, 88($sp)
+ lw      $21, 92($sp)
+ lw      $22, 96($sp)
+ lw      $23, 100($sp)
+ lw      $fp, 104($sp)
+ lw      $ra, 108($sp)
  jr      $ra
- addiu   $sp, $sp, 64
+ addiu   $sp, $sp, 112
 $func_end2:
 asm_test::atomic_memcpy_store_align1::write_volatile_release_fence:
  addiu   $sp, $sp, -32

@@ -1,37 +1,88 @@
 asm_test::atomic_memcpy_store_align8::release:
- push    ebp
- push    ebx
- push    edi
- push    esi
- sub     esp, 8
- mov     ecx, dword, ptr, [esp, +, 32]
- mov     eax, dword, ptr, [ecx]
- mov     dword, ptr, [esp, +, 4], eax
- mov     eax, dword, ptr, [ecx, +, 4]
- mov     dword, ptr, [esp], eax
- mov     esi, dword, ptr, [ecx, +, 8]
- mov     edi, dword, ptr, [ecx, +, 12]
- mov     ebx, dword, ptr, [ecx, +, 16]
- mov     ebp, dword, ptr, [ecx, +, 20]
+ sub     esp, 68
+ mov     eax, dword, ptr, [esp, +, 72]
+ mov     ecx, dword, ptr, [esp, +, 76]
+ mov     edx, dword, ptr, [ecx, +, 28]
+ mov     dword, ptr, [esp, +, 28], edx
  mov     edx, dword, ptr, [ecx, +, 24]
- mov     ecx, dword, ptr, [ecx, +, 28]
+ mov     dword, ptr, [esp, +, 24], edx
+ mov     edx, dword, ptr, [ecx, +, 20]
+ mov     dword, ptr, [esp, +, 20], edx
+ mov     edx, dword, ptr, [ecx, +, 16]
+ mov     dword, ptr, [esp, +, 16], edx
+ mov     edx, dword, ptr, [ecx, +, 12]
+ mov     dword, ptr, [esp, +, 12], edx
+ mov     edx, dword, ptr, [ecx, +, 8]
+ mov     dword, ptr, [esp, +, 8], edx
+ mov     edx, dword, ptr, [ecx]
+ mov     ecx, dword, ptr, [ecx, +, 4]
+ mov     dword, ptr, [esp, +, 4], ecx
+ mov     dword, ptr, [esp], edx
  #MEMBARRIER
- mov     eax, dword, ptr, [esp, +, 28]
- mov     dword, ptr, [eax, +, 28], ecx
- mov     dword, ptr, [eax, +, 24], edx
- mov     dword, ptr, [eax, +, 20], ebp
- mov     dword, ptr, [eax, +, 16], ebx
- mov     dword, ptr, [eax, +, 12], edi
- mov     dword, ptr, [eax, +, 8], esi
+ mov     ecx, dword, ptr, [esp, +, 28]
+ mov     dword, ptr, [esp, +, 60], ecx
+ mov     ecx, dword, ptr, [esp, +, 24]
+ mov     dword, ptr, [esp, +, 56], ecx
+ mov     ecx, dword, ptr, [esp, +, 20]
+ mov     dword, ptr, [esp, +, 52], ecx
+ mov     ecx, dword, ptr, [esp, +, 16]
+ mov     dword, ptr, [esp, +, 48], ecx
+ mov     ecx, dword, ptr, [esp, +, 12]
+ mov     dword, ptr, [esp, +, 44], ecx
+ mov     ecx, dword, ptr, [esp, +, 8]
+ mov     dword, ptr, [esp, +, 40], ecx
  mov     ecx, dword, ptr, [esp]
- mov     dword, ptr, [eax, +, 4], ecx
- mov     ecx, dword, ptr, [esp, +, 4]
+ mov     edx, dword, ptr, [esp, +, 4]
+ mov     dword, ptr, [esp, +, 36], edx
+ mov     dword, ptr, [esp, +, 32], ecx
+ lea     ecx, [esp, +, 60]
+ lea     edx, [eax, +, 28]
+ #APP
+ mov     ecx, dword, ptr, [ecx]
+ mov     dword, ptr, [edx], ecx
+ #NO_APP
+ lea     ecx, [esp, +, 56]
+ lea     edx, [eax, +, 24]
+ #APP
+ mov     ecx, dword, ptr, [ecx]
+ mov     dword, ptr, [edx], ecx
+ #NO_APP
+ lea     ecx, [esp, +, 52]
+ lea     edx, [eax, +, 20]
+ #APP
+ mov     ecx, dword, ptr, [ecx]
+ mov     dword, ptr, [edx], ecx
+ #NO_APP
+ lea     ecx, [esp, +, 48]
+ lea     edx, [eax, +, 16]
+ #APP
+ mov     ecx, dword, ptr, [ecx]
+ mov     dword, ptr, [edx], ecx
+ #NO_APP
+ lea     ecx, [esp, +, 44]
+ lea     edx, [eax, +, 12]
+ #APP
+ mov     ecx, dword, ptr, [ecx]
+ mov     dword, ptr, [edx], ecx
+ #NO_APP
+ lea     ecx, [esp, +, 40]
+ lea     edx, [eax, +, 8]
+ #APP
+ mov     ecx, dword, ptr, [ecx]
+ mov     dword, ptr, [edx], ecx
+ #NO_APP
+ lea     ecx, [esp, +, 36]
+ lea     edx, [eax, +, 4]
+ #APP
+ mov     ecx, dword, ptr, [ecx]
+ mov     dword, ptr, [edx], ecx
+ #NO_APP
+ lea     ecx, [esp, +, 32]
+ #APP
+ mov     ecx, dword, ptr, [ecx]
  mov     dword, ptr, [eax], ecx
- add     esp, 8
- pop     esi
- pop     edi
- pop     ebx
- pop     ebp
+ #NO_APP
+ add     esp, 68
  ret
 asm_test::atomic_memcpy_store_align8::write_volatile_release_fence:
  push    esi

@@ -1,302 +1,243 @@
 asm_test::atomic_memcpy_store_align1::release:
- push    {r4, r5, r6, r7, r8, lr}
+ push    {r4, r5, r6, lr}
  sub     sp, sp, #64
- mov     r8, sp
- mov     r7, r0
- mov     r0, r8
- mov     r2, #32
- mov     r6, #32
- bl      memcpy
- mov     r0, #0
- add     r2, sp, #32
- mcr     p15, #0, r0, c7, c10, #5
- ldm     r8!, {r1, r3, r4, r5}
- mov     r0, r2
- stm     r0!, {r1, r3, r4, r5}
- ldm     r8, {r1, r3, r4, r5}
- stm     r0, {r1, r3, r4, r5}
- add     r0, r7, #3
- bic     r1, r0, #3
- sub     r0, r1, r7
- cmp     r0, #33
- bhs     .LBB2_12
- cmp     r0, #0
- beq     .LBB2_5
- sub     r6, r7, r1
- add     r3, r7, #32
- mov     r4, r7
-.LBB2_3:
- ldrb    r5, [r2], #1
- adds    r6, r6, #1
- strb    r5, [r4]
- add     r4, r4, #1
- blo     .LBB2_3
- sub     r6, r3, r1
- cmp     r6, #4
- blo     .LBB2_8
-.LBB2_5:
- sub     r0, r7, r1
- add     r1, sp, #32
-.LBB2_6:
- sub     r3, r1, r0
- ldrb    r2, [r1, -r0]
- sub     r6, r6, #4
- ldrb    r5, [r3, #1]
- cmp     r6, #3
- ldrb    r4, [r3, #2]
- ldrb    r3, [r3, #3]
- orr     r2, r2, r5, lsl, #8
- orr     r3, r4, r3, lsl, #8
- orr     r2, r2, r3, lsl, #16
- str     r2, [r7, -r0]
- sub     r0, r0, #4
- bhi     .LBB2_6
- rsb     r0, r0, #0
-.LBB2_8:
- cmp     r6, #0
- beq     .LBB2_11
- add     r1, sp, #32
- add     r1, r1, r0
- add     r0, r7, r0
-.LBB2_10:
- ldrb    r2, [r1], #1
- subs    r6, r6, #1
- strb    r2, [r0]
- add     r0, r0, #1
- bne     .LBB2_10
-.LBB2_11:
- add     sp, sp, #64
- pop     {r4, r5, r6, r7, r8, pc}
-.LBB2_12:
- ldrb    r0, [sp, #32]
- strb    r0, [r7]
- ldrb    r0, [sp, #33]
- strb    r0, [r7, #1]
- ldrb    r0, [sp, #34]
- strb    r0, [r7, #2]
- ldrb    r0, [sp, #35]
- strb    r0, [r7, #3]
- ldrb    r0, [sp, #36]
- strb    r0, [r7, #4]
- ldrb    r0, [sp, #37]
- strb    r0, [r7, #5]
- ldrb    r0, [sp, #38]
- strb    r0, [r7, #6]
- ldrb    r0, [sp, #39]
- strb    r0, [r7, #7]
- ldrb    r0, [sp, #40]
- strb    r0, [r7, #8]
- ldrb    r0, [sp, #41]
- strb    r0, [r7, #9]
- ldrb    r0, [sp, #42]
- strb    r0, [r7, #10]
- ldrb    r0, [sp, #43]
- strb    r0, [r7, #11]
- ldrb    r0, [sp, #44]
- strb    r0, [r7, #12]
- ldrb    r0, [sp, #45]
- strb    r0, [r7, #13]
- ldrb    r0, [sp, #46]
- strb    r0, [r7, #14]
- ldrb    r0, [sp, #47]
- strb    r0, [r7, #15]
- ldrb    r0, [sp, #48]
- strb    r0, [r7, #16]
- ldrb    r0, [sp, #49]
- strb    r0, [r7, #17]
- ldrb    r0, [sp, #50]
- strb    r0, [r7, #18]
- ldrb    r0, [sp, #51]
- strb    r0, [r7, #19]
- ldrb    r0, [sp, #52]
- strb    r0, [r7, #20]
- ldrb    r0, [sp, #53]
- strb    r0, [r7, #21]
- ldrb    r0, [sp, #54]
- strb    r0, [r7, #22]
- ldrb    r0, [sp, #55]
- strb    r0, [r7, #23]
- ldrb    r0, [sp, #56]
- strb    r0, [r7, #24]
- ldrb    r0, [sp, #57]
- strb    r0, [r7, #25]
- ldrb    r0, [sp, #58]
- strb    r0, [r7, #26]
- ldrb    r0, [sp, #59]
- strb    r0, [r7, #27]
- ldrb    r0, [sp, #60]
- strb    r0, [r7, #28]
- ldrb    r0, [sp, #61]
- strb    r0, [r7, #29]
- ldrb    r0, [sp, #62]
- strb    r0, [r7, #30]
- ldrb    r0, [sp, #63]
- strb    r0, [r7, #31]
- add     sp, sp, #64
- pop     {r4, r5, r6, r7, r8, pc}
-.LBB4_3:
- ldrb    r6, [r5]
- adds    r2, r2, #1
- strb    r6, [r4], #1
- add     r5, r5, #1
- blo     .LBB4_3
- sub     r2, lr, r12
- cmp     r2, #4
- bhs     .LBB4_8
- cmp     r2, #0
- bne     .LBB4_11
- b       .LBB4_13
-.LBB4_6:
- ldrh    r2, [r1, #30]
- strh    r2, [sp, #30]
- ldrh    r2, [r1, #28]
- strh    r2, [sp, #28]
- ldrh    r2, [r1, #26]
- strh    r2, [sp, #26]
- ldrh    r2, [r1, #24]
- strh    r2, [sp, #24]
- ldrh    r2, [r1, #22]
- strh    r2, [sp, #22]
- ldrh    r2, [r1, #20]
- strh    r2, [sp, #20]
- ldrh    r2, [r1, #18]
- strh    r2, [sp, #18]
- ldrh    r2, [r1, #16]
- strh    r2, [sp, #16]
- ldrh    r2, [r1, #14]
- strh    r2, [sp, #14]
- ldrh    r2, [r1, #12]
- strh    r2, [sp, #12]
- ldrh    r2, [r1, #10]
- strh    r2, [sp, #10]
- ldrh    r2, [r1, #8]
- strh    r2, [sp, #8]
- ldrh    r2, [r1, #6]
- strh    r2, [sp, #6]
- ldrh    r2, [r1, #4]
- strh    r2, [sp, #4]
- ldrh    r2, [r1, #2]
- strh    r2, [sp, #2]
- ldrh    r1, [r1]
- strh    r1, [sp]
- b       .LBB4_13
-.LBB4_7:
- mov     r2, #32
-.LBB4_8:
- sub     r3, r1, r12
- mov     r12, sp
-.LBB4_9:
- ldr     r6, [r1, -r3]
- sub     r5, r12, r3
- sub     r2, r2, #4
- strb    r6, [r12, -r3]
- sub     r3, r3, #4
- cmp     r2, #3
- lsr     r4, r6, #24
- strb    r4, [r5, #3]
- lsr     r4, r6, #16
- lsr     r6, r6, #8
- strb    r4, [r5, #2]
- strb    r6, [r5, #1]
- bhi     .LBB4_9
- rsb     r3, r3, #0
- cmp     r2, #0
- beq     .LBB4_13
-.LBB4_11:
- add     r1, r1, r3
  mov     r6, sp
- add     r3, r6, r3
-.LBB4_12:
- ldrb    r6, [r1]
- add     r1, r1, #1
- strb    r6, [r3], #1
- subs    r2, r2, #1
- bne     .LBB4_12
-.LBB4_13:
- mov     r1, sp
+ mov     r4, r0
+ mov     r0, r6
  mov     r2, #32
  bl      memcpy
  mov     r0, #0
+ add     r12, sp, #32
  mcr     p15, #0, r0, c7, c10, #5
- add     sp, sp, #32
+ ldm     r6!, {r1, r2, r3, r5}
+ mov     r0, r12
+ stm     r0!, {r1, r2, r3, r5}
+ ldm     r6, {r1, r2, r3, r5}
+ stm     r0, {r1, r2, r3, r5}
+ add     r1, r4, #31
+ add     r2, r12, #31
+ mov     r0, #0
+ @APP
+ ldrb    r2, [r2]
+ strb    r2, [r1]
+ @NO_APP
+ add     r1, r4, #30
+ add     r2, r12, #30
+ mov     r0, #0
+ @APP
+ ldrb    r2, [r2]
+ strb    r2, [r1]
+ @NO_APP
+ add     r1, r4, #29
+ add     r2, r12, #29
+ mov     r0, #0
+ @APP
+ ldrb    r2, [r2]
+ strb    r2, [r1]
+ @NO_APP
+ add     r1, r4, #28
+ add     r2, r12, #28
+ mov     r0, #0
+ @APP
+ ldrb    r2, [r2]
+ strb    r2, [r1]
+ @NO_APP
+ add     r1, r4, #27
+ add     r2, r12, #27
+ mov     r0, #0
+ @APP
+ ldrb    r2, [r2]
+ strb    r2, [r1]
+ @NO_APP
+ add     r1, r4, #26
+ add     r2, r12, #26
+ mov     r0, #0
+ @APP
+ ldrb    r2, [r2]
+ strb    r2, [r1]
+ @NO_APP
+ add     r1, r4, #25
+ add     r2, r12, #25
+ mov     r0, #0
+ @APP
+ ldrb    r2, [r2]
+ strb    r2, [r1]
+ @NO_APP
+ add     r1, r4, #24
+ add     r2, r12, #24
+ mov     r0, #0
+ @APP
+ ldrb    r2, [r2]
+ strb    r2, [r1]
+ @NO_APP
+ add     r1, r4, #23
+ add     r2, r12, #23
+ mov     r0, #0
+ @APP
+ ldrb    r2, [r2]
+ strb    r2, [r1]
+ @NO_APP
+ add     r1, r4, #22
+ add     r2, r12, #22
+ mov     r0, #0
+ @APP
+ ldrb    r2, [r2]
+ strb    r2, [r1]
+ @NO_APP
+ add     r1, r4, #21
+ add     r2, r12, #21
+ mov     r0, #0
+ @APP
+ ldrb    r2, [r2]
+ strb    r2, [r1]
+ @NO_APP
+ add     r1, r4, #20
+ add     r2, r12, #20
+ mov     r0, #0
+ @APP
+ ldrb    r2, [r2]
+ strb    r2, [r1]
+ @NO_APP
+ add     r1, r4, #19
+ add     r2, r12, #19
+ mov     r0, #0
+ @APP
+ ldrb    r2, [r2]
+ strb    r2, [r1]
+ @NO_APP
+ add     r1, r4, #18
+ add     r2, r12, #18
+ mov     r0, #0
+ @APP
+ ldrb    r2, [r2]
+ strb    r2, [r1]
+ @NO_APP
+ add     r1, r4, #17
+ add     r2, r12, #17
+ mov     r0, #0
+ @APP
+ ldrb    r2, [r2]
+ strb    r2, [r1]
+ @NO_APP
+ add     r1, r4, #16
+ add     r2, r12, #16
+ mov     r0, #0
+ @APP
+ ldrb    r2, [r2]
+ strb    r2, [r1]
+ @NO_APP
+ add     r1, r4, #15
+ add     r2, r12, #15
+ mov     r0, #0
+ @APP
+ ldrb    r2, [r2]
+ strb    r2, [r1]
+ @NO_APP
+ add     r1, r4, #14
+ add     r2, r12, #14
+ mov     r0, #0
+ @APP
+ ldrb    r2, [r2]
+ strb    r2, [r1]
+ @NO_APP
+ add     r1, r4, #13
+ add     r2, r12, #13
+ mov     r0, #0
+ @APP
+ ldrb    r2, [r2]
+ strb    r2, [r1]
+ @NO_APP
+ add     r1, r4, #12
+ add     r2, r12, #12
+ mov     r0, #0
+ @APP
+ ldrb    r2, [r2]
+ strb    r2, [r1]
+ @NO_APP
+ add     r1, r4, #11
+ add     r2, r12, #11
+ mov     r0, #0
+ @APP
+ ldrb    r2, [r2]
+ strb    r2, [r1]
+ @NO_APP
+ add     r1, r4, #10
+ add     r2, r12, #10
+ mov     r0, #0
+ @APP
+ ldrb    r2, [r2]
+ strb    r2, [r1]
+ @NO_APP
+ add     r1, r4, #9
+ add     r2, r12, #9
+ mov     r0, #0
+ @APP
+ ldrb    r2, [r2]
+ strb    r2, [r1]
+ @NO_APP
+ add     r1, r4, #8
+ add     r2, r12, #8
+ mov     r0, #0
+ @APP
+ ldrb    r2, [r2]
+ strb    r2, [r1]
+ @NO_APP
+ add     r1, r4, #7
+ orr     r2, r12, #7
+ mov     r0, #0
+ @APP
+ ldrb    r2, [r2]
+ strb    r2, [r1]
+ @NO_APP
+ add     r1, r4, #6
+ orr     r2, r12, #6
+ mov     r0, #0
+ @APP
+ ldrb    r2, [r2]
+ strb    r2, [r1]
+ @NO_APP
+ add     r1, r4, #5
+ orr     r2, r12, #5
+ mov     r0, #0
+ @APP
+ ldrb    r2, [r2]
+ strb    r2, [r1]
+ @NO_APP
+ add     r1, r4, #4
+ orr     r2, r12, #4
+ mov     r0, #0
+ @APP
+ ldrb    r2, [r2]
+ strb    r2, [r1]
+ @NO_APP
+ add     r1, r4, #3
+ orr     r2, r12, #3
+ mov     r0, #0
+ @APP
+ ldrb    r2, [r2]
+ strb    r2, [r1]
+ @NO_APP
+ add     r1, r4, #2
+ orr     r2, r12, #2
+ mov     r0, #0
+ @APP
+ ldrb    r2, [r2]
+ strb    r2, [r1]
+ @NO_APP
+ add     r1, r4, #1
+ orr     r2, r12, #1
+ mov     r0, #0
+ @APP
+ ldrb    r2, [r2]
+ strb    r2, [r1]
+ @NO_APP
+ mov     r0, #0
+ @APP
+ ldrb    r1, [r12]
+ strb    r1, [r4]
+ @NO_APP
+ add     sp, sp, #64
  pop     {r4, r5, r6, pc}
-.LBB6_3:
- ldrb    r5, [r2], #1
- adds    r6, r6, #1
- strb    r5, [r4]
- add     r4, r4, #1
- blo     .LBB6_3
- sub     r6, r3, r1
- cmp     r6, #4
- blo     .LBB6_8
-.LBB6_5:
- sub     r0, r7, r1
- add     r1, sp, #32
-.LBB6_6:
- sub     r3, r1, r0
- ldrb    r2, [r1, -r0]
- sub     r6, r6, #4
- ldrb    r5, [r3, #1]
- cmp     r6, #3
- ldrb    r4, [r3, #2]
- ldrb    r3, [r3, #3]
- orr     r2, r2, r5, lsl, #8
- orr     r3, r4, r3, lsl, #8
- orr     r2, r2, r3, lsl, #16
- str     r2, [r7, -r0]
- sub     r0, r0, #4
- bhi     .LBB6_6
- rsb     r0, r0, #0
-.LBB6_8:
- cmp     r6, #0
- beq     .LBB6_11
- add     r1, sp, #32
- add     r1, r1, r0
- add     r0, r7, r0
-.LBB6_10:
- ldrb    r2, [r1], #1
- subs    r6, r6, #1
- strb    r2, [r0]
- add     r0, r0, #1
- bne     .LBB6_10
-.LBB6_11:
- add     sp, sp, #64
- pop     {r4, r5, r6, r7, r8, pc}
-.LBB6_12:
- ldrh    r0, [sp, #62]
- strh    r0, [r7, #30]
- ldrh    r0, [sp, #60]
- strh    r0, [r7, #28]
- ldrh    r0, [sp, #58]
- strh    r0, [r7, #26]
- ldrh    r0, [sp, #56]
- strh    r0, [r7, #24]
- ldrh    r0, [sp, #54]
- strh    r0, [r7, #22]
- ldrh    r0, [sp, #52]
- strh    r0, [r7, #20]
- ldrh    r0, [sp, #50]
- strh    r0, [r7, #18]
- ldrh    r0, [sp, #48]
- strh    r0, [r7, #16]
- ldrh    r0, [sp, #46]
- strh    r0, [r7, #14]
- ldrh    r0, [sp, #44]
- strh    r0, [r7, #12]
- ldrh    r0, [sp, #42]
- strh    r0, [r7, #10]
- ldrh    r0, [sp, #40]
- strh    r0, [r7, #8]
- ldrh    r0, [sp, #38]
- strh    r0, [r7, #6]
- ldrh    r0, [sp, #36]
- strh    r0, [r7, #4]
- ldrh    r0, [sp, #34]
- strh    r0, [r7, #2]
- ldrh    r0, [sp, #32]
- strh    r0, [r7]
- add     sp, sp, #64
- pop     {r4, r5, r6, r7, r8, pc}
 asm_test::atomic_memcpy_store_align1::write_volatile_release_fence:
  push    {r4, r5, r11, lr}
  sub     sp, sp, #32
@@ -313,166 +254,3 @@ asm_test::atomic_memcpy_store_align1::write_volatile_release_fence:
  bl      memcpy
  add     sp, sp, #32
  pop     {r4, r5, r11, pc}
-.LBB4_3:
- ldrb    r6, [r5]
- adds    r2, r2, #1
- strb    r6, [r4], #1
- add     r5, r5, #1
- blo     .LBB4_3
- sub     r2, lr, r12
- cmp     r2, #4
- bhs     .LBB4_8
- cmp     r2, #0
- bne     .LBB4_11
- b       .LBB4_13
-.LBB4_6:
- ldrh    r2, [r1, #30]
- strh    r2, [sp, #30]
- ldrh    r2, [r1, #28]
- strh    r2, [sp, #28]
- ldrh    r2, [r1, #26]
- strh    r2, [sp, #26]
- ldrh    r2, [r1, #24]
- strh    r2, [sp, #24]
- ldrh    r2, [r1, #22]
- strh    r2, [sp, #22]
- ldrh    r2, [r1, #20]
- strh    r2, [sp, #20]
- ldrh    r2, [r1, #18]
- strh    r2, [sp, #18]
- ldrh    r2, [r1, #16]
- strh    r2, [sp, #16]
- ldrh    r2, [r1, #14]
- strh    r2, [sp, #14]
- ldrh    r2, [r1, #12]
- strh    r2, [sp, #12]
- ldrh    r2, [r1, #10]
- strh    r2, [sp, #10]
- ldrh    r2, [r1, #8]
- strh    r2, [sp, #8]
- ldrh    r2, [r1, #6]
- strh    r2, [sp, #6]
- ldrh    r2, [r1, #4]
- strh    r2, [sp, #4]
- ldrh    r2, [r1, #2]
- strh    r2, [sp, #2]
- ldrh    r1, [r1]
- strh    r1, [sp]
- b       .LBB4_13
-.LBB4_7:
- mov     r2, #32
-.LBB4_8:
- sub     r3, r1, r12
- mov     r12, sp
-.LBB4_9:
- ldr     r6, [r1, -r3]
- sub     r5, r12, r3
- sub     r2, r2, #4
- strb    r6, [r12, -r3]
- sub     r3, r3, #4
- cmp     r2, #3
- lsr     r4, r6, #24
- strb    r4, [r5, #3]
- lsr     r4, r6, #16
- lsr     r6, r6, #8
- strb    r4, [r5, #2]
- strb    r6, [r5, #1]
- bhi     .LBB4_9
- rsb     r3, r3, #0
- cmp     r2, #0
- beq     .LBB4_13
-.LBB4_11:
- add     r1, r1, r3
- mov     r6, sp
- add     r3, r6, r3
-.LBB4_12:
- ldrb    r6, [r1]
- add     r1, r1, #1
- strb    r6, [r3], #1
- subs    r2, r2, #1
- bne     .LBB4_12
-.LBB4_13:
- mov     r1, sp
- mov     r2, #32
- bl      memcpy
- mov     r0, #0
- mcr     p15, #0, r0, c7, c10, #5
- add     sp, sp, #32
- pop     {r4, r5, r6, pc}
-.LBB6_3:
- ldrb    r5, [r2], #1
- adds    r6, r6, #1
- strb    r5, [r4]
- add     r4, r4, #1
- blo     .LBB6_3
- sub     r6, r3, r1
- cmp     r6, #4
- blo     .LBB6_8
-.LBB6_5:
- sub     r0, r7, r1
- add     r1, sp, #32
-.LBB6_6:
- sub     r3, r1, r0
- ldrb    r2, [r1, -r0]
- sub     r6, r6, #4
- ldrb    r5, [r3, #1]
- cmp     r6, #3
- ldrb    r4, [r3, #2]
- ldrb    r3, [r3, #3]
- orr     r2, r2, r5, lsl, #8
- orr     r3, r4, r3, lsl, #8
- orr     r2, r2, r3, lsl, #16
- str     r2, [r7, -r0]
- sub     r0, r0, #4
- bhi     .LBB6_6
- rsb     r0, r0, #0
-.LBB6_8:
- cmp     r6, #0
- beq     .LBB6_11
- add     r1, sp, #32
- add     r1, r1, r0
- add     r0, r7, r0
-.LBB6_10:
- ldrb    r2, [r1], #1
- subs    r6, r6, #1
- strb    r2, [r0]
- add     r0, r0, #1
- bne     .LBB6_10
-.LBB6_11:
- add     sp, sp, #64
- pop     {r4, r5, r6, r7, r8, pc}
-.LBB6_12:
- ldrh    r0, [sp, #62]
- strh    r0, [r7, #30]
- ldrh    r0, [sp, #60]
- strh    r0, [r7, #28]
- ldrh    r0, [sp, #58]
- strh    r0, [r7, #26]
- ldrh    r0, [sp, #56]
- strh    r0, [r7, #24]
- ldrh    r0, [sp, #54]
- strh    r0, [r7, #22]
- ldrh    r0, [sp, #52]
- strh    r0, [r7, #20]
- ldrh    r0, [sp, #50]
- strh    r0, [r7, #18]
- ldrh    r0, [sp, #48]
- strh    r0, [r7, #16]
- ldrh    r0, [sp, #46]
- strh    r0, [r7, #14]
- ldrh    r0, [sp, #44]
- strh    r0, [r7, #12]
- ldrh    r0, [sp, #42]
- strh    r0, [r7, #10]
- ldrh    r0, [sp, #40]
- strh    r0, [r7, #8]
- ldrh    r0, [sp, #38]
- strh    r0, [r7, #6]
- ldrh    r0, [sp, #36]
- strh    r0, [r7, #4]
- ldrh    r0, [sp, #34]
- strh    r0, [r7, #2]
- ldrh    r0, [sp, #32]
- strh    r0, [r7]
- add     sp, sp, #64
- pop     {r4, r5, r6, r7, r8, pc}

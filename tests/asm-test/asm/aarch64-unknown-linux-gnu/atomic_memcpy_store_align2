@@ -1,120 +1,205 @@
 asm_test::atomic_memcpy_store_align2::release:
  ldp     q0, q1, [x1]
- add     x8, x0, #7
- and     x9, x8, #0xfffffffffffffff8
  ldp     q2, q3, [x1, #32]
  stp     q0, q1, [sp, #-128]!
  stp     q2, q3, [sp, #32]
- sub     x8, x9, x0
+ add     x8, sp, #64
  dmb     ish
- cmp     x8, #64
+ add     x9, x0, #62
  ldp     q0, q1, [sp]
- ldp     q2, q3, [sp, #32]
+ add     x10, x8, #62
+ add     x11, x0, #60
+ add     x12, x8, #60
+ add     x13, x0, #58
+ add     x14, x8, #46
  stp     q0, q1, [sp, #64]
- stp     q2, q3, [sp, #96]
- b.hi    .LBB6_5
- cbz     x8, .LBB6_6
- add     x10, x0, #64
- sub     x11, x0, x9
- add     x12, sp, #64
- mov     x13, x0
-.LBB6_3:
- ldrb    w14, [x12], #1
- adds    x11, x11, #1
- strb    w14, [x13], #1
- b.lo    .LBB6_3
- sub     x9, x10, x9
- cmp     x9, #7
- b.hi    .LBB6_7
- b       .LBB6_9
-.LBB6_5:
- ldrh    w8, [sp, #126]
- strh    w8, [x0, #62]
- ldrh    w8, [sp, #124]
- strh    w8, [x0, #60]
- ldrh    w8, [sp, #122]
- strh    w8, [x0, #58]
- ldrh    w8, [sp, #120]
- strh    w8, [x0, #56]
- ldrh    w8, [sp, #118]
- strh    w8, [x0, #54]
- ldrh    w8, [sp, #116]
- strh    w8, [x0, #52]
- ldrh    w8, [sp, #114]
- strh    w8, [x0, #50]
- ldrh    w8, [sp, #112]
- strh    w8, [x0, #48]
- ldrh    w8, [sp, #110]
- strh    w8, [x0, #46]
- ldrh    w8, [sp, #108]
- strh    w8, [x0, #44]
- ldrh    w8, [sp, #106]
- strh    w8, [x0, #42]
- ldrh    w8, [sp, #104]
- strh    w8, [x0, #40]
- ldrh    w8, [sp, #102]
- strh    w8, [x0, #38]
- ldrh    w8, [sp, #100]
- strh    w8, [x0, #36]
- ldrh    w8, [sp, #98]
- strh    w8, [x0, #34]
- ldrh    w8, [sp, #96]
- strh    w8, [x0, #32]
- ldrh    w8, [sp, #94]
- strh    w8, [x0, #30]
- ldrh    w8, [sp, #92]
- strh    w8, [x0, #28]
- ldrh    w8, [sp, #90]
- strh    w8, [x0, #26]
- ldrh    w8, [sp, #88]
- strh    w8, [x0, #24]
- ldrh    w8, [sp, #86]
- strh    w8, [x0, #22]
- ldrh    w8, [sp, #84]
- strh    w8, [x0, #20]
- ldrh    w8, [sp, #82]
- strh    w8, [x0, #18]
- ldrh    w8, [sp, #80]
- strh    w8, [x0, #16]
- ldrh    w8, [sp, #78]
- strh    w8, [x0, #14]
- ldrh    w8, [sp, #76]
- strh    w8, [x0, #12]
- ldrh    w8, [sp, #74]
- strh    w8, [x0, #10]
- ldrh    w8, [sp, #72]
- strh    w8, [x0, #8]
- ldrh    w8, [sp, #70]
- strh    w8, [x0, #6]
- ldrh    w8, [sp, #68]
- strh    w8, [x0, #4]
- ldrh    w8, [sp, #66]
- strh    w8, [x0, #2]
- ldrh    w8, [sp, #64]
+ ldp     q2, q0, [sp, #32]
+ stp     q2, q0, [sp, #96]
+ //APP
+ ldrh    w10, [x10]
+ strh    w10, [x9]
+ //NO_APP
+ add     x9, x8, #58
+ //APP
+ ldrh    w10, [x12]
+ strh    w10, [x11]
+ //NO_APP
+ add     x10, x0, #56
+ add     x11, x8, #56
+ //APP
+ ldrh    w9, [x9]
+ strh    w9, [x13]
+ //NO_APP
+ add     x12, x8, #54
+ add     x9, x0, #54
+ //APP
+ ldrh    w11, [x11]
+ strh    w11, [x10]
+ //NO_APP
+ add     x10, x0, #52
+ add     x11, x8, #52
+ //APP
+ ldrh    w12, [x12]
+ strh    w12, [x9]
+ //NO_APP
+ add     x13, x8, #48
+ add     x9, x0, #50
+ add     x12, x8, #50
+ //APP
+ ldrh    w11, [x11]
+ strh    w11, [x10]
+ //NO_APP
+ add     x10, x0, #48
+ //APP
+ ldrh    w12, [x12]
+ strh    w12, [x9]
+ //NO_APP
+ add     x11, x0, #46
+ //APP
+ ldrh    w9, [x13]
+ strh    w9, [x10]
+ //NO_APP
+ //APP
+ ldrh    w9, [x14]
+ strh    w9, [x11]
+ //NO_APP
+ add     x10, x8, #44
+ add     x9, x0, #44
+ add     x11, x0, #42
+ //APP
+ ldrh    w10, [x10]
+ strh    w10, [x9]
+ //NO_APP
+ add     x12, x8, #42
+ add     x13, x0, #40
+ //APP
+ ldrh    w9, [x12]
+ strh    w9, [x11]
+ //NO_APP
+ add     x14, x8, #40
+ //APP
+ ldrh    w9, [x14]
+ strh    w9, [x13]
+ //NO_APP
+ add     x9, x0, #38
+ add     x10, x8, #38
+ add     x11, x0, #36
+ //APP
+ ldrh    w10, [x10]
+ strh    w10, [x9]
+ //NO_APP
+ add     x12, x8, #36
+ add     x13, x0, #34
+ //APP
+ ldrh    w10, [x12]
+ strh    w10, [x11]
+ //NO_APP
+ add     x14, x8, #34
+ add     x9, x8, #32
+ add     x10, x0, #32
+ //APP
+ ldrh    w11, [x14]
+ strh    w11, [x13]
+ //NO_APP
+ add     x12, x8, #30
+ add     x11, x0, #30
+ //APP
+ ldrh    w9, [x9]
+ strh    w9, [x10]
+ //NO_APP
+ add     x9, x0, #28
+ add     x10, x8, #28
+ //APP
+ ldrh    w12, [x12]
+ strh    w12, [x11]
+ //NO_APP
+ add     x13, x8, #16
+ add     x11, x0, #26
+ add     x12, x8, #26
+ //APP
+ ldrh    w10, [x10]
+ strh    w10, [x9]
+ //NO_APP
+ orr     x14, x8, #0xe
+ add     x9, x0, #24
+ add     x10, x8, #24
+ //APP
+ ldrh    w12, [x12]
+ strh    w12, [x11]
+ //NO_APP
+ add     x11, x0, #22
+ add     x12, x8, #22
+ //APP
+ ldrh    w10, [x10]
+ strh    w10, [x9]
+ //NO_APP
+ add     x9, x0, #20
+ add     x10, x8, #20
+ //APP
+ ldrh    w12, [x12]
+ strh    w12, [x11]
+ //NO_APP
+ add     x11, x0, #18
+ add     x12, x8, #18
+ //APP
+ ldrh    w10, [x10]
+ strh    w10, [x9]
+ //NO_APP
+ add     x9, x0, #16
+ //APP
+ ldrh    w12, [x12]
+ strh    w12, [x11]
+ //NO_APP
+ add     x10, x0, #14
+ //APP
+ ldrh    w11, [x13]
+ strh    w11, [x9]
+ //NO_APP
+ //APP
+ ldrh    w9, [x14]
+ strh    w9, [x10]
+ //NO_APP
+ mov     w11, #10
+ add     x9, x0, #12
+ orr     x10, x8, #0xc
+ add     x12, x0, #10
+ //APP
+ ldrh    w10, [x10]
+ strh    w10, [x9]
+ //NO_APP
+ orr     x11, x8, x11
+ add     x13, x0, #8
+ //APP
+ ldrh    w9, [x11]
+ strh    w9, [x12]
+ //NO_APP
+ orr     x14, x8, #0x8
+ //APP
+ ldrh    w9, [x14]
+ strh    w9, [x13]
+ //NO_APP
+ orr     x10, x8, #0x6
+ add     x9, x0, #6
+ add     x11, x0, #4
+ //APP
+ ldrh    w10, [x10]
+ strh    w10, [x9]
+ //NO_APP
+ orr     x12, x8, #0x4
+ add     x13, x0, #2
+ //APP
+ ldrh    w9, [x12]
+ strh    w9, [x11]
+ //NO_APP
+ orr     x14, x8, #0x2
+ //APP
+ ldrh    w9, [x14]
+ strh    w9, [x13]
+ //NO_APP
+ //APP
+ ldrh    w8, [x8]
  strh    w8, [x0]
- b       .LBB6_12
-.LBB6_6:
- mov     w9, #64
-.LBB6_7:
- add     x10, sp, #64
-.LBB6_8:
- ldr     x11, [x10, x8]
- sub     x9, x9, #8
- cmp     x9, #7
- str     x11, [x0, x8]
- add     x8, x8, #8
- b.hi    .LBB6_8
-.LBB6_9:
- cbz     x9, .LBB6_12
- add     x11, sp, #64
- add     x10, x0, x8
- add     x8, x11, x8
-.LBB6_11:
- ldrb    w11, [x8], #1
- subs    x9, x9, #1
- strb    w11, [x10], #1
- b.ne    .LBB6_11
-.LBB6_12:
+ //NO_APP
  add     sp, sp, #128
  ret
 asm_test::atomic_memcpy_store_align2::write_volatile_release_fence:

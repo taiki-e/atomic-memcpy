@@ -1,21 +1,87 @@
 asm_test::atomic_memcpy_store_align4::release:
- lwz     5, 0(4)
- lwz     6, 4(4)
- lwz     7, 8(4)
- lwz     8, 12(4)
+ stwu    1, -80(1)
+ lwz     6, 28(4)
+ li      5, 4
+ lwz     7, 24(4)
+ lwz     8, 20(4)
  lwz     9, 16(4)
- lwz     10, 20(4)
- lwz     11, 24(4)
- lwz     4, 28(4)
+ lwz     10, 12(4)
+ lwz     11, 8(4)
+ lwz     12, 4(4)
+ lwz     4, 0(4)
+ stw     6, 44(1)
+ stw     7, 40(1)
+ stw     8, 36(1)
+ stw     9, 32(1)
+ stw     10, 28(1)
+ stw     11, 24(1)
+ stw     12, 20(1)
+ stw     4, 16(1)
  lwsync
- stw     5, 0(3)
- stw     6, 4(3)
- stw     7, 8(3)
- stw     8, 12(3)
- stw     9, 16(3)
- stw     10, 20(3)
- stw     11, 24(3)
- stw     4, 28(3)
+ lwz     4, 44(1)
+ lwz     6, 40(1)
+ lwz     7, 36(1)
+ lwz     8, 32(1)
+ lwz     9, 28(1)
+ lwz     10, 24(1)
+ lwz     11, 20(1)
+ lwz     12, 16(1)
+ stw     4, 76(1)
+ addi    4, 1, 48
+ stw     6, 72(1)
+ addi    6, 3, 4
+ stw     7, 68(1)
+ addi    7, 3, 8
+ stw     8, 64(1)
+ addi    8, 3, 12
+ stw     9, 60(1)
+ addi    9, 3, 16
+ stw     10, 56(1)
+ addi    10, 3, 20
+ stw     11, 52(1)
+ addi    11, 3, 24
+ stw     12, 48(1)
+ addi    12, 3, 28
+ rlwimi  5, 4, 0, 30, 28
+ #APP
+ lwz     4, 0(4)
+ stw     4, 0(3)
+ #NO_APP
+ addi    3, 1, 56
+ #APP
+ lwz     4, 0(5)
+ stw     4, 0(6)
+ #NO_APP
+ addi    4, 1, 60
+ #APP
+ lwz     3, 0(3)
+ stw     3, 0(7)
+ #NO_APP
+ addi    3, 1, 64
+ #APP
+ lwz     4, 0(4)
+ stw     4, 0(8)
+ #NO_APP
+ addi    4, 1, 68
+ #APP
+ lwz     3, 0(3)
+ stw     3, 0(9)
+ #NO_APP
+ addi    3, 1, 72
+ #APP
+ lwz     4, 0(4)
+ stw     4, 0(10)
+ #NO_APP
+ #APP
+ lwz     3, 0(3)
+ stw     3, 0(11)
+ #NO_APP
+ addi    4, 1, 76
+ #APP
+ lwz     3, 0(4)
+ stw     3, 0(12)
+ #NO_APP
+ addi    1, 1, 80
  blr
 asm_test::atomic_memcpy_store_align4::write_volatile_release_fence:
  stwu    1, -48(1)

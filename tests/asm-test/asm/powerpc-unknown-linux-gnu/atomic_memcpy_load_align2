@@ -1,119 +1,139 @@
 asm_test::atomic_memcpy_load_align2::acquire:
- stwu    1, -48(1)
- addi    5, 4, 3
- rlwinm  8, 5, 0, 0, 29
- sub     5, 8, 4
- cmplwi  5, 32
- bgt     0, .LBB4_5
- cmplwi  5, 0
- addi    6, 1, 16
- beq     0, .LBB4_6
- addi    7, 4, 32
- addi    9, 4, -1
- addi    10, 6, -1
- mtctr   5
-.LBB4_3:
- lbz     11, 1(9)
- addi    9, 9, 1
- stbu    11, 1(10)
- bdnz    .LBB4_3
- sub     7, 7, 8
- cmplwi  7, 4
- bge     0, .LBB4_7
- b       .LBB4_11
-.LBB4_5:
- lhz     5, 0(4)
- sth     5, 16(1)
- lhz     5, 2(4)
- sth     5, 18(1)
- lhz     5, 4(4)
- sth     5, 20(1)
- lhz     5, 6(4)
- sth     5, 22(1)
- lhz     5, 8(4)
- sth     5, 24(1)
- lhz     5, 10(4)
- sth     5, 26(1)
- lhz     5, 12(4)
- sth     5, 28(1)
- lhz     5, 14(4)
- sth     5, 30(1)
- lhz     5, 16(4)
- sth     5, 32(1)
- lhz     5, 18(4)
- sth     5, 34(1)
- lhz     5, 20(4)
- sth     5, 36(1)
- lhz     5, 22(4)
- sth     5, 38(1)
- lhz     5, 24(4)
- sth     5, 40(1)
- lhz     5, 26(4)
- sth     5, 42(1)
- lhz     5, 28(4)
- sth     5, 44(1)
- lhz     4, 30(4)
- sth     4, 46(1)
- b       .LBB4_14
-.LBB4_6:
- li      7, 32
-.LBB4_7:
- addi    10, 7, -4
- li      11, 3
- cmplwi  10, 3
- bc      12, 0, .LBB4_9
- ori     10, 11, 0
- b       .LBB4_9
-.LBB4_9:
- sub     9, 8, 4
- not     10, 10
- add     8, 8, 6
- add     10, 10, 7
- add     9, 9, 4
- sub     12, 8, 4
- srwi    10, 10, 2
- addi    8, 9, -4
- addi    9, 12, -4
- addi    10, 10, 1
- mtctr   10
-.LBB4_10:
- lwz     10, 4(8)
- addi    8, 8, 4
- addi    7, 7, -4
- addi    5, 5, 4
- stwu    10, 4(9)
- bdnz    .LBB4_10
-.LBB4_11:
- cmplwi  7, 0
- beq     0, .LBB4_14
- addi    5, 5, -1
- add     4, 4, 5
- add     5, 6, 5
- mtctr   7
-.LBB4_13:
- lbz     6, 1(4)
- addi    4, 4, 1
- stbu    6, 1(5)
- bdnz    .LBB4_13
-.LBB4_14:
- lwz     4, 44(1)
- lwz     5, 40(1)
- stw     4, 28(3)
+ stwu    1, -96(1)
+ stw     21, 52(1)
+ addi    5, 1, 16
+ stw     22, 56(1)
+ li      6, 2
+ stw     23, 60(1)
+ li      7, 4
+ stw     24, 64(1)
+ li      8, 6
+ stw     25, 68(1)
+ rlwimi  6, 5, 0, 31, 29
+ stw     26, 72(1)
+ rlwimi  7, 5, 0, 30, 28
+ stw     27, 76(1)
+ rlwimi  8, 5, 0, 31, 28
+ stw     28, 80(1)
+ addi    22, 4, 2
+ stw     29, 84(1)
+ #APP
+ lhz     21, 0(4)
+ sth     21, 0(5)
+ #NO_APP
+ addi    9, 1, 24
+ addi    5, 4, 4
+ #APP
+ lhz     22, 0(22)
+ sth     22, 0(6)
+ #NO_APP
+ addi    10, 1, 26
+ addi    6, 4, 6
+ #APP
+ lhz     5, 0(5)
+ sth     5, 0(7)
+ #NO_APP
+ addi    11, 1, 28
+ addi    5, 4, 8
+ #APP
+ lhz     6, 0(6)
+ sth     6, 0(8)
+ #NO_APP
+ addi    12, 1, 30
+ addi    6, 4, 10
+ #APP
+ lhz     5, 0(5)
+ sth     5, 0(9)
+ #NO_APP
+ addi    29, 1, 32
+ addi    5, 4, 12
+ #APP
+ lhz     6, 0(6)
+ sth     6, 0(10)
+ #NO_APP
+ addi    28, 1, 34
+ addi    6, 4, 14
+ #APP
+ lhz     5, 0(5)
+ sth     5, 0(11)
+ #NO_APP
+ addi    27, 1, 36
+ addi    5, 4, 16
+ #APP
+ lhz     6, 0(6)
+ sth     6, 0(12)
+ #NO_APP
+ addi    26, 1, 38
+ addi    6, 4, 18
+ #APP
+ lhz     5, 0(5)
+ sth     5, 0(29)
+ #NO_APP
+ addi    25, 1, 40
+ addi    5, 4, 20
+ #APP
+ lhz     6, 0(6)
+ sth     6, 0(28)
+ #NO_APP
+ addi    24, 1, 42
+ addi    6, 4, 22
+ #APP
+ lhz     5, 0(5)
+ sth     5, 0(27)
+ #NO_APP
+ addi    23, 1, 44
+ addi    5, 4, 24
+ #APP
+ lhz     6, 0(6)
+ sth     6, 0(26)
+ #NO_APP
+ addi    6, 4, 26
+ #APP
+ lhz     5, 0(5)
+ sth     5, 0(25)
+ #NO_APP
+ #APP
+ lhz     6, 0(6)
+ sth     6, 0(24)
+ #NO_APP
+ addi    5, 1, 46
+ addi    6, 4, 28
+ addi    4, 4, 30
+ #APP
+ lhz     6, 0(6)
+ sth     6, 0(23)
+ #NO_APP
+ #APP
+ lhz     4, 0(4)
+ sth     4, 0(5)
+ #NO_APP
+ lwz     4, 16(1)
+ lwz     5, 20(1)
+ lwz     6, 24(1)
+ lwz     7, 28(1)
+ lwz     8, 32(1)
+ stw     4, 0(3)
  lwz     4, 36(1)
- stw     5, 24(3)
- lwz     5, 32(1)
+ stw     5, 4(3)
+ lwz     5, 40(1)
+ stw     6, 8(3)
+ lwz     6, 44(1)
+ stw     7, 12(3)
+ stw     8, 16(3)
  stw     4, 20(3)
- lwz     4, 28(1)
- stw     5, 16(3)
- lwz     5, 24(1)
- stw     4, 12(3)
- lwz     4, 20(1)
- stw     5, 8(3)
- lwz     5, 16(1)
- stw     4, 4(3)
- stw     5, 0(3)
+ stw     5, 24(3)
+ stw     6, 28(3)
  lwsync
- addi    1, 1, 48
+ lwz     29, 84(1)
+ lwz     28, 80(1)
+ lwz     27, 76(1)
+ lwz     26, 72(1)
+ lwz     25, 68(1)
+ lwz     24, 64(1)
+ lwz     23, 60(1)
+ lwz     22, 56(1)
+ lwz     21, 52(1)
+ addi    1, 1, 96
  blr
 asm_test::atomic_memcpy_load_align2::read_volatile_acquire_fence:
  stwu    1, -48(1)

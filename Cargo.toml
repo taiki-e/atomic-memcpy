@@ -12,6 +12,8 @@ Byte-wise atomic memcpy.
 """
 
 [package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
 targets = ["x86_64-unknown-linux-gnu"]
 
 [workspace]
@@ -27,6 +29,9 @@ members = [
 # This is mainly used for asm test.
 # Note that it is useless to enable this in most cases.
 inline-always = []
+
+[dependencies]
+atomic-maybe-uninit = { version = "0.2.10", optional = true }
 
 [target.'cfg(target_os = "none")'.dependencies]
 portable-atomic = { version = "0.3.6", default-features = false }

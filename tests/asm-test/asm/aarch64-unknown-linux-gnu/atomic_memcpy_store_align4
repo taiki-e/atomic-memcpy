@@ -1,88 +1,109 @@
 asm_test::atomic_memcpy_store_align4::release:
+ sub     sp, sp, #128
  ldp     q0, q1, [x1]
- add     x8, x0, #7
- and     x9, x8, #0xfffffffffffffff8
+ add     x8, sp, #64
+ add     x9, x0, #60
+ add     x10, x8, #60
+ add     x11, x0, #56
+ add     x12, x8, #56
+ add     x13, x0, #52
+ add     x14, x8, #52
  ldp     q2, q3, [x1, #32]
- stp     q0, q1, [sp, #-128]!
+ stp     q0, q1, [sp]
  stp     q2, q3, [sp, #32]
- sub     x8, x9, x0
  dmb     ish
- cmp     x8, #64
  ldp     q0, q1, [sp]
- ldp     q2, q3, [sp, #32]
  stp     q0, q1, [sp, #64]
- stp     q2, q3, [sp, #96]
- b.hi    .LBB10_5
- cbz     x8, .LBB10_6
- add     x10, x0, #64
- sub     x11, x0, x9
- add     x12, sp, #64
- mov     x13, x0
-.LBB10_3:
- ldrb    w14, [x12], #1
- adds    x11, x11, #1
- strb    w14, [x13], #1
- b.lo    .LBB10_3
- sub     x9, x10, x9
- cmp     x9, #7
- b.hi    .LBB10_7
- b       .LBB10_9
-.LBB10_5:
- ldr     w8, [sp, #124]
- str     w8, [x0, #60]
- ldr     w8, [sp, #120]
- str     w8, [x0, #56]
- ldr     w8, [sp, #116]
- str     w8, [x0, #52]
- ldr     w8, [sp, #112]
- str     w8, [x0, #48]
- ldr     w8, [sp, #108]
- str     w8, [x0, #44]
- ldr     w8, [sp, #104]
- str     w8, [x0, #40]
- ldr     w8, [sp, #100]
- str     w8, [x0, #36]
- ldr     w8, [sp, #96]
- str     w8, [x0, #32]
- ldr     w8, [sp, #92]
- str     w8, [x0, #28]
- ldr     w8, [sp, #88]
- str     w8, [x0, #24]
- ldr     w8, [sp, #84]
- str     w8, [x0, #20]
- ldr     w8, [sp, #80]
- str     w8, [x0, #16]
- ldr     w8, [sp, #76]
- str     w8, [x0, #12]
- ldr     w8, [sp, #72]
- str     w8, [x0, #8]
- ldr     w8, [sp, #68]
- str     w8, [x0, #4]
- ldr     w8, [sp, #64]
+ ldp     q2, q0, [sp, #32]
+ stp     q2, q0, [sp, #96]
+ //APP
+ ldr     w10, [x10]
+ str     w10, [x9]
+ //NO_APP
+ //APP
+ ldr     w10, [x12]
+ str     w10, [x11]
+ //NO_APP
+ add     x9, x8, #48
+ add     x10, x0, #48
+ //APP
+ ldr     w11, [x14]
+ str     w11, [x13]
+ //NO_APP
+ add     x11, x0, #44
+ add     x12, x8, #44
+ //APP
+ ldr     w9, [x9]
+ str     w9, [x10]
+ //NO_APP
+ add     x13, x8, #32
+ add     x9, x0, #40
+ add     x10, x8, #40
+ //APP
+ ldr     w12, [x12]
+ str     w12, [x11]
+ //NO_APP
+ add     x14, x8, #28
+ add     x11, x0, #36
+ add     x12, x8, #36
+ //APP
+ ldr     w10, [x10]
+ str     w10, [x9]
+ //NO_APP
+ add     x9, x0, #32
+ //APP
+ ldr     w12, [x12]
+ str     w12, [x11]
+ //NO_APP
+ add     x10, x0, #28
+ //APP
+ ldr     w11, [x13]
+ str     w11, [x9]
+ //NO_APP
+ //APP
+ ldr     w9, [x14]
+ str     w9, [x10]
+ //NO_APP
+ add     x11, x0, #20
+ add     x9, x0, #24
+ add     x10, x8, #24
+ //APP
+ ldr     w10, [x10]
+ str     w10, [x9]
+ //NO_APP
+ add     x12, x8, #20
+ add     x14, x0, #16
+ //APP
+ ldr     w9, [x12]
+ str     w9, [x11]
+ //NO_APP
+ add     x13, x8, #16
+ //APP
+ ldr     w9, [x13]
+ str     w9, [x14]
+ //NO_APP
+ add     x9, x0, #12
+ orr     x10, x8, #0xc
+ add     x11, x0, #8
+ //APP
+ ldr     w10, [x10]
+ str     w10, [x9]
+ //NO_APP
+ orr     x12, x8, #0x8
+ add     x13, x0, #4
+ //APP
+ ldr     w9, [x12]
+ str     w9, [x11]
+ //NO_APP
+ orr     x14, x8, #0x4
+ //APP
+ ldr     w9, [x14]
+ str     w9, [x13]
+ //NO_APP
+ //APP
+ ldr     w8, [x8]
  str     w8, [x0]
- b       .LBB10_12
-.LBB10_6:
- mov     w9, #64
-.LBB10_7:
- add     x10, sp, #64
-.LBB10_8:
- ldr     x11, [x10, x8]
- sub     x9, x9, #8
- cmp     x9, #7
- str     x11, [x0, x8]
- add     x8, x8, #8
- b.hi    .LBB10_8
-.LBB10_9:
- cbz     x9, .LBB10_12
- add     x11, sp, #64
- add     x10, x0, x8
- add     x8, x11, x8
-.LBB10_11:
- ldrb    w11, [x8], #1
- subs    x9, x9, #1
- strb    w11, [x10], #1
- b.ne    .LBB10_11
-.LBB10_12:
+ //NO_APP
  add     sp, sp, #128
  ret
 asm_test::atomic_memcpy_store_align4::write_volatile_release_fence:

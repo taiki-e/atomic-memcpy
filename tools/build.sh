@@ -46,7 +46,7 @@ if [[ "${rustc_version}" == *"nightly"* ]] || [[ "${rustc_version}" == *"dev"* ]
         # -Z check-cfg requires 1.63.0-nightly
         1.[0-5]* | 1.6[0-2].*) ;;
         *)
-            check_cfg="-Z unstable-options --check-cfg=names(atomic_memcpy_unsafe_volatile)"
+            check_cfg="-Z unstable-options --check-cfg=names(docsrs,atomic_memcpy_unsafe_volatile)"
             rustup ${pre_args[@]+"${pre_args[@]}"} component add clippy &>/dev/null
             base_args=(${pre_args[@]+"${pre_args[@]}"} hack clippy -Z check-cfg="names,values,output,features")
             ;;
@@ -91,6 +91,12 @@ build() {
         x cargo "${args[@]}" --manifest-path tests/no-std/Cargo.toml
     RUSTFLAGS="${target_rustflags}" \
         x cargo "${args[@]}" --release --manifest-path tests/no-std/Cargo.toml
+
+    case "${target}" in
+        # https://github.com/taiki-e/atomic-maybe-uninit#platform-support
+        x86_64* | i*86* | aarch64* | arm* | thumb* | riscv* | mips* | powerpc* | s390x*) ;;
+        *) args+=(--exclude-features "atomic-maybe-uninit") ;;
+    esac
 
     RUSTFLAGS="${target_rustflags}" \
         x cargo "${args[@]}" --feature-powerset --optional-deps --no-dev-deps --manifest-path Cargo.toml

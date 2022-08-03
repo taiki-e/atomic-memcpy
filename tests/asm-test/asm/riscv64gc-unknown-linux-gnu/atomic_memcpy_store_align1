@@ -188,101 +188,31 @@ asm_test::atomic_memcpy_store_align1::release:
  ld      a1, 56(sp)
  ld      a2, 48(sp)
  ld      a3, 40(sp)
+ ld      a4, 32(sp)
  sd      a1, 120(sp)
  sd      a2, 112(sp)
  sd      a3, 104(sp)
- ld      a1, 32(sp)
- ld      a2, 24(sp)
- ld      a3, 16(sp)
- ld      a4, 8(sp)
- sd      a1, 96(sp)
- sd      a2, 88(sp)
- sd      a3, 80(sp)
- sd      a4, 72(sp)
- ld      a3, 0(sp)
- addi    a1, a0, 7
- andi    a7, a1, -8
- sub     t0, a7, a0
- li      a4, 65
- sd      a3, 64(sp)
- bgeu    t0, a4, .LBB2_5
- beqz    t0, .LBB2_7
- addi    a6, a0, 64
- sub     a5, a0, a7
- addi    a4, sp, 64
- mv      a3, a0
-.LBB2_3:
- lb      a2, 0(a4)
- mv      a1, a5
- sb      a2, 0(a3)
- addi    a3, a3, 1
- addi    a5, a5, 1
- addi    a4, a4, 1
- bgeu    a5, a1, .LBB2_3
- sub     a2, a6, a7
- li      a3, 8
- bgeu    a2, a3, .LBB2_8
- j       .LBB2_10
-.LBB2_5:
- li      a3, 0
- addi    a1, sp, 64
- li      a2, 64
-.LBB2_6:
- add     a4, a1, a3
- lb      a4, 0(a4)
- addi    a5, a3, 1
- add     a3, a3, a0
- sb      a4, 0(a3)
- mv      a3, a5
- bne     a5, a2, .LBB2_6
- j       .LBB2_13
-.LBB2_7:
- li      a2, 64
-.LBB2_8:
- addi    a6, sp, 64
- li      a7, 7
-.LBB2_9:
- add     a1, a6, t0
- lbu     a5, 1(a1)
- lbu     t1, 0(a1)
- lbu     a4, 3(a1)
- lbu     a3, 2(a1)
- slli    a5, a5, 8
- or      a5, a5, t1
- slli    a4, a4, 8
- or      a3, a3, a4
- slli    a3, a3, 16
- or      t1, a3, a5
- lbu     a4, 5(a1)
- lbu     a5, 4(a1)
- lbu     a3, 7(a1)
- lbu     a1, 6(a1)
- slli    a4, a4, 8
- or      a4, a4, a5
- slli    a3, a3, 8
- or      a1, a1, a3
- slli    a1, a1, 16
- or      a1, a1, a4
- slli    a1, a1, 32
- or      a1, a1, t1
- add     a3, a0, t0
- sd      a1, 0(a3)
- addi    a2, a2, -8
- addi    t0, t0, 8
- bltu    a7, a2, .LBB2_9
-.LBB2_10:
- beqz    a2, .LBB2_13
- add     a0, a0, t0
- addi    a1, sp, 64
- add     a1, a1, t0
-.LBB2_12:
- lb      a3, 0(a1)
- sb      a3, 0(a0)
- addi    a2, a2, -1
- addi    a0, a0, 1
- addi    a1, a1, 1
- bnez    a2, .LBB2_12
-.LBB2_13:
+ sd      a4, 96(sp)
+ ld      a1, 24(sp)
+ ld      a2, 16(sp)
+ ld      a3, 8(sp)
+ ld      a4, 0(sp)
+ sd      a1, 88(sp)
+ sd      a2, 80(sp)
+ sd      a3, 72(sp)
+ sd      a4, 64(sp)
+ li      a1, 63
+ addi    a2, sp, 64
+ li      a3, -1
+.LBB2_1:
+ add     a4, a0, a1
+ add     a5, a2, a1
+ #APP
+ lb      a5, 0(a5)
+ sb      a5, 0(a4)
+ #NO_APP
+ addi    a1, a1, -1
+ bne     a1, a3, .LBB2_1
  addi    sp, sp, 128
  ret
 asm_test::atomic_memcpy_store_align1::write_volatile_release_fence:

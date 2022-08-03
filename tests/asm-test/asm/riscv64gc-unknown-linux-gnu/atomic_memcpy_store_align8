@@ -1,21 +1,86 @@
 asm_test::atomic_memcpy_store_align8::release:
- ld      a6, 0(a1)
- ld      a7, 8(a1)
- ld      t0, 16(a1)
- ld      a5, 24(a1)
- ld      a2, 32(a1)
- ld      a3, 56(a1)
- ld      a4, 48(a1)
- ld      a1, 40(a1)
+ addi    sp, sp, -128
+ ld      a2, 56(a1)
+ ld      a3, 48(a1)
+ ld      a4, 40(a1)
+ ld      a5, 32(a1)
+ sd      a2, 56(sp)
+ sd      a3, 48(sp)
+ sd      a4, 40(sp)
+ sd      a5, 32(sp)
+ ld      a2, 24(a1)
+ ld      a3, 16(a1)
+ ld      a4, 8(a1)
+ ld      a1, 0(a1)
+ sd      a2, 24(sp)
+ sd      a3, 16(sp)
+ sd      a4, 8(sp)
+ sd      a1, 0(sp)
  fence   rw, w
- sd      a3, 56(a0)
- sd      a4, 48(a0)
- sd      a1, 40(a0)
- sd      a2, 32(a0)
- sd      a5, 24(a0)
- sd      t0, 16(a0)
- sd      a7, 8(a0)
- sd      a6, 0(a0)
+ ld      a1, 56(sp)
+ ld      a2, 48(sp)
+ ld      a3, 40(sp)
+ ld      a4, 32(sp)
+ sd      a1, 120(sp)
+ sd      a2, 112(sp)
+ sd      a3, 104(sp)
+ sd      a4, 96(sp)
+ ld      a1, 24(sp)
+ ld      a2, 16(sp)
+ ld      a3, 8(sp)
+ ld      a4, 0(sp)
+ sd      a1, 88(sp)
+ sd      a2, 80(sp)
+ sd      a3, 72(sp)
+ sd      a4, 64(sp)
+ addi    a6, sp, 72
+ addi    a7, sp, 80
+ addi    t0, sp, 88
+ addi    a4, sp, 96
+ addi    a5, sp, 104
+ addi    a1, sp, 112
+ addi    a2, sp, 120
+ addi    a3, a0, 56
+ #APP
+ ld      a2, 0(a2)
+ sd      a2, 0(a3)
+ #NO_APP
+ addi    a2, a0, 48
+ #APP
+ ld      a1, 0(a1)
+ sd      a1, 0(a2)
+ #NO_APP
+ addi    a1, a0, 40
+ #APP
+ ld      a2, 0(a5)
+ sd      a2, 0(a1)
+ #NO_APP
+ addi    a1, a0, 32
+ #APP
+ ld      a2, 0(a4)
+ sd      a2, 0(a1)
+ #NO_APP
+ addi    a1, a0, 24
+ #APP
+ ld      a2, 0(t0)
+ sd      a2, 0(a1)
+ #NO_APP
+ addi    a1, a0, 16
+ #APP
+ ld      a2, 0(a7)
+ sd      a2, 0(a1)
+ #NO_APP
+ addi    a1, a0, 8
+ #APP
+ ld      a2, 0(a6)
+ sd      a2, 0(a1)
+ #NO_APP
+ addi    a1, sp, 64
+ #APP
+ ld      a1, 0(a1)
+ sd      a1, 0(a0)
+ #NO_APP
+ addi    sp, sp, 128
  ret
 asm_test::atomic_memcpy_store_align8::write_volatile_release_fence:
  addi    sp, sp, -64

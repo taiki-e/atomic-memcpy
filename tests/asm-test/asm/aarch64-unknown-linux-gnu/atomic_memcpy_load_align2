@@ -1,112 +1,196 @@
 asm_test::atomic_memcpy_load_align2::acquire:
  sub     sp, sp, #64
- add     x9, x0, #7
- and     x10, x9, #0xfffffffffffffff8
- sub     x9, x10, x0
- cmp     x9, #64
- b.hi    .LBB4_5
- cbz     x9, .LBB4_6
- add     x11, x0, #64
- sub     x12, x0, x10
- mov     x13, sp
- mov     x14, x0
-.LBB4_3:
- ldrb    w15, [x14], #1
- adds    x12, x12, #1
- strb    w15, [x13], #1
- b.lo    .LBB4_3
- sub     x10, x11, x10
- cmp     x10, #7
- b.hi    .LBB4_7
- b       .LBB4_9
-.LBB4_5:
- ldrh    w9, [x0, #62]
- strh    w9, [sp, #62]
- ldrh    w9, [x0, #60]
- strh    w9, [sp, #60]
- ldrh    w9, [x0, #58]
- strh    w9, [sp, #58]
- ldrh    w9, [x0, #56]
- strh    w9, [sp, #56]
- ldrh    w9, [x0, #54]
- strh    w9, [sp, #54]
- ldrh    w9, [x0, #52]
- strh    w9, [sp, #52]
- ldrh    w9, [x0, #50]
- strh    w9, [sp, #50]
- ldrh    w9, [x0, #48]
- strh    w9, [sp, #48]
- ldrh    w9, [x0, #46]
- strh    w9, [sp, #46]
- ldrh    w9, [x0, #44]
- strh    w9, [sp, #44]
- ldrh    w9, [x0, #42]
- strh    w9, [sp, #42]
- ldrh    w9, [x0, #40]
- strh    w9, [sp, #40]
- ldrh    w9, [x0, #38]
- strh    w9, [sp, #38]
- ldrh    w9, [x0, #36]
- strh    w9, [sp, #36]
- ldrh    w9, [x0, #34]
- strh    w9, [sp, #34]
- ldrh    w9, [x0, #32]
- strh    w9, [sp, #32]
- ldrh    w9, [x0, #30]
- strh    w9, [sp, #30]
- ldrh    w9, [x0, #28]
- strh    w9, [sp, #28]
- ldrh    w9, [x0, #26]
- strh    w9, [sp, #26]
- ldrh    w9, [x0, #24]
- strh    w9, [sp, #24]
- ldrh    w9, [x0, #22]
- strh    w9, [sp, #22]
- ldrh    w9, [x0, #20]
- strh    w9, [sp, #20]
- ldrh    w9, [x0, #18]
- strh    w9, [sp, #18]
- ldrh    w9, [x0, #16]
- strh    w9, [sp, #16]
- ldrh    w9, [x0, #14]
- strh    w9, [sp, #14]
- ldrh    w9, [x0, #12]
- strh    w9, [sp, #12]
- ldrh    w9, [x0, #10]
- strh    w9, [sp, #10]
- ldrh    w9, [x0, #8]
- strh    w9, [sp, #8]
- ldrh    w9, [x0, #6]
- strh    w9, [sp, #6]
- ldrh    w9, [x0, #4]
- strh    w9, [sp, #4]
- ldrh    w9, [x0, #2]
- strh    w9, [sp, #2]
- ldrh    w9, [x0]
- strh    w9, [sp]
- b       .LBB4_12
-.LBB4_6:
- mov     w10, #64
-.LBB4_7:
- mov     x11, sp
-.LBB4_8:
- ldr     x12, [x0, x9]
- sub     x10, x10, #8
- cmp     x10, #7
- str     x12, [x11, x9]
- add     x9, x9, #8
- b.hi    .LBB4_8
-.LBB4_9:
- cbz     x10, .LBB4_12
- mov     x11, sp
- add     x11, x11, x9
- add     x9, x0, x9
-.LBB4_11:
- ldrb    w12, [x9], #1
- subs    x10, x10, #1
- strb    w12, [x11], #1
- b.ne    .LBB4_11
-.LBB4_12:
+ mov     x9, sp
+ add     x10, x0, #62
+ add     x11, x9, #62
+ add     x12, x0, #60
+ add     x13, x9, #60
+ //APP
+ ldrh    w10, [x10]
+ strh    w10, [x11]
+ //NO_APP
+ add     x15, x9, #58
+ //APP
+ ldrh    w12, [x12]
+ strh    w12, [x13]
+ //NO_APP
+ add     x14, x0, #58
+ add     x10, x0, #56
+ add     x11, x9, #56
+ //APP
+ ldrh    w12, [x14]
+ strh    w12, [x15]
+ //NO_APP
+ //APP
+ ldrh    w10, [x10]
+ strh    w10, [x11]
+ //NO_APP
+ add     x12, x0, #54
+ add     x10, x9, #54
+ add     x13, x9, #52
+ //APP
+ ldrh    w12, [x12]
+ strh    w12, [x10]
+ //NO_APP
+ add     x11, x0, #52
+ add     x15, x9, #50
+ //APP
+ ldrh    w10, [x11]
+ strh    w10, [x13]
+ //NO_APP
+ add     x14, x0, #50
+ //APP
+ ldrh    w10, [x14]
+ strh    w10, [x15]
+ //NO_APP
+ add     x10, x0, #48
+ add     x11, x9, #48
+ add     x13, x9, #46
+ //APP
+ ldrh    w10, [x10]
+ strh    w10, [x11]
+ //NO_APP
+ add     x12, x0, #46
+ add     x15, x9, #44
+ //APP
+ ldrh    w10, [x12]
+ strh    w10, [x13]
+ //NO_APP
+ add     x14, x0, #44
+ //APP
+ ldrh    w10, [x14]
+ strh    w10, [x15]
+ //NO_APP
+ add     x11, x9, #42
+ add     x10, x0, #42
+ add     x13, x9, #40
+ //APP
+ ldrh    w10, [x10]
+ strh    w10, [x11]
+ //NO_APP
+ add     x12, x0, #40
+ add     x15, x9, #38
+ //APP
+ ldrh    w10, [x12]
+ strh    w10, [x13]
+ //NO_APP
+ add     x14, x0, #38
+ //APP
+ ldrh    w10, [x14]
+ strh    w10, [x15]
+ //NO_APP
+ add     x10, x0, #36
+ add     x11, x9, #36
+ add     x13, x9, #34
+ //APP
+ ldrh    w10, [x10]
+ strh    w10, [x11]
+ //NO_APP
+ add     x12, x0, #34
+ add     x15, x9, #32
+ //APP
+ ldrh    w10, [x12]
+ strh    w10, [x13]
+ //NO_APP
+ add     x14, x0, #32
+ //APP
+ ldrh    w10, [x14]
+ strh    w10, [x15]
+ //NO_APP
+ add     x11, x9, #30
+ add     x10, x0, #30
+ add     x13, x9, #28
+ //APP
+ ldrh    w10, [x10]
+ strh    w10, [x11]
+ //NO_APP
+ add     x12, x0, #28
+ add     x15, x9, #26
+ //APP
+ ldrh    w10, [x12]
+ strh    w10, [x13]
+ //NO_APP
+ add     x14, x0, #26
+ //APP
+ ldrh    w10, [x14]
+ strh    w10, [x15]
+ //NO_APP
+ add     x10, x0, #24
+ add     x11, x9, #24
+ add     x13, x9, #22
+ //APP
+ ldrh    w10, [x10]
+ strh    w10, [x11]
+ //NO_APP
+ add     x12, x0, #22
+ add     x15, x9, #20
+ //APP
+ ldrh    w10, [x12]
+ strh    w10, [x13]
+ //NO_APP
+ add     x14, x0, #20
+ //APP
+ ldrh    w10, [x14]
+ strh    w10, [x15]
+ //NO_APP
+ add     x11, x9, #18
+ add     x10, x0, #18
+ add     x13, x9, #16
+ //APP
+ ldrh    w10, [x10]
+ strh    w10, [x11]
+ //NO_APP
+ add     x12, x0, #16
+ add     x15, x9, #14
+ //APP
+ ldrh    w10, [x12]
+ strh    w10, [x13]
+ //NO_APP
+ add     x14, x0, #14
+ //APP
+ ldrh    w10, [x14]
+ strh    w10, [x15]
+ //NO_APP
+ add     x10, x0, #12
+ add     x11, x9, #12
+ add     x13, x9, #10
+ //APP
+ ldrh    w10, [x10]
+ strh    w10, [x11]
+ //NO_APP
+ add     x12, x0, #10
+ add     x15, x9, #8
+ //APP
+ ldrh    w10, [x12]
+ strh    w10, [x13]
+ //NO_APP
+ add     x14, x0, #8
+ //APP
+ ldrh    w10, [x14]
+ strh    w10, [x15]
+ //NO_APP
+ orr     x11, x9, #0x6
+ add     x10, x0, #6
+ orr     x13, x9, #0x4
+ //APP
+ ldrh    w10, [x10]
+ strh    w10, [x11]
+ //NO_APP
+ add     x12, x0, #4
+ orr     x15, x9, #0x2
+ //APP
+ ldrh    w10, [x12]
+ strh    w10, [x13]
+ //NO_APP
+ add     x14, x0, #2
+ //APP
+ ldrh    w10, [x14]
+ strh    w10, [x15]
+ //NO_APP
+ //APP
+ ldrh    w10, [x0]
+ strh    w10, [x9]
+ //NO_APP
  ldp     q0, q1, [sp]
  ldp     q2, q3, [sp, #32]
  stp     q0, q1, [x8]

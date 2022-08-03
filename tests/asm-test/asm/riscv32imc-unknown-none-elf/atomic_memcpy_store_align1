@@ -91,510 +91,209 @@ asm_test::atomic_memcpy_store_align1::release:
  lw      a1, 28(sp)
  lw      a2, 24(sp)
  lw      a3, 20(sp)
+ lw      a4, 16(sp)
  sw      a1, 60(sp)
  sw      a2, 56(sp)
  sw      a3, 52(sp)
- lw      a1, 16(sp)
- lw      a2, 12(sp)
- lw      a3, 8(sp)
- lw      a4, 4(sp)
- sw      a1, 48(sp)
- sw      a2, 44(sp)
- sw      a3, 40(sp)
- sw      a4, 36(sp)
+ sw      a4, 48(sp)
+ lw      a1, 12(sp)
+ lw      a2, 8(sp)
+ lw      a3, 4(sp)
  lw      a4, 0(sp)
- addi    a3, a0, 3
- andi    a7, a3, -4
- sub     a1, a7, a0
- li      a5, 33
+ sw      a1, 44(sp)
+ sw      a2, 40(sp)
+ sw      a3, 36(sp)
  sw      a4, 32(sp)
- bgeu    a1, a5, .LBB2_5
- beqz    a1, .LBB2_6
- addi    a6, a0, 32
- sub     a3, a0, a7
- addi    a4, sp, 32
- mv      a5, a0
-.LBB2_3:
- lbu     t0, 0(a4)
- mv      a2, a3
+ addi    a6, sp, 36
+ addi    a7, sp, 40
+ addi    t0, sp, 44
+ addi    t1, sp, 48
+ addi    a5, sp, 52
+ addi    a1, sp, 56
+ addi    a2, sp, 60
+ addi    a3, a0, 31
+ addi    a4, sp, 63
  #APP
- sb      t0, 0(a5)
+ lb      a4, 0(a4)
+ sb      a4, 0(a3)
  #NO_APP
- addi    a5, a5, 1
- addi    a3, a3, 1
- addi    a4, a4, 1
- bgeu    a3, a2, .LBB2_3
- sub     a2, a6, a7
- li      a3, 4
- bgeu    a2, a3, .LBB2_7
- j       .LBB2_9
-.LBB2_5:
- lbu     a1, 32(sp)
+ addi    a3, a0, 30
+ addi    a4, sp, 62
  #APP
- sb      a1, 0(a0)
+ lb      a4, 0(a4)
+ sb      a4, 0(a3)
  #NO_APP
- lbu     a1, 33(sp)
- addi    a2, a0, 1
+ addi    a3, a0, 29
+ addi    a4, sp, 61
  #APP
- sb      a1, 0(a2)
+ lb      a4, 0(a4)
+ sb      a4, 0(a3)
  #NO_APP
- lbu     a1, 34(sp)
- addi    a2, a0, 2
+ addi    a3, a0, 28
  #APP
- sb      a1, 0(a2)
+ lb      a2, 0(a2)
+ sb      a2, 0(a3)
  #NO_APP
- lbu     a1, 35(sp)
- #APP
- sb      a1, 0(a3)
- #NO_APP
- lbu     a1, 36(sp)
- addi    a2, a0, 4
- #APP
- sb      a1, 0(a2)
- #NO_APP
- lbu     a1, 37(sp)
- addi    a2, a0, 5
- #APP
- sb      a1, 0(a2)
- #NO_APP
- lbu     a1, 38(sp)
- addi    a2, a0, 6
- #APP
- sb      a1, 0(a2)
- #NO_APP
- lbu     a1, 39(sp)
- addi    a2, a0, 7
- #APP
- sb      a1, 0(a2)
- #NO_APP
- lbu     a1, 40(sp)
- addi    a2, a0, 8
- #APP
- sb      a1, 0(a2)
- #NO_APP
- lbu     a1, 41(sp)
- addi    a2, a0, 9
- #APP
- sb      a1, 0(a2)
- #NO_APP
- lbu     a1, 42(sp)
- addi    a2, a0, 10
- #APP
- sb      a1, 0(a2)
- #NO_APP
- lbu     a1, 43(sp)
- addi    a2, a0, 11
- #APP
- sb      a1, 0(a2)
- #NO_APP
- lbu     a1, 44(sp)
- addi    a2, a0, 12
- #APP
- sb      a1, 0(a2)
- #NO_APP
- lbu     a1, 45(sp)
- addi    a2, a0, 13
- #APP
- sb      a1, 0(a2)
- #NO_APP
- lbu     a1, 46(sp)
- addi    a2, a0, 14
- #APP
- sb      a1, 0(a2)
- #NO_APP
- lbu     a1, 47(sp)
- addi    a2, a0, 15
- #APP
- sb      a1, 0(a2)
- #NO_APP
- lbu     a1, 48(sp)
- addi    a2, a0, 16
- #APP
- sb      a1, 0(a2)
- #NO_APP
- lbu     a1, 49(sp)
- addi    a2, a0, 17
- #APP
- sb      a1, 0(a2)
- #NO_APP
- lbu     a1, 50(sp)
- addi    a2, a0, 18
- #APP
- sb      a1, 0(a2)
- #NO_APP
- lbu     a1, 51(sp)
- addi    a2, a0, 19
- #APP
- sb      a1, 0(a2)
- #NO_APP
- lbu     a1, 52(sp)
- addi    a2, a0, 20
- #APP
- sb      a1, 0(a2)
- #NO_APP
- lbu     a1, 53(sp)
- addi    a2, a0, 21
- #APP
- sb      a1, 0(a2)
- #NO_APP
- lbu     a1, 54(sp)
- addi    a2, a0, 22
- #APP
- sb      a1, 0(a2)
- #NO_APP
- lbu     a1, 55(sp)
- addi    a2, a0, 23
- #APP
- sb      a1, 0(a2)
- #NO_APP
- lbu     a1, 56(sp)
- addi    a2, a0, 24
- #APP
- sb      a1, 0(a2)
- #NO_APP
- lbu     a1, 57(sp)
- addi    a2, a0, 25
- #APP
- sb      a1, 0(a2)
- #NO_APP
- lbu     a1, 58(sp)
- addi    a2, a0, 26
- #APP
- sb      a1, 0(a2)
- #NO_APP
- lbu     a1, 59(sp)
  addi    a2, a0, 27
+ addi    a3, sp, 59
  #APP
- sb      a1, 0(a2)
+ lb      a3, 0(a3)
+ sb      a3, 0(a2)
  #NO_APP
- lbu     a1, 60(sp)
- addi    a2, a0, 28
- #APP
- sb      a1, 0(a2)
- #NO_APP
- lbu     a1, 61(sp)
- addi    a2, a0, 29
- #APP
- sb      a1, 0(a2)
- #NO_APP
- lbu     a1, 62(sp)
- addi    a2, a0, 30
- #APP
- sb      a1, 0(a2)
- #NO_APP
- lbu     a1, 63(sp)
- addi    a0, a0, 31
- #APP
- sb      a1, 0(a0)
- #NO_APP
- j       .LBB2_12
-.LBB2_6:
- li      a2, 32
-.LBB2_7:
- addi    a6, sp, 32
- li      a7, 3
-.LBB2_8:
- add     a5, a6, a1
- lbu     t0, 1(a5)
- lbu     t1, 0(a5)
- lbu     a3, 3(a5)
- lbu     a5, 2(a5)
- slli    a4, t0, 8
- or      a4, a4, t1
- slli    a3, a3, 8
- or      a3, a3, a5
- slli    a3, a3, 16
- or      a3, a3, a4
- add     a4, a0, a1
- #APP
- sw      a3, 0(a4)
- #NO_APP
- addi    a2, a2, -4
- addi    a1, a1, 4
- bltu    a7, a2, .LBB2_8
-.LBB2_9:
- beqz    a2, .LBB2_12
- add     a0, a0, a1
- addi    a3, sp, 32
- add     a1, a1, a3
-.LBB2_11:
- lbu     a3, 0(a1)
- #APP
- sb      a3, 0(a0)
- #NO_APP
- addi    a2, a2, -1
- addi    a0, a0, 1
- addi    a1, a1, 1
- bnez    a2, .LBB2_11
-.LBB2_12:
- addi    sp, sp, 64
- ret
-.LBB4_3:
- #APP
- lb      t0, 0(a3)
- #NO_APP
- mv      a2, a4
- sb      t0, 0(a5)
- addi    a5, a5, 1
- addi    a4, a4, 1
- addi    a3, a3, 1
- bgeu    a4, a2, .LBB4_3
- sub     a3, a6, a7
- li      a4, 4
- bltu    a3, a4, .LBB4_7
-.LBB4_5:
- addi    a6, sp, 8
- li      a7, 3
-.LBB4_6:
- add     a2, a1, t1
- #APP
- lw      a2, 0(a2)
- #NO_APP
- add     a4, a6, t1
- sb      a2, 0(a4)
- srli    a5, a2, 24
- sb      a5, 3(a4)
- srli    a5, a2, 16
- sb      a5, 2(a4)
- srli    a2, a2, 8
- sb      a2, 1(a4)
- addi    a3, a3, -4
- addi    t1, t1, 4
- bltu    a7, a3, .LBB4_6
-.LBB4_7:
- beqz    a3, .LBB4_11
- addi    a2, sp, 8
- add     a4, a2, t1
- add     a1, a1, t1
-.LBB4_9:
- #APP
- lb      a2, 0(a1)
- #NO_APP
- sb      a2, 0(a4)
- addi    a3, a3, -1
- addi    a4, a4, 1
- addi    a1, a1, 1
- bnez    a3, .LBB4_9
- j       .LBB4_11
-.LBB4_10:
- addi    a2, a1, 30
- #APP
- lh      a2, 0(a2)
- #NO_APP
- sh      a2, 38(sp)
- addi    a2, a1, 28
- #APP
- lh      a2, 0(a2)
- #NO_APP
- sh      a2, 36(sp)
- addi    a2, a1, 26
- #APP
- lh      a2, 0(a2)
- #NO_APP
- sh      a2, 34(sp)
- addi    a2, a1, 24
- #APP
- lh      a2, 0(a2)
- #NO_APP
- sh      a2, 32(sp)
- addi    a2, a1, 22
- #APP
- lh      a2, 0(a2)
- #NO_APP
- sh      a2, 30(sp)
- addi    a2, a1, 20
- #APP
- lh      a2, 0(a2)
- #NO_APP
- sh      a2, 28(sp)
- addi    a2, a1, 18
- #APP
- lh      a2, 0(a2)
- #NO_APP
- sh      a2, 26(sp)
- addi    a2, a1, 16
- #APP
- lh      a2, 0(a2)
- #NO_APP
- sh      a2, 24(sp)
- addi    a2, a1, 14
- #APP
- lh      a2, 0(a2)
- #NO_APP
- sh      a2, 22(sp)
- addi    a2, a1, 12
- #APP
- lh      a2, 0(a2)
- #NO_APP
- sh      a2, 20(sp)
- addi    a2, a1, 10
- #APP
- lh      a2, 0(a2)
- #NO_APP
- sh      a2, 18(sp)
- addi    a2, a1, 8
- #APP
- lh      a2, 0(a2)
- #NO_APP
- sh      a2, 16(sp)
- addi    a2, a1, 6
- #APP
- lh      a2, 0(a2)
- #NO_APP
- sh      a2, 14(sp)
- addi    a2, a1, 4
- #APP
- lh      a2, 0(a2)
- #NO_APP
- sh      a2, 12(sp)
- addi    a2, a1, 2
- #APP
- lh      a2, 0(a2)
- #NO_APP
- sh      a2, 10(sp)
- #APP
- lh      a1, 0(a1)
- #NO_APP
- sh      a1, 8(sp)
-.LBB4_11:
- addi    a1, sp, 8
- li      a2, 32
- call    memcpy@plt
- fence   r, rw
- lw      ra, 44(sp)
- addi    sp, sp, 48
- ret
-.LBB6_3:
- lbu     t0, 0(a4)
- mv      a3, a2
- #APP
- sb      t0, 0(a5)
- #NO_APP
- addi    a5, a5, 1
- addi    a2, a2, 1
- addi    a4, a4, 1
- bgeu    a2, a3, .LBB6_3
- sub     a2, a6, a7
- li      a3, 4
- bltu    a2, a3, .LBB6_7
-.LBB6_5:
- addi    a6, sp, 32
- li      a7, 3
-.LBB6_6:
- add     a5, a6, a1
- lbu     t0, 1(a5)
- lbu     t1, 0(a5)
- lbu     a3, 3(a5)
- lbu     a5, 2(a5)
- slli    a4, t0, 8
- or      a4, a4, t1
- slli    a3, a3, 8
- or      a3, a3, a5
- slli    a3, a3, 16
- or      a3, a3, a4
- add     a4, a0, a1
- #APP
- sw      a3, 0(a4)
- #NO_APP
- addi    a2, a2, -4
- addi    a1, a1, 4
- bltu    a7, a2, .LBB6_6
-.LBB6_7:
- beqz    a2, .LBB6_10
- add     a0, a0, a1
- addi    a3, sp, 32
- add     a1, a1, a3
-.LBB6_9:
- lbu     a3, 0(a1)
- #APP
- sb      a3, 0(a0)
- #NO_APP
- addi    a2, a2, -1
- addi    a0, a0, 1
- addi    a1, a1, 1
- bnez    a2, .LBB6_9
-.LBB6_10:
- addi    sp, sp, 64
- ret
-.LBB6_11:
- lhu     a1, 62(sp)
- addi    a2, a0, 30
- #APP
- sh      a1, 0(a2)
- #NO_APP
- lhu     a1, 60(sp)
- addi    a2, a0, 28
- #APP
- sh      a1, 0(a2)
- #NO_APP
- lhu     a1, 58(sp)
  addi    a2, a0, 26
+ addi    a3, sp, 58
  #APP
- sh      a1, 0(a2)
+ lb      a3, 0(a3)
+ sb      a3, 0(a2)
  #NO_APP
- lhu     a1, 56(sp)
+ addi    a2, a0, 25
+ addi    a3, sp, 57
+ #APP
+ lb      a3, 0(a3)
+ sb      a3, 0(a2)
+ #NO_APP
  addi    a2, a0, 24
  #APP
- sh      a1, 0(a2)
+ lb      a1, 0(a1)
+ sb      a1, 0(a2)
  #NO_APP
- lhu     a1, 54(sp)
- addi    a2, a0, 22
+ addi    a1, a0, 23
+ addi    a2, sp, 55
  #APP
- sh      a1, 0(a2)
+ lb      a2, 0(a2)
+ sb      a2, 0(a1)
  #NO_APP
- lhu     a1, 52(sp)
- addi    a2, a0, 20
+ addi    a1, a0, 22
+ addi    a2, sp, 54
  #APP
- sh      a1, 0(a2)
+ lb      a2, 0(a2)
+ sb      a2, 0(a1)
  #NO_APP
- lhu     a1, 50(sp)
- addi    a2, a0, 18
+ addi    a1, a0, 21
+ addi    a2, sp, 53
  #APP
- sh      a1, 0(a2)
+ lb      a2, 0(a2)
+ sb      a2, 0(a1)
  #NO_APP
- lhu     a1, 48(sp)
- addi    a2, a0, 16
+ addi    a1, a0, 20
  #APP
- sh      a1, 0(a2)
+ lb      a2, 0(a5)
+ sb      a2, 0(a1)
  #NO_APP
- lhu     a1, 46(sp)
- addi    a2, a0, 14
+ addi    a1, a0, 19
+ addi    a2, sp, 51
  #APP
- sh      a1, 0(a2)
+ lb      a2, 0(a2)
+ sb      a2, 0(a1)
  #NO_APP
- lhu     a1, 44(sp)
- addi    a2, a0, 12
+ addi    a1, a0, 18
+ addi    a2, sp, 50
  #APP
- sh      a1, 0(a2)
+ lb      a2, 0(a2)
+ sb      a2, 0(a1)
  #NO_APP
- lhu     a1, 42(sp)
- addi    a2, a0, 10
+ addi    a1, a0, 17
+ addi    a2, sp, 49
  #APP
- sh      a1, 0(a2)
+ lb      a2, 0(a2)
+ sb      a2, 0(a1)
  #NO_APP
- lhu     a1, 40(sp)
- addi    a2, a0, 8
+ addi    a1, a0, 16
  #APP
- sh      a1, 0(a2)
+ lb      a2, 0(t1)
+ sb      a2, 0(a1)
  #NO_APP
- lhu     a1, 38(sp)
- addi    a2, a0, 6
+ addi    a1, a0, 15
+ addi    a2, sp, 47
  #APP
- sh      a1, 0(a2)
+ lb      a2, 0(a2)
+ sb      a2, 0(a1)
  #NO_APP
- lhu     a1, 36(sp)
- addi    a2, a0, 4
+ addi    a1, a0, 14
+ addi    a2, sp, 46
  #APP
- sh      a1, 0(a2)
+ lb      a2, 0(a2)
+ sb      a2, 0(a1)
  #NO_APP
- lhu     a1, 34(sp)
- addi    a2, a0, 2
+ addi    a1, a0, 13
+ addi    a2, sp, 45
  #APP
- sh      a1, 0(a2)
+ lb      a2, 0(a2)
+ sb      a2, 0(a1)
  #NO_APP
- lhu     a1, 32(sp)
+ addi    a1, a0, 12
  #APP
- sh      a1, 0(a0)
+ lb      a2, 0(t0)
+ sb      a2, 0(a1)
+ #NO_APP
+ addi    a1, a0, 11
+ addi    a2, sp, 43
+ #APP
+ lb      a2, 0(a2)
+ sb      a2, 0(a1)
+ #NO_APP
+ addi    a1, a0, 10
+ addi    a2, sp, 42
+ #APP
+ lb      a2, 0(a2)
+ sb      a2, 0(a1)
+ #NO_APP
+ addi    a1, a0, 9
+ addi    a2, sp, 41
+ #APP
+ lb      a2, 0(a2)
+ sb      a2, 0(a1)
+ #NO_APP
+ addi    a1, a0, 8
+ #APP
+ lb      a2, 0(a7)
+ sb      a2, 0(a1)
+ #NO_APP
+ addi    a1, a0, 7
+ addi    a2, sp, 39
+ #APP
+ lb      a2, 0(a2)
+ sb      a2, 0(a1)
+ #NO_APP
+ addi    a1, a0, 6
+ addi    a2, sp, 38
+ #APP
+ lb      a2, 0(a2)
+ sb      a2, 0(a1)
+ #NO_APP
+ addi    a1, a0, 5
+ addi    a2, sp, 37
+ #APP
+ lb      a2, 0(a2)
+ sb      a2, 0(a1)
+ #NO_APP
+ addi    a1, a0, 4
+ #APP
+ lb      a2, 0(a6)
+ sb      a2, 0(a1)
+ #NO_APP
+ addi    a1, a0, 3
+ addi    a2, sp, 35
+ #APP
+ lb      a2, 0(a2)
+ sb      a2, 0(a1)
+ #NO_APP
+ addi    a1, a0, 2
+ addi    a2, sp, 34
+ #APP
+ lb      a2, 0(a2)
+ sb      a2, 0(a1)
+ #NO_APP
+ addi    a1, a0, 1
+ addi    a2, sp, 33
+ #APP
+ lb      a2, 0(a2)
+ sb      a2, 0(a1)
+ #NO_APP
+ addi    a1, sp, 32
+ #APP
+ lb      a1, 0(a1)
+ sb      a1, 0(a0)
  #NO_APP
  addi    sp, sp, 64
  ret
@@ -694,273 +393,4 @@ asm_test::atomic_memcpy_store_align1::write_volatile_release_fence:
  call    memcpy@plt
  lw      ra, 44(sp)
  addi    sp, sp, 48
- ret
-.LBB4_3:
- #APP
- lb      t0, 0(a3)
- #NO_APP
- mv      a2, a4
- sb      t0, 0(a5)
- addi    a5, a5, 1
- addi    a4, a4, 1
- addi    a3, a3, 1
- bgeu    a4, a2, .LBB4_3
- sub     a3, a6, a7
- li      a4, 4
- bltu    a3, a4, .LBB4_7
-.LBB4_5:
- addi    a6, sp, 8
- li      a7, 3
-.LBB4_6:
- add     a2, a1, t1
- #APP
- lw      a2, 0(a2)
- #NO_APP
- add     a4, a6, t1
- sb      a2, 0(a4)
- srli    a5, a2, 24
- sb      a5, 3(a4)
- srli    a5, a2, 16
- sb      a5, 2(a4)
- srli    a2, a2, 8
- sb      a2, 1(a4)
- addi    a3, a3, -4
- addi    t1, t1, 4
- bltu    a7, a3, .LBB4_6
-.LBB4_7:
- beqz    a3, .LBB4_11
- addi    a2, sp, 8
- add     a4, a2, t1
- add     a1, a1, t1
-.LBB4_9:
- #APP
- lb      a2, 0(a1)
- #NO_APP
- sb      a2, 0(a4)
- addi    a3, a3, -1
- addi    a4, a4, 1
- addi    a1, a1, 1
- bnez    a3, .LBB4_9
- j       .LBB4_11
-.LBB4_10:
- addi    a2, a1, 30
- #APP
- lh      a2, 0(a2)
- #NO_APP
- sh      a2, 38(sp)
- addi    a2, a1, 28
- #APP
- lh      a2, 0(a2)
- #NO_APP
- sh      a2, 36(sp)
- addi    a2, a1, 26
- #APP
- lh      a2, 0(a2)
- #NO_APP
- sh      a2, 34(sp)
- addi    a2, a1, 24
- #APP
- lh      a2, 0(a2)
- #NO_APP
- sh      a2, 32(sp)
- addi    a2, a1, 22
- #APP
- lh      a2, 0(a2)
- #NO_APP
- sh      a2, 30(sp)
- addi    a2, a1, 20
- #APP
- lh      a2, 0(a2)
- #NO_APP
- sh      a2, 28(sp)
- addi    a2, a1, 18
- #APP
- lh      a2, 0(a2)
- #NO_APP
- sh      a2, 26(sp)
- addi    a2, a1, 16
- #APP
- lh      a2, 0(a2)
- #NO_APP
- sh      a2, 24(sp)
- addi    a2, a1, 14
- #APP
- lh      a2, 0(a2)
- #NO_APP
- sh      a2, 22(sp)
- addi    a2, a1, 12
- #APP
- lh      a2, 0(a2)
- #NO_APP
- sh      a2, 20(sp)
- addi    a2, a1, 10
- #APP
- lh      a2, 0(a2)
- #NO_APP
- sh      a2, 18(sp)
- addi    a2, a1, 8
- #APP
- lh      a2, 0(a2)
- #NO_APP
- sh      a2, 16(sp)
- addi    a2, a1, 6
- #APP
- lh      a2, 0(a2)
- #NO_APP
- sh      a2, 14(sp)
- addi    a2, a1, 4
- #APP
- lh      a2, 0(a2)
- #NO_APP
- sh      a2, 12(sp)
- addi    a2, a1, 2
- #APP
- lh      a2, 0(a2)
- #NO_APP
- sh      a2, 10(sp)
- #APP
- lh      a1, 0(a1)
- #NO_APP
- sh      a1, 8(sp)
-.LBB4_11:
- addi    a1, sp, 8
- li      a2, 32
- call    memcpy@plt
- fence   r, rw
- lw      ra, 44(sp)
- addi    sp, sp, 48
- ret
-.LBB6_3:
- lbu     t0, 0(a4)
- mv      a3, a2
- #APP
- sb      t0, 0(a5)
- #NO_APP
- addi    a5, a5, 1
- addi    a2, a2, 1
- addi    a4, a4, 1
- bgeu    a2, a3, .LBB6_3
- sub     a2, a6, a7
- li      a3, 4
- bltu    a2, a3, .LBB6_7
-.LBB6_5:
- addi    a6, sp, 32
- li      a7, 3
-.LBB6_6:
- add     a5, a6, a1
- lbu     t0, 1(a5)
- lbu     t1, 0(a5)
- lbu     a3, 3(a5)
- lbu     a5, 2(a5)
- slli    a4, t0, 8
- or      a4, a4, t1
- slli    a3, a3, 8
- or      a3, a3, a5
- slli    a3, a3, 16
- or      a3, a3, a4
- add     a4, a0, a1
- #APP
- sw      a3, 0(a4)
- #NO_APP
- addi    a2, a2, -4
- addi    a1, a1, 4
- bltu    a7, a2, .LBB6_6
-.LBB6_7:
- beqz    a2, .LBB6_10
- add     a0, a0, a1
- addi    a3, sp, 32
- add     a1, a1, a3
-.LBB6_9:
- lbu     a3, 0(a1)
- #APP
- sb      a3, 0(a0)
- #NO_APP
- addi    a2, a2, -1
- addi    a0, a0, 1
- addi    a1, a1, 1
- bnez    a2, .LBB6_9
-.LBB6_10:
- addi    sp, sp, 64
- ret
-.LBB6_11:
- lhu     a1, 62(sp)
- addi    a2, a0, 30
- #APP
- sh      a1, 0(a2)
- #NO_APP
- lhu     a1, 60(sp)
- addi    a2, a0, 28
- #APP
- sh      a1, 0(a2)
- #NO_APP
- lhu     a1, 58(sp)
- addi    a2, a0, 26
- #APP
- sh      a1, 0(a2)
- #NO_APP
- lhu     a1, 56(sp)
- addi    a2, a0, 24
- #APP
- sh      a1, 0(a2)
- #NO_APP
- lhu     a1, 54(sp)
- addi    a2, a0, 22
- #APP
- sh      a1, 0(a2)
- #NO_APP
- lhu     a1, 52(sp)
- addi    a2, a0, 20
- #APP
- sh      a1, 0(a2)
- #NO_APP
- lhu     a1, 50(sp)
- addi    a2, a0, 18
- #APP
- sh      a1, 0(a2)
- #NO_APP
- lhu     a1, 48(sp)
- addi    a2, a0, 16
- #APP
- sh      a1, 0(a2)
- #NO_APP
- lhu     a1, 46(sp)
- addi    a2, a0, 14
- #APP
- sh      a1, 0(a2)
- #NO_APP
- lhu     a1, 44(sp)
- addi    a2, a0, 12
- #APP
- sh      a1, 0(a2)
- #NO_APP
- lhu     a1, 42(sp)
- addi    a2, a0, 10
- #APP
- sh      a1, 0(a2)
- #NO_APP
- lhu     a1, 40(sp)
- addi    a2, a0, 8
- #APP
- sh      a1, 0(a2)
- #NO_APP
- lhu     a1, 38(sp)
- addi    a2, a0, 6
- #APP
- sh      a1, 0(a2)
- #NO_APP
- lhu     a1, 36(sp)
- addi    a2, a0, 4
- #APP
- sh      a1, 0(a2)
- #NO_APP
- lhu     a1, 34(sp)
- addi    a2, a0, 2
- #APP
- sh      a1, 0(a2)
- #NO_APP
- lhu     a1, 32(sp)
- #APP
- sh      a1, 0(a0)
- #NO_APP
- addi    sp, sp, 64
  ret

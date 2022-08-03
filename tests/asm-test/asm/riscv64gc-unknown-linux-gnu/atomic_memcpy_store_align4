@@ -44,120 +44,114 @@ asm_test::atomic_memcpy_store_align4::release:
  ld      a1, 56(sp)
  ld      a2, 48(sp)
  ld      a3, 40(sp)
+ ld      a4, 32(sp)
  sd      a1, 120(sp)
  sd      a2, 112(sp)
  sd      a3, 104(sp)
- ld      a1, 32(sp)
- ld      a2, 24(sp)
- ld      a3, 16(sp)
- ld      a4, 8(sp)
- sd      a1, 96(sp)
- sd      a2, 88(sp)
- sd      a3, 80(sp)
- sd      a4, 72(sp)
+ sd      a4, 96(sp)
+ ld      a1, 24(sp)
+ ld      a2, 16(sp)
+ ld      a3, 8(sp)
  ld      a4, 0(sp)
- addi    a1, a0, 7
- andi    a7, a1, -8
- sub     t2, a7, a0
- li      a2, 64
+ sd      a1, 88(sp)
+ sd      a2, 80(sp)
+ sd      a3, 72(sp)
  sd      a4, 64(sp)
- bltu    a2, t2, .LBB10_11
- beqz    t2, .LBB10_5
- addi    a6, a0, 64
- sub     a5, a0, a7
- addi    a4, sp, 64
- mv      a2, a0
-.LBB10_3:
- lb      t0, 0(a4)
- mv      a3, a5
- sb      t0, 0(a2)
- addi    a2, a2, 1
- addi    a5, a5, 1
- addi    a4, a4, 1
- bgeu    a5, a3, .LBB10_3
- sub     a2, a6, a7
- li      a3, 8
- bltu    a2, a3, .LBB10_7
-.LBB10_5:
- addi    a6, sp, 64
- li      a7, 7
-.LBB10_6:
- add     a5, a6, t2
- lbu     t0, 1(a5)
- lbu     t1, 0(a5)
- lbu     a3, 3(a5)
- lbu     a4, 2(a5)
- slli    a1, t0, 8
- or      a1, a1, t1
- slli    a3, a3, 8
- or      a3, a3, a4
- slli    a3, a3, 16
- or      t0, a3, a1
- lbu     a3, 5(a5)
- lbu     a4, 4(a5)
- lbu     a1, 7(a5)
- lbu     a5, 6(a5)
- slli    a3, a3, 8
- or      a3, a3, a4
- slli    a1, a1, 8
- or      a1, a1, a5
- slli    a1, a1, 16
- or      a1, a1, a3
- slli    a1, a1, 32
- or      a1, a1, t0
- add     a3, a0, t2
- sd      a1, 0(a3)
- addi    a2, a2, -8
- addi    t2, t2, 8
- bltu    a7, a2, .LBB10_6
-.LBB10_7:
- beqz    a2, .LBB10_10
- add     a0, a0, t2
- addi    a3, sp, 64
- add     a1, a3, t2
-.LBB10_9:
- lb      a3, 0(a1)
- sb      a3, 0(a0)
- addi    a2, a2, -1
- addi    a0, a0, 1
- addi    a1, a1, 1
- bnez    a2, .LBB10_9
-.LBB10_10:
- addi    sp, sp, 128
- ret
-.LBB10_11:
- lw      a1, 124(sp)
- sw      a1, 60(a0)
- lw      a1, 120(sp)
- sw      a1, 56(a0)
- lw      a1, 116(sp)
- sw      a1, 52(a0)
- lw      a1, 112(sp)
- sw      a1, 48(a0)
- lw      a1, 108(sp)
- sw      a1, 44(a0)
- lw      a1, 104(sp)
- sw      a1, 40(a0)
- lw      a1, 100(sp)
- sw      a1, 36(a0)
- lw      a1, 96(sp)
- sw      a1, 32(a0)
- lw      a1, 92(sp)
- sw      a1, 28(a0)
- lw      a1, 88(sp)
- sw      a1, 24(a0)
- lw      a1, 84(sp)
- sw      a1, 20(a0)
- lw      a1, 80(sp)
- sw      a1, 16(a0)
- lw      a1, 76(sp)
- sw      a1, 12(a0)
- lw      a1, 72(sp)
- sw      a1, 8(a0)
- lw      a1, 68(sp)
- sw      a1, 4(a0)
- lw      a1, 64(sp)
+ addi    a6, sp, 72
+ addi    a7, sp, 80
+ addi    t0, sp, 88
+ addi    t1, sp, 96
+ addi    a5, sp, 104
+ addi    a1, sp, 112
+ addi    a2, sp, 120
+ addi    a3, a0, 60
+ addi    a4, sp, 124
+ #APP
+ lw      a4, 0(a4)
+ sw      a4, 0(a3)
+ #NO_APP
+ addi    a3, a0, 56
+ #APP
+ lw      a2, 0(a2)
+ sw      a2, 0(a3)
+ #NO_APP
+ addi    a2, a0, 52
+ addi    a3, sp, 116
+ #APP
+ lw      a3, 0(a3)
+ sw      a3, 0(a2)
+ #NO_APP
+ addi    a2, a0, 48
+ #APP
+ lw      a1, 0(a1)
+ sw      a1, 0(a2)
+ #NO_APP
+ addi    a1, a0, 44
+ addi    a2, sp, 108
+ #APP
+ lw      a2, 0(a2)
+ sw      a2, 0(a1)
+ #NO_APP
+ addi    a1, a0, 40
+ #APP
+ lw      a2, 0(a5)
+ sw      a2, 0(a1)
+ #NO_APP
+ addi    a1, a0, 36
+ addi    a2, sp, 100
+ #APP
+ lw      a2, 0(a2)
+ sw      a2, 0(a1)
+ #NO_APP
+ addi    a1, a0, 32
+ #APP
+ lw      a2, 0(t1)
+ sw      a2, 0(a1)
+ #NO_APP
+ addi    a1, a0, 28
+ addi    a2, sp, 92
+ #APP
+ lw      a2, 0(a2)
+ sw      a2, 0(a1)
+ #NO_APP
+ addi    a1, a0, 24
+ #APP
+ lw      a2, 0(t0)
+ sw      a2, 0(a1)
+ #NO_APP
+ addi    a1, a0, 20
+ addi    a2, sp, 84
+ #APP
+ lw      a2, 0(a2)
+ sw      a2, 0(a1)
+ #NO_APP
+ addi    a1, a0, 16
+ #APP
+ lw      a2, 0(a7)
+ sw      a2, 0(a1)
+ #NO_APP
+ addi    a1, a0, 12
+ addi    a2, sp, 76
+ #APP
+ lw      a2, 0(a2)
+ sw      a2, 0(a1)
+ #NO_APP
+ addi    a1, a0, 8
+ #APP
+ lw      a2, 0(a6)
+ sw      a2, 0(a1)
+ #NO_APP
+ addi    a1, a0, 4
+ addi    a2, sp, 68
+ #APP
+ lw      a2, 0(a2)
+ sw      a2, 0(a1)
+ #NO_APP
+ addi    a1, sp, 64
+ #APP
+ lw      a1, 0(a1)
  sw      a1, 0(a0)
+ #NO_APP
  addi    sp, sp, 128
  ret
 asm_test::atomic_memcpy_store_align4::write_volatile_release_fence:

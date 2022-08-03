@@ -1,17 +1,62 @@
 asm_test::atomic_memcpy_store_align16::release:
- ldp     x8, x9, [x1]
- ldp     x10, x11, [x1, #16]
- ldp     x12, x13, [x1, #48]
- ldp     x14, x15, [x1, #32]
+ sub     sp, sp, #128
+ ldp     q0, q1, [x1]
+ add     x8, sp, #64
+ add     x10, x0, #56
+ add     x11, x8, #56
+ add     x9, x8, #48
+ add     x12, x0, #48
+ add     x13, x0, #40
+ add     x14, x8, #40
+ ldp     q2, q3, [x1, #32]
+ stp     q0, q1, [sp]
+ stp     q2, q3, [sp, #32]
  dmb     ish
- str     x13, [x0, #56]
- str     x12, [x0, #48]
- str     x15, [x0, #40]
- str     x14, [x0, #32]
- str     x11, [x0, #24]
- str     x10, [x0, #16]
- str     x9, [x0, #8]
+ ldp     q0, q1, [sp]
+ ldp     q2, q3, [sp, #32]
+ stp     q0, q1, [sp, #64]
+ stp     q2, q3, [sp, #96]
+ //APP
+ ldr     x11, [x11]
+ str     x11, [x10]
+ //NO_APP
+ //APP
+ ldr     x9, [x9]
+ str     x9, [x12]
+ //NO_APP
+ add     x10, x8, #32
+ add     x9, x0, #32
+ //APP
+ ldr     x12, [x14]
+ str     x12, [x13]
+ //NO_APP
+ add     x12, x0, #24
+ add     x13, x8, #24
+ //APP
+ ldr     x10, [x10]
+ str     x10, [x9]
+ //NO_APP
+ add     x11, x8, #16
+ add     x9, x0, #16
+ //APP
+ ldr     x13, [x13]
+ str     x13, [x12]
+ //NO_APP
+ add     x10, x0, #8
+ //APP
+ ldr     x11, [x11]
+ str     x11, [x9]
+ //NO_APP
+ orr     x14, x8, #0x8
+ //APP
+ ldr     x9, [x14]
+ str     x9, [x10]
+ //NO_APP
+ //APP
+ ldr     x8, [x8]
  str     x8, [x0]
+ //NO_APP
+ add     sp, sp, #128
  ret
 asm_test::atomic_memcpy_store_align16::write_volatile_release_fence:
  sub     sp, sp, #64
