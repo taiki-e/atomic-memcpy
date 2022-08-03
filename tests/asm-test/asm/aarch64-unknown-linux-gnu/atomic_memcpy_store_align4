@@ -12,7 +12,22 @@ asm_test::atomic_memcpy_store_align4::release:
  ldp     q2, q3, [sp, #32]
  stp     q0, q1, [sp, #64]
  stp     q2, q3, [sp, #96]
- b.ls    .LBB10_2
+ b.hi    .LBB10_5
+ cbz     x8, .LBB10_6
+ add     x10, x0, #64
+ sub     x11, x0, x9
+ add     x12, sp, #64
+ mov     x13, x0
+.LBB10_3:
+ ldrb    w14, [x12], #1
+ adds    x11, x11, #1
+ strb    w14, [x13], #1
+ b.lo    .LBB10_3
+ sub     x9, x10, x9
+ cmp     x9, #7
+ b.hi    .LBB10_7
+ b       .LBB10_9
+.LBB10_5:
  ldr     w8, [sp, #124]
  str     w8, [x0, #60]
  ldr     w8, [sp, #120]
@@ -46,21 +61,6 @@ asm_test::atomic_memcpy_store_align4::release:
  ldr     w8, [sp, #64]
  str     w8, [x0]
  b       .LBB10_12
-.LBB10_2:
- cbz     x8, .LBB10_6
- sub     x9, x0, x9
- add     x10, sp, #64
- mov     x11, x9
- mov     x12, x0
-.LBB10_4:
- ldrb    w13, [x10], #1
- adds    x11, x11, #1
- strb    w13, [x12], #1
- b.lo    .LBB10_4
- add     x9, x9, #64
- cmp     x9, #8
- b.hs    .LBB10_7
- b       .LBB10_9
 .LBB10_6:
  mov     w9, #64
 .LBB10_7:

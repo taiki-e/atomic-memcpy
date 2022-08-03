@@ -64,6 +64,92 @@ asm_test::atomic_memcpy_store_align4::release:
  stx     %o2, [%sp+2239]
  ba      .LBB10_1
  nop
+.LBB10_1:
+ cmp     %o1, 0
+ be      %xcc, .LBB10_6
+ mov     64, %o2
+ ba      .LBB10_2
+ nop
+.LBB10_2:
+ add     %o0, 64, %o2
+ sub     %o0, %o3, %g2
+ add     %sp, 2239, %o4
+ mov     %g0, %o5
+ mov     %o0, %g3
+.LBB10_3:
+ ldub    [%o4], %g4
+ stb     %g4, [%g3]
+ add     %g3, 1, %g3
+ add     %g2, 1, %g4
+ cmp     %g4, %g2
+ mov     %o5, %g2
+ movcs   %xcc, 1, %g2
+ cmp     %g2, 0
+ add     %o4, 1, %o4
+ be      .LBB10_3
+ mov     %g4, %g2
+ sub     %o2, %o3, %o2
+ cmp     %o2, 8
+ bcs     %xcc, .LBB10_5
+ nop
+ ba      .LBB10_6
+ nop
+.LBB10_6:
+ add     %sp, 2239, %o3
+.LBB10_7:
+ add     %o3, %o1, %o4
+ ldub    [%o4+6], %o5
+ ldub    [%o4+7], %g2
+ ldub    [%o4+4], %g3
+ ldub    [%o4+5], %g4
+ sllx    %o5, 8, %o5
+ or      %o5, %g2, %o5
+ sllx    %g3, 8, %g2
+ or      %g2, %g4, %g2
+ sllx    %g2, 16, %g2
+ or      %g2, %o5, %o5
+ ldub    [%o4+2], %g2
+ ldub    [%o4+3], %g3
+ ldub    [%o3+%o1], %g4
+ ldub    [%o4+1], %o4
+ sllx    %g2, 8, %g2
+ or      %g2, %g3, %g2
+ sllx    %g4, 8, %g3
+ or      %g3, %o4, %o4
+ sllx    %o4, 16, %o4
+ or      %o4, %g2, %o4
+ sllx    %o4, 32, %o4
+ or      %o4, %o5, %o4
+ stx     %o4, [%o0+%o1]
+ add     %o2, -8, %o2
+ cmp     %o2, 7
+ bgu     %xcc, .LBB10_7
+ add     %o1, 8, %o1
+ ba      .LBB10_5
+ nop
+.LBB10_5:
+ cmp     %o2, 0
+ be      %xcc, .LBB10_11
+ nop
+ ba      .LBB10_8
+ nop
+.LBB10_8:
+ add     %o0, %o1, %o0
+ add     %sp, 2239, %o3
+ add     %o3, %o1, %o1
+.LBB10_9:
+ ldub    [%o1], %o3
+ stb     %o3, [%o0]
+ add     %o2, -1, %o2
+ add     %o0, 1, %o0
+ cmp     %o2, 0
+ bne     %xcc, .LBB10_9
+ add     %o1, 1, %o1
+ ba      .LBB10_11
+ nop
+.LBB10_11:
+ retl
+ add     %sp, 256, %sp
 .LBB10_10:
  ld      [%sp+2239], %o1
  st      %o1, [%o0]
@@ -98,92 +184,7 @@ asm_test::atomic_memcpy_store_align4::release:
  ld      [%sp+2295], %o1
  st      %o1, [%o0+56]
  ld      [%sp+2299], %o1
- ba      .LBB10_11
  st      %o1, [%o0+60]
-.LBB10_1:
- cmp     %o1, 0
- be      %xcc, .LBB10_5
- mov     64, %o2
- ba      .LBB10_2
- nop
-.LBB10_2:
- add     %sp, 2239, %o2
- sub     %o0, %o3, %o5
- mov     %g0, %o4
- mov     %o0, %g2
-.LBB10_3:
- ldub    [%o2], %g3
- stb     %g3, [%g2]
- add     %g2, 1, %g2
- add     %o5, 1, %g3
- cmp     %g3, %o5
- mov     %o4, %o5
- movcs   %xcc, 1, %o5
- cmp     %o5, 1
- add     %o2, 1, %o2
- bne     .LBB10_3
- mov     %g3, %o5
- sub     %o0, %o3, %o2
- add     %o2, 64, %o2
- cmp     %o2, 8
- bcs     %xcc, .LBB10_7
- nop
- ba      .LBB10_5
- nop
-.LBB10_5:
- add     %sp, 2239, %o3
-.LBB10_6:
- add     %o3, %o1, %o4
- ldub    [%o4+6], %o5
- ldub    [%o4+7], %g2
- ldub    [%o4+4], %g3
- ldub    [%o4+5], %g4
- sllx    %o5, 8, %o5
- or      %o5, %g2, %o5
- sllx    %g3, 8, %g2
- or      %g2, %g4, %g2
- sllx    %g2, 16, %g2
- or      %g2, %o5, %o5
- ldub    [%o4+2], %g2
- ldub    [%o4+3], %g3
- ldub    [%o3+%o1], %g4
- ldub    [%o4+1], %o4
- sllx    %g2, 8, %g2
- or      %g2, %g3, %g2
- sllx    %g4, 8, %g3
- or      %g3, %o4, %o4
- sllx    %o4, 16, %o4
- or      %o4, %g2, %o4
- sllx    %o4, 32, %o4
- or      %o4, %o5, %o4
- stx     %o4, [%o0+%o1]
- add     %o2, -8, %o2
- cmp     %o2, 7
- bgu     %xcc, .LBB10_6
- add     %o1, 8, %o1
- ba      .LBB10_7
- nop
-.LBB10_7:
- cmp     %o2, 0
- be      %xcc, .LBB10_11
- nop
- ba      .LBB10_8
- nop
-.LBB10_8:
- add     %o0, %o1, %o0
- add     %sp, 2239, %o3
- add     %o3, %o1, %o1
-.LBB10_9:
- ldub    [%o1], %o3
- stb     %o3, [%o0]
- add     %o0, 1, %o0
- add     %o2, -1, %o2
- cmp     %o2, 0
- be      %xcc, .LBB10_11
- add     %o1, 1, %o1
- ba      .LBB10_9
- nop
-.LBB10_11:
  retl
  add     %sp, 256, %sp
 asm_test::atomic_memcpy_store_align4::write_volatile_release_fence:

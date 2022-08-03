@@ -3,8 +3,23 @@ asm_test::atomic_memcpy_load_align4::acquire:
  add     x9, x0, #7
  and     x10, x9, #0xfffffffffffffff8
  sub     x9, x10, x0
- cmp     x9, #65
- b.lo    .LBB8_2
+ cmp     x9, #64
+ b.hi    .LBB8_5
+ cbz     x9, .LBB8_6
+ add     x11, x0, #64
+ sub     x12, x0, x10
+ mov     x13, sp
+ mov     x14, x0
+.LBB8_3:
+ ldrb    w15, [x14], #1
+ adds    x12, x12, #1
+ strb    w15, [x13], #1
+ b.lo    .LBB8_3
+ sub     x10, x11, x10
+ cmp     x10, #7
+ b.hi    .LBB8_7
+ b       .LBB8_9
+.LBB8_5:
  ldr     w10, [x0, #60]
  ldr     w9, [x0, #56]
  stp     w9, w10, [sp, #56]
@@ -30,21 +45,6 @@ asm_test::atomic_memcpy_load_align4::acquire:
  ldr     w9, [x0]
  stp     w9, w10, [sp]
  b       .LBB8_12
-.LBB8_2:
- cbz     x9, .LBB8_6
- sub     x10, x0, x10
- mov     x11, sp
- mov     x12, x10
- mov     x13, x0
-.LBB8_4:
- ldrb    w14, [x13], #1
- adds    x12, x12, #1
- strb    w14, [x11], #1
- b.lo    .LBB8_4
- add     x10, x10, #64
- cmp     x10, #8
- b.hs    .LBB8_7
- b       .LBB8_9
 .LBB8_6:
  mov     w10, #64
 .LBB8_7:

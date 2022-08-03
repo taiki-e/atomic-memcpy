@@ -1,11 +1,34 @@
 asm_test::atomic_memcpy_load_align4::acquire:
- lw      a7, 24(a1)
- lw      t0, 20(a1)
- lw      a5, 16(a1)
- lw      a2, 12(a1)
- lw      a3, 8(a1)
- lw      a4, 4(a1)
+ #APP
+ lw      a6, 0(a2)
+ #NO_APP
+ addi    a3, a1, 24
+ #APP
+ lw      a7, 0(a3)
+ #NO_APP
+ addi    a4, a1, 20
+ #APP
+ lw      t0, 0(a4)
+ #NO_APP
+ addi    a5, a1, 16
+ #APP
+ lw      a5, 0(a5)
+ #NO_APP
+ addi    a2, a1, 12
+ #APP
+ lw      a2, 0(a2)
+ #NO_APP
+ addi    a3, a1, 8
+ #APP
+ lw      a3, 0(a3)
+ #NO_APP
+ addi    a4, a1, 4
+ #APP
+ lw      a4, 0(a4)
+ #NO_APP
+ #APP
  lw      a1, 0(a1)
+ #NO_APP
  sw      a1, 0(a0)
  sw      a4, 4(a0)
  sw      a3, 8(a0)

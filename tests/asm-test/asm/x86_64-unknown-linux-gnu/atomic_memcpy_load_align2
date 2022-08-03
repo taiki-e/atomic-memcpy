@@ -1,12 +1,27 @@
 asm_test::atomic_memcpy_load_align2::acquire:
  sub     rsp, 64
  mov     rax, rdi
- lea     rdx, [rsi, +, 7]
- and     rdx, -8
- mov     rcx, rdx
- sub     rcx, rsi
- cmp     rcx, 65
- jb      .LBB4_2
+ lea     rcx, [rsi, +, 7]
+ and     rcx, -8
+ mov     r9, rcx
+ sub     r9, rsi
+ cmp     r9, 64
+ ja      .LBB4_6
+ test    r9, r9
+ je      .LBB4_2
+ mov     rdx, rsi
+ not     rdx
+ add     rcx, rdx
+ mov     r8d, r9d
+ and     r8d, 3
+ cmp     rcx, 3
+ jae     .LBB4_21
+ mov     r11d, 64
+ xor     edi, edi
+ test    r8, r8
+ jne     .LBB4_10
+ jmp     .LBB4_13
+.LBB4_6:
  movzx   ecx, word, ptr, [rsi, +, 62]
  mov     word, ptr, [rsp, +, 62], cx
  movzx   ecx, word, ptr, [rsi, +, 60]
@@ -71,100 +86,84 @@ asm_test::atomic_memcpy_load_align2::acquire:
  mov     word, ptr, [rsp, +, 2], cx
  movzx   ecx, word, ptr, [rsi]
  mov     word, ptr, [rsp], cx
- jmp     .LBB4_22
+ jmp     .LBB4_7
 .LBB4_2:
- test    rcx, rcx
- je      .LBB4_3
- mov     rdi, rsi
- not     rdi
- add     rdx, rdi
- mov     r8d, ecx
- and     r8d, 3
- cmp     rdx, 3
- jae     .LBB4_6
  mov     r11d, 64
- xor     r10d, r10d
- test    r8, r8
- jne     .LBB4_10
- jmp     .LBB4_13
-.LBB4_3:
+ xor     r9d, r9d
+ jmp     .LBB4_3
+.LBB4_21:
+ mov     rcx, r9
+ and     rcx, -4
+ xor     edi, edi
+.LBB4_22:
+ movzx   edx, byte, ptr, [rsi, +, rdi]
+ mov     byte, ptr, [rsp, +, rdi], dl
+ movzx   edx, byte, ptr, [rsi, +, rdi, +, 1]
+ mov     byte, ptr, [rsp, +, rdi, +, 1], dl
+ movzx   edx, byte, ptr, [rsi, +, rdi, +, 2]
+ mov     byte, ptr, [rsp, +, rdi, +, 2], dl
+ movzx   edx, byte, ptr, [rsi, +, rdi, +, 3]
+ mov     byte, ptr, [rsp, +, rdi, +, 3], dl
+ add     rdi, 4
+ cmp     rcx, rdi
+ jne     .LBB4_22
  mov     r11d, 64
- jmp     .LBB4_14
-.LBB4_6:
- mov     rdi, rcx
- and     rdi, -4
- xor     r10d, r10d
-.LBB4_7:
- movzx   edx, byte, ptr, [rsi, +, r10]
- mov     byte, ptr, [rsp, +, r10], dl
- movzx   edx, byte, ptr, [rsi, +, r10, +, 1]
- mov     byte, ptr, [rsp, +, r10, +, 1], dl
- movzx   edx, byte, ptr, [rsi, +, r10, +, 2]
- mov     byte, ptr, [rsp, +, r10, +, 2], dl
- movzx   edx, byte, ptr, [rsi, +, r10, +, 3]
- mov     byte, ptr, [rsp, +, r10, +, 3], dl
- add     r10, 4
- cmp     rdi, r10
- jne     .LBB4_7
- mov     r11d, 64
- sub     r11, r10
+ sub     r11, rdi
  test    r8, r8
  je      .LBB4_13
 .LBB4_10:
- lea     r9, [rsp, +, r10]
- add     r10, rsi
- xor     edi, edi
+ lea     r10, [rsp, +, rdi]
+ add     rdi, rsi
+ xor     edx, edx
 .LBB4_11:
- movzx   edx, byte, ptr, [r10, +, rdi]
- mov     byte, ptr, [r9, +, rdi], dl
- add     rdi, 1
- cmp     r8, rdi
+ movzx   ecx, byte, ptr, [rdi, +, rdx]
+ mov     byte, ptr, [r10, +, rdx], cl
+ add     rdx, 1
+ cmp     r8, rdx
  jne     .LBB4_11
- sub     r11, rdi
+ sub     r11, rdx
 .LBB4_13:
  cmp     r11, 8
- jb      .LBB4_15
-.LBB4_14:
- mov     rdx, qword, ptr, [rsi, +, rcx]
- mov     qword, ptr, [rsp, +, rcx], rdx
+ jb      .LBB4_14
+.LBB4_3:
+ mov     rcx, qword, ptr, [rsi, +, r9]
+ mov     qword, ptr, [rsp, +, r9], rcx
  add     r11, -8
- add     rcx, 8
+ add     r9, 8
  cmp     r11, 7
- ja      .LBB4_14
-.LBB4_15:
+ ja      .LBB4_3
+.LBB4_14:
  test    r11, r11
- je      .LBB4_22
- lea     rdx, [r11, -, 1]
- mov     r8d, r11d
- and     r8d, 3
- cmp     rdx, 3
- jb      .LBB4_19
- and     r11, -4
+ je      .LBB4_7
+ lea     r8, [r11, -, 1]
+ mov     rdx, r11
+ mov     rdi, r9
+ and     rdx, 3
+ je      .LBB4_18
+ mov     rdi, r9
+.LBB4_17:
+ movzx   ecx, byte, ptr, [rsi, +, rdi]
+ mov     byte, ptr, [rsp, +, rdi], cl
+ add     rdi, 1
+ add     rdx, -1
+ jne     .LBB4_17
 .LBB4_18:
- movzx   edx, byte, ptr, [rsi, +, rcx]
- mov     byte, ptr, [rsp, +, rcx], dl
- movzx   edx, byte, ptr, [rsi, +, rcx, +, 1]
- mov     byte, ptr, [rsp, +, rcx, +, 1], dl
- movzx   edx, byte, ptr, [rsi, +, rcx, +, 2]
- mov     byte, ptr, [rsp, +, rcx, +, 2], dl
- movzx   edx, byte, ptr, [rsi, +, rcx, +, 3]
- mov     byte, ptr, [rsp, +, rcx, +, 3], dl
- add     rcx, 4
- add     r11, -4
- jne     .LBB4_18
-.LBB4_19:
- test    r8, r8
- je      .LBB4_22
- lea     rdi, [rsp, +, rcx]
- add     rsi, rcx
- xor     ecx, ecx
-.LBB4_21:
- movzx   edx, byte, ptr, [rsi, +, rcx]
- mov     byte, ptr, [rdi, +, rcx], dl
- add     rcx, 1
- cmp     r8, rcx
- jne     .LBB4_21
-.LBB4_22:
+ cmp     r8, 3
+ jb      .LBB4_7
+ add     r11, r9
+.LBB4_20:
+ movzx   ecx, byte, ptr, [rsi, +, rdi]
+ mov     byte, ptr, [rsp, +, rdi], cl
+ movzx   ecx, byte, ptr, [rsi, +, rdi, +, 1]
+ mov     byte, ptr, [rsp, +, rdi, +, 1], cl
+ movzx   ecx, byte, ptr, [rsi, +, rdi, +, 2]
+ mov     byte, ptr, [rsp, +, rdi, +, 2], cl
+ movzx   ecx, byte, ptr, [rsi, +, rdi, +, 3]
+ mov     byte, ptr, [rsp, +, rdi, +, 3], cl
+ add     rdi, 4
+ cmp     r11, rdi
+ jne     .LBB4_20
+.LBB4_7:
  movzx   ecx, word, ptr, [rsp]
  movzx   edx, word, ptr, [rsp, +, 2]
  movzx   esi, word, ptr, [rsp, +, 4]

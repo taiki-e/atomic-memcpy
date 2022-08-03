@@ -3,10 +3,86 @@ asm_test::atomic_memcpy_load_align4::acquire:
  add     %i1, 7, %i2
  and     %i2, -8, %i4
  sub     %i4, %i1, %i2
- cmp     %i2, 65
- bcs     %xcc, .LBB8_1
+ cmp     %i2, 64
+ bgu     %xcc, .LBB8_10
  nop
- ba      .LBB8_10
+ ba      .LBB8_1
+ nop
+.LBB8_1:
+ cmp     %i2, 0
+ be      %xcc, .LBB8_6
+ mov     64, %i3
+ ba      .LBB8_2
+ nop
+.LBB8_2:
+ add     %i1, 64, %i3
+ sub     %i1, %i4, %g3
+ add     %fp, 1983, %i5
+ mov     %g0, %g2
+ mov     %i1, %g4
+.LBB8_3:
+ ldub    [%g4], %g5
+ stb     %g5, [%i5]
+ add     %i5, 1, %i5
+ add     %g3, 1, %g5
+ cmp     %g5, %g3
+ mov     %g2, %g3
+ movcs   %xcc, 1, %g3
+ cmp     %g3, 0
+ add     %g4, 1, %g4
+ be      .LBB8_3
+ mov     %g5, %g3
+ sub     %i3, %i4, %i3
+ cmp     %i3, 8
+ bcs     %xcc, .LBB8_5
+ nop
+ ba      .LBB8_6
+ nop
+.LBB8_6:
+ add     %fp, 1983, %i4
+.LBB8_7:
+ ldx     [%i1+%i2], %i5
+ add     %i4, %i2, %g2
+ srlx    %i5, 56, %g3
+ stb     %g3, [%i4+%i2]
+ stb     %i5, [%g2+7]
+ srlx    %i5, 8, %g3
+ stb     %g3, [%g2+6]
+ srlx    %i5, 16, %g3
+ stb     %g3, [%g2+5]
+ srlx    %i5, 24, %g3
+ stb     %g3, [%g2+4]
+ srlx    %i5, 32, %g3
+ stb     %g3, [%g2+3]
+ srlx    %i5, 40, %g3
+ stb     %g3, [%g2+2]
+ srlx    %i5, 48, %i5
+ stb     %i5, [%g2+1]
+ add     %i3, -8, %i3
+ cmp     %i3, 7
+ bgu     %xcc, .LBB8_7
+ add     %i2, 8, %i2
+ ba      .LBB8_5
+ nop
+.LBB8_5:
+ cmp     %i3, 0
+ be      %xcc, .LBB8_11
+ nop
+ ba      .LBB8_8
+ nop
+.LBB8_8:
+ add     %fp, 1983, %i4
+ add     %i4, %i2, %i4
+ add     %i1, %i2, %i1
+.LBB8_9:
+ ldub    [%i1], %i2
+ stb     %i2, [%i4]
+ add     %i3, -1, %i3
+ add     %i4, 1, %i4
+ cmp     %i3, 0
+ bne     %xcc, .LBB8_9
+ add     %i1, 1, %i1
+ ba      .LBB8_11
  nop
 .LBB8_10:
  ld      [%i1], %i2
@@ -42,84 +118,7 @@ asm_test::atomic_memcpy_load_align4::acquire:
  ld      [%i1+56], %i2
  st      %i2, [%fp+2039]
  ld      [%i1+60], %i1
- ba      .LBB8_11
  st      %i1, [%fp+2043]
-.LBB8_1:
- cmp     %i2, 0
- be      %xcc, .LBB8_5
- mov     64, %i3
- ba      .LBB8_2
- nop
-.LBB8_2:
- add     %fp, 1983, %i3
- sub     %i1, %i4, %g3
- mov     %g0, %i5
- mov     %i1, %g2
-.LBB8_3:
- ldub    [%g2], %g4
- stb     %g4, [%i3]
- add     %i3, 1, %i3
- add     %g3, 1, %g4
- cmp     %g4, %g3
- mov     %i5, %g3
- movcs   %xcc, 1, %g3
- cmp     %g3, 1
- add     %g2, 1, %g2
- bne     .LBB8_3
- mov     %g4, %g3
- sub     %i1, %i4, %i3
- add     %i3, 64, %i3
- cmp     %i3, 8
- bcs     %xcc, .LBB8_7
- nop
- ba      .LBB8_5
- nop
-.LBB8_5:
- add     %fp, 1983, %i4
-.LBB8_6:
- ldx     [%i1+%i2], %i5
- add     %i4, %i2, %g2
- srlx    %i5, 56, %g3
- stb     %g3, [%i4+%i2]
- stb     %i5, [%g2+7]
- srlx    %i5, 8, %g3
- stb     %g3, [%g2+6]
- srlx    %i5, 16, %g3
- stb     %g3, [%g2+5]
- srlx    %i5, 24, %g3
- stb     %g3, [%g2+4]
- srlx    %i5, 32, %g3
- stb     %g3, [%g2+3]
- srlx    %i5, 40, %g3
- stb     %g3, [%g2+2]
- srlx    %i5, 48, %i5
- stb     %i5, [%g2+1]
- add     %i3, -8, %i3
- cmp     %i3, 7
- bgu     %xcc, .LBB8_6
- add     %i2, 8, %i2
- ba      .LBB8_7
- nop
-.LBB8_7:
- cmp     %i3, 0
- be      %xcc, .LBB8_11
- nop
- ba      .LBB8_8
- nop
-.LBB8_8:
- add     %fp, 1983, %i4
- add     %i4, %i2, %i4
- add     %i1, %i2, %i1
-.LBB8_9:
- ldub    [%i1], %i2
- stb     %i2, [%i4]
- add     %i4, 1, %i4
- add     %i3, -1, %i3
- cmp     %i3, 0
- bne     %xcc, .LBB8_9
- add     %i1, 1, %i1
- ba      .LBB8_11
- nop
 .LBB8_11:
  add     %fp, 1983, %o1
  mov     64, %o2

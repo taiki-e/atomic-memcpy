@@ -28,4 +28,7 @@ members = [
 # Note that it is useless to enable this in most cases.
 inline-always = []
 
+[target.'cfg(target_os = "none")'.dependencies]
+portable-atomic = { version = "0.3.6", default-features = false }
+
 [dev-dependencies]

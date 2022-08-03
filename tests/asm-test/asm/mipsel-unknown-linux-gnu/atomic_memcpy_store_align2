@@ -45,8 +45,30 @@ asm_test::atomic_memcpy_store_align2::release:
  and     $3, $1, $2
  subu    $2, $3, $4
  sltiu   $1, $2, 33
- bnez    $1, $BB6_2
+ beqz    $1, $BB6_6
  sw      $5, 32($sp)
+ beqz    $2, $BB6_7
+ nop
+ addiu   $5, $sp, 32
+ subu    $7, $4, $3
+ addiu   $6, $4, 32
+ move    $8, $4
+$BB6_3:
+ lbu     $1, 0($5)
+ addiu   $5, $5, 1
+ sb      $1, 0($8)
+ addiu   $1, $7, 1
+ addiu   $8, $8, 1
+ sltu    $9, $1, $7
+ beqz    $9, $BB6_3
+ move    $7, $1
+ subu    $3, $6, $3
+ sltiu   $1, $3, 4
+ bnez    $1, $BB6_10
+ nop
+ b       $BB6_8
+ nop
+$BB6_6:
  lhu     $1, 62($sp)
  sh      $1, 30($4)
  lhu     $1, 60($sp)
@@ -80,28 +102,6 @@ asm_test::atomic_memcpy_store_align2::release:
  lhu     $1, 32($sp)
  b       $BB6_13
  sh      $1, 0($4)
-$BB6_2:
- beqz    $2, $BB6_7
- nop
- addiu   $5, $sp, 32
- subu    $6, $4, $3
- move    $7, $4
-$BB6_4:
- lbu     $1, 0($5)
- addiu   $5, $5, 1
- sb      $1, 0($7)
- addiu   $1, $6, 1
- addiu   $7, $7, 1
- sltu    $8, $1, $6
- beqz    $8, $BB6_4
- move    $6, $1
- subu    $1, $4, $3
- addiu   $3, $1, 32
- sltiu   $1, $3, 4
- bnez    $1, $BB6_10
- nop
- b       $BB6_8
- nop
 $BB6_7:
  addiu   $3, $zero, 32
 $BB6_8:
@@ -124,8 +124,8 @@ $BB6_10:
  addu    $2, $4, $2
 $BB6_12:
  lbu     $1, 0($5)
- addiu   $3, $3, -1
  addiu   $5, $5, 1
+ addiu   $3, $3, -1
  sb      $1, 0($2)
  bnez    $3, $BB6_12
  addiu   $2, $2, 1
