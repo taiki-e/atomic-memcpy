@@ -22,7 +22,7 @@ members = [
 ]
 
 [features]
-# Use #[inline(always)] instead of #[inline].
+# Unstable feature flag to use #[inline(always)] instead of #[inline].
 #
 # This is mainly used for asm test.
 # Note that it is useless to enable this in most cases.
