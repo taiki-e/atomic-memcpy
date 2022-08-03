@@ -45,41 +45,45 @@ asm_test::atomic_memcpy_store_align1::release:
  and     $1, $1, $2
  dsubu   $2, $1, $4
  sltiu   $1, $2, 65
- bnez    $1, .LBB2_4
+ beqz    $1, .LBB2_6
  sd      $3, 80($sp)
- daddiu  $2, $zero, 0
- daddiu  $3, $sp, 64
- daddiu  $5, $zero, 64
-.LBB2_2:
- daddu   $6, $3, $2
- daddu   $1, $4, $2
- daddiu  $2, $2, 1
- lbu     $6, 0($6)
- bne     $2, $5, .LBB2_2
- sb      $6, 0($1)
- b       .LBB2_14
- nop
-.LBB2_4:
  beqz    $2, .LBB2_9
- daddiu  $5, $sp, 64
+ nop
  daddiu  $3, $zero, 0
-.LBB2_6:
+ daddiu  $5, $sp, 64
+.LBB2_3:
  daddu   $6, $5, $3
  daddu   $1, $4, $3
  daddiu  $3, $3, 1
  lbu     $6, 0($6)
- bne     $2, $3, .LBB2_6
+ bne     $2, $3, .LBB2_3
  sb      $6, 0($1)
  daddiu  $1, $zero, 64
  dsubu   $3, $1, $3
  sltiu   $1, $3, 8
- bnez    $1, .LBB2_11
+ bnez    $1, .LBB2_12
  nop
  b       .LBB2_10
  nop
+.LBB2_6:
+ daddiu  $2, $zero, 0
+ daddiu  $3, $sp, 64
+ daddiu  $5, $zero, 64
+.LBB2_7:
+ daddu   $6, $3, $2
+ daddu   $1, $4, $2
+ daddiu  $2, $2, 1
+ lbu     $6, 0($6)
+ bne     $2, $5, .LBB2_7
+ sb      $6, 0($1)
+ b       .LBB2_15
+ nop
 .LBB2_9:
  daddiu  $3, $zero, 64
+ daddiu  $2, $zero, 0
 .LBB2_10:
+ daddiu  $5, $sp, 64
+.LBB2_11:
  daddu   $1, $5, $2
  daddiu  $3, $3, -8
  ldl     $6, 0($1)
@@ -87,21 +91,22 @@ asm_test::atomic_memcpy_store_align1::release:
  daddu   $1, $4, $2
  sd      $6, 0($1)
  sltiu   $1, $3, 8
- beqz    $1, .LBB2_10
+ beqz    $1, .LBB2_11
  daddiu  $2, $2, 8
-.LBB2_11:
- beqz    $3, .LBB2_14
+.LBB2_12:
+ beqz    $3, .LBB2_15
  nop
- daddu   $5, $5, $2
+ daddiu  $1, $sp, 64
+ daddu   $5, $1, $2
  daddu   $2, $4, $2
-.LBB2_13:
- lbu     $1, 0($5)
- daddiu  $3, $3, -1
- daddiu  $5, $5, 1
- sb      $1, 0($2)
- bnez    $3, .LBB2_13
- daddiu  $2, $2, 1
 .LBB2_14:
+ lbu     $1, 0($5)
+ daddiu  $5, $5, 1
+ daddiu  $3, $3, -1
+ sb      $1, 0($2)
+ bnez    $3, .LBB2_14
+ daddiu  $2, $2, 1
+.LBB2_15:
  jr      $ra
  daddiu  $sp, $sp, 128
 asm_test::atomic_memcpy_store_align1::write_volatile_release_fence:

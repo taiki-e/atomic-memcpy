@@ -5,8 +5,26 @@ asm_test::atomic_memcpy_load_align2::acquire:
  and     $1, $1, $2
  dsubu   $2, $1, $5
  sltiu   $1, $2, 65
- bnez    $1, .LBB4_2
+ beqz    $1, .LBB4_6
  nop
+ beqz    $2, .LBB4_7
+ daddiu  $3, $sp, 0
+ daddiu  $6, $zero, 0
+.LBB4_3:
+ daddu   $7, $5, $6
+ daddu   $1, $3, $6
+ daddiu  $6, $6, 1
+ lb      $7, 0($7)
+ bne     $2, $6, .LBB4_3
+ sb      $7, 0($1)
+ daddiu  $1, $zero, 64
+ dsubu   $6, $1, $6
+ sltiu   $1, $6, 8
+ bnez    $1, .LBB4_9
+ nop
+ b       .LBB4_8
+ nop
+.LBB4_6:
  lh      $1, 62($5)
  sh      $1, 62($sp)
  lh      $1, 60($5)
@@ -72,26 +90,9 @@ asm_test::atomic_memcpy_load_align2::acquire:
  lh      $1, 0($5)
  b       .LBB4_12
  sh      $1, 0($sp)
-.LBB4_2:
- beqz    $2, .LBB4_7
- daddiu  $3, $sp, 0
- daddiu  $6, $zero, 0
-.LBB4_4:
- daddu   $7, $5, $6
- daddu   $1, $3, $6
- daddiu  $6, $6, 1
- lb      $7, 0($7)
- bne     $2, $6, .LBB4_4
- sb      $7, 0($1)
- daddiu  $1, $zero, 64
- dsubu   $6, $1, $6
- sltiu   $1, $6, 8
- bnez    $1, .LBB4_9
- nop
- b       .LBB4_8
- nop
 .LBB4_7:
  daddiu  $6, $zero, 64
+ daddiu  $2, $zero, 0
 .LBB4_8:
  daddu   $7, $5, $2
  daddu   $1, $3, $2
@@ -109,8 +110,8 @@ asm_test::atomic_memcpy_load_align2::acquire:
  daddu   $2, $3, $2
 .LBB4_11:
  lb      $1, 0($5)
- daddiu  $6, $6, -1
  daddiu  $5, $5, 1
+ daddiu  $6, $6, -1
  sb      $1, 0($2)
  bnez    $6, .LBB4_11
  daddiu  $2, $2, 1

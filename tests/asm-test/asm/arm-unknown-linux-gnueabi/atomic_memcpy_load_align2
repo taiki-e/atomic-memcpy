@@ -1,11 +1,30 @@
 asm_test::atomic_memcpy_load_align2::acquire:
- push    {r4, r5, r11, lr}
+ push    {r4, r5, r6, lr}
  sub     sp, sp, #32
  add     r2, r1, #3
  bic     r12, r2, #3
- sub     lr, r12, r1
- cmp     lr, #33
- blo     .LBB4_2
+ sub     r3, r12, r1
+ cmp     r3, #32
+ bhi     .LBB4_6
+ cmp     r3, #0
+ beq     .LBB4_7
+ sub     r2, r1, r12
+ add     lr, r1, #32
+ mov     r4, sp
+ mov     r5, r1
+.LBB4_3:
+ ldrb    r6, [r5]
+ adds    r2, r2, #1
+ strb    r6, [r4], #1
+ add     r5, r5, #1
+ blo     .LBB4_3
+ sub     r2, lr, r12
+ cmp     r2, #4
+ bhs     .LBB4_8
+ cmp     r2, #0
+ bne     .LBB4_11
+ b       .LBB4_13
+.LBB4_6:
  ldrh    r2, [r1, #30]
  strh    r2, [sp, #30]
  ldrh    r2, [r1, #28]
@@ -39,56 +58,37 @@ asm_test::atomic_memcpy_load_align2::acquire:
  ldrh    r1, [r1]
  strh    r1, [sp]
  b       .LBB4_13
-.LBB4_2:
- cmp     lr, #0
- beq     .LBB4_7
- sub     r2, r1, r12
- mov     r3, sp
- mov     r4, r1
-.LBB4_4:
- ldrb    r5, [r4]
- adds    r2, r2, #1
- strb    r5, [r3], #1
- add     r4, r4, #1
- blo     .LBB4_4
- sub     r2, r1, r12
- add     r2, r2, #32
- cmp     r2, #4
- bhs     .LBB4_8
- cmp     r2, #0
- bne     .LBB4_11
- b       .LBB4_13
 .LBB4_7:
  mov     r2, #32
 .LBB4_8:
  sub     r3, r1, r12
  mov     r12, sp
 .LBB4_9:
- ldr     r5, [r1, -r3]
- sub     lr, r12, r3
+ ldr     r6, [r1, -r3]
+ sub     r5, r12, r3
  sub     r2, r2, #4
- strb    r5, [r12, -r3]
+ strb    r6, [r12, -r3]
  sub     r3, r3, #4
  cmp     r2, #3
- lsr     r4, r5, #24
- strb    r4, [lr, #3]
- lsr     r4, r5, #16
- strb    r4, [lr, #2]
- lsr     r4, r5, #8
- strb    r4, [lr, #1]
+ lsr     r4, r6, #24
+ strb    r4, [r5, #3]
+ lsr     r4, r6, #16
+ lsr     r6, r6, #8
+ strb    r4, [r5, #2]
+ strb    r6, [r5, #1]
  bhi     .LBB4_9
- rsb     lr, r3, #0
+ rsb     r3, r3, #0
  cmp     r2, #0
  beq     .LBB4_13
 .LBB4_11:
- mov     r3, sp
- add     r1, r1, lr
- add     r3, r3, lr
+ add     r1, r1, r3
+ mov     r6, sp
+ add     r3, r6, r3
 .LBB4_12:
- ldrb    r5, [r1]
- subs    r2, r2, #1
- strb    r5, [r3], #1
+ ldrb    r6, [r1]
  add     r1, r1, #1
+ strb    r6, [r3], #1
+ subs    r2, r2, #1
  bne     .LBB4_12
 .LBB4_13:
  mov     r1, sp
@@ -97,26 +97,20 @@ asm_test::atomic_memcpy_load_align2::acquire:
  mov     r0, #0
  mcr     p15, #0, r0, c7, c10, #5
  add     sp, sp, #32
- pop     {r4, r5, r11, pc}
-.LBB6_2:
- cmp     r0, #0
- beq     .LBB6_6
- sub     r3, r7, r1
- mov     r4, r7
-.LBB6_4:
- ldrb    r6, [r2], #1
- adds    r3, r3, #1
- strb    r6, [r4]
+ pop     {r4, r5, r6, pc}
+.LBB6_3:
+ ldrb    r5, [r2], #1
+ adds    r6, r6, #1
+ strb    r5, [r4]
  add     r4, r4, #1
- blo     .LBB6_4
- sub     r2, r7, r1
- add     r6, r2, #32
+ blo     .LBB6_3
+ sub     r6, r3, r1
  cmp     r6, #4
- blo     .LBB6_9
-.LBB6_6:
+ blo     .LBB6_8
+.LBB6_5:
  sub     r0, r7, r1
  add     r1, sp, #32
-.LBB6_7:
+.LBB6_6:
  sub     r3, r1, r0
  ldrb    r2, [r1, -r0]
  sub     r6, r6, #4
@@ -129,21 +123,56 @@ asm_test::atomic_memcpy_load_align2::acquire:
  orr     r2, r2, r3, lsl, #16
  str     r2, [r7, -r0]
  sub     r0, r0, #4
- bhi     .LBB6_7
+ bhi     .LBB6_6
  rsb     r0, r0, #0
-.LBB6_9:
+.LBB6_8:
  cmp     r6, #0
- beq     .LBB6_12
+ beq     .LBB6_11
  add     r1, sp, #32
  add     r1, r1, r0
  add     r0, r7, r0
-.LBB6_11:
+.LBB6_10:
  ldrb    r2, [r1], #1
  subs    r6, r6, #1
  strb    r2, [r0]
  add     r0, r0, #1
- bne     .LBB6_11
+ bne     .LBB6_10
+.LBB6_11:
+ add     sp, sp, #64
+ pop     {r4, r5, r6, r7, r8, pc}
 .LBB6_12:
+ ldrh    r0, [sp, #62]
+ strh    r0, [r7, #30]
+ ldrh    r0, [sp, #60]
+ strh    r0, [r7, #28]
+ ldrh    r0, [sp, #58]
+ strh    r0, [r7, #26]
+ ldrh    r0, [sp, #56]
+ strh    r0, [r7, #24]
+ ldrh    r0, [sp, #54]
+ strh    r0, [r7, #22]
+ ldrh    r0, [sp, #52]
+ strh    r0, [r7, #20]
+ ldrh    r0, [sp, #50]
+ strh    r0, [r7, #18]
+ ldrh    r0, [sp, #48]
+ strh    r0, [r7, #16]
+ ldrh    r0, [sp, #46]
+ strh    r0, [r7, #14]
+ ldrh    r0, [sp, #44]
+ strh    r0, [r7, #12]
+ ldrh    r0, [sp, #42]
+ strh    r0, [r7, #10]
+ ldrh    r0, [sp, #40]
+ strh    r0, [r7, #8]
+ ldrh    r0, [sp, #38]
+ strh    r0, [r7, #6]
+ ldrh    r0, [sp, #36]
+ strh    r0, [r7, #4]
+ ldrh    r0, [sp, #34]
+ strh    r0, [r7, #2]
+ ldrh    r0, [sp, #32]
+ strh    r0, [r7]
  add     sp, sp, #64
  pop     {r4, r5, r6, r7, r8, pc}
 asm_test::atomic_memcpy_load_align2::read_volatile_acquire_fence:
@@ -182,25 +211,19 @@ asm_test::atomic_memcpy_load_align2::read_volatile_acquire_fence:
  mov     r0, #0
  mcr     p15, #0, r0, c7, c10, #5
  bx      lr
-.LBB6_2:
- cmp     r0, #0
- beq     .LBB6_6
- sub     r3, r7, r1
- mov     r4, r7
-.LBB6_4:
- ldrb    r6, [r2], #1
- adds    r3, r3, #1
- strb    r6, [r4]
+.LBB6_3:
+ ldrb    r5, [r2], #1
+ adds    r6, r6, #1
+ strb    r5, [r4]
  add     r4, r4, #1
- blo     .LBB6_4
- sub     r2, r7, r1
- add     r6, r2, #32
+ blo     .LBB6_3
+ sub     r6, r3, r1
  cmp     r6, #4
- blo     .LBB6_9
-.LBB6_6:
+ blo     .LBB6_8
+.LBB6_5:
  sub     r0, r7, r1
  add     r1, sp, #32
-.LBB6_7:
+.LBB6_6:
  sub     r3, r1, r0
  ldrb    r2, [r1, -r0]
  sub     r6, r6, #4
@@ -213,20 +236,55 @@ asm_test::atomic_memcpy_load_align2::read_volatile_acquire_fence:
  orr     r2, r2, r3, lsl, #16
  str     r2, [r7, -r0]
  sub     r0, r0, #4
- bhi     .LBB6_7
+ bhi     .LBB6_6
  rsb     r0, r0, #0
-.LBB6_9:
+.LBB6_8:
  cmp     r6, #0
- beq     .LBB6_12
+ beq     .LBB6_11
  add     r1, sp, #32
  add     r1, r1, r0
  add     r0, r7, r0
-.LBB6_11:
+.LBB6_10:
  ldrb    r2, [r1], #1
  subs    r6, r6, #1
  strb    r2, [r0]
  add     r0, r0, #1
- bne     .LBB6_11
+ bne     .LBB6_10
+.LBB6_11:
+ add     sp, sp, #64
+ pop     {r4, r5, r6, r7, r8, pc}
 .LBB6_12:
+ ldrh    r0, [sp, #62]
+ strh    r0, [r7, #30]
+ ldrh    r0, [sp, #60]
+ strh    r0, [r7, #28]
+ ldrh    r0, [sp, #58]
+ strh    r0, [r7, #26]
+ ldrh    r0, [sp, #56]
+ strh    r0, [r7, #24]
+ ldrh    r0, [sp, #54]
+ strh    r0, [r7, #22]
+ ldrh    r0, [sp, #52]
+ strh    r0, [r7, #20]
+ ldrh    r0, [sp, #50]
+ strh    r0, [r7, #18]
+ ldrh    r0, [sp, #48]
+ strh    r0, [r7, #16]
+ ldrh    r0, [sp, #46]
+ strh    r0, [r7, #14]
+ ldrh    r0, [sp, #44]
+ strh    r0, [r7, #12]
+ ldrh    r0, [sp, #42]
+ strh    r0, [r7, #10]
+ ldrh    r0, [sp, #40]
+ strh    r0, [r7, #8]
+ ldrh    r0, [sp, #38]
+ strh    r0, [r7, #6]
+ ldrh    r0, [sp, #36]
+ strh    r0, [r7, #4]
+ ldrh    r0, [sp, #34]
+ strh    r0, [r7, #2]
+ ldrh    r0, [sp, #32]
+ strh    r0, [r7]
  add     sp, sp, #64
  pop     {r4, r5, r6, r7, r8, pc}
