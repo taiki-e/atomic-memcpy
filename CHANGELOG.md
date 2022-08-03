@@ -10,6 +10,14 @@ Note: In this file, do not use the hard wrap in the middle of a sentence for com
 
 ## [Unreleased]
 
+- Use `portable-atomic` crate on no-std targets　to soundly support targets that do not have atomic load/store. ([#4](https://github.com/taiki-e/atomic-memcpy/pull/4))
+
+- `inline-always` optional feature is now considered unstable.
+
+- Remove `atomic_memcpy_unsafe_volatile` cfg.
+
+- Remove unstable `no-panic` optional feature.
+
 ## [0.1.3] - 2022-02-26
 
 - Fix documentation about uninitialized bytes. ([#5](https://github.com/taiki-e/atomic-memcpy/pull/5))
