@@ -366,25 +366,35 @@ mod imp {
     /**
     # Implementation
 
-    It is implemented based on the assumption that atomic operations at a granularity greater than bytes is not a problem, as stated by [p1478r1].
+    It is implemented based on the assumption that atomic operations at a
+    granularity greater than bytes is not a problem, as stated by [p1478r1].
 
-    > Note that on standard hardware, it should be OK to actually perform the copy at larger than byte granularity. Copying multiple bytes as part of one operation is indistinguishable from running them so quickly that the intermediate state is not observed. In fact, we expect that existing assembly memcpy implementations will suffice when suffixed with the required fence.
+    > Note that on standard hardware, it should be OK to actually perform the
+    > copy at larger than byte granularity. Copying multiple bytes as part of
+    > one operation is indistinguishable from running them so quickly that the
+    > intermediate state is not observed. In fact, we expect that existing
+    > assembly memcpy implementations will suffice when suffixed with the required fence.
 
     And it turns out that the granularity of the atomic operations is very important for performance.
 
     - Loading/storing all bytes in bytes is very slow at least on x86/x86_64.
     - The pointer width atomic operation is the fastest at least on x86/x86_64.
-    - Atomic operations with a granularity larger than the pointer width are slow at least on x86/x86_64 (cmpxchg8b/cmpxchg16b).
+    - Atomic operations with a granularity larger than the pointer width are slow
+      at least on x86/x86_64 (cmpxchg8b/cmpxchg16b).
 
     Note that the following additional safety requirements.
 
     - The granularity of the atomic operations in load and store must be the same.
-    - When performing an atomic operation as a type with alignment greater than 1, the pointer must be properly aligned.
+    - When performing an atomic operation as a type with alignment greater than 1,
+      the pointer must be properly aligned.
 
     The caller of `atomic_load` guarantees that the `src` is properly aligned.
-    So, we can avoid calling `align_offset` or read at a granularity greater than u8 in some cases.
+    So, we can avoid calling `align_offset` or read at a granularity greater
+    than u8 in some cases.
 
-    The following is what this implementation is currently `atomic_load` using (Note: `atomic_store` also uses exactly the same way to determine the granularity of atomic operations):
+    The following is what this implementation is currently `atomic_load` using
+    (Note: `atomic_store` also uses exactly the same way to determine the
+    granularity of atomic operations):
 
     Branch | Granularity of atomic operations | Conditions
     ------ | -------------------------------- | ----------
@@ -394,9 +404,14 @@ mod imp {
     4      | u16 ...                          | `align_of::<T>() >= align_of::<AtomicU16>()`, 32-bit or higher
     5      | u8 ...                           |
 
-    - Branch 1: If the alignment of `T` is less than usize, but `T` can be read as at least a few numbers of usize, compute the align offset and read it like `(&[AtomicU8], &[AtomicUsize], &[AtomicU8])`.
-    - Branch 2: If the alignment of `T` is greater than or equal to usize, we can read it as a chunk of usize from the first byte.
-    - Branch 3, 4: If the alignment of `T` is greater than 1, we can read it as a chunk of smaller integers (u32 or u16). This is basically the same strategy as Branch 2.
+    - Branch 1: If the alignment of `T` is less than usize, but `T` can be read
+      as at least a few numbers of usize, compute the align offset and read it
+      like `(&[AtomicU8], &[AtomicUsize], &[AtomicU8])`.
+    - Branch 2: If the alignment of `T` is greater than or equal to usize, we
+      can read it as a chunk of usize from the first byte.
+    - Branch 3, 4: If the alignment of `T` is greater than 1, we can read it as
+      a chunk of smaller integers (u32 or u16). This is basically the same
+      strategy as Branch 2.
     - Branch 5: Otherwise, we read it per byte.
 
     Note that only Branch 1 requires to compute align offset dynamically.
@@ -406,7 +421,8 @@ mod imp {
     - If the size of `T` is not too small, Branch 1 is the next fastest to Branch 2.
     - If the size of `T` is small, Branch 3/4/5 can be faster than Branch 1.
 
-    Whether to choose Branch 1 or Branch 3/4/5 when `T` is small is currently based on a rough heuristic based on simple benchmarks on x86_64.
+    Whether to choose Branch 1 or Branch 3/4/5 when `T` is small is currently
+    based on a rough heuristic based on simple benchmarks on x86_64.
 
     [p1478r1]: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/p1478r1.html
     */
