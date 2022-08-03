@@ -67,9 +67,6 @@ jobs:
           CARGO_PROFILE_RELEASE_CODEGEN_UNITS: 1
           CARGO_PROFILE_RELEASE_LTO: fat
       - run: cargo hack build -vv --workspace --ignore-private --feature-powerset --optional-deps --no-dev-deps
-      - run: cargo hack build -vv --workspace --ignore-private --feature-powerset --optional-deps --no-dev-deps
-        env:
-          RUSTFLAGS: ${{ env.RUSTFLAGS }} --cfg atomic_memcpy_unsafe_volatile
       - run: tools/build.sh
         if: matrix.target == ''
       - run: cargo minimal-versions build -vv --workspace --all-features --ignore-private

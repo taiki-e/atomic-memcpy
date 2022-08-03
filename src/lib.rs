@@ -230,12 +230,6 @@ fn assert_store_ordering(order: Ordering) {
     }
 }
 
-/// There is `cfg(atomic_memcpy_unsafe_volatile)` to force the use of volatile
-/// read/write instead of atomic load/store.
-/// Note that the use of `--cfg atomic_memcpy_unsafe_volatile` is
-/// undefined behavior in the multi-core environment, since volatile
-/// read/write does not guarantee anything about data race.
-#[cfg(not(atomic_memcpy_unsafe_volatile))]
 mod imp {
     use core::{
         mem::{self, ManuallyDrop, MaybeUninit},
@@ -818,27 +812,6 @@ mod imp {
             // This crate supports no-std environment, so we cannot use std::process::abort.
             // Instead, it uses the nature of double panics being converted to an abort.
             panic!("abort");
-        }
-    }
-}
-
-#[cfg(atomic_memcpy_unsafe_volatile)]
-mod imp {
-    #[cfg_attr(feature = "inline-always", inline(always))]
-    #[cfg_attr(not(feature = "inline-always"), inline)]
-    pub(crate) unsafe fn atomic_load<T>(src: *const T) -> core::mem::MaybeUninit<T> {
-        // SAFETY: the user who explicitly specified the `--cfg atomic_memcpy_unsafe_volatile`
-        // must guarantees that the volatile read would not cause data races.
-        unsafe { (src as *const core::mem::MaybeUninit<T>).read_volatile() }
-    }
-
-    #[cfg_attr(feature = "inline-always", inline(always))]
-    #[cfg_attr(not(feature = "inline-always"), inline)]
-    pub(crate) unsafe fn atomic_store<T>(dst: *mut T, src: T) {
-        // SAFETY: the user who explicitly specified the `--cfg atomic_memcpy_unsafe_volatile`
-        // must guarantees that the volatile write would not cause data races.
-        unsafe {
-            dst.write_volatile(src);
         }
     }
 }
