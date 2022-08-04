@@ -679,7 +679,7 @@ mod imp {
         debug_assert!(!dst.is_null());
         debug_assert!(dst as usize % mem::align_of::<T>() == 0);
 
-        //　In atomic_store, the panic *after* the first store operation is unsound
+        // In atomic_store, the panic *after* the first store operation is unsound
         // because dst may become an invalid bit pattern.
         //
         // Our code is written very carefully so as not to cause panic, but we

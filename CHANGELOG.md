@@ -12,7 +12,7 @@ Note: In this file, do not use the hard wrap in the middle of a sentence for com
 
 ## [0.2.0] - 2022-08-03
 
-- Use `portable-atomic` crate on no-std targets　to soundly support targets that do not have atomic load/store. ([#4](https://github.com/taiki-e/atomic-memcpy/pull/4))
+- Use `portable-atomic` crate on no-std targets to soundly support targets that do not have atomic load/store. ([#4](https://github.com/taiki-e/atomic-memcpy/pull/4))
 
 - `inline-always` optional feature is now considered unstable.
 
