@@ -1,6 +1,6 @@
 [package]
 name = "atomic-memcpy"
-version = "0.2.0" #publish:version
+version = "0.2.0"
 edition = "2018"
 rust-version = "1.36"
 license = "Apache-2.0 OR MIT"
