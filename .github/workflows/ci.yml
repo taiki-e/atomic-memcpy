@@ -158,6 +158,15 @@ jobs:
           CARGO_PROFILE_RELEASE_CODEGEN_UNITS: 1
           CARGO_PROFILE_RELEASE_LTO: fat
 
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@nightly
+      - run: cargo doc --workspace --all-features --document-private-items
+
   tidy:
     runs-on: ubuntu-latest
     steps:
@@ -168,39 +177,22 @@ jobs:
         with:
           components: clippy,rustfmt
       - uses: taiki-e/install-action@shellcheck
+      - run: pip3 install yq
       - run: cargo fmt --all --check
         if: always()
       - run: cargo clippy --workspace --all-targets
         if: always()
       - run: shellcheck $(git ls-files '*.sh')
         if: always()
+      - run: tools/check-workflow.sh
+        if: always()
 
-  docs:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          persist-credentials: false
-      - uses: dtolnay/rust-toolchain@nightly
-      - run: cargo doc --workspace --document-private-items
-
-  # This job doesn't actually test anything, but they're used to tell bors the
-  # build completed, as there is no practical way to detect when a workflow is
-  # successful listening to webhooks only.
-  #
   # ALL THE PREVIOUS JOBS NEEDS TO BE ADDED TO THE `needs` SECTION OF THIS JOB!
 
   ci-success:
     name: ci
     if: github.event_name == 'push' && success()
-    needs:
-      - test
-      - msrv
-      - miri
-      - san
-      - valgrind
-      - tidy
-      - docs
+    needs: [test, msrv, miri, san, valgrind, docs, tidy] # tidy:needs
     runs-on: ubuntu-latest
     steps:
       - name: Mark the job as a success
