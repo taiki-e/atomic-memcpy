@@ -8,10 +8,10 @@
 
 Byte-wise atomic memcpy.
 
-This is an attempt to implement equivalent of C++ ["P1478R1: Byte-wise atomic memcpy"][p1478r1] in Rust.
+This is an attempt to implement equivalent of C++ ["P1478: Byte-wise atomic memcpy"][p1478] in Rust.
 
 This is expected to allow algorithms such as Seqlock and Chase-Lev deque to be implemented without UB of data races.
-See [P1478R1][p1478r1] for more.
+See [P1478][p1478] for more.
 
 ## Status
 
@@ -29,7 +29,7 @@ See [P1478R1][p1478r1] for more.
 [asm-test]: https://github.com/taiki-e/atomic-memcpy/tree/HEAD/tests/asm-test/asm
 [atomic-maybe-uninit]: https://github.com/taiki-e/atomic-maybe-uninit
 [implementation]: https://github.com/taiki-e/atomic-memcpy/blob/v0.2.0/src/lib.rs#L367-L427
-[p1478r1]: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/p1478r1.html
+[p1478]: https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2022/p1478r7.html
 [portable-atomic]: https://github.com/taiki-e/portable-atomic
 [undefined-behavior]: https://doc.rust-lang.org/reference/behavior-considered-undefined.html
 
