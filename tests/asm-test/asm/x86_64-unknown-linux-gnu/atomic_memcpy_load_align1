@@ -1,154 +1,145 @@
 asm_test::atomic_memcpy_load_align1::acquire:
  sub     rsp, 64
  mov     rax, rdi
- lea     rcx, [rsi, +, 7]
- and     rcx, -8
- mov     r9, rcx
- sub     r9, rsi
- cmp     r9, 65
+ lea     rdx, [rsi, +, 7]
+ and     rdx, -8
+ mov     rcx, rdx
+ sub     rcx, rsi
+ cmp     rcx, 65
  jae     .LBB0_1
- test    r9, r9
- je      .LBB0_4
- mov     rdx, rsi
- not     rdx
- add     rcx, rdx
- mov     r8d, r9d
- and     r8d, 3
- cmp     rcx, 3
- jae     .LBB0_22
+ cmp     rdx, rsi
+ jne     .LBB0_6
  mov     r11d, 64
- xor     edi, edi
- test    r8, r8
- jne     .LBB0_10
- jmp     .LBB0_13
+ xor     r9d, r9d
+ jmp     .LBB0_5
 .LBB0_1:
- mov     cl, byte, ptr, [rsi]
+ movzx   ecx, byte, ptr, [rsi]
  mov     byte, ptr, [rsp], cl
- mov     cl, byte, ptr, [rsi, +, 1]
+ movzx   ecx, byte, ptr, [rsi, +, 1]
  mov     byte, ptr, [rsp, +, 1], cl
- mov     cl, byte, ptr, [rsi, +, 2]
+ movzx   ecx, byte, ptr, [rsi, +, 2]
  mov     byte, ptr, [rsp, +, 2], cl
- mov     cl, byte, ptr, [rsi, +, 3]
+ movzx   ecx, byte, ptr, [rsi, +, 3]
  mov     byte, ptr, [rsp, +, 3], cl
- mov     cl, byte, ptr, [rsi, +, 4]
+ movzx   ecx, byte, ptr, [rsi, +, 4]
  mov     byte, ptr, [rsp, +, 4], cl
- mov     cl, byte, ptr, [rsi, +, 5]
+ movzx   ecx, byte, ptr, [rsi, +, 5]
  mov     byte, ptr, [rsp, +, 5], cl
- mov     cl, byte, ptr, [rsi, +, 6]
+ movzx   ecx, byte, ptr, [rsi, +, 6]
  mov     byte, ptr, [rsp, +, 6], cl
- mov     cl, byte, ptr, [rsi, +, 7]
+ movzx   ecx, byte, ptr, [rsi, +, 7]
  mov     byte, ptr, [rsp, +, 7], cl
- mov     cl, byte, ptr, [rsi, +, 8]
+ movzx   ecx, byte, ptr, [rsi, +, 8]
  mov     byte, ptr, [rsp, +, 8], cl
- mov     cl, byte, ptr, [rsi, +, 9]
+ movzx   ecx, byte, ptr, [rsi, +, 9]
  mov     byte, ptr, [rsp, +, 9], cl
- mov     cl, byte, ptr, [rsi, +, 10]
+ movzx   ecx, byte, ptr, [rsi, +, 10]
  mov     byte, ptr, [rsp, +, 10], cl
- mov     cl, byte, ptr, [rsi, +, 11]
+ movzx   ecx, byte, ptr, [rsi, +, 11]
  mov     byte, ptr, [rsp, +, 11], cl
- mov     cl, byte, ptr, [rsi, +, 12]
+ movzx   ecx, byte, ptr, [rsi, +, 12]
  mov     byte, ptr, [rsp, +, 12], cl
- mov     cl, byte, ptr, [rsi, +, 13]
+ movzx   ecx, byte, ptr, [rsi, +, 13]
  mov     byte, ptr, [rsp, +, 13], cl
- mov     cl, byte, ptr, [rsi, +, 14]
+ movzx   ecx, byte, ptr, [rsi, +, 14]
  mov     byte, ptr, [rsp, +, 14], cl
- mov     cl, byte, ptr, [rsi, +, 15]
+ movzx   ecx, byte, ptr, [rsi, +, 15]
  mov     byte, ptr, [rsp, +, 15], cl
- mov     cl, byte, ptr, [rsi, +, 16]
+ movzx   ecx, byte, ptr, [rsi, +, 16]
  mov     byte, ptr, [rsp, +, 16], cl
- mov     cl, byte, ptr, [rsi, +, 17]
+ movzx   ecx, byte, ptr, [rsi, +, 17]
  mov     byte, ptr, [rsp, +, 17], cl
- mov     cl, byte, ptr, [rsi, +, 18]
+ movzx   ecx, byte, ptr, [rsi, +, 18]
  mov     byte, ptr, [rsp, +, 18], cl
- mov     cl, byte, ptr, [rsi, +, 19]
+ movzx   ecx, byte, ptr, [rsi, +, 19]
  mov     byte, ptr, [rsp, +, 19], cl
- mov     cl, byte, ptr, [rsi, +, 20]
+ movzx   ecx, byte, ptr, [rsi, +, 20]
  mov     byte, ptr, [rsp, +, 20], cl
- mov     cl, byte, ptr, [rsi, +, 21]
+ movzx   ecx, byte, ptr, [rsi, +, 21]
  mov     byte, ptr, [rsp, +, 21], cl
- mov     cl, byte, ptr, [rsi, +, 22]
+ movzx   ecx, byte, ptr, [rsi, +, 22]
  mov     byte, ptr, [rsp, +, 22], cl
- mov     cl, byte, ptr, [rsi, +, 23]
+ movzx   ecx, byte, ptr, [rsi, +, 23]
  mov     byte, ptr, [rsp, +, 23], cl
- mov     cl, byte, ptr, [rsi, +, 24]
+ movzx   ecx, byte, ptr, [rsi, +, 24]
  mov     byte, ptr, [rsp, +, 24], cl
- mov     cl, byte, ptr, [rsi, +, 25]
+ movzx   ecx, byte, ptr, [rsi, +, 25]
  mov     byte, ptr, [rsp, +, 25], cl
- mov     cl, byte, ptr, [rsi, +, 26]
+ movzx   ecx, byte, ptr, [rsi, +, 26]
  mov     byte, ptr, [rsp, +, 26], cl
- mov     cl, byte, ptr, [rsi, +, 27]
+ movzx   ecx, byte, ptr, [rsi, +, 27]
  mov     byte, ptr, [rsp, +, 27], cl
- mov     cl, byte, ptr, [rsi, +, 28]
+ movzx   ecx, byte, ptr, [rsi, +, 28]
  mov     byte, ptr, [rsp, +, 28], cl
- mov     cl, byte, ptr, [rsi, +, 29]
+ movzx   ecx, byte, ptr, [rsi, +, 29]
  mov     byte, ptr, [rsp, +, 29], cl
- mov     cl, byte, ptr, [rsi, +, 30]
+ movzx   ecx, byte, ptr, [rsi, +, 30]
  mov     byte, ptr, [rsp, +, 30], cl
- mov     cl, byte, ptr, [rsi, +, 31]
+ movzx   ecx, byte, ptr, [rsi, +, 31]
  mov     byte, ptr, [rsp, +, 31], cl
- mov     cl, byte, ptr, [rsi, +, 32]
+ movzx   ecx, byte, ptr, [rsi, +, 32]
  mov     byte, ptr, [rsp, +, 32], cl
- mov     cl, byte, ptr, [rsi, +, 33]
+ movzx   ecx, byte, ptr, [rsi, +, 33]
  mov     byte, ptr, [rsp, +, 33], cl
- mov     cl, byte, ptr, [rsi, +, 34]
+ movzx   ecx, byte, ptr, [rsi, +, 34]
  mov     byte, ptr, [rsp, +, 34], cl
- mov     cl, byte, ptr, [rsi, +, 35]
+ movzx   ecx, byte, ptr, [rsi, +, 35]
  mov     byte, ptr, [rsp, +, 35], cl
- mov     cl, byte, ptr, [rsi, +, 36]
+ movzx   ecx, byte, ptr, [rsi, +, 36]
  mov     byte, ptr, [rsp, +, 36], cl
- mov     cl, byte, ptr, [rsi, +, 37]
+ movzx   ecx, byte, ptr, [rsi, +, 37]
  mov     byte, ptr, [rsp, +, 37], cl
- mov     cl, byte, ptr, [rsi, +, 38]
+ movzx   ecx, byte, ptr, [rsi, +, 38]
  mov     byte, ptr, [rsp, +, 38], cl
- mov     cl, byte, ptr, [rsi, +, 39]
+ movzx   ecx, byte, ptr, [rsi, +, 39]
  mov     byte, ptr, [rsp, +, 39], cl
- mov     cl, byte, ptr, [rsi, +, 40]
+ movzx   ecx, byte, ptr, [rsi, +, 40]
  mov     byte, ptr, [rsp, +, 40], cl
- mov     cl, byte, ptr, [rsi, +, 41]
+ movzx   ecx, byte, ptr, [rsi, +, 41]
  mov     byte, ptr, [rsp, +, 41], cl
- mov     cl, byte, ptr, [rsi, +, 42]
+ movzx   ecx, byte, ptr, [rsi, +, 42]
  mov     byte, ptr, [rsp, +, 42], cl
- mov     cl, byte, ptr, [rsi, +, 43]
+ movzx   ecx, byte, ptr, [rsi, +, 43]
  mov     byte, ptr, [rsp, +, 43], cl
- mov     cl, byte, ptr, [rsi, +, 44]
+ movzx   ecx, byte, ptr, [rsi, +, 44]
  mov     byte, ptr, [rsp, +, 44], cl
- mov     cl, byte, ptr, [rsi, +, 45]
+ movzx   ecx, byte, ptr, [rsi, +, 45]
  mov     byte, ptr, [rsp, +, 45], cl
- mov     cl, byte, ptr, [rsi, +, 46]
+ movzx   ecx, byte, ptr, [rsi, +, 46]
  mov     byte, ptr, [rsp, +, 46], cl
- mov     cl, byte, ptr, [rsi, +, 47]
+ movzx   ecx, byte, ptr, [rsi, +, 47]
  mov     byte, ptr, [rsp, +, 47], cl
- mov     cl, byte, ptr, [rsi, +, 48]
+ movzx   ecx, byte, ptr, [rsi, +, 48]
  mov     byte, ptr, [rsp, +, 48], cl
- mov     cl, byte, ptr, [rsi, +, 49]
+ movzx   ecx, byte, ptr, [rsi, +, 49]
  mov     byte, ptr, [rsp, +, 49], cl
- mov     cl, byte, ptr, [rsi, +, 50]
+ movzx   ecx, byte, ptr, [rsi, +, 50]
  mov     byte, ptr, [rsp, +, 50], cl
- mov     cl, byte, ptr, [rsi, +, 51]
+ movzx   ecx, byte, ptr, [rsi, +, 51]
  mov     byte, ptr, [rsp, +, 51], cl
- mov     cl, byte, ptr, [rsi, +, 52]
+ movzx   ecx, byte, ptr, [rsi, +, 52]
  mov     byte, ptr, [rsp, +, 52], cl
- mov     cl, byte, ptr, [rsi, +, 53]
+ movzx   ecx, byte, ptr, [rsi, +, 53]
  mov     byte, ptr, [rsp, +, 53], cl
- mov     cl, byte, ptr, [rsi, +, 54]
+ movzx   ecx, byte, ptr, [rsi, +, 54]
  mov     byte, ptr, [rsp, +, 54], cl
- mov     cl, byte, ptr, [rsi, +, 55]
+ movzx   ecx, byte, ptr, [rsi, +, 55]
  mov     byte, ptr, [rsp, +, 55], cl
- mov     cl, byte, ptr, [rsi, +, 56]
+ movzx   ecx, byte, ptr, [rsi, +, 56]
  mov     byte, ptr, [rsp, +, 56], cl
- mov     cl, byte, ptr, [rsi, +, 57]
+ movzx   ecx, byte, ptr, [rsi, +, 57]
  mov     byte, ptr, [rsp, +, 57], cl
- mov     cl, byte, ptr, [rsi, +, 58]
+ movzx   ecx, byte, ptr, [rsi, +, 58]
  mov     byte, ptr, [rsp, +, 58], cl
- mov     cl, byte, ptr, [rsi, +, 59]
+ movzx   ecx, byte, ptr, [rsi, +, 59]
  mov     byte, ptr, [rsp, +, 59], cl
- mov     cl, byte, ptr, [rsi, +, 60]
+ movzx   ecx, byte, ptr, [rsi, +, 60]
  mov     byte, ptr, [rsp, +, 60], cl
- mov     cl, byte, ptr, [rsi, +, 61]
+ movzx   ecx, byte, ptr, [rsi, +, 61]
  mov     byte, ptr, [rsp, +, 61], cl
- mov     cl, byte, ptr, [rsi, +, 62]
+ movzx   ecx, byte, ptr, [rsi, +, 62]
  mov     byte, ptr, [rsp, +, 62], cl
- mov     cl, byte, ptr, [rsi, +, 63]
+ movzx   ecx, byte, ptr, [rsi, +, 63]
  mov     byte, ptr, [rsp, +, 63], cl
  movups  xmm0, xmmword, ptr, [rsp]
  movups  xmm1, xmmword, ptr, [rsp, +, 16]
@@ -158,29 +149,39 @@ asm_test::atomic_memcpy_load_align1::acquire:
  movups  xmmword, ptr, [rax], xmm0
  mov     rcx, qword, ptr, [rsp, +, 48]
  mov     qword, ptr, [rax, +, 48], rcx
- mov     cl, byte, ptr, [rsp, +, 56]
+ movzx   ecx, byte, ptr, [rsp, +, 56]
  mov     byte, ptr, [rax, +, 56], cl
- mov     cl, byte, ptr, [rsp, +, 57]
+ movzx   ecx, byte, ptr, [rsp, +, 57]
  mov     byte, ptr, [rax, +, 57], cl
- mov     cl, byte, ptr, [rsp, +, 58]
+ movzx   ecx, byte, ptr, [rsp, +, 58]
  mov     byte, ptr, [rax, +, 58], cl
- mov     cl, byte, ptr, [rsp, +, 59]
+ movzx   ecx, byte, ptr, [rsp, +, 59]
  mov     byte, ptr, [rax, +, 59], cl
- mov     cl, byte, ptr, [rsp, +, 60]
+ movzx   ecx, byte, ptr, [rsp, +, 60]
  mov     byte, ptr, [rax, +, 60], cl
- mov     cl, byte, ptr, [rsp, +, 61]
+ movzx   ecx, byte, ptr, [rsp, +, 61]
  mov     byte, ptr, [rax, +, 61], cl
- mov     cl, byte, ptr, [rsp, +, 62]
+ movzx   ecx, byte, ptr, [rsp, +, 62]
  mov     byte, ptr, [rax, +, 62], cl
- mov     cl, byte, ptr, [rsp, +, 63]
+ movzx   ecx, byte, ptr, [rsp, +, 63]
  mov     byte, ptr, [rax, +, 63], cl
  #MEMBARRIER
  add     rsp, 64
  ret
-.LBB0_4:
+.LBB0_6:
+ cmp     rcx, 2
+ mov     r9d, 1
+ cmovae  r9, rcx
+ lea     rcx, [r9, -, 1]
+ mov     r8d, r9d
+ and     r8d, 3
+ cmp     rcx, 3
+ jae     .LBB0_22
  mov     r11d, 64
- xor     r9d, r9d
- jmp     .LBB0_5
+ xor     edi, edi
+ test    r8, r8
+ jne     .LBB0_10
+ jmp     .LBB0_13
 .LBB0_22:
  mov     rcx, r9
  and     rcx, -4
@@ -208,7 +209,7 @@ asm_test::atomic_memcpy_load_align1::acquire:
 .LBB0_11:
  movzx   ecx, byte, ptr, [rdi, +, rdx]
  mov     byte, ptr, [r10, +, rdx], cl
- add     rdx, 1
+ inc     rdx
  cmp     r8, rdx
  jne     .LBB0_11
  sub     r11, rdx
@@ -234,8 +235,8 @@ asm_test::atomic_memcpy_load_align1::acquire:
 .LBB0_17:
  movzx   ecx, byte, ptr, [rsi, +, rdi]
  mov     byte, ptr, [rsp, +, rdi], cl
- add     rdi, 1
- add     rdx, -1
+ inc     rdi
+ dec     rdx
  jne     .LBB0_17
 .LBB0_18:
  cmp     r8, 3
@@ -274,120 +275,120 @@ asm_test::atomic_memcpy_load_align1::read_volatile_acquire_fence:
  push    rbx
  sub     rsp, 50
  mov     rax, rdi
- mov     cl, byte, ptr, [rsi, +, 63]
+ movzx   ecx, byte, ptr, [rsi, +, 63]
  mov     byte, ptr, [rsp, +, 49], cl
- mov     cl, byte, ptr, [rsi, +, 62]
+ movzx   ecx, byte, ptr, [rsi, +, 62]
  mov     byte, ptr, [rsp, +, 48], cl
- mov     cl, byte, ptr, [rsi, +, 61]
+ movzx   ecx, byte, ptr, [rsi, +, 61]
  mov     byte, ptr, [rsp, +, 47], cl
- mov     cl, byte, ptr, [rsi, +, 60]
+ movzx   ecx, byte, ptr, [rsi, +, 60]
  mov     byte, ptr, [rsp, +, 46], cl
- mov     cl, byte, ptr, [rsi, +, 59]
+ movzx   ecx, byte, ptr, [rsi, +, 59]
  mov     byte, ptr, [rsp, +, 45], cl
- mov     cl, byte, ptr, [rsi, +, 58]
+ movzx   ecx, byte, ptr, [rsi, +, 58]
  mov     byte, ptr, [rsp, +, 44], cl
- mov     cl, byte, ptr, [rsi, +, 57]
+ movzx   ecx, byte, ptr, [rsi, +, 57]
  mov     byte, ptr, [rsp, +, 43], cl
- mov     cl, byte, ptr, [rsi, +, 56]
+ movzx   ecx, byte, ptr, [rsi, +, 56]
  mov     byte, ptr, [rsp, +, 42], cl
- mov     cl, byte, ptr, [rsi, +, 55]
+ movzx   ecx, byte, ptr, [rsi, +, 55]
  mov     byte, ptr, [rsp, +, 41], cl
- mov     cl, byte, ptr, [rsi, +, 54]
+ movzx   ecx, byte, ptr, [rsi, +, 54]
  mov     byte, ptr, [rsp, +, 40], cl
- mov     cl, byte, ptr, [rsi, +, 53]
+ movzx   ecx, byte, ptr, [rsi, +, 53]
  mov     byte, ptr, [rsp, +, 39], cl
- mov     cl, byte, ptr, [rsi, +, 52]
+ movzx   ecx, byte, ptr, [rsi, +, 52]
  mov     byte, ptr, [rsp, +, 38], cl
- mov     cl, byte, ptr, [rsi, +, 51]
+ movzx   ecx, byte, ptr, [rsi, +, 51]
  mov     byte, ptr, [rsp, +, 37], cl
- mov     cl, byte, ptr, [rsi, +, 50]
+ movzx   ecx, byte, ptr, [rsi, +, 50]
  mov     byte, ptr, [rsp, +, 36], cl
- mov     cl, byte, ptr, [rsi, +, 49]
+ movzx   ecx, byte, ptr, [rsi, +, 49]
  mov     byte, ptr, [rsp, +, 35], cl
- mov     cl, byte, ptr, [rsi, +, 48]
+ movzx   ecx, byte, ptr, [rsi, +, 48]
  mov     byte, ptr, [rsp, +, 34], cl
- mov     cl, byte, ptr, [rsi, +, 47]
+ movzx   ecx, byte, ptr, [rsi, +, 47]
  mov     byte, ptr, [rsp, +, 33], cl
- mov     cl, byte, ptr, [rsi, +, 46]
+ movzx   ecx, byte, ptr, [rsi, +, 46]
  mov     byte, ptr, [rsp, +, 32], cl
- mov     cl, byte, ptr, [rsi, +, 45]
+ movzx   ecx, byte, ptr, [rsi, +, 45]
  mov     byte, ptr, [rsp, +, 31], cl
- mov     cl, byte, ptr, [rsi, +, 44]
+ movzx   ecx, byte, ptr, [rsi, +, 44]
  mov     byte, ptr, [rsp, +, 30], cl
- mov     cl, byte, ptr, [rsi, +, 43]
+ movzx   ecx, byte, ptr, [rsi, +, 43]
  mov     byte, ptr, [rsp, +, 29], cl
- mov     cl, byte, ptr, [rsi, +, 42]
+ movzx   ecx, byte, ptr, [rsi, +, 42]
  mov     byte, ptr, [rsp, +, 28], cl
- mov     cl, byte, ptr, [rsi, +, 41]
+ movzx   ecx, byte, ptr, [rsi, +, 41]
  mov     byte, ptr, [rsp, +, 27], cl
- mov     cl, byte, ptr, [rsi, +, 40]
+ movzx   ecx, byte, ptr, [rsi, +, 40]
  mov     byte, ptr, [rsp, +, 26], cl
- mov     cl, byte, ptr, [rsi, +, 39]
+ movzx   ecx, byte, ptr, [rsi, +, 39]
  mov     byte, ptr, [rsp, +, 25], cl
- mov     cl, byte, ptr, [rsi, +, 38]
+ movzx   ecx, byte, ptr, [rsi, +, 38]
  mov     byte, ptr, [rsp, +, 24], cl
- mov     cl, byte, ptr, [rsi, +, 37]
+ movzx   ecx, byte, ptr, [rsi, +, 37]
  mov     byte, ptr, [rsp, +, 23], cl
- mov     cl, byte, ptr, [rsi, +, 36]
+ movzx   ecx, byte, ptr, [rsi, +, 36]
  mov     byte, ptr, [rsp, +, 22], cl
- mov     cl, byte, ptr, [rsi, +, 35]
+ movzx   ecx, byte, ptr, [rsi, +, 35]
  mov     byte, ptr, [rsp, +, 21], cl
- mov     cl, byte, ptr, [rsi, +, 34]
+ movzx   ecx, byte, ptr, [rsi, +, 34]
  mov     byte, ptr, [rsp, +, 20], cl
- mov     cl, byte, ptr, [rsi, +, 33]
+ movzx   ecx, byte, ptr, [rsi, +, 33]
  mov     byte, ptr, [rsp, +, 19], cl
- mov     cl, byte, ptr, [rsi, +, 32]
+ movzx   ecx, byte, ptr, [rsi, +, 32]
  mov     byte, ptr, [rsp, +, 18], cl
- mov     cl, byte, ptr, [rsi, +, 31]
+ movzx   ecx, byte, ptr, [rsi, +, 31]
  mov     byte, ptr, [rsp, +, 17], cl
- mov     cl, byte, ptr, [rsi, +, 30]
+ movzx   ecx, byte, ptr, [rsi, +, 30]
  mov     byte, ptr, [rsp, +, 16], cl
- mov     cl, byte, ptr, [rsi, +, 29]
+ movzx   ecx, byte, ptr, [rsi, +, 29]
  mov     byte, ptr, [rsp, +, 15], cl
- mov     cl, byte, ptr, [rsi, +, 28]
+ movzx   ecx, byte, ptr, [rsi, +, 28]
  mov     byte, ptr, [rsp, +, 14], cl
- mov     cl, byte, ptr, [rsi, +, 27]
+ movzx   ecx, byte, ptr, [rsi, +, 27]
  mov     byte, ptr, [rsp, +, 13], cl
- mov     cl, byte, ptr, [rsi, +, 26]
+ movzx   ecx, byte, ptr, [rsi, +, 26]
  mov     byte, ptr, [rsp, +, 12], cl
- mov     cl, byte, ptr, [rsi, +, 25]
+ movzx   ecx, byte, ptr, [rsi, +, 25]
  mov     byte, ptr, [rsp, +, 11], cl
- mov     cl, byte, ptr, [rsi, +, 24]
+ movzx   ecx, byte, ptr, [rsi, +, 24]
  mov     byte, ptr, [rsp, +, 10], cl
- mov     cl, byte, ptr, [rsi, +, 23]
+ movzx   ecx, byte, ptr, [rsi, +, 23]
  mov     byte, ptr, [rsp, +, 9], cl
- mov     cl, byte, ptr, [rsi, +, 22]
+ movzx   ecx, byte, ptr, [rsi, +, 22]
  mov     byte, ptr, [rsp, +, 8], cl
- mov     cl, byte, ptr, [rsi, +, 21]
+ movzx   ecx, byte, ptr, [rsi, +, 21]
  mov     byte, ptr, [rsp, +, 7], cl
- mov     cl, byte, ptr, [rsi, +, 20]
+ movzx   ecx, byte, ptr, [rsi, +, 20]
  mov     byte, ptr, [rsp, +, 6], cl
- mov     cl, byte, ptr, [rsi, +, 19]
+ movzx   ecx, byte, ptr, [rsi, +, 19]
  mov     byte, ptr, [rsp, +, 5], cl
- mov     cl, byte, ptr, [rsi, +, 18]
+ movzx   ecx, byte, ptr, [rsi, +, 18]
  mov     byte, ptr, [rsp, +, 4], cl
- mov     cl, byte, ptr, [rsi, +, 17]
+ movzx   ecx, byte, ptr, [rsi, +, 17]
  mov     byte, ptr, [rsp, +, 3], cl
- mov     cl, byte, ptr, [rsi, +, 16]
+ movzx   ecx, byte, ptr, [rsi, +, 16]
  mov     byte, ptr, [rsp, +, 2], cl
- mov     cl, byte, ptr, [rsi, +, 15]
+ movzx   ecx, byte, ptr, [rsi, +, 15]
  mov     byte, ptr, [rsp, +, 1], cl
- mov     cl, byte, ptr, [rsi, +, 14]
+ movzx   ecx, byte, ptr, [rsi, +, 14]
  mov     byte, ptr, [rsp], cl
- mov     r13b, byte, ptr, [rsi, +, 13]
- mov     r12b, byte, ptr, [rsi, +, 12]
- mov     r15b, byte, ptr, [rsi, +, 11]
- mov     r14b, byte, ptr, [rsi, +, 10]
- mov     bpl, byte, ptr, [rsi, +, 9]
- mov     bl, byte, ptr, [rsi, +, 8]
- mov     r11b, byte, ptr, [rsi, +, 7]
- mov     r10b, byte, ptr, [rsi, +, 6]
- mov     r9b, byte, ptr, [rsi, +, 5]
- mov     r8b, byte, ptr, [rsi, +, 4]
- mov     dil, byte, ptr, [rsi, +, 3]
- mov     dl, byte, ptr, [rsi, +, 2]
- mov     cl, byte, ptr, [rsi]
- mov     sil, byte, ptr, [rsi, +, 1]
+ movzx   r13d, byte, ptr, [rsi, +, 13]
+ movzx   r12d, byte, ptr, [rsi, +, 12]
+ movzx   r15d, byte, ptr, [rsi, +, 11]
+ movzx   r14d, byte, ptr, [rsi, +, 10]
+ movzx   ebp, byte, ptr, [rsi, +, 9]
+ movzx   ebx, byte, ptr, [rsi, +, 8]
+ movzx   r11d, byte, ptr, [rsi, +, 7]
+ movzx   r10d, byte, ptr, [rsi, +, 6]
+ movzx   r9d, byte, ptr, [rsi, +, 5]
+ movzx   r8d, byte, ptr, [rsi, +, 4]
+ movzx   edi, byte, ptr, [rsi, +, 3]
+ movzx   edx, byte, ptr, [rsi, +, 2]
+ movzx   ecx, byte, ptr, [rsi]
+ movzx   esi, byte, ptr, [rsi, +, 1]
  mov     byte, ptr, [rax], cl
  mov     byte, ptr, [rax, +, 1], sil
  mov     byte, ptr, [rax, +, 2], dl
@@ -402,105 +403,105 @@ asm_test::atomic_memcpy_load_align1::read_volatile_acquire_fence:
  mov     byte, ptr, [rax, +, 11], r15b
  mov     byte, ptr, [rax, +, 12], r12b
  mov     byte, ptr, [rax, +, 13], r13b
- mov     cl, byte, ptr, [rsp]
+ movzx   ecx, byte, ptr, [rsp]
  mov     byte, ptr, [rax, +, 14], cl
- mov     cl, byte, ptr, [rsp, +, 1]
+ movzx   ecx, byte, ptr, [rsp, +, 1]
  mov     byte, ptr, [rax, +, 15], cl
- mov     cl, byte, ptr, [rsp, +, 2]
+ movzx   ecx, byte, ptr, [rsp, +, 2]
  mov     byte, ptr, [rax, +, 16], cl
- mov     cl, byte, ptr, [rsp, +, 3]
+ movzx   ecx, byte, ptr, [rsp, +, 3]
  mov     byte, ptr, [rax, +, 17], cl
- mov     cl, byte, ptr, [rsp, +, 4]
+ movzx   ecx, byte, ptr, [rsp, +, 4]
  mov     byte, ptr, [rax, +, 18], cl
- mov     cl, byte, ptr, [rsp, +, 5]
+ movzx   ecx, byte, ptr, [rsp, +, 5]
  mov     byte, ptr, [rax, +, 19], cl
- mov     cl, byte, ptr, [rsp, +, 6]
+ movzx   ecx, byte, ptr, [rsp, +, 6]
  mov     byte, ptr, [rax, +, 20], cl
- mov     cl, byte, ptr, [rsp, +, 7]
+ movzx   ecx, byte, ptr, [rsp, +, 7]
  mov     byte, ptr, [rax, +, 21], cl
- mov     cl, byte, ptr, [rsp, +, 8]
+ movzx   ecx, byte, ptr, [rsp, +, 8]
  mov     byte, ptr, [rax, +, 22], cl
- mov     cl, byte, ptr, [rsp, +, 9]
+ movzx   ecx, byte, ptr, [rsp, +, 9]
  mov     byte, ptr, [rax, +, 23], cl
- mov     cl, byte, ptr, [rsp, +, 10]
+ movzx   ecx, byte, ptr, [rsp, +, 10]
  mov     byte, ptr, [rax, +, 24], cl
- mov     cl, byte, ptr, [rsp, +, 11]
+ movzx   ecx, byte, ptr, [rsp, +, 11]
  mov     byte, ptr, [rax, +, 25], cl
- mov     cl, byte, ptr, [rsp, +, 12]
+ movzx   ecx, byte, ptr, [rsp, +, 12]
  mov     byte, ptr, [rax, +, 26], cl
- mov     cl, byte, ptr, [rsp, +, 13]
+ movzx   ecx, byte, ptr, [rsp, +, 13]
  mov     byte, ptr, [rax, +, 27], cl
- mov     cl, byte, ptr, [rsp, +, 14]
+ movzx   ecx, byte, ptr, [rsp, +, 14]
  mov     byte, ptr, [rax, +, 28], cl
- mov     cl, byte, ptr, [rsp, +, 15]
+ movzx   ecx, byte, ptr, [rsp, +, 15]
  mov     byte, ptr, [rax, +, 29], cl
- mov     cl, byte, ptr, [rsp, +, 16]
+ movzx   ecx, byte, ptr, [rsp, +, 16]
  mov     byte, ptr, [rax, +, 30], cl
- mov     cl, byte, ptr, [rsp, +, 17]
+ movzx   ecx, byte, ptr, [rsp, +, 17]
  mov     byte, ptr, [rax, +, 31], cl
- mov     cl, byte, ptr, [rsp, +, 18]
+ movzx   ecx, byte, ptr, [rsp, +, 18]
  mov     byte, ptr, [rax, +, 32], cl
- mov     cl, byte, ptr, [rsp, +, 19]
+ movzx   ecx, byte, ptr, [rsp, +, 19]
  mov     byte, ptr, [rax, +, 33], cl
- mov     cl, byte, ptr, [rsp, +, 20]
+ movzx   ecx, byte, ptr, [rsp, +, 20]
  mov     byte, ptr, [rax, +, 34], cl
- mov     cl, byte, ptr, [rsp, +, 21]
+ movzx   ecx, byte, ptr, [rsp, +, 21]
  mov     byte, ptr, [rax, +, 35], cl
- mov     cl, byte, ptr, [rsp, +, 22]
+ movzx   ecx, byte, ptr, [rsp, +, 22]
  mov     byte, ptr, [rax, +, 36], cl
- mov     cl, byte, ptr, [rsp, +, 23]
+ movzx   ecx, byte, ptr, [rsp, +, 23]
  mov     byte, ptr, [rax, +, 37], cl
- mov     cl, byte, ptr, [rsp, +, 24]
+ movzx   ecx, byte, ptr, [rsp, +, 24]
  mov     byte, ptr, [rax, +, 38], cl
- mov     cl, byte, ptr, [rsp, +, 25]
+ movzx   ecx, byte, ptr, [rsp, +, 25]
  mov     byte, ptr, [rax, +, 39], cl
- mov     cl, byte, ptr, [rsp, +, 26]
+ movzx   ecx, byte, ptr, [rsp, +, 26]
  mov     byte, ptr, [rax, +, 40], cl
- mov     cl, byte, ptr, [rsp, +, 27]
+ movzx   ecx, byte, ptr, [rsp, +, 27]
  mov     byte, ptr, [rax, +, 41], cl
- mov     cl, byte, ptr, [rsp, +, 28]
+ movzx   ecx, byte, ptr, [rsp, +, 28]
  mov     byte, ptr, [rax, +, 42], cl
- mov     cl, byte, ptr, [rsp, +, 29]
+ movzx   ecx, byte, ptr, [rsp, +, 29]
  mov     byte, ptr, [rax, +, 43], cl
- mov     cl, byte, ptr, [rsp, +, 30]
+ movzx   ecx, byte, ptr, [rsp, +, 30]
  mov     byte, ptr, [rax, +, 44], cl
- mov     cl, byte, ptr, [rsp, +, 31]
+ movzx   ecx, byte, ptr, [rsp, +, 31]
  mov     byte, ptr, [rax, +, 45], cl
- mov     cl, byte, ptr, [rsp, +, 32]
+ movzx   ecx, byte, ptr, [rsp, +, 32]
  mov     byte, ptr, [rax, +, 46], cl
- mov     cl, byte, ptr, [rsp, +, 33]
+ movzx   ecx, byte, ptr, [rsp, +, 33]
  mov     byte, ptr, [rax, +, 47], cl
- mov     cl, byte, ptr, [rsp, +, 34]
+ movzx   ecx, byte, ptr, [rsp, +, 34]
  mov     byte, ptr, [rax, +, 48], cl
- mov     cl, byte, ptr, [rsp, +, 35]
+ movzx   ecx, byte, ptr, [rsp, +, 35]
  mov     byte, ptr, [rax, +, 49], cl
- mov     cl, byte, ptr, [rsp, +, 36]
+ movzx   ecx, byte, ptr, [rsp, +, 36]
  mov     byte, ptr, [rax, +, 50], cl
- mov     cl, byte, ptr, [rsp, +, 37]
+ movzx   ecx, byte, ptr, [rsp, +, 37]
  mov     byte, ptr, [rax, +, 51], cl
- mov     cl, byte, ptr, [rsp, +, 38]
+ movzx   ecx, byte, ptr, [rsp, +, 38]
  mov     byte, ptr, [rax, +, 52], cl
- mov     cl, byte, ptr, [rsp, +, 39]
+ movzx   ecx, byte, ptr, [rsp, +, 39]
  mov     byte, ptr, [rax, +, 53], cl
- mov     cl, byte, ptr, [rsp, +, 40]
+ movzx   ecx, byte, ptr, [rsp, +, 40]
  mov     byte, ptr, [rax, +, 54], cl
- mov     cl, byte, ptr, [rsp, +, 41]
+ movzx   ecx, byte, ptr, [rsp, +, 41]
  mov     byte, ptr, [rax, +, 55], cl
- mov     cl, byte, ptr, [rsp, +, 42]
+ movzx   ecx, byte, ptr, [rsp, +, 42]
  mov     byte, ptr, [rax, +, 56], cl
- mov     cl, byte, ptr, [rsp, +, 43]
+ movzx   ecx, byte, ptr, [rsp, +, 43]
  mov     byte, ptr, [rax, +, 57], cl
- mov     cl, byte, ptr, [rsp, +, 44]
+ movzx   ecx, byte, ptr, [rsp, +, 44]
  mov     byte, ptr, [rax, +, 58], cl
- mov     cl, byte, ptr, [rsp, +, 45]
+ movzx   ecx, byte, ptr, [rsp, +, 45]
  mov     byte, ptr, [rax, +, 59], cl
- mov     cl, byte, ptr, [rsp, +, 46]
+ movzx   ecx, byte, ptr, [rsp, +, 46]
  mov     byte, ptr, [rax, +, 60], cl
- mov     cl, byte, ptr, [rsp, +, 47]
+ movzx   ecx, byte, ptr, [rsp, +, 47]
  mov     byte, ptr, [rax, +, 61], cl
- mov     cl, byte, ptr, [rsp, +, 48]
+ movzx   ecx, byte, ptr, [rsp, +, 48]
  mov     byte, ptr, [rax, +, 62], cl
- mov     cl, byte, ptr, [rsp, +, 49]
+ movzx   ecx, byte, ptr, [rsp, +, 49]
  mov     byte, ptr, [rax, +, 63], cl
  #MEMBARRIER
  add     rsp, 50

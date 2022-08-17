@@ -1,38 +1,40 @@
 asm_test::atomic_memcpy_load_align1::acquire:
  save    %sp, -240, %sp
  add     %i1, 7, %i2
- and     %i2, -8, %i4
- sub     %i4, %i1, %i2
- cmp     %i2, 65
+ and     %i2, -8, %i2
+ sub     %i2, %i1, %i4
+ cmp     %i4, 65
  bcs     %xcc, .LBB0_2
  nop
  ba      .LBB0_1
  nop
 .LBB0_2:
- cmp     %i2, 0
- be      %xcc, .LBB0_7
  mov     64, %i3
- ba      .LBB0_3
+ cmp     %i2, %i1
+ be      %xcc, .LBB0_7
+ mov     0, %i2
+ ba      .LBB0_4
+ nop
+.LBB0_4:
+ mov     1, %i2
+ cmp     %i4, 1
+ movgu   %xcc, %i4, %i2
+ add     %fp, 1983, %i3
+ mov     %i2, %i4
+ mov     %i1, %i5
+.LBB0_5:
+ ldub    [%i5], %g2
+ stb     %g2, [%i3]
+ add     %i3, 1, %i3
+ add     %i4, -1, %i4
+ cmp     %i4, 0
+ be      %xcc, .LBB0_3
+ add     %i5, 1, %i5
+ ba      .LBB0_5
  nop
 .LBB0_3:
- add     %i1, 64, %i3
- sub     %i1, %i4, %g3
- add     %fp, 1983, %i5
- mov     %g0, %g2
- mov     %i1, %g4
-.LBB0_4:
- ldub    [%g4], %g5
- stb     %g5, [%i5]
- add     %i5, 1, %i5
- add     %g3, 1, %g5
- cmp     %g5, %g3
- mov     %g2, %g3
- movcs   %xcc, 1, %g3
- cmp     %g3, 0
- add     %g4, 1, %g4
- be      .LBB0_4
- mov     %g5, %g3
- sub     %i3, %i4, %i3
+ mov     64, %i3
+ sub     %i3, %i2, %i3
  cmp     %i3, 8
  bcs     %xcc, .LBB0_6
  nop

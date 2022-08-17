@@ -1,27 +1,17 @@
 asm_test::atomic_memcpy_load_align4::acquire:
 .Lfunc_begin8:
  addi    5, 4, 7
- rldicr  8, 5, 0, 60
- sub     5, 8, 4
- cmpldi  5, 64
- bgt     0, .LBB8_5
- cmpldi  5, 0
- addi    6, 1, -64
- beq     0, .LBB8_6
- addi    7, 4, 64
- addi    9, 4, -1
- addi    10, 6, -1
- mtctr   5
+ rldicr  5, 5, 0, 60
+ sub     6, 5, 4
+ cmpldi  6, 65
+ bge     0, .LBB8_3
+ cmpld   5, 4
+ addi    5, 1, -64
+ bne     0, .LBB8_4
+ li      7, 64
+ li      6, 0
+ b       .LBB8_9
 .LBB8_3:
- lbz     11, 1(9)
- addi    9, 9, 1
- stbu    11, 1(10)
- bdnz    .LBB8_3
- sub     7, 7, 8
- cmpldi  7, 8
- bge     0, .LBB8_7
- b       .LBB8_11
-.LBB8_5:
  lwz     5, 0(4)
  stw     5, -64(1)
  lwz     5, 4(4)
@@ -54,50 +44,63 @@ asm_test::atomic_memcpy_load_align4::acquire:
  stw     5, -8(1)
  lwz     4, 60(4)
  stw     4, -4(1)
- b       .LBB8_14
+ b       .LBB8_16
+.LBB8_4:
+ cmpldi  6, 1
+ li      8, 1
+ bc      12, 1, .LBB8_6
+ ori     6, 8, 0
+ b       .LBB8_6
 .LBB8_6:
- li      7, 64
+ addi    7, 4, -1
+ addi    8, 1, -65
+ mtctr   6
 .LBB8_7:
- addi    9, 7, -8
- li      11, 7
- cmpldi  9, 7
- sub     10, 8, 4
- bc      12, 0, .LBB8_9
- ori     9, 11, 0
- b       .LBB8_9
+ lbz     9, 1(7)
+ addi    7, 7, 1
+ stbu    9, 1(8)
+ bdnz    .LBB8_7
+ subfic  7, 6, 64
+ cmpldi  7, 8
+ blt     0, .LBB8_13
 .LBB8_9:
- not     9, 9
- add     8, 8, 6
- add     9, 9, 7
- add     10, 10, 4
- sub     11, 8, 4
- rldicl  9, 9, 61, 3
- addi    8, 10, -8
- addi    10, 9, 1
- addi    9, 11, -8
+ addi    8, 7, -8
+ li      9, 7
+ cmpldi  8, 7
+ bc      12, 0, .LBB8_11
+ ori     8, 9, 0
+ b       .LBB8_11
+.LBB8_11:
+ addi    9, 6, -8
+ not     8, 8
+ add     8, 8, 7
+ rldicl  10, 8, 61, 3
+ add     8, 4, 9
+ addi    10, 10, 1
+ add     9, 5, 9
  mtctr   10
-.LBB8_10:
+.LBB8_12:
  ld      10, 8(8)
  addi    11, 9, 8
  addi    8, 8, 8
  addi    7, 7, -8
- addi    5, 5, 8
+ addi    6, 6, 8
  std     10, 8(9)
  mr      9, 11
- bdnz    .LBB8_10
-.LBB8_11:
- cmpldi  7, 0
- beq     0, .LBB8_14
- addi    5, 5, -1
- add     4, 4, 5
- add     5, 6, 5
- mtctr   7
+ bdnz    .LBB8_12
 .LBB8_13:
+ cmpldi  7, 0
+ beq     0, .LBB8_16
+ addi    6, 6, -1
+ add     4, 4, 6
+ add     5, 5, 6
+ mtctr   7
+.LBB8_15:
  lbz     6, 1(4)
  addi    4, 4, 1
  stbu    6, 1(5)
- bdnz    .LBB8_13
-.LBB8_14:
+ bdnz    .LBB8_15
+.LBB8_16:
  ld      4, -8(1)
  std     4, 56(3)
  ld      4, -16(1)

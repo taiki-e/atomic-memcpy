@@ -1,58 +1,18 @@
 asm_test::atomic_memcpy_load_align2::acquire:
- push    rbx
  sub     esp, 32
  mov     rax, rdi
- lea     r8d, [rsi, +, 3]
- and     r8d, -4
- mov     r10d, r8d
- sub     r10d, esi
- cmp     r10d, 32
- ja      .LBB4_19
- test    r10d, r10d
- je      .LBB4_2
- mov     ecx, esi
- not     ecx
- add     ecx, r8d
- mov     r9d, r10d
- and     r9d, 3
- xor     edi, edi
- cmp     ecx, 3
- jb      .LBB4_7
- mov     edx, r10d
+ lea     edx, [rsi, +, 3]
  and     edx, -4
- xor     ecx, ecx
-.LBB4_6:
- movzx   ebx, byte, ptr, [esi, +, ecx]
- mov     byte, ptr, [esp, +, ecx], bl
- movzx   ebx, byte, ptr, [esi, +, ecx, +, 1]
- mov     byte, ptr, [esp, +, ecx, +, 1], bl
- movzx   ebx, byte, ptr, [esi, +, ecx, +, 2]
- mov     byte, ptr, [esp, +, ecx, +, 2], bl
- lea     edi, [rcx, +, 4]
- movzx   ebx, byte, ptr, [esi, +, ecx, +, 3]
- mov     byte, ptr, [esp, +, ecx, +, 3], bl
- mov     ecx, edi
- cmp     edx, edi
- jne     .LBB4_6
-.LBB4_7:
- lea     edx, [rsi, +, 32]
- test    r9d, r9d
- je      .LBB4_10
- lea     r11d, [rsp, +, rdi]
- add     edi, esi
- xor     ecx, ecx
-.LBB4_9:
- movzx   ebx, byte, ptr, [edi, +, ecx]
- mov     byte, ptr, [r11d, +, ecx], bl
- add     ecx, 1
- cmp     r9d, ecx
- jne     .LBB4_9
-.LBB4_10:
- sub     edx, r8d
- cmp     edx, 4
- jae     .LBB4_3
- jmp     .LBB4_11
-.LBB4_19:
+ mov     ecx, edx
+ sub     ecx, esi
+ cmp     ecx, 33
+ jae     .LBB4_1
+ cmp     edx, esi
+ jne     .LBB4_5
+ mov     r10d, 32
+ xor     r9d, r9d
+ jmp     .LBB4_4
+.LBB4_1:
  movzx   ecx, word, ptr, [esi, +, 30]
  mov     word, ptr, [esp, +, 30], cx
  movzx   ecx, word, ptr, [esi, +, 28]
@@ -85,36 +45,77 @@ asm_test::atomic_memcpy_load_align2::acquire:
  mov     word, ptr, [esp, +, 2], cx
  movzx   ecx, word, ptr, [esi]
  mov     word, ptr, [esp], cx
- jmp     .LBB4_18
-.LBB4_2:
- mov     edx, 32
-.LBB4_3:
- mov     ecx, dword, ptr, [esi, +, r10d]
- mov     dword, ptr, [esp, +, r10d], ecx
- add     edx, -4
- add     r10d, 4
- cmp     edx, 3
- ja      .LBB4_3
+ jmp     .LBB4_19
+.LBB4_5:
+ cmp     ecx, 2
+ mov     r9d, 1
+ cmovae  r9d, ecx
+ lea     ecx, [r9, -, 1]
+ mov     r8d, r9d
+ and     r8d, 3
+ xor     edi, edi
+ cmp     ecx, 3
+ jb      .LBB4_8
+ mov     r10d, r9d
+ and     r10d, -4
+ xor     ecx, ecx
+.LBB4_7:
+ movzx   edx, byte, ptr, [esi, +, ecx]
+ mov     byte, ptr, [esp, +, ecx], dl
+ movzx   edx, byte, ptr, [esi, +, ecx, +, 1]
+ mov     byte, ptr, [esp, +, ecx, +, 1], dl
+ movzx   edx, byte, ptr, [esi, +, ecx, +, 2]
+ mov     byte, ptr, [esp, +, ecx, +, 2], dl
+ lea     edi, [rcx, +, 4]
+ movzx   edx, byte, ptr, [esi, +, ecx, +, 3]
+ mov     byte, ptr, [esp, +, ecx, +, 3], dl
+ mov     ecx, edi
+ cmp     r10d, edi
+ jne     .LBB4_7
+.LBB4_8:
+ test    r8d, r8d
+ je      .LBB4_11
+ lea     r10d, [rsp, +, rdi]
+ add     edi, esi
+ xor     edx, edx
+.LBB4_10:
+ movzx   ecx, byte, ptr, [edi, +, edx]
+ mov     byte, ptr, [r10d, +, edx], cl
+ inc     edx
+ cmp     r8d, edx
+ jne     .LBB4_10
 .LBB4_11:
- test    edx, edx
- je      .LBB4_18
- lea     r8d, [rdx, -, 1]
- mov     ecx, edx
- mov     edi, r10d
+ mov     r10d, 32
+ sub     r10d, r9d
+ cmp     r10d, 4
+ jb      .LBB4_12
+.LBB4_4:
+ mov     ecx, dword, ptr, [esi, +, r9d]
+ mov     dword, ptr, [esp, +, r9d], ecx
+ add     r10d, -4
+ add     r9d, 4
+ cmp     r10d, 3
+ ja      .LBB4_4
+.LBB4_12:
+ test    r10d, r10d
+ je      .LBB4_19
+ lea     r8d, [r10, -, 1]
+ mov     ecx, r10d
+ mov     edi, r9d
  and     ecx, 3
- je      .LBB4_15
- mov     edi, r10d
-.LBB4_14:
- movzx   ebx, byte, ptr, [esi, +, edi]
- mov     byte, ptr, [esp, +, edi], bl
- add     edi, 1
- add     ecx, -1
- jne     .LBB4_14
+ je      .LBB4_16
+ mov     edi, r9d
 .LBB4_15:
+ movzx   edx, byte, ptr, [esi, +, edi]
+ mov     byte, ptr, [esp, +, edi], dl
+ inc     edi
+ dec     ecx
+ jne     .LBB4_15
+.LBB4_16:
  cmp     r8d, 3
- jb      .LBB4_18
- add     edx, r10d
-.LBB4_17:
+ jb      .LBB4_19
+ add     r10d, r9d
+.LBB4_18:
  movzx   ecx, byte, ptr, [esi, +, edi]
  mov     byte, ptr, [esp, +, edi], cl
  movzx   ecx, byte, ptr, [esi, +, edi, +, 1]
@@ -124,30 +125,29 @@ asm_test::atomic_memcpy_load_align2::acquire:
  movzx   ecx, byte, ptr, [esi, +, edi, +, 3]
  mov     byte, ptr, [esp, +, edi, +, 3], cl
  add     edi, 4
- cmp     edx, edi
- jne     .LBB4_17
-.LBB4_18:
+ cmp     r10d, edi
+ jne     .LBB4_18
+.LBB4_19:
  movzx   ecx, word, ptr, [esp]
  movzx   edx, word, ptr, [esp, +, 2]
  movzx   esi, word, ptr, [esp, +, 4]
  movzx   edi, word, ptr, [esp, +, 6]
- movzx   ebx, word, ptr, [esp, +, 8]
- movzx   r8d, word, ptr, [esp, +, 10]
- movzx   r9d, word, ptr, [esp, +, 12]
- movzx   r10d, word, ptr, [esp, +, 14]
+ movzx   r8d, word, ptr, [esp, +, 8]
+ movzx   r9d, word, ptr, [esp, +, 10]
+ movzx   r10d, word, ptr, [esp, +, 12]
+ movzx   r11d, word, ptr, [esp, +, 14]
  movups  xmm0, xmmword, ptr, [esp, +, 16]
  movups  xmmword, ptr, [eax, +, 16], xmm0
  mov     word, ptr, [eax], cx
  mov     word, ptr, [eax, +, 2], dx
  mov     word, ptr, [eax, +, 4], si
  mov     word, ptr, [eax, +, 6], di
- mov     word, ptr, [eax, +, 8], bx
- mov     word, ptr, [eax, +, 10], r8w
- mov     word, ptr, [eax, +, 12], r9w
- mov     word, ptr, [eax, +, 14], r10w
+ mov     word, ptr, [eax, +, 8], r8w
+ mov     word, ptr, [eax, +, 10], r9w
+ mov     word, ptr, [eax, +, 12], r10w
+ mov     word, ptr, [eax, +, 14], r11w
  #MEMBARRIER
  add     esp, 32
- pop     rbx
  ret
 asm_test::atomic_memcpy_load_align2::read_volatile_acquire_fence:
  push    rbp

@@ -1,54 +1,16 @@
 asm_test::atomic_memcpy_load_align2::acquire:
- stmg    %r11, %r15, 88(%r15)
+ stmg    %r12, %r15, 96(%r15)
  aghi    %r15, -224
  la      %r0, 7(%r3)
  nill    %r0, 65528
  lgr     %r1, %r0
  sgr     %r1, %r3
- clgijh  %r1, 64, .LBB4_10
- cgije   %r1, 0, .LBB4_11
- lgr     %r4, %r3
- xihf    %r4, 4294967295
- xilf    %r4, 4294967295
- agr     %r4, %r0
- risbg   %r5, %r1, 62, 191, 0
- lghi    %r14, 0
- clgijl  %r4, 3, .LBB4_6
- risbg   %r4, %r1, 0, 189, 0
- lcgr    %r14, %r4
- lghi    %r4, 0
- la      %r13, 160(%r15)
- lgr     %r12, %r3
-.LBB4_4:
- lb      %r11, 0(%r12)
- stc     %r11, 0(%r13)
- lb      %r11, 1(%r12)
- stc     %r11, 1(%r13)
- lb      %r11, 2(%r12)
- stc     %r11, 2(%r13)
- lb      %r11, 3(%r12)
- stc     %r11, 3(%r13)
- aghi    %r4, -4
- la      %r13, 4(%r13)
- la      %r12, 4(%r12)
- cgrjlh  %r14, %r4, .LBB4_4
- lcgr    %r14, %r4
-.LBB4_6:
- la      %r4, 64(%r3)
- cgije   %r5, 0, .LBB4_9
- la      %r13, 160(%r14, %r15)
- agr     %r14, %r3
-.LBB4_8:
- lb      %r12, 0(%r14)
- stc     %r12, 0(%r13)
- la      %r13, 1(%r13)
- la      %r14, 1(%r14)
- brctg   %r5, .LBB4_8
-.LBB4_9:
- sgr     %r4, %r0
- clgijhe %r4, 8, .LBB4_12
- j       .LBB4_19
-.LBB4_10:
+ clgijhe %r1, 65, .LBB4_3
+ cgrjlh  %r0, %r3, .LBB4_4
+ lghi    %r4, 64
+ lghi    %r1, 0
+ j       .LBB4_14
+.LBB4_3:
  lh      %r0, 0(%r3)
  sth     %r0, 160(%r15)
  lh      %r0, 2(%r3)
@@ -113,31 +75,71 @@ asm_test::atomic_memcpy_load_align2::acquire:
  sth     %r0, 220(%r15)
  lh      %r0, 62(%r3)
  sth     %r0, 222(%r15)
- j       .LBB4_26
-.LBB4_11:
- lghi    %r4, 64
+ j       .LBB4_28
+.LBB4_4:
+ clgijh  %r1, 1, .LBB4_6
+ lghi    %r1, 1
+.LBB4_6:
+ lay     %r4, -1(%r1)
+ risbg   %r0, %r1, 62, 191, 0
+ clgfi   %r4, 3
+ lghi    %r4, 0
+ jl      .LBB4_10
+ risbg   %r4, %r1, 0, 189, 0
+ lcgr    %r5, %r4
+ lghi    %r4, 0
+ la      %r14, 160(%r15)
+ lgr     %r13, %r3
+.LBB4_8:
+ lb      %r12, 0(%r13)
+ stc     %r12, 0(%r14)
+ lb      %r12, 1(%r13)
+ stc     %r12, 1(%r14)
+ lb      %r12, 2(%r13)
+ stc     %r12, 2(%r14)
+ lb      %r12, 3(%r13)
+ stc     %r12, 3(%r14)
+ aghi    %r4, -4
+ la      %r14, 4(%r14)
+ la      %r13, 4(%r13)
+ cgrjlh  %r5, %r4, .LBB4_8
+ lcgr    %r4, %r4
+.LBB4_10:
+ cgije   %r0, 0, .LBB4_13
+ la      %r5, 160(%r4, %r15)
+ agr     %r4, %r3
 .LBB4_12:
+ lb      %r14, 0(%r4)
+ stc     %r14, 0(%r5)
+ la      %r5, 1(%r5)
+ la      %r4, 1(%r4)
+ brctg   %r0, .LBB4_12
+.LBB4_13:
+ lghi    %r4, 64
+ sgr     %r4, %r1
+ clgijl  %r4, 8, .LBB4_21
+.LBB4_14:
  lghi    %r0, 7
  sgr     %r0, %r4
  lghi    %r5, -8
- clgrjh  %r0, %r5, .LBB4_14
+ clgrjh  %r0, %r5, .LBB4_16
  lghi    %r0, -8
-.LBB4_14:
+.LBB4_16:
  agr     %r0, %r4
  srlg    %r5, %r0, 3
  la      %r5, 1(%r5)
  tmll    %r5, 3
- je      .LBB4_17
+ je      .LBB4_19
  risbg   %r5, %r5, 62, 191, 0
-.LBB4_16:
+.LBB4_18:
  lg      %r14, 0(%r1, %r3)
  stg     %r14, 160(%r1, %r15)
  aghi    %r4, -8
  la      %r1, 8(%r1)
- brctg   %r5, .LBB4_16
-.LBB4_17:
- clgijl  %r0, 24, .LBB4_19
-.LBB4_18:
+ brctg   %r5, .LBB4_18
+.LBB4_19:
+ clgijl  %r0, 24, .LBB4_21
+.LBB4_20:
  lg      %r0, 0(%r1, %r3)
  stg     %r0, 160(%r1, %r15)
  lg      %r0, 8(%r1, %r3)
@@ -148,43 +150,43 @@ asm_test::atomic_memcpy_load_align2::acquire:
  stg     %r0, 184(%r1, %r15)
  aghi    %r4, -32
  la      %r1, 32(%r1)
- clgijh  %r4, 7, .LBB4_18
-.LBB4_19:
- cgije   %r4, 0, .LBB4_26
+ clgijh  %r4, 7, .LBB4_20
+.LBB4_21:
+ cgije   %r4, 0, .LBB4_28
  tmll    %r4, 3
  lay     %r0, -1(%r4)
  lgr     %r5, %r1
- je      .LBB4_23
+ je      .LBB4_25
  risbg   %r14, %r4, 62, 191, 0
  lgr     %r5, %r1
-.LBB4_22:
+.LBB4_24:
  lb      %r13, 0(%r5, %r3)
  stc     %r13, 160(%r5, %r15)
  la      %r5, 1(%r5)
- brctg   %r14, .LBB4_22
-.LBB4_23:
- clgijl  %r0, 3, .LBB4_26
- agr     %r4, %r1
- sgr     %r4, %r5
- la      %r1, 160(%r5, %r15)
- agr     %r3, %r5
+ brctg   %r14, .LBB4_24
 .LBB4_25:
+ clgijl  %r0, 3, .LBB4_28
+ agr     %r1, %r4
+ sgr     %r1, %r5
+ la      %r4, 160(%r5, %r15)
+ agr     %r3, %r5
+.LBB4_27:
  lb      %r0, 0(%r3)
- stc     %r0, 0(%r1)
+ stc     %r0, 0(%r4)
  lb      %r0, 1(%r3)
- stc     %r0, 1(%r1)
+ stc     %r0, 1(%r4)
  lb      %r0, 2(%r3)
- stc     %r0, 2(%r1)
+ stc     %r0, 2(%r4)
  lb      %r0, 3(%r3)
- stc     %r0, 3(%r1)
- aghi    %r4, -4
- la      %r1, 4(%r1)
+ stc     %r0, 3(%r4)
+ aghi    %r1, -4
+ la      %r4, 4(%r4)
  la      %r3, 4(%r3)
- jne     .LBB4_25
-.LBB4_26:
+ jne     .LBB4_27
+.LBB4_28:
  mvc     0(64, %r2), 160(%r15)
  #MEMBARRIER
- lmg     %r11, %r15, 312(%r15)
+ lmg     %r12, %r15, 320(%r15)
  br      %r14
 asm_test::atomic_memcpy_load_align2::read_volatile_acquire_fence:
  stmg    %r6, %r15, 48(%r15)

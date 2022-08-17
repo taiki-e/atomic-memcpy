@@ -1,28 +1,28 @@
 asm_test::atomic_u8_load::unordered:
- mov     al, byte, ptr, [edi]
+ movzx   eax, byte, ptr, [edi]
  ret
 asm_test::atomic_u8_load::relaxed:
- mov     al, byte, ptr, [edi]
+ movzx   eax, byte, ptr, [edi]
  ret
 asm_test::atomic_u8_load::unordered_acquire_fence:
- mov     al, byte, ptr, [edi]
+ movzx   eax, byte, ptr, [edi]
  #MEMBARRIER
  ret
 asm_test::atomic_u8_load::relaxed_acquire_fence:
- mov     al, byte, ptr, [edi]
+ movzx   eax, byte, ptr, [edi]
  #MEMBARRIER
  ret
 asm_test::atomic_u8_load::acquire:
- mov     al, byte, ptr, [edi]
+ movzx   eax, byte, ptr, [edi]
  ret
 asm_test::atomic_u8_load::unordered_seq_cst_fence:
- mov     al, byte, ptr, [edi]
+ movzx   eax, byte, ptr, [edi]
  mfence
  ret
 asm_test::atomic_u8_load::relaxed_seq_cst_fence:
- mov     al, byte, ptr, [edi]
+ movzx   eax, byte, ptr, [edi]
  mfence
  ret
 asm_test::atomic_u8_load::seq_cst:
- mov     al, byte, ptr, [edi]
+ movzx   eax, byte, ptr, [edi]
  ret

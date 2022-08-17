@@ -103,49 +103,34 @@ asm_test::atomic_memcpy_store_align1::release:
  sw      a3, 40(sp)
  sw      a4, 36(sp)
  lw      a4, 0(sp)
- addi    a3, a0, 3
- andi    a7, a3, -4
- sub     a1, a7, a0
+ addi    a2, a0, 3
+ andi    a3, a2, -4
+ sub     a1, a3, a0
  li      a5, 33
  sw      a4, 32(sp)
- bgeu    a1, a5, .LBB2_5
- beqz    a1, .LBB2_6
- addi    a6, a0, 32
- sub     a3, a0, a7
- addi    a4, sp, 32
- mv      a5, a0
-.LBB2_3:
- lbu     t0, 0(a4)
- mv      a2, a3
- #APP
- sb      t0, 0(a5)
- #NO_APP
- addi    a5, a5, 1
- addi    a3, a3, 1
- addi    a4, a4, 1
- bgeu    a3, a2, .LBB2_3
- sub     a2, a6, a7
- li      a3, 4
- bgeu    a2, a3, .LBB2_7
+ bgeu    a1, a5, .LBB2_3
+ bne     a3, a0, .LBB2_4
+ li      a1, 0
+ li      a2, 32
  j       .LBB2_9
-.LBB2_5:
+.LBB2_3:
  lbu     a1, 32(sp)
  #APP
  sb      a1, 0(a0)
  #NO_APP
  lbu     a1, 33(sp)
- addi    a2, a0, 1
+ addi    a3, a0, 1
  #APP
- sb      a1, 0(a2)
+ sb      a1, 0(a3)
  #NO_APP
  lbu     a1, 34(sp)
- addi    a2, a0, 2
+ addi    a3, a0, 2
  #APP
- sb      a1, 0(a2)
+ sb      a1, 0(a3)
  #NO_APP
  lbu     a1, 35(sp)
  #APP
- sb      a1, 0(a3)
+ sb      a1, 0(a2)
  #NO_APP
  lbu     a1, 36(sp)
  addi    a2, a0, 4
@@ -287,13 +272,33 @@ asm_test::atomic_memcpy_store_align1::release:
  #APP
  sb      a1, 0(a0)
  #NO_APP
- j       .LBB2_12
+ addi    sp, sp, 64
+ ret
+.LBB2_4:
+ li      a2, 1
+ bltu    a2, a1, .LBB2_6
+ li      a1, 1
 .LBB2_6:
- li      a2, 32
+ addi    a2, sp, 32
+ mv      a3, a1
+ mv      a4, a0
 .LBB2_7:
+ lbu     a5, 0(a2)
+ #APP
+ sb      a5, 0(a4)
+ #NO_APP
+ addi    a4, a4, 1
+ addi    a3, a3, -1
+ addi    a2, a2, 1
+ bnez    a3, .LBB2_7
+ li      a2, 32
+ sub     a2, a2, a1
+ li      a3, 4
+ bltu    a2, a3, .LBB2_11
+.LBB2_9:
  addi    a6, sp, 32
  li      a7, 3
-.LBB2_8:
+.LBB2_10:
  add     a5, a6, a1
  lbu     t0, 1(a5)
  lbu     t1, 0(a5)
@@ -311,13 +316,13 @@ asm_test::atomic_memcpy_store_align1::release:
  #NO_APP
  addi    a2, a2, -4
  addi    a1, a1, 4
- bltu    a7, a2, .LBB2_8
-.LBB2_9:
- beqz    a2, .LBB2_12
+ bltu    a7, a2, .LBB2_10
+.LBB2_11:
+ beqz    a2, .LBB2_14
  add     a0, a0, a1
  addi    a3, sp, 32
  add     a1, a1, a3
-.LBB2_11:
+.LBB2_13:
  lbu     a3, 0(a1)
  #APP
  sb      a3, 0(a0)
@@ -325,58 +330,11 @@ asm_test::atomic_memcpy_store_align1::release:
  addi    a2, a2, -1
  addi    a0, a0, 1
  addi    a1, a1, 1
- bnez    a2, .LBB2_11
-.LBB2_12:
+ bnez    a2, .LBB2_13
+.LBB2_14:
  addi    sp, sp, 64
  ret
 .LBB4_3:
- #APP
- lb      t0, 0(a3)
- #NO_APP
- mv      a2, a4
- sb      t0, 0(a5)
- addi    a5, a5, 1
- addi    a4, a4, 1
- addi    a3, a3, 1
- bgeu    a4, a2, .LBB4_3
- sub     a3, a6, a7
- li      a4, 4
- bltu    a3, a4, .LBB4_7
-.LBB4_5:
- addi    a6, sp, 8
- li      a7, 3
-.LBB4_6:
- add     a2, a1, t1
- #APP
- lw      a2, 0(a2)
- #NO_APP
- add     a4, a6, t1
- sb      a2, 0(a4)
- srli    a5, a2, 24
- sb      a5, 3(a4)
- srli    a5, a2, 16
- sb      a5, 2(a4)
- srli    a2, a2, 8
- sb      a2, 1(a4)
- addi    a3, a3, -4
- addi    t1, t1, 4
- bltu    a7, a3, .LBB4_6
-.LBB4_7:
- beqz    a3, .LBB4_11
- addi    a2, sp, 8
- add     a4, a2, t1
- add     a1, a1, t1
-.LBB4_9:
- #APP
- lb      a2, 0(a1)
- #NO_APP
- sb      a2, 0(a4)
- addi    a3, a3, -1
- addi    a4, a4, 1
- addi    a1, a1, 1
- bnez    a3, .LBB4_9
- j       .LBB4_11
-.LBB4_10:
  addi    a2, a1, 30
  #APP
  lh      a2, 0(a2)
@@ -456,7 +414,62 @@ asm_test::atomic_memcpy_store_align1::release:
  lh      a1, 0(a1)
  #NO_APP
  sh      a1, 8(sp)
+ j       .LBB4_14
+.LBB4_4:
+ li      a3, 1
+ bltu    a3, a6, .LBB4_6
+ li      a6, 1
+.LBB4_6:
+ addi    a3, sp, 8
+ mv      a4, a6
+ mv      a5, a1
+.LBB4_7:
+ #APP
+ lb      a2, 0(a5)
+ #NO_APP
+ sb      a2, 0(a3)
+ addi    a3, a3, 1
+ addi    a4, a4, -1
+ addi    a5, a5, 1
+ bnez    a4, .LBB4_7
+ li      a3, 32
+ sub     a3, a3, a6
+ li      a4, 4
+ bltu    a3, a4, .LBB4_11
+.LBB4_9:
+ addi    a7, sp, 8
+ li      t0, 3
+.LBB4_10:
+ add     a2, a1, a6
+ #APP
+ lw      a2, 0(a2)
+ #NO_APP
+ add     a4, a7, a6
+ sb      a2, 0(a4)
+ srli    a5, a2, 24
+ sb      a5, 3(a4)
+ srli    a5, a2, 16
+ sb      a5, 2(a4)
+ srli    a2, a2, 8
+ sb      a2, 1(a4)
+ addi    a3, a3, -4
+ addi    a6, a6, 4
+ bltu    t0, a3, .LBB4_10
 .LBB4_11:
+ beqz    a3, .LBB4_14
+ addi    a2, sp, 8
+ add     a4, a2, a6
+ add     a1, a1, a6
+.LBB4_13:
+ #APP
+ lb      a2, 0(a1)
+ #NO_APP
+ sb      a2, 0(a4)
+ addi    a3, a3, -1
+ addi    a4, a4, 1
+ addi    a1, a1, 1
+ bnez    a3, .LBB4_13
+.LBB4_14:
  addi    a1, sp, 8
  li      a2, 32
  call    memcpy@plt
@@ -465,58 +478,6 @@ asm_test::atomic_memcpy_store_align1::release:
  addi    sp, sp, 48
  ret
 .LBB6_3:
- lbu     t0, 0(a4)
- mv      a3, a2
- #APP
- sb      t0, 0(a5)
- #NO_APP
- addi    a5, a5, 1
- addi    a2, a2, 1
- addi    a4, a4, 1
- bgeu    a2, a3, .LBB6_3
- sub     a2, a6, a7
- li      a3, 4
- bltu    a2, a3, .LBB6_7
-.LBB6_5:
- addi    a6, sp, 32
- li      a7, 3
-.LBB6_6:
- add     a5, a6, a1
- lbu     t0, 1(a5)
- lbu     t1, 0(a5)
- lbu     a3, 3(a5)
- lbu     a5, 2(a5)
- slli    a4, t0, 8
- or      a4, a4, t1
- slli    a3, a3, 8
- or      a3, a3, a5
- slli    a3, a3, 16
- or      a3, a3, a4
- add     a4, a0, a1
- #APP
- sw      a3, 0(a4)
- #NO_APP
- addi    a2, a2, -4
- addi    a1, a1, 4
- bltu    a7, a2, .LBB6_6
-.LBB6_7:
- beqz    a2, .LBB6_10
- add     a0, a0, a1
- addi    a3, sp, 32
- add     a1, a1, a3
-.LBB6_9:
- lbu     a3, 0(a1)
- #APP
- sb      a3, 0(a0)
- #NO_APP
- addi    a2, a2, -1
- addi    a0, a0, 1
- addi    a1, a1, 1
- bnez    a2, .LBB6_9
-.LBB6_10:
- addi    sp, sp, 64
- ret
-.LBB6_11:
  lhu     a1, 62(sp)
  addi    a2, a0, 30
  #APP
@@ -596,6 +557,66 @@ asm_test::atomic_memcpy_store_align1::release:
  #APP
  sh      a1, 0(a0)
  #NO_APP
+ addi    sp, sp, 64
+ ret
+.LBB6_4:
+ li      a2, 1
+ bltu    a2, a1, .LBB6_6
+ li      a1, 1
+.LBB6_6:
+ addi    a2, sp, 32
+ mv      a3, a1
+ mv      a4, a0
+.LBB6_7:
+ lbu     a5, 0(a2)
+ #APP
+ sb      a5, 0(a4)
+ #NO_APP
+ addi    a4, a4, 1
+ addi    a3, a3, -1
+ addi    a2, a2, 1
+ bnez    a3, .LBB6_7
+ li      a2, 32
+ sub     a2, a2, a1
+ li      a3, 4
+ bltu    a2, a3, .LBB6_11
+.LBB6_9:
+ addi    a6, sp, 32
+ li      a7, 3
+.LBB6_10:
+ add     a5, a6, a1
+ lbu     t0, 1(a5)
+ lbu     t1, 0(a5)
+ lbu     a3, 3(a5)
+ lbu     a5, 2(a5)
+ slli    a4, t0, 8
+ or      a4, a4, t1
+ slli    a3, a3, 8
+ or      a3, a3, a5
+ slli    a3, a3, 16
+ or      a3, a3, a4
+ add     a4, a0, a1
+ #APP
+ sw      a3, 0(a4)
+ #NO_APP
+ addi    a2, a2, -4
+ addi    a1, a1, 4
+ bltu    a7, a2, .LBB6_10
+.LBB6_11:
+ beqz    a2, .LBB6_14
+ add     a0, a0, a1
+ addi    a3, sp, 32
+ add     a1, a1, a3
+.LBB6_13:
+ lbu     a3, 0(a1)
+ #APP
+ sb      a3, 0(a0)
+ #NO_APP
+ addi    a2, a2, -1
+ addi    a0, a0, 1
+ addi    a1, a1, 1
+ bnez    a2, .LBB6_13
+.LBB6_14:
  addi    sp, sp, 64
  ret
 asm_test::atomic_memcpy_store_align1::write_volatile_release_fence:
@@ -696,53 +717,6 @@ asm_test::atomic_memcpy_store_align1::write_volatile_release_fence:
  addi    sp, sp, 48
  ret
 .LBB4_3:
- #APP
- lb      t0, 0(a3)
- #NO_APP
- mv      a2, a4
- sb      t0, 0(a5)
- addi    a5, a5, 1
- addi    a4, a4, 1
- addi    a3, a3, 1
- bgeu    a4, a2, .LBB4_3
- sub     a3, a6, a7
- li      a4, 4
- bltu    a3, a4, .LBB4_7
-.LBB4_5:
- addi    a6, sp, 8
- li      a7, 3
-.LBB4_6:
- add     a2, a1, t1
- #APP
- lw      a2, 0(a2)
- #NO_APP
- add     a4, a6, t1
- sb      a2, 0(a4)
- srli    a5, a2, 24
- sb      a5, 3(a4)
- srli    a5, a2, 16
- sb      a5, 2(a4)
- srli    a2, a2, 8
- sb      a2, 1(a4)
- addi    a3, a3, -4
- addi    t1, t1, 4
- bltu    a7, a3, .LBB4_6
-.LBB4_7:
- beqz    a3, .LBB4_11
- addi    a2, sp, 8
- add     a4, a2, t1
- add     a1, a1, t1
-.LBB4_9:
- #APP
- lb      a2, 0(a1)
- #NO_APP
- sb      a2, 0(a4)
- addi    a3, a3, -1
- addi    a4, a4, 1
- addi    a1, a1, 1
- bnez    a3, .LBB4_9
- j       .LBB4_11
-.LBB4_10:
  addi    a2, a1, 30
  #APP
  lh      a2, 0(a2)
@@ -822,7 +796,62 @@ asm_test::atomic_memcpy_store_align1::write_volatile_release_fence:
  lh      a1, 0(a1)
  #NO_APP
  sh      a1, 8(sp)
+ j       .LBB4_14
+.LBB4_4:
+ li      a3, 1
+ bltu    a3, a6, .LBB4_6
+ li      a6, 1
+.LBB4_6:
+ addi    a3, sp, 8
+ mv      a4, a6
+ mv      a5, a1
+.LBB4_7:
+ #APP
+ lb      a2, 0(a5)
+ #NO_APP
+ sb      a2, 0(a3)
+ addi    a3, a3, 1
+ addi    a4, a4, -1
+ addi    a5, a5, 1
+ bnez    a4, .LBB4_7
+ li      a3, 32
+ sub     a3, a3, a6
+ li      a4, 4
+ bltu    a3, a4, .LBB4_11
+.LBB4_9:
+ addi    a7, sp, 8
+ li      t0, 3
+.LBB4_10:
+ add     a2, a1, a6
+ #APP
+ lw      a2, 0(a2)
+ #NO_APP
+ add     a4, a7, a6
+ sb      a2, 0(a4)
+ srli    a5, a2, 24
+ sb      a5, 3(a4)
+ srli    a5, a2, 16
+ sb      a5, 2(a4)
+ srli    a2, a2, 8
+ sb      a2, 1(a4)
+ addi    a3, a3, -4
+ addi    a6, a6, 4
+ bltu    t0, a3, .LBB4_10
 .LBB4_11:
+ beqz    a3, .LBB4_14
+ addi    a2, sp, 8
+ add     a4, a2, a6
+ add     a1, a1, a6
+.LBB4_13:
+ #APP
+ lb      a2, 0(a1)
+ #NO_APP
+ sb      a2, 0(a4)
+ addi    a3, a3, -1
+ addi    a4, a4, 1
+ addi    a1, a1, 1
+ bnez    a3, .LBB4_13
+.LBB4_14:
  addi    a1, sp, 8
  li      a2, 32
  call    memcpy@plt
@@ -831,58 +860,6 @@ asm_test::atomic_memcpy_store_align1::write_volatile_release_fence:
  addi    sp, sp, 48
  ret
 .LBB6_3:
- lbu     t0, 0(a4)
- mv      a3, a2
- #APP
- sb      t0, 0(a5)
- #NO_APP
- addi    a5, a5, 1
- addi    a2, a2, 1
- addi    a4, a4, 1
- bgeu    a2, a3, .LBB6_3
- sub     a2, a6, a7
- li      a3, 4
- bltu    a2, a3, .LBB6_7
-.LBB6_5:
- addi    a6, sp, 32
- li      a7, 3
-.LBB6_6:
- add     a5, a6, a1
- lbu     t0, 1(a5)
- lbu     t1, 0(a5)
- lbu     a3, 3(a5)
- lbu     a5, 2(a5)
- slli    a4, t0, 8
- or      a4, a4, t1
- slli    a3, a3, 8
- or      a3, a3, a5
- slli    a3, a3, 16
- or      a3, a3, a4
- add     a4, a0, a1
- #APP
- sw      a3, 0(a4)
- #NO_APP
- addi    a2, a2, -4
- addi    a1, a1, 4
- bltu    a7, a2, .LBB6_6
-.LBB6_7:
- beqz    a2, .LBB6_10
- add     a0, a0, a1
- addi    a3, sp, 32
- add     a1, a1, a3
-.LBB6_9:
- lbu     a3, 0(a1)
- #APP
- sb      a3, 0(a0)
- #NO_APP
- addi    a2, a2, -1
- addi    a0, a0, 1
- addi    a1, a1, 1
- bnez    a2, .LBB6_9
-.LBB6_10:
- addi    sp, sp, 64
- ret
-.LBB6_11:
  lhu     a1, 62(sp)
  addi    a2, a0, 30
  #APP
@@ -962,5 +939,65 @@ asm_test::atomic_memcpy_store_align1::write_volatile_release_fence:
  #APP
  sh      a1, 0(a0)
  #NO_APP
+ addi    sp, sp, 64
+ ret
+.LBB6_4:
+ li      a2, 1
+ bltu    a2, a1, .LBB6_6
+ li      a1, 1
+.LBB6_6:
+ addi    a2, sp, 32
+ mv      a3, a1
+ mv      a4, a0
+.LBB6_7:
+ lbu     a5, 0(a2)
+ #APP
+ sb      a5, 0(a4)
+ #NO_APP
+ addi    a4, a4, 1
+ addi    a3, a3, -1
+ addi    a2, a2, 1
+ bnez    a3, .LBB6_7
+ li      a2, 32
+ sub     a2, a2, a1
+ li      a3, 4
+ bltu    a2, a3, .LBB6_11
+.LBB6_9:
+ addi    a6, sp, 32
+ li      a7, 3
+.LBB6_10:
+ add     a5, a6, a1
+ lbu     t0, 1(a5)
+ lbu     t1, 0(a5)
+ lbu     a3, 3(a5)
+ lbu     a5, 2(a5)
+ slli    a4, t0, 8
+ or      a4, a4, t1
+ slli    a3, a3, 8
+ or      a3, a3, a5
+ slli    a3, a3, 16
+ or      a3, a3, a4
+ add     a4, a0, a1
+ #APP
+ sw      a3, 0(a4)
+ #NO_APP
+ addi    a2, a2, -4
+ addi    a1, a1, 4
+ bltu    a7, a2, .LBB6_10
+.LBB6_11:
+ beqz    a2, .LBB6_14
+ add     a0, a0, a1
+ addi    a3, sp, 32
+ add     a1, a1, a3
+.LBB6_13:
+ lbu     a3, 0(a1)
+ #APP
+ sb      a3, 0(a0)
+ #NO_APP
+ addi    a2, a2, -1
+ addi    a0, a0, 1
+ addi    a1, a1, 1
+ bnez    a2, .LBB6_13
+.LBB6_14:
  addi    sp, sp, 64
  ret

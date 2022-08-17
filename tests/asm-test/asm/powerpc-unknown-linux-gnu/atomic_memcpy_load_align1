@@ -1,27 +1,17 @@
 asm_test::atomic_memcpy_load_align1::acquire:
  stwu    1, -48(1)
  addi    5, 4, 3
- rlwinm  8, 5, 0, 0, 29
- sub     5, 8, 4
- cmplwi  5, 33
- bge     0, .LBB0_5
- cmplwi  5, 0
- addi    6, 1, 16
- beq     0, .LBB0_6
- addi    7, 4, 32
- addi    9, 4, -1
- addi    10, 1, 15
- mtctr   5
+ rlwinm  5, 5, 0, 0, 29
+ sub     6, 5, 4
+ cmplwi  6, 33
+ bge     0, .LBB0_3
+ cmplw   5, 4
+ addi    5, 1, 16
+ bne     0, .LBB0_4
+ li      7, 32
+ li      6, 0
+ b       .LBB0_9
 .LBB0_3:
- lbz     11, 1(9)
- addi    9, 9, 1
- stbu    11, 1(10)
- bdnz    .LBB0_3
- sub     7, 7, 8
- cmplwi  7, 4
- bge     0, .LBB0_7
- b       .LBB0_11
-.LBB0_5:
  lbz     5, 0(4)
  stb     5, 16(1)
  lbz     5, 1(4)
@@ -105,45 +95,60 @@ asm_test::atomic_memcpy_load_align1::acquire:
  lwsync
  addi    1, 1, 48
  blr
+.LBB0_4:
+ cmplwi  6, 1
+ li      8, 1
+ addi    7, 4, -1
+ bc      12, 1, .LBB0_6
+ ori     6, 8, 0
+ b       .LBB0_6
 .LBB0_6:
- li      7, 32
+ addi    8, 1, 15
+ mtctr   6
 .LBB0_7:
- addi    10, 7, -4
- li      11, 3
- cmplwi  10, 3
- bc      12, 0, .LBB0_9
- ori     10, 11, 0
- b       .LBB0_9
+ lbz     9, 1(7)
+ addi    7, 7, 1
+ stbu    9, 1(8)
+ bdnz    .LBB0_7
+ subfic  7, 6, 32
+ cmplwi  7, 4
+ blt     0, .LBB0_13
 .LBB0_9:
- sub     8, 8, 4
+ addi    10, 7, -4
+ cmplwi  10, 3
+ li      11, 3
+ bc      12, 0, .LBB0_11
+ ori     10, 11, 0
+ b       .LBB0_11
+.LBB0_11:
+ addi    9, 6, -4
  not     10, 10
  add     10, 10, 7
- addi    9, 8, -4
  srwi    10, 10, 2
  add     8, 4, 9
- add     9, 6, 9
+ add     9, 5, 9
  addi    10, 10, 1
  mtctr   10
-.LBB0_10:
+.LBB0_12:
  lwz     10, 4(8)
  addi    8, 8, 4
  addi    7, 7, -4
- addi    5, 5, 4
+ addi    6, 6, 4
  stwu    10, 4(9)
- bdnz    .LBB0_10
-.LBB0_11:
- cmplwi  7, 0
- beq     0, .LBB0_14
- addi    5, 5, -1
- add     4, 4, 5
- add     5, 6, 5
- mtctr   7
+ bdnz    .LBB0_12
 .LBB0_13:
+ cmplwi  7, 0
+ beq     0, .LBB0_16
+ addi    6, 6, -1
+ add     4, 4, 6
+ add     5, 5, 6
+ mtctr   7
+.LBB0_15:
  lbz     6, 1(4)
  addi    4, 4, 1
  stbu    6, 1(5)
- bdnz    .LBB0_13
-.LBB0_14:
+ bdnz    .LBB0_15
+.LBB0_16:
  lwz     4, 44(1)
  lwz     5, 40(1)
  stw     4, 28(3)

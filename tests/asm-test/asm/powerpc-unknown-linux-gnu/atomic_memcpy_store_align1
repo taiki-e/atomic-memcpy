@@ -18,44 +18,33 @@ asm_test::atomic_memcpy_store_align1::release:
  stw     4, 16(1)
  lwsync
  lwz     4, 44(1)
- lwz     5, 40(1)
  lwz     6, 36(1)
+ lwz     5, 40(1)
  stw     4, 76(1)
  lwz     4, 32(1)
- stw     5, 72(1)
- lwz     5, 28(1)
  stw     6, 68(1)
  lwz     6, 24(1)
+ stw     5, 72(1)
+ lwz     5, 28(1)
  stw     4, 64(1)
- lwz     4, 20(1)
- stw     5, 60(1)
- addi    5, 3, 3
+ addi    4, 3, 3
+ lwz     7, 20(1)
+ rlwinm  4, 4, 0, 0, 29
  stw     6, 56(1)
- rlwinm  7, 5, 0, 0, 29
  lwz     6, 16(1)
- stw     4, 52(1)
- sub     4, 7, 3
- cmplwi  4, 33
+ stw     5, 60(1)
+ sub     5, 4, 3
+ cmplwi  5, 33
+ stw     7, 52(1)
  stw     6, 48(1)
- bge     0, .LBB2_5
- cmplwi  4, 0
- addi    5, 1, 48
- beq     0, .LBB2_6
- addi    6, 3, 32
- addi    8, 1, 47
- addi    9, 3, -1
- mtctr   4
+ bge     0, .LBB2_3
+ cmplw   4, 3
+ addi    4, 1, 48
+ bne     0, .LBB2_4
+ li      6, 32
+ li      5, 0
+ b       .LBB2_9
 .LBB2_3:
- lbzu    10, 1(8)
- addi    11, 9, 1
- stb     10, 1(9)
- mr      9, 11
- bdnz    .LBB2_3
- sub     6, 6, 7
- cmplwi  6, 4
- bge     0, .LBB2_7
- b       .LBB2_11
-.LBB2_5:
  lbz     4, 48(1)
  stb     4, 0(3)
  lbz     4, 49(1)
@@ -120,47 +109,63 @@ asm_test::atomic_memcpy_store_align1::release:
  stb     4, 30(3)
  lbz     4, 79(1)
  stb     4, 31(3)
- b       .LBB2_14
+ b       .LBB2_16
+.LBB2_4:
+ cmplwi  5, 1
+ li      7, 1
+ addi    6, 1, 47
+ bc      12, 1, .LBB2_6
+ ori     5, 7, 0
+ b       .LBB2_6
 .LBB2_6:
- li      6, 32
+ addi    7, 3, -1
+ mtctr   5
 .LBB2_7:
- addi    9, 6, -4
- li      10, 3
- cmplwi  9, 3
- bc      12, 0, .LBB2_9
- ori     9, 10, 0
- b       .LBB2_9
+ lbzu    8, 1(6)
+ addi    9, 7, 1
+ stb     8, 1(7)
+ mr      7, 9
+ bdnz    .LBB2_7
+ subfic  6, 5, 32
+ cmplwi  6, 4
+ blt     0, .LBB2_13
 .LBB2_9:
- sub     7, 7, 3
+ addi    9, 6, -4
+ cmplwi  9, 3
+ li      10, 3
+ bc      12, 0, .LBB2_11
+ ori     9, 10, 0
+ b       .LBB2_11
+.LBB2_11:
+ addi    8, 5, -4
  not     9, 9
  add     9, 9, 6
- addi    8, 7, -4
  srwi    9, 9, 2
- add     7, 5, 8
+ add     7, 4, 8
  add     8, 3, 8
  addi    9, 9, 1
  mtctr   9
-.LBB2_10:
+.LBB2_12:
  lwzu    9, 4(7)
  addi    6, 6, -4
- addi    4, 4, 4
+ addi    5, 5, 4
  stw     9, 4(8)
  addi    8, 8, 4
- bdnz    .LBB2_10
-.LBB2_11:
- cmplwi  6, 0
- beq     0, .LBB2_14
- addi    7, 4, -1
- add     4, 5, 7
- add     3, 3, 7
- mtctr   6
+ bdnz    .LBB2_12
 .LBB2_13:
+ cmplwi  6, 0
+ beq     0, .LBB2_16
+ addi    5, 5, -1
+ add     4, 4, 5
+ add     3, 3, 5
+ mtctr   6
+.LBB2_15:
  lbzu    5, 1(4)
  addi    6, 3, 1
  stb     5, 1(3)
  mr      3, 6
- bdnz    .LBB2_13
-.LBB2_14:
+ bdnz    .LBB2_15
+.LBB2_16:
  addi    1, 1, 80
  blr
 asm_test::atomic_memcpy_store_align1::write_volatile_release_fence:

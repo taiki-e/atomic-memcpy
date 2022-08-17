@@ -1,27 +1,18 @@
 asm_test::atomic_memcpy_load_align4::acquire:
  sub     rsp, 64
  mov     rax, rdi
- lea     rcx, [rsi, +, 7]
- and     rcx, -8
- mov     r9, rcx
- sub     r9, rsi
- cmp     r9, 64
- ja      .LBB8_6
- test    r9, r9
- je      .LBB8_2
- mov     rdx, rsi
- not     rdx
- add     rcx, rdx
- mov     r8d, r9d
- and     r8d, 3
- cmp     rcx, 3
- jae     .LBB8_21
+ lea     rdx, [rsi, +, 7]
+ and     rdx, -8
+ mov     rcx, rdx
+ sub     rcx, rsi
+ cmp     rcx, 65
+ jae     .LBB8_1
+ cmp     rdx, rsi
+ jne     .LBB8_6
  mov     r11d, 64
- xor     edi, edi
- test    r8, r8
- jne     .LBB8_10
- jmp     .LBB8_13
-.LBB8_6:
+ xor     r9d, r9d
+ jmp     .LBB8_5
+.LBB8_1:
  mov     ecx, dword, ptr, [rsi, +, 60]
  mov     dword, ptr, [rsp, +, 60], ecx
  mov     ecx, dword, ptr, [rsi, +, 56]
@@ -54,11 +45,21 @@ asm_test::atomic_memcpy_load_align4::acquire:
  mov     dword, ptr, [rsp, +, 4], ecx
  mov     ecx, dword, ptr, [rsi]
  mov     dword, ptr, [rsp], ecx
- jmp     .LBB8_7
-.LBB8_2:
+ jmp     .LBB8_2
+.LBB8_6:
+ cmp     rcx, 2
+ mov     r9d, 1
+ cmovae  r9, rcx
+ lea     rcx, [r9, -, 1]
+ mov     r8d, r9d
+ and     r8d, 3
+ cmp     rcx, 3
+ jae     .LBB8_21
  mov     r11d, 64
- xor     r9d, r9d
- jmp     .LBB8_3
+ xor     edi, edi
+ test    r8, r8
+ jne     .LBB8_10
+ jmp     .LBB8_13
 .LBB8_21:
  mov     rcx, r9
  and     rcx, -4
@@ -86,23 +87,23 @@ asm_test::atomic_memcpy_load_align4::acquire:
 .LBB8_11:
  movzx   ecx, byte, ptr, [rdi, +, rdx]
  mov     byte, ptr, [r10, +, rdx], cl
- add     rdx, 1
+ inc     rdx
  cmp     r8, rdx
  jne     .LBB8_11
  sub     r11, rdx
 .LBB8_13:
  cmp     r11, 8
  jb      .LBB8_14
-.LBB8_3:
+.LBB8_5:
  mov     rcx, qword, ptr, [rsi, +, r9]
  mov     qword, ptr, [rsp, +, r9], rcx
  add     r11, -8
  add     r9, 8
  cmp     r11, 7
- ja      .LBB8_3
+ ja      .LBB8_5
 .LBB8_14:
  test    r11, r11
- je      .LBB8_7
+ je      .LBB8_2
  lea     r8, [r11, -, 1]
  mov     rdx, r11
  mov     rdi, r9
@@ -112,12 +113,12 @@ asm_test::atomic_memcpy_load_align4::acquire:
 .LBB8_17:
  movzx   ecx, byte, ptr, [rsi, +, rdi]
  mov     byte, ptr, [rsp, +, rdi], cl
- add     rdi, 1
- add     rdx, -1
+ inc     rdi
+ dec     rdx
  jne     .LBB8_17
 .LBB8_18:
  cmp     r8, 3
- jb      .LBB8_7
+ jb      .LBB8_2
  add     r11, r9
 .LBB8_20:
  movzx   ecx, byte, ptr, [rsi, +, rdi]
@@ -131,7 +132,7 @@ asm_test::atomic_memcpy_load_align4::acquire:
  add     rdi, 4
  cmp     r11, rdi
  jne     .LBB8_20
-.LBB8_7:
+.LBB8_2:
  mov     r8d, dword, ptr, [rsp]
  mov     r9d, dword, ptr, [rsp, +, 4]
  mov     r10d, dword, ptr, [rsp, +, 8]

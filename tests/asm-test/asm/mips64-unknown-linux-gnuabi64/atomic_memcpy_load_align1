@@ -2,39 +2,26 @@ asm_test::atomic_memcpy_load_align1::acquire:
  daddiu  $sp, $sp, -64
  daddiu  $1, $5, 7
  daddiu  $2, $zero, -8
- and     $1, $1, $2
- dsubu   $2, $1, $5
+ and     $3, $1, $2
+ dsubu   $2, $3, $5
  sltiu   $1, $2, 65
- beqz    $1, .LBB0_6
+ beqz    $1, .LBB0_3
  nop
- beqz    $2, .LBB0_9
+ bne     $3, $5, .LBB0_6
  nop
+ daddiu  $2, $zero, 64
+ b       .LBB0_9
  daddiu  $3, $zero, 0
- daddiu  $6, $sp, 0
 .LBB0_3:
- daddu   $7, $5, $3
- daddu   $1, $6, $3
- daddiu  $3, $3, 1
- lb      $7, 0($7)
- bne     $2, $3, .LBB0_3
- sb      $7, 0($1)
- daddiu  $1, $zero, 64
- dsubu   $3, $1, $3
- sltiu   $1, $3, 8
- bnez    $1, .LBB0_12
- nop
- b       .LBB0_10
- nop
-.LBB0_6:
  daddiu  $2, $zero, 0
  daddiu  $3, $sp, 0
  daddiu  $6, $zero, 64
-.LBB0_7:
+.LBB0_4:
  daddu   $7, $5, $2
  daddu   $1, $3, $2
  daddiu  $2, $2, 1
  lb      $7, 0($7)
- bne     $2, $6, .LBB0_7
+ bne     $2, $6, .LBB0_4
  sb      $7, 0($1)
  ld      $1, 56($sp)
  ld      $2, 24($sp)
@@ -64,35 +51,50 @@ asm_test::atomic_memcpy_load_align1::acquire:
  move    $2, $4
  jr      $ra
  daddiu  $sp, $sp, 64
-.LBB0_9:
- daddiu  $3, $zero, 64
- daddiu  $2, $zero, 0
-.LBB0_10:
+.LBB0_6:
+ sltiu   $1, $2, 2
+ daddiu  $3, $zero, 1
  daddiu  $6, $sp, 0
-.LBB0_11:
+ movz    $3, $2, $1
+ daddiu  $2, $zero, 0
+.LBB0_7:
  daddu   $7, $5, $2
  daddu   $1, $6, $2
- daddiu  $3, $3, -8
+ daddiu  $2, $2, 1
+ lb      $7, 0($7)
+ bne     $3, $2, .LBB0_7
+ sb      $7, 0($1)
+ daddiu  $1, $zero, 64
+ dsubu   $2, $1, $2
+ sltiu   $1, $2, 8
+ bnez    $1, .LBB0_11
+ nop
+.LBB0_9:
+ daddiu  $6, $sp, 0
+.LBB0_10:
+ daddu   $7, $5, $3
+ daddu   $1, $6, $3
+ daddiu  $2, $2, -8
  ld      $7, 0($7)
  sdl     $7, 0($1)
  sdr     $7, 7($1)
- sltiu   $1, $3, 8
- beqz    $1, .LBB0_11
- daddiu  $2, $2, 8
-.LBB0_12:
- beqz    $3, .LBB0_15
+ sltiu   $1, $2, 8
+ beqz    $1, .LBB0_10
+ daddiu  $3, $3, 8
+.LBB0_11:
+ beqz    $2, .LBB0_14
  nop
  daddiu  $1, $sp, 0
- daddu   $5, $5, $2
- daddu   $2, $1, $2
-.LBB0_14:
+ daddu   $5, $5, $3
+ daddu   $3, $1, $3
+.LBB0_13:
  lb      $1, 0($5)
  daddiu  $5, $5, 1
- daddiu  $3, $3, -1
- sb      $1, 0($2)
- bnez    $3, .LBB0_14
- daddiu  $2, $2, 1
-.LBB0_15:
+ daddiu  $2, $2, -1
+ sb      $1, 0($3)
+ bnez    $2, .LBB0_13
+ daddiu  $3, $3, 1
+.LBB0_14:
  ld      $1, 56($sp)
  ld      $2, 24($sp)
  ld      $3, 32($sp)

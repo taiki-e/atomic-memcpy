@@ -105,38 +105,40 @@ asm_test::atomic_memcpy_store_align2::release:
  stx     %o4, [%sp+2247]
  ldx     [%sp+2175], %o2
  add     %o0, 7, %o1
- and     %o1, -8, %o3
- sub     %o3, %o0, %o1
- cmp     %o1, 64
- bgu     %xcc, .LBB6_10
+ and     %o1, -8, %o1
+ sub     %o1, %o0, %o3
+ cmp     %o3, 65
+ bcs     %xcc, .LBB6_1
  stx     %o2, [%sp+2239]
- ba      .LBB6_1
+ ba      .LBB6_10
  nop
 .LBB6_1:
- cmp     %o1, 0
- be      %xcc, .LBB6_6
  mov     64, %o2
- ba      .LBB6_2
+ cmp     %o1, %o0
+ be      %xcc, .LBB6_6
+ mov     0, %o1
+ ba      .LBB6_3
+ nop
+.LBB6_3:
+ mov     1, %o1
+ cmp     %o3, 1
+ movgu   %xcc, %o3, %o1
+ add     %sp, 2239, %o2
+ mov     %o1, %o3
+ mov     %o0, %o4
+.LBB6_4:
+ ldub    [%o2], %o5
+ stb     %o5, [%o4]
+ add     %o4, 1, %o4
+ add     %o3, -1, %o3
+ cmp     %o3, 0
+ be      %xcc, .LBB6_2
+ add     %o2, 1, %o2
+ ba      .LBB6_4
  nop
 .LBB6_2:
- add     %o0, 64, %o2
- sub     %o0, %o3, %g2
- add     %sp, 2239, %o4
- mov     %g0, %o5
- mov     %o0, %g3
-.LBB6_3:
- ldub    [%o4], %g4
- stb     %g4, [%g3]
- add     %g3, 1, %g3
- add     %g2, 1, %g4
- cmp     %g4, %g2
- mov     %o5, %g2
- movcs   %xcc, 1, %g2
- cmp     %g2, 0
- add     %o4, 1, %o4
- be      .LBB6_3
- mov     %g4, %g2
- sub     %o2, %o3, %o2
+ mov     64, %o2
+ sub     %o2, %o1, %o2
  cmp     %o2, 8
  bcs     %xcc, .LBB6_5
  nop

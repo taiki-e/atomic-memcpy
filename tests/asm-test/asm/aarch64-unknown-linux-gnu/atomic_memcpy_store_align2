@@ -1,33 +1,24 @@
 asm_test::atomic_memcpy_store_align2::release:
  ldp     q0, q1, [x1]
  add     x8, x0, #7
- and     x9, x8, #0xfffffffffffffff8
+ and     x8, x8, #0xfffffffffffffff8
  ldp     q2, q3, [x1, #32]
  stp     q0, q1, [sp, #-128]!
  stp     q2, q3, [sp, #32]
- sub     x8, x9, x0
+ sub     x9, x8, x0
  dmb     ish
- cmp     x8, #64
+ cmp     x9, #65
  ldp     q0, q1, [sp]
  ldp     q2, q3, [sp, #32]
  stp     q0, q1, [sp, #64]
  stp     q2, q3, [sp, #96]
- b.hi    .LBB6_5
- cbz     x8, .LBB6_6
- add     x10, x0, #64
- sub     x11, x0, x9
- add     x12, sp, #64
- mov     x13, x0
+ b.hs    .LBB6_3
+ cmp     x8, x0
+ b.ne    .LBB6_4
+ mov     x8, xzr
+ mov     w9, #64
+ b       .LBB6_7
 .LBB6_3:
- ldrb    w14, [x12], #1
- adds    x11, x11, #1
- strb    w14, [x13], #1
- b.lo    .LBB6_3
- sub     x9, x10, x9
- cmp     x9, #7
- b.hi    .LBB6_7
- b       .LBB6_9
-.LBB6_5:
  ldrh    w8, [sp, #126]
  strh    w8, [x0, #62]
  ldrh    w8, [sp, #124]
@@ -92,9 +83,23 @@ asm_test::atomic_memcpy_store_align2::release:
  strh    w8, [x0, #2]
  ldrh    w8, [sp, #64]
  strh    w8, [x0]
- b       .LBB6_12
-.LBB6_6:
+ add     sp, sp, #128
+ ret
+.LBB6_4:
+ cmp     x9, #1
+ mov     x11, x0
+ csinc   x8, x9, xzr, hi
+ add     x9, sp, #64
+ mov     x10, x8
+.LBB6_5:
+ ldrb    w12, [x9], #1
+ subs    x10, x10, #1
+ strb    w12, [x11], #1
+ b.ne    .LBB6_5
  mov     w9, #64
+ sub     x9, x9, x8
+ cmp     x9, #7
+ b.ls    .LBB6_9
 .LBB6_7:
  add     x10, sp, #64
 .LBB6_8:

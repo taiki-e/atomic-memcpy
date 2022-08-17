@@ -1,48 +1,38 @@
 asm_test::atomic_memcpy_store_align2::release:
  push    ebx
- push    edi
  push    esi
- sub     esp, 64
+ sub     esp, 68
  mov     ecx, dword, ptr, [esp, +, 84]
  mov     eax, dword, ptr, [esp, +, 80]
  movsd   xmm1, qword, ptr, [ecx, +, 16]
  movsd   xmm0, qword, ptr, [ecx, +, 24]
  movsd   xmm3, qword, ptr, [ecx]
- lea     esi, [eax, +, 3]
- and     esi, -4
- mov     edx, esi
- sub     edx, eax
- movsd   qword, ptr, [esp, +, 48], xmm1
+ movsd   qword, ptr, [esp, +, 52], xmm1
  movsd   xmm1, qword, ptr, [ecx, +, 8]
- movsd   qword, ptr, [esp, +, 56], xmm0
- movsd   qword, ptr, [esp, +, 32], xmm3
- cmp     edx, 32
- movsd   qword, ptr, [esp, +, 40], xmm1
+ movsd   qword, ptr, [esp, +, 60], xmm0
+ movsd   qword, ptr, [esp, +, 36], xmm3
+ lea     ecx, [eax, +, 3]
+ and     ecx, -4
+ mov     edx, ecx
+ sub     edx, eax
+ movsd   qword, ptr, [esp, +, 44], xmm1
  #MEMBARRIER
- movsd   xmm2, qword, ptr, [esp, +, 56]
- movsd   xmm1, qword, ptr, [esp, +, 48]
+ movsd   xmm2, qword, ptr, [esp, +, 60]
+ movsd   xmm1, qword, ptr, [esp, +, 52]
+ cmp     edx, 33
  movsd   qword, ptr, [esp, +, 24], xmm2
  movsd   qword, ptr, [esp, +, 16], xmm1
- movsd   xmm2, qword, ptr, [esp, +, 32]
- movsd   xmm1, qword, ptr, [esp, +, 40]
+ movsd   xmm2, qword, ptr, [esp, +, 36]
+ movsd   xmm1, qword, ptr, [esp, +, 44]
  movsd   qword, ptr, [esp, +, 8], xmm1
  movsd   qword, ptr, [esp], xmm2
- ja      .LBB6_10
- test    edx, edx
- je      .LBB6_2
- lea     ecx, [eax, +, 32]
- xor     edi, edi
-.LBB6_9:
- movzx   ebx, byte, ptr, [esp, +, edi]
- mov     byte, ptr, [eax, +, edi], bl
- inc     edi
- cmp     edx, edi
- jne     .LBB6_9
- sub     ecx, esi
- cmp     ecx, 4
- jae     .LBB6_3
+ jae     .LBB6_1
+ cmp     ecx, eax
+ jne     .LBB6_10
+ mov     edx, 32
+ xor     ecx, ecx
  jmp     .LBB6_5
-.LBB6_10:
+.LBB6_1:
  movzx   ecx, word, ptr, [esp, +, 30]
  mov     word, ptr, [eax, +, 30], cx
  movzx   ecx, word, ptr, [esp, +, 28]
@@ -75,32 +65,44 @@ asm_test::atomic_memcpy_store_align2::release:
  mov     word, ptr, [eax, +, 2], cx
  movzx   ecx, word, ptr, [esp]
  mov     word, ptr, [eax], cx
- jmp     .LBB6_11
-.LBB6_2:
- mov     ecx, 32
-.LBB6_3:
- mov     esi, dword, ptr, [esp, +, edx]
- add     ecx, -4
- mov     dword, ptr, [eax, +, edx], esi
- add     edx, 4
- cmp     ecx, 3
- ja      .LBB6_3
+ jmp     .LBB6_2
+.LBB6_10:
+ cmp     edx, 2
+ mov     ecx, 1
+ cmovae  ecx, edx
+ xor     edx, edx
+.LBB6_11:
+ movzx   ebx, byte, ptr, [esp, +, edx]
+ mov     byte, ptr, [eax, +, edx], bl
+ inc     edx
+ cmp     ecx, edx
+ jne     .LBB6_11
+ mov     edx, 32
+ sub     edx, ecx
+ cmp     edx, 4
+ jb      .LBB6_7
 .LBB6_5:
- test    ecx, ecx
- je      .LBB6_11
- add     eax, edx
- add     edx, esp
- xor     esi, esi
+ mov     esi, dword, ptr, [esp, +, ecx]
+ add     edx, -4
+ mov     dword, ptr, [eax, +, ecx], esi
+ add     ecx, 4
+ cmp     edx, 3
+ ja      .LBB6_5
 .LBB6_7:
- movzx   ebx, byte, ptr, [edx, +, esi]
+ test    edx, edx
+ je      .LBB6_2
+ add     eax, ecx
+ add     ecx, esp
+ xor     esi, esi
+.LBB6_9:
+ movzx   ebx, byte, ptr, [ecx, +, esi]
  mov     byte, ptr, [eax, +, esi], bl
  inc     esi
- cmp     ecx, esi
- jne     .LBB6_7
-.LBB6_11:
- add     esp, 64
+ cmp     edx, esi
+ jne     .LBB6_9
+.LBB6_2:
+ add     esp, 68
  pop     esi
- pop     edi
  pop     ebx
  ret
 asm_test::atomic_memcpy_store_align2::write_volatile_release_fence:

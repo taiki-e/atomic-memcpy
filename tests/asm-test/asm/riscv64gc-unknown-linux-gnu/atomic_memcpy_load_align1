@@ -2,49 +2,53 @@ asm_test::atomic_memcpy_load_align1::acquire:
  addi    sp, sp, -80
  sd      ra, 72(sp)
  addi    a2, a1, 7
- andi    a7, a2, -8
- sub     t1, a7, a1
- li      a3, 65
- bgeu    t1, a3, .LBB0_5
- beqz    t1, .LBB0_7
- addi    a6, a1, 64
- sub     a3, a1, a7
- addi    a5, sp, 8
- mv      a4, a1
-.LBB0_3:
- lb      t0, 0(a4)
- mv      a2, a3
- sb      t0, 0(a5)
- addi    a5, a5, 1
- addi    a3, a3, 1
- addi    a4, a4, 1
- bgeu    a3, a2, .LBB0_3
- sub     a3, a6, a7
- li      a4, 8
- bgeu    a3, a4, .LBB0_8
+ andi    a3, a2, -8
+ sub     a6, a3, a1
+ li      a4, 65
+ bgeu    a6, a4, .LBB0_3
+ bne     a3, a1, .LBB0_5
+ li      a6, 0
+ li      a3, 64
  j       .LBB0_10
-.LBB0_5:
+.LBB0_3:
  li      a4, 0
  addi    a6, sp, 8
  li      a3, 64
-.LBB0_6:
+.LBB0_4:
  add     a5, a1, a4
  lb      a5, 0(a5)
  addi    a2, a4, 1
  add     a4, a4, a6
  sb      a5, 0(a4)
  mv      a4, a2
- bne     a2, a3, .LBB0_6
- j       .LBB0_13
+ bne     a2, a3, .LBB0_4
+ j       .LBB0_15
+.LBB0_5:
+ li      a3, 1
+ bltu    a3, a6, .LBB0_7
+ li      a6, 1
 .LBB0_7:
- li      a3, 64
+ addi    a3, sp, 8
+ mv      a4, a6
+ mv      a5, a1
 .LBB0_8:
- addi    a6, sp, 8
- li      a7, 7
-.LBB0_9:
- add     a2, a1, t1
+ lb      a2, 0(a5)
+ sb      a2, 0(a3)
+ addi    a3, a3, 1
+ addi    a4, a4, -1
+ addi    a5, a5, 1
+ bnez    a4, .LBB0_8
+ li      a3, 64
+ sub     a3, a3, a6
+ li      a4, 8
+ bltu    a3, a4, .LBB0_12
+.LBB0_10:
+ addi    a7, sp, 8
+ li      t0, 7
+.LBB0_11:
+ add     a2, a1, a6
  ld      a2, 0(a2)
- add     a4, a6, t1
+ add     a4, a7, a6
  sb      a2, 0(a4)
  srli    a5, a2, 56
  sb      a5, 7(a4)
@@ -61,21 +65,21 @@ asm_test::atomic_memcpy_load_align1::acquire:
  srli    a2, a2, 8
  sb      a2, 1(a4)
  addi    a3, a3, -8
- addi    t1, t1, 8
- bltu    a7, a3, .LBB0_9
-.LBB0_10:
- beqz    a3, .LBB0_13
- addi    a2, sp, 8
- add     a4, a2, t1
- add     a1, a1, t1
+ addi    a6, a6, 8
+ bltu    t0, a3, .LBB0_11
 .LBB0_12:
+ beqz    a3, .LBB0_15
+ addi    a2, sp, 8
+ add     a4, a2, a6
+ add     a1, a1, a6
+.LBB0_14:
  lb      a2, 0(a1)
  sb      a2, 0(a4)
  addi    a3, a3, -1
  addi    a4, a4, 1
  addi    a1, a1, 1
- bnez    a3, .LBB0_12
-.LBB0_13:
+ bnez    a3, .LBB0_14
+.LBB0_15:
  addi    a1, sp, 8
  li      a2, 64
  call    memcpy@plt
