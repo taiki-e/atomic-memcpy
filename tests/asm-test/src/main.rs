@@ -117,6 +117,10 @@ fn main() -> Result<()> {
             {
                 continue;
             }
+            let mut rustflags = String::from("-Z merge-functions=disabled");
+            if target.contains("x86_64") {
+                rustflags.push_str(" -C target-feature=+cmpxchg16b");
+            }
             println!("  {}", m);
             let mut out = String::new();
             for func in functions {
@@ -130,11 +134,7 @@ fn main() -> Result<()> {
                     target,
                     func
                 );
-                if target.contains("x86_64") {
-                    cmd = cmd.env("RUSTFLAGS", "-C target-feature=+cmpxchg16b");
-                } else {
-                    cmd = cmd.env_remove("RUSTFLAGS");
-                }
+                cmd = cmd.env("RUSTFLAGS", &rustflags);
                 let asm = &cmd.dir(manifest_dir).read()?;
                 if target.starts_with("arm")
                     || target.starts_with("thumb")
