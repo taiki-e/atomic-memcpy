@@ -123,14 +123,14 @@ fn ordering() {
             assert_eq!(
                 assert_panic(|| {
                     let x = UnsafeCell::new(0u8);
-                    atomic_store(x.get(), 1, Ordering::Acquire)
+                    atomic_store(x.get(), 1, Ordering::Acquire);
                 }),
                 "there is no such thing as an acquire store"
             );
             assert_eq!(
                 assert_panic(|| {
                     let x = UnsafeCell::new(0u8);
-                    atomic_store(x.get(), 1, Ordering::AcqRel)
+                    atomic_store(x.get(), 1, Ordering::AcqRel);
                 }),
                 "there is no such thing as an acquire-release store"
             );
