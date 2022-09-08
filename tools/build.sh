@@ -23,6 +23,15 @@ default_targets=(
     riscv32imc-esp-espidf
 )
 
+x() {
+    local cmd="$1"
+    shift
+    (
+        set -x
+        "${cmd}" "$@"
+    )
+}
+
 pre_args=()
 if [[ "${1:-}" == "+"* ]]; then
     pre_args+=("$1")
@@ -54,26 +63,14 @@ if [[ "${rustc_version}" == *"nightly"* ]] || [[ "${rustc_version}" == *"dev"* ]
 fi
 echo "base rustflags='${RUSTFLAGS:-} ${check_cfg:-}'"
 
-x() {
-    local cmd="$1"
-    shift
-    (
-        set -x
-        "${cmd}" "$@"
-    )
-}
 build() {
     local target="$1"
     shift
     local args=("${base_args[@]}" --target "${target}")
     local target_rustflags="${RUSTFLAGS:-} ${check_cfg:-}"
     if ! grep <<<"${rustc_target_list}" -Eq "^${target}$"; then
-        echo "target '${target}' not available on ${rustc_version}"
+        echo "target '${target}' not available on ${rustc_version} (skipped all checks)"
         return 0
-    fi
-    if [[ "${target}" == "avr-"* ]]; then
-        # https://github.com/rust-lang/rust/issues/88252
-        target_rustflags="${target_rustflags} -C opt-level=s"
     fi
     if grep <<<"${rustup_target_list}" -Eq "^${target}( |$)"; then
         x rustup ${pre_args[@]+"${pre_args[@]}"} target add "${target}" &>/dev/null
@@ -85,6 +82,10 @@ build() {
     else
         echo "target '${target}' requires nightly compiler"
         return 0
+    fi
+    if [[ "${target}" == "avr-"* ]]; then
+        # https://github.com/rust-lang/rust/issues/88252
+        target_rustflags="${target_rustflags} -C opt-level=s"
     fi
 
     RUSTFLAGS="${target_rustflags}" \
