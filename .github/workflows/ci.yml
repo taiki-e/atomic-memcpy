@@ -95,7 +95,7 @@ jobs:
       - uses: dtolnay/rust-toolchain@miri
       - run: cargo miri test --workspace --exclude asm-test
         env:
-          MIRIFLAGS: -Zmiri-strict-provenance -Zmiri-symbolic-alignment-check -Zmiri-disable-isolation
+          MIRIFLAGS: -Zmiri-strict-provenance -Zmiri-symbolic-alignment-check -Zmiri-retag-fields -Zmiri-disable-isolation
           RUSTFLAGS: ${{ env.RUSTFLAGS }} -Z randomize-layout
 
   san:
