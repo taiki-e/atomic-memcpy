@@ -76,7 +76,7 @@ build() {
         x rustup ${pre_args[@]+"${pre_args[@]}"} target add "${target}" &>/dev/null
     elif [[ -n "${nightly}" ]]; then
         case "${target}" in
-            *-none* | avr-* | *-esp-espidf) args+=(-Z build-std="core") ;;
+            *-none* | *-cuda* | avr-* | *-esp-espidf) args+=(-Z build-std="core") ;;
             *) args+=(-Z build-std) ;;
         esac
     else
