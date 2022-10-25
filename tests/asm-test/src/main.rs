@@ -94,7 +94,7 @@ fn main() -> Result<()> {
     }
 
     for target in targets {
-        println!("{}", target);
+        println!("{target}");
         cmd!("rustup", "target", "add", target).stderr_capture().stdout_capture().run()?;
         let target_cfg = cmd!("rustc", "--print", "cfg", "--target", target).read()?;
         let target_cfg: Vec<_> = target_cfg.lines().collect();
@@ -121,7 +121,7 @@ fn main() -> Result<()> {
             if target.contains("x86_64") {
                 rustflags.push_str(" -C target-feature=+cmpxchg16b");
             }
-            println!("  {}", m);
+            println!("  {m}");
             let mut out = String::new();
             for func in functions {
                 let mut cmd = cmd!(
