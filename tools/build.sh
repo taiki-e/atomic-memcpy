@@ -48,20 +48,19 @@ fi
 rustup_target_list=$(rustup ${pre_args[@]+"${pre_args[@]}"} target list)
 rustc_target_list=$(rustc ${pre_args[@]+"${pre_args[@]}"} --print target-list)
 rustc_version=$(rustc ${pre_args[@]+"${pre_args[@]}"} -Vv | grep 'release: ' | sed 's/release: //')
+rustc_minor_version="${rustc_version#*.}"
+rustc_minor_version="${rustc_minor_version%.*}"
 base_args=(${pre_args[@]+"${pre_args[@]}"} hack build)
 nightly=''
 if [[ "${rustc_version}" == *"nightly"* ]] || [[ "${rustc_version}" == *"dev"* ]]; then
     nightly=1
     rustup ${pre_args[@]+"${pre_args[@]}"} component add rust-src &>/dev/null
-    case "${rustc_version}" in
-        # -Z check-cfg requires 1.63.0-nightly
-        1.[0-5]* | 1.6[0-2].*) ;;
-        *)
-            check_cfg="-Z unstable-options --check-cfg=names() --check-cfg=values(feature,\"cargo-clippy\")"
-            rustup ${pre_args[@]+"${pre_args[@]}"} component add clippy &>/dev/null
-            base_args=(${pre_args[@]+"${pre_args[@]}"} hack clippy -Z check-cfg="names,values,output,features")
-            ;;
-    esac
+    # -Z check-cfg requires 1.63.0-nightly
+    if [[ "${rustc_minor_version}" -gt 62 ]]; then
+        check_cfg="-Z unstable-options --check-cfg=names() --check-cfg=values(feature,\"cargo-clippy\")"
+        rustup ${pre_args[@]+"${pre_args[@]}"} component add clippy &>/dev/null
+        base_args=(${pre_args[@]+"${pre_args[@]}"} hack clippy -Z check-cfg="names,values,output,features")
+    fi
 fi
 echo "base rustflags='${RUSTFLAGS:-} ${check_cfg:-}'"
 
