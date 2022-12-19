@@ -21,6 +21,9 @@ members = [
     "tests/no-std",
 ]
 
+[lib]
+doc-scrape-examples = false
+
 [features]
 # Unstable feature flag to use #[inline(always)] instead of #[inline].
 #
