@@ -7,6 +7,9 @@ cd "$(dirname "$0")"/..
 trap 's=$?; echo >&2 "$0: Error on line "${LINENO}": ${BASH_COMMAND}"; exit ${s}' ERR
 trap -- 'exit 0' SIGINT
 
+# USAGE:
+#    ./tools/build.sh [+toolchain] [target]...
+
 default_targets=(
     # no atomic load/store (16-bit)
     avr-unknown-gnu-atmega328
@@ -33,6 +36,14 @@ x() {
         "${cmd}" "$@"
     )
 }
+x_cargo() {
+    if [[ -n "${RUSTFLAGS:-}" ]]; then
+        echo "+ RUSTFLAGS='${RUSTFLAGS}' \\"
+    fi
+    RUSTFLAGS="${RUSTFLAGS:-} ${check_cfg:-}" \
+        x cargo "$@"
+    echo
+}
 
 pre_args=()
 if [[ "${1:-}" == "+"* ]]; then
@@ -49,7 +60,7 @@ rustup_target_list=$(rustup ${pre_args[@]+"${pre_args[@]}"} target list)
 rustc_target_list=$(rustc ${pre_args[@]+"${pre_args[@]}"} --print target-list)
 rustc_version=$(rustc ${pre_args[@]+"${pre_args[@]}"} -Vv | grep 'release: ' | sed 's/release: //')
 rustc_minor_version="${rustc_version#*.}"
-rustc_minor_version="${rustc_minor_version%.*}"
+rustc_minor_version="${rustc_minor_version%%.*}"
 base_args=(${pre_args[@]+"${pre_args[@]}"} hack build)
 nightly=''
 if [[ "${rustc_version}" == *"nightly"* ]] || [[ "${rustc_version}" == *"dev"* ]]; then
@@ -62,7 +73,6 @@ if [[ "${rustc_version}" == *"nightly"* ]] || [[ "${rustc_version}" == *"dev"* ]
         base_args=(${pre_args[@]+"${pre_args[@]}"} hack clippy -Z check-cfg="names,values,output,features")
     fi
 fi
-echo "base rustflags='${RUSTFLAGS:-} ${check_cfg:-}'"
 
 build() {
     local target="$1"
@@ -81,7 +91,7 @@ build() {
             *) args+=(-Z build-std) ;;
         esac
     else
-        echo "target '${target}' requires nightly compiler"
+        echo "target '${target}' requires nightly compiler (skipped all checks)"
         return 0
     fi
     if [[ "${target}" == "avr-"* ]]; then
@@ -90,14 +100,14 @@ build() {
     fi
 
     RUSTFLAGS="${target_rustflags}" \
-        x cargo "${args[@]}" --manifest-path tests/no-std/Cargo.toml
+        x_cargo "${args[@]}" --manifest-path tests/no-std/Cargo.toml
     RUSTFLAGS="${target_rustflags}" \
-        x cargo "${args[@]}" --release --manifest-path tests/no-std/Cargo.toml
+        x_cargo "${args[@]}" --release --manifest-path tests/no-std/Cargo.toml
 
     RUSTFLAGS="${target_rustflags}" \
-        x cargo "${args[@]}" --feature-powerset --optional-deps --no-dev-deps --manifest-path Cargo.toml
+        x_cargo "${args[@]}" --feature-powerset --optional-deps --no-dev-deps --manifest-path Cargo.toml
     RUSTFLAGS="${target_rustflags}" \
-        x cargo "${args[@]}" --release --feature-powerset --optional-deps --no-dev-deps --manifest-path Cargo.toml
+        x_cargo "${args[@]}" --release --feature-powerset --optional-deps --no-dev-deps --manifest-path Cargo.toml
 }
 
 for target in "${targets[@]}"; do
