@@ -96,7 +96,7 @@ build() {
     fi
     if [[ "${target}" == "avr-"* ]]; then
         # https://github.com/rust-lang/rust/issues/88252
-        target_rustflags="${target_rustflags} -C opt-level=s"
+        target_rustflags+=" -C opt-level=s"
     fi
 
     RUSTFLAGS="${target_rustflags}" \
