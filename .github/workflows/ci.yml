@@ -43,6 +43,8 @@ jobs:
     uses: taiki-e/workflows/.github/workflows/tidy-rust.yml@main
 
   test:
+    env:
+      CARGO_CAREFUL_VERSION: 0.3.0
     strategy:
       fail-fast: false
       matrix:
@@ -68,9 +70,27 @@ jobs:
       - run: rustup toolchain add nightly --no-self-update
       - uses: taiki-e/install-action@cargo-hack
       - uses: taiki-e/install-action@cargo-minimal-versions
+      - name: Pre Cache cargo-careful
+        run: |
+          mkdir -p .github/caching
+          echo "${CARGO_CAREFUL_VERSION}" > .github/caching/cargo-careful.lock
+          echo "${{ runner.tool_cache }}/cargo-careful/bin" >> "${GITHUB_PATH}"
+        if: startsWith(matrix.rust, 'nightly')
+      - name: Cache cargo-careful
+        id: cache-cargo-careful
+        uses: actions/cache@v3
+        with:
+          path: ${{ runner.tool_cache }}/cargo-careful/bin
+          key: cargo-careful-bin-${{ hashFiles('.github/caching/cargo-careful.lock') }}
+        if: startsWith(matrix.rust, 'nightly')
+      - name: Install cargo-careful
+        run: cargo install -f cargo-careful --root "${{ runner.tool_cache }}/cargo-careful" --locked --version "${CARGO_CAREFUL_VERSION}"
+        if: startsWith(matrix.rust, 'nightly') && steps.cache-cargo-careful.outputs.cache-hit != 'true'
       - uses: taiki-e/setup-cross-toolchain-action@v1
         with:
           target: ${{ matrix.target }}
+        if: matrix.target != ''
+      - run: echo "TARGET=--target=${{ matrix.target }}" >>"${GITHUB_ENV}"
         if: matrix.target != ''
       - run: cargo test -v --workspace --exclude asm-test $DOCTEST_XCOMPILE
       - run: cargo test -v --workspace --exclude asm-test --release $DOCTEST_XCOMPILE
@@ -78,6 +98,11 @@ jobs:
         env:
           CARGO_PROFILE_RELEASE_CODEGEN_UNITS: 1
           CARGO_PROFILE_RELEASE_LTO: fat
+      - run: cargo careful test -v --workspace --exclude asm-test $TARGET $DOCTEST_XCOMPILE
+        env:
+          RUSTDOCFLAGS: ${{ env.RUSTDOCFLAGS }} -Z randomize-layout
+          RUSTFLAGS: ${{ env.RUSTFLAGS }} -Z randomize-layout
+        if: startsWith(matrix.rust, 'nightly')
       - run: cargo hack build -vv --workspace --ignore-private --feature-powerset --optional-deps --no-dev-deps
       - run: tools/build.sh
         if: matrix.target == ''
@@ -94,6 +119,7 @@ jobs:
       - run: cargo miri test --workspace --exclude asm-test
         env:
           MIRIFLAGS: -Zmiri-strict-provenance -Zmiri-symbolic-alignment-check -Zmiri-retag-fields -Zmiri-disable-isolation
+          RUSTDOCFLAGS: ${{ env.RUSTDOCFLAGS }} -Z randomize-layout
           RUSTFLAGS: ${{ env.RUSTFLAGS }} -Z randomize-layout
 
   san:
