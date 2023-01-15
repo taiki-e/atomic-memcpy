@@ -32,6 +32,6 @@ doc-scrape-examples = false
 inline-always = []
 
 [target.'cfg(target_os = "none")'.dependencies]
-portable-atomic = { version = "0.3.6", default-features = false }
+portable-atomic = { version = "1", default-features = false }
 
 [dev-dependencies]
