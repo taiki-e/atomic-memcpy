@@ -10,6 +10,8 @@ Note: In this file, do not use the hard wrap in the middle of a sentence for com
 
 ## [Unreleased]
 
+## [0.2.1] - 2023-01-15
+
 ## [0.2.0] - 2022-08-03
 
 - Use `portable-atomic` crate on no-std targets to soundly support targets that do not have atomic load/store. ([#4](https://github.com/taiki-e/atomic-memcpy/pull/4))
@@ -36,7 +38,8 @@ Note: In this file, do not use the hard wrap in the middle of a sentence for com
 
 Initial release
 
-[Unreleased]: https://github.com/taiki-e/atomic-memcpy/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/taiki-e/atomic-memcpy/compare/v0.2.1...HEAD
+[0.2.1]: https://github.com/taiki-e/atomic-memcpy/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/taiki-e/atomic-memcpy/compare/v0.1.3...v0.2.0
 [0.1.3]: https://github.com/taiki-e/atomic-memcpy/compare/v0.1.2...v0.1.3
 [0.1.2]: https://github.com/taiki-e/atomic-memcpy/compare/v0.1.1...v0.1.2
