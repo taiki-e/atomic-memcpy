@@ -12,6 +12,8 @@ Note: In this file, do not use the hard wrap in the middle of a sentence for com
 
 ## [0.2.1] - 2023-01-15
 
+- Update `portable-atomic` to 1.
+
 ## [0.2.0] - 2022-08-03
 
 - Use `portable-atomic` crate on no-std targets to soundly support targets that do not have atomic load/store. ([#4](https://github.com/taiki-e/atomic-memcpy/pull/4))
