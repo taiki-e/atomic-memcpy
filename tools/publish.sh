@@ -87,8 +87,12 @@ fi
 
 # Make sure that a valid release note for this version exists.
 # https://github.com/taiki-e/parse-changelog
+changes=$(parse-changelog "${changelog}" "${version}")
+if [[ -z "${changes}" ]]; then
+    bail "changelog for ${version} has no body"
+fi
 echo "============== CHANGELOG =============="
-parse-changelog "${changelog}" "${version}"
+echo "${changes}"
 echo "======================================="
 
 metadata="$(cargo metadata --format-version=1 --all-features --no-deps)"
