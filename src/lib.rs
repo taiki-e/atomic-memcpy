@@ -60,12 +60,7 @@ See [P1478][p1478] for more.
     // misc
     clippy::missing_inline_in_public_items,
 )]
-#![allow(
-    clippy::doc_markdown,
-    clippy::inline_always,
-    clippy::single_match_else,
-    clippy::too_many_lines
-)]
+#![allow(clippy::doc_markdown, clippy::inline_always, clippy::single_match_else)]
 
 // This crate should work on targets with power-of-two pointer widths,
 // but it is not clear how it will work on targets without them.

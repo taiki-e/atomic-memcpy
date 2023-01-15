@@ -1,4 +1,5 @@
 #![no_std]
+#![warn(rust_2018_idioms, single_use_lifetimes, unsafe_op_in_unsafe_fn)]
 #![allow(dead_code, unused_imports)]
 
 use core::{cell::UnsafeCell, mem, sync::atomic::Ordering};
