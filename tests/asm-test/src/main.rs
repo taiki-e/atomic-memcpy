@@ -44,8 +44,8 @@ fn main() -> Result<()> {
     let mut target_modules = vec![];
     while let Some(arg) = parser.next()? {
         match arg {
-            Short('m') => target_modules.push(parser.value()?.parse::<String>()?),
-            Value(v) => target_triples.push(v.parse::<String>()?),
+            Short('m') => target_modules.push(parser.value()?.string()?),
+            Value(v) => target_triples.push(v.string()?),
             Short('h') | Long("help") => {
                 println!("Usage: cargo run -p asm-test -- [-m <module>]... [TARGET]...");
                 return Ok(());

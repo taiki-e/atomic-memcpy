@@ -18,6 +18,6 @@ anyhow = { version = "1", optional = true }
 duct = { version = "0.13", optional = true }
 fs-err = { version = "2", optional = true }
 indexmap = { version = "1", optional = true }
-lexopt = { version = "0.2", optional = true }
+lexopt = { version = "0.3", optional = true }
 rustc-demangle = { version = "0.1", optional = true }
 syn = { version = "1", optional = true, features = ["full"] }
