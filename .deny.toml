@@ -5,6 +5,7 @@ unmaintained = "deny"
 unsound = "deny"
 yanked = "deny"
 notice = "deny"
+git-fetch-with-cli = true
 ignore = []
 
 # https://embarkstudios.github.io/cargo-deny/checks/bans/cfg.html
@@ -23,7 +24,6 @@ private.ignore = true
 allow = [
     "Apache-2.0",
     "MIT",
-    "Unicode-DFS-2016", # unicode-ident
 ]
 
 # https://embarkstudios.github.io/cargo-deny/checks/sources/cfg.html
