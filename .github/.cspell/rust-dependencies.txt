@@ -4,7 +4,6 @@
 anyhow
 atomic
 criterion
-crossbeam
 demangle
 duct
 indexmap
@@ -12,4 +11,3 @@ lexopt
 memcpy
 portable
 rustc
-utils
