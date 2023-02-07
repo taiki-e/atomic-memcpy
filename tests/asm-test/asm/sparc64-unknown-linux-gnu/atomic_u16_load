@@ -19,17 +19,17 @@ asm_test::atomic_u16_load::acquire:
  membar  #LoadLoad, |, #StoreLoad, |, #LoadStore, |, #StoreStore
  retl
  nop
-asm_test::atomic_u16_load::unordered_seq_cst_fence:
+asm_test::atomic_u16_load::unordered_seqcst_fence:
  lduh    [%o0], %o0
  membar  #LoadLoad, |, #StoreLoad, |, #LoadStore, |, #StoreStore
  retl
  nop
-asm_test::atomic_u16_load::relaxed_seq_cst_fence:
+asm_test::atomic_u16_load::relaxed_seqcst_fence:
  lduh    [%o0], %o0
  membar  #LoadLoad, |, #StoreLoad, |, #LoadStore, |, #StoreStore
  retl
  nop
-asm_test::atomic_u16_load::seq_cst:
+asm_test::atomic_u16_load::seqcst:
  lduh    [%o0], %o0
  membar  #LoadLoad, |, #StoreLoad, |, #LoadStore, |, #StoreStore
  retl

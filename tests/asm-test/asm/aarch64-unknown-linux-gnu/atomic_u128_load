@@ -35,7 +35,7 @@ asm_test::atomic_u128_load::acquire:
  stxp    w9, x0, x1, [x8]
  cbnz    w9, .LBB56_1
  ret
-asm_test::atomic_u128_load::unordered_seq_cst_fence:
+asm_test::atomic_u128_load::unordered_seqcst_fence:
  mov     x8, x0
 .LBB57_1:
  ldxp    x0, x1, [x8]
@@ -43,7 +43,7 @@ asm_test::atomic_u128_load::unordered_seq_cst_fence:
  cbnz    w9, .LBB57_1
  dmb     ish
  ret
-asm_test::atomic_u128_load::relaxed_seq_cst_fence:
+asm_test::atomic_u128_load::relaxed_seqcst_fence:
  mov     x8, x0
 .LBB58_1:
  ldxp    x0, x1, [x8]
@@ -51,7 +51,7 @@ asm_test::atomic_u128_load::relaxed_seq_cst_fence:
  cbnz    w9, .LBB58_1
  dmb     ish
  ret
-asm_test::atomic_u128_load::seq_cst:
+asm_test::atomic_u128_load::seqcst:
  mov     x8, x0
 .LBB59_1:
  ldaxp   x0, x1, [x8]

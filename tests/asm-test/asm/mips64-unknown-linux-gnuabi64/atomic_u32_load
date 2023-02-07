@@ -21,17 +21,17 @@ asm_test::atomic_u32_load::acquire:
  sync
  jr      $ra
  nop
-asm_test::atomic_u32_load::unordered_seq_cst_fence:
+asm_test::atomic_u32_load::unordered_seqcst_fence:
  lw      $2, 0($4)
  sync
  jr      $ra
  nop
-asm_test::atomic_u32_load::relaxed_seq_cst_fence:
+asm_test::atomic_u32_load::relaxed_seqcst_fence:
  lw      $2, 0($4)
  sync
  jr      $ra
  nop
-asm_test::atomic_u32_load::seq_cst:
+asm_test::atomic_u32_load::seqcst:
  lw      $2, 0($4)
  sync
  jr      $ra

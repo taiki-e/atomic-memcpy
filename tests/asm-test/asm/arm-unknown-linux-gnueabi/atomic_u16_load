@@ -19,17 +19,17 @@ asm_test::atomic_u16_load::acquire:
  mov     r1, #0
  mcr     p15, #0, r1, c7, c10, #5
  bx      lr
-asm_test::atomic_u16_load::unordered_seq_cst_fence:
+asm_test::atomic_u16_load::unordered_seqcst_fence:
  ldrh    r0, [r0]
  mov     r1, #0
  mcr     p15, #0, r1, c7, c10, #5
  bx      lr
-asm_test::atomic_u16_load::relaxed_seq_cst_fence:
+asm_test::atomic_u16_load::relaxed_seqcst_fence:
  ldrh    r0, [r0]
  mov     r1, #0
  mcr     p15, #0, r1, c7, c10, #5
  bx      lr
-asm_test::atomic_u16_load::seq_cst:
+asm_test::atomic_u16_load::seqcst:
  ldrh    r0, [r0]
  mov     r1, #0
  mcr     p15, #0, r1, c7, c10, #5

@@ -23,17 +23,17 @@ asm_test::atomic_u32_load::acquire:
  bne-    7, .+4
  isync
  blr
-asm_test::atomic_u32_load::unordered_seq_cst_fence:
+asm_test::atomic_u32_load::unordered_seqcst_fence:
 .Lfunc_begin41:
  lwz     3, 0(3)
  sync
  blr
-asm_test::atomic_u32_load::relaxed_seq_cst_fence:
+asm_test::atomic_u32_load::relaxed_seqcst_fence:
 .Lfunc_begin42:
  lwz     3, 0(3)
  sync
  blr
-asm_test::atomic_u32_load::seq_cst:
+asm_test::atomic_u32_load::seqcst:
 .Lfunc_begin43:
  sync
  lwz     3, 0(3)

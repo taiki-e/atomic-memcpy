@@ -22,19 +22,19 @@ asm_test::atomic_u8_load::acquire:
  mov     r2, #0
  bl      __sync_val_compare_and_swap_1
  pop     {r11, pc}
-asm_test::atomic_u8_load::unordered_seq_cst_fence:
+asm_test::atomic_u8_load::unordered_seqcst_fence:
  push    {r4, lr}
  ldrb    r4, [r0]
  bl      __sync_synchronize
  mov     r0, r4
  pop     {r4, pc}
-asm_test::atomic_u8_load::relaxed_seq_cst_fence:
+asm_test::atomic_u8_load::relaxed_seqcst_fence:
  push    {r4, lr}
  ldrb    r4, [r0]
  bl      __sync_synchronize
  mov     r0, r4
  pop     {r4, pc}
-asm_test::atomic_u8_load::seq_cst:
+asm_test::atomic_u8_load::seqcst:
  push    {r11, lr}
  mov     r1, #0
  mov     r2, #0

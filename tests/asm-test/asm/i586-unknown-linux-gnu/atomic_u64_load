@@ -45,7 +45,7 @@ asm_test::atomic_u64_load::acquire:
  mov     edx, dword, ptr, [esp, +, 4]
  add     esp, 12
  ret
-asm_test::atomic_u64_load::unordered_seq_cst_fence:
+asm_test::atomic_u64_load::unordered_seqcst_fence:
  sub     esp, 12
  mov     eax, dword, ptr, [esp, +, 16]
  fild    qword, ptr, [eax]
@@ -55,7 +55,7 @@ asm_test::atomic_u64_load::unordered_seq_cst_fence:
  lock    or, dword, ptr, [esp], 0
  add     esp, 12
  ret
-asm_test::atomic_u64_load::relaxed_seq_cst_fence:
+asm_test::atomic_u64_load::relaxed_seqcst_fence:
  sub     esp, 12
  mov     eax, dword, ptr, [esp, +, 16]
  fild    qword, ptr, [eax]
@@ -65,7 +65,7 @@ asm_test::atomic_u64_load::relaxed_seq_cst_fence:
  lock    or, dword, ptr, [esp], 0
  add     esp, 12
  ret
-asm_test::atomic_u64_load::seq_cst:
+asm_test::atomic_u64_load::seqcst:
  sub     esp, 12
  mov     eax, dword, ptr, [esp, +, 16]
  fild    qword, ptr, [eax]

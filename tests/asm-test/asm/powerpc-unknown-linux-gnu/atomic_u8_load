@@ -16,15 +16,15 @@ asm_test::atomic_u8_load::acquire:
  lbz     3, 0(3)
  lwsync
  blr
-asm_test::atomic_u8_load::unordered_seq_cst_fence:
+asm_test::atomic_u8_load::unordered_seqcst_fence:
  lbz     3, 0(3)
  sync
  blr
-asm_test::atomic_u8_load::relaxed_seq_cst_fence:
+asm_test::atomic_u8_load::relaxed_seqcst_fence:
  lbz     3, 0(3)
  sync
  blr
-asm_test::atomic_u8_load::seq_cst:
+asm_test::atomic_u8_load::seqcst:
  sync
  lbz     3, 0(3)
  lwsync

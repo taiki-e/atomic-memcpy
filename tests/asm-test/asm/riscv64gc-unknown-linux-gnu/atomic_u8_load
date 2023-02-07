@@ -16,15 +16,15 @@ asm_test::atomic_u8_load::acquire:
  lb      a0, 0(a0)
  fence   r, rw
  ret
-asm_test::atomic_u8_load::unordered_seq_cst_fence:
+asm_test::atomic_u8_load::unordered_seqcst_fence:
  lb      a0, 0(a0)
  fence   rw, rw
  ret
-asm_test::atomic_u8_load::relaxed_seq_cst_fence:
+asm_test::atomic_u8_load::relaxed_seqcst_fence:
  lb      a0, 0(a0)
  fence   rw, rw
  ret
-asm_test::atomic_u8_load::seq_cst:
+asm_test::atomic_u8_load::seqcst:
  fence   rw, rw
  lb      a0, 0(a0)
  fence   r, rw
