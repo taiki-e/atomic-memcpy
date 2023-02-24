@@ -204,7 +204,7 @@ pub mod atomic_u8_load {
     type T = u8;
     #[inline(never)]
     pub fn unordered(a: A<'_>) -> T {
-        unsafe { intrinsics::atomic_load_unordered(a.as_mut_ptr()) }
+        unsafe { intrinsics::atomic_load_unordered(a.as_ptr()) }
     }
     #[inline(never)]
     pub fn relaxed(a: A<'_>) -> T {
@@ -212,7 +212,7 @@ pub mod atomic_u8_load {
     }
     #[inline(never)]
     pub fn unordered_acquire_fence(a: A<'_>) -> T {
-        let v = unsafe { intrinsics::atomic_load_unordered(a.as_mut_ptr()) };
+        let v = unsafe { intrinsics::atomic_load_unordered(a.as_ptr()) };
         atomic::fence(Ordering::Acquire);
         v
     }
@@ -228,7 +228,7 @@ pub mod atomic_u8_load {
     }
     #[inline(never)]
     pub fn unordered_seqcst_fence(a: A<'_>) -> T {
-        let v = unsafe { intrinsics::atomic_load_unordered(a.as_mut_ptr()) };
+        let v = unsafe { intrinsics::atomic_load_unordered(a.as_ptr()) };
         atomic::fence(Ordering::SeqCst);
         v
     }
@@ -254,7 +254,7 @@ pub mod atomic_u16_load {
     type T = u16;
     #[inline(never)]
     pub fn unordered(a: A<'_>) -> T {
-        unsafe { intrinsics::atomic_load_unordered(a.as_mut_ptr()) }
+        unsafe { intrinsics::atomic_load_unordered(a.as_ptr()) }
     }
     #[inline(never)]
     pub fn relaxed(a: A<'_>) -> T {
@@ -262,7 +262,7 @@ pub mod atomic_u16_load {
     }
     #[inline(never)]
     pub fn unordered_acquire_fence(a: A<'_>) -> T {
-        let v = unsafe { intrinsics::atomic_load_unordered(a.as_mut_ptr()) };
+        let v = unsafe { intrinsics::atomic_load_unordered(a.as_ptr()) };
         atomic::fence(Ordering::Acquire);
         v
     }
@@ -278,7 +278,7 @@ pub mod atomic_u16_load {
     }
     #[inline(never)]
     pub fn unordered_seqcst_fence(a: A<'_>) -> T {
-        let v = unsafe { intrinsics::atomic_load_unordered(a.as_mut_ptr()) };
+        let v = unsafe { intrinsics::atomic_load_unordered(a.as_ptr()) };
         atomic::fence(Ordering::SeqCst);
         v
     }
@@ -304,7 +304,7 @@ pub mod atomic_u32_load {
     type T = u32;
     #[inline(never)]
     pub fn unordered(a: A<'_>) -> T {
-        unsafe { intrinsics::atomic_load_unordered(a.as_mut_ptr()) }
+        unsafe { intrinsics::atomic_load_unordered(a.as_ptr()) }
     }
     #[inline(never)]
     pub fn relaxed(a: A<'_>) -> T {
@@ -312,7 +312,7 @@ pub mod atomic_u32_load {
     }
     #[inline(never)]
     pub fn unordered_acquire_fence(a: A<'_>) -> T {
-        let v = unsafe { intrinsics::atomic_load_unordered(a.as_mut_ptr()) };
+        let v = unsafe { intrinsics::atomic_load_unordered(a.as_ptr()) };
         atomic::fence(Ordering::Acquire);
         v
     }
@@ -328,7 +328,7 @@ pub mod atomic_u32_load {
     }
     #[inline(never)]
     pub fn unordered_seqcst_fence(a: A<'_>) -> T {
-        let v = unsafe { intrinsics::atomic_load_unordered(a.as_mut_ptr()) };
+        let v = unsafe { intrinsics::atomic_load_unordered(a.as_ptr()) };
         atomic::fence(Ordering::SeqCst);
         v
     }
@@ -354,7 +354,7 @@ pub mod atomic_u64_load {
     type T = u64;
     #[inline(never)]
     pub fn unordered(a: A<'_>) -> T {
-        unsafe { intrinsics::atomic_load_unordered(a.as_mut_ptr()) }
+        unsafe { intrinsics::atomic_load_unordered(a.as_ptr()) }
     }
     #[inline(never)]
     pub fn relaxed(a: A<'_>) -> T {
@@ -362,7 +362,7 @@ pub mod atomic_u64_load {
     }
     #[inline(never)]
     pub fn unordered_acquire_fence(a: A<'_>) -> T {
-        let v = unsafe { intrinsics::atomic_load_unordered(a.as_mut_ptr()) };
+        let v = unsafe { intrinsics::atomic_load_unordered(a.as_ptr()) };
         atomic::fence(Ordering::Acquire);
         v
     }
@@ -378,7 +378,7 @@ pub mod atomic_u64_load {
     }
     #[inline(never)]
     pub fn unordered_seqcst_fence(a: A<'_>) -> T {
-        let v = unsafe { intrinsics::atomic_load_unordered(a.as_mut_ptr()) };
+        let v = unsafe { intrinsics::atomic_load_unordered(a.as_ptr()) };
         atomic::fence(Ordering::SeqCst);
         v
     }
