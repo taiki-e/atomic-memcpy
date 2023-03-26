@@ -68,7 +68,7 @@ if [[ "${rustc_version}" == *"nightly"* ]] || [[ "${rustc_version}" == *"dev"* ]
     nightly=1
     rustup ${pre_args[@]+"${pre_args[@]}"} component add rust-src &>/dev/null
     # -Z check-cfg requires 1.63.0-nightly
-    if [[ "${rustc_minor_version}" -gt 62 ]]; then
+    if [[ "${rustc_minor_version}" -ge 63 ]]; then
         check_cfg="-Z unstable-options --check-cfg=names() --check-cfg=values(feature,\"cargo-clippy\")"
         rustup ${pre_args[@]+"${pre_args[@]}"} component add clippy &>/dev/null
         base_args=(${pre_args[@]+"${pre_args[@]}"} hack clippy -Z check-cfg="names,values,output,features")
