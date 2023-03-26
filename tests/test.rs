@@ -219,7 +219,7 @@ fn small_alignment() {
                         (i as $ty..).take(mem::size_of::<usize>() * 2 - 2).collect::<Vec<_>>()[..]
                     );
 
-                    ptr = ptr.cast::<$ty>().add(1).cast();
+                    ptr = ptr.cast::<$ty>().add(1);
                 }
             }
         };
