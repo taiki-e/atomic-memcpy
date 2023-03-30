@@ -4,4 +4,3 @@
 demangle
 indexmap
 lexopt
-memcpy
