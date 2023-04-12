@@ -6,6 +6,7 @@
 [![rustc](https://img.shields.io/badge/rustc-1.36+-blue?style=flat-square&logo=rust)](https://www.rust-lang.org)
 [![build status](https://img.shields.io/github/actions/workflow/status/taiki-e/atomic-memcpy/ci.yml?branch=main&style=flat-square&logo=github)](https://github.com/taiki-e/atomic-memcpy/actions)
 
+<!-- tidy:crate-doc:start -->
 Byte-wise atomic memcpy.
 
 This is an attempt to implement equivalent of C++ ["P1478: Byte-wise atomic memcpy"][p1478] in Rust.
@@ -32,6 +33,8 @@ See [P1478][p1478] for more.
 [p1478]: https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2022/p1478r7.html
 [portable-atomic]: https://github.com/taiki-e/portable-atomic
 [undefined-behavior]: https://doc.rust-lang.org/reference/behavior-considered-undefined.html
+
+<!-- tidy:crate-doc:end -->
 
 ## License
 
