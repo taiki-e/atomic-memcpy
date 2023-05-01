@@ -35,3 +35,4 @@ inline-always = []
 portable-atomic = { version = "1", default-features = false }
 
 [dev-dependencies]
+build-context = "0.1"

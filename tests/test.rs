@@ -97,7 +97,7 @@ fn ordering() {
     }
 
     if option_env!("CARGO_PROFILE_RELEASE_LTO").map_or(false, |v| v == "fat")
-        && option_env!("MSAN_OPTIONS").is_some()
+        && build_context::SANITIZE.contains("memory")
     {
         // MSAN false positive: https://gist.github.com/taiki-e/dd6269a8ffec46284fdc764a4849f884
         return;
