@@ -12,8 +12,7 @@ trap -- 'exit 1' SIGINT
 
 default_targets=(
     # no atomic load/store (16-bit)
-    # TODO: LLVM 16 broke AVR.
-    # avr-unknown-gnu-atmega328
+    avr-unknown-gnu-atmega328
     msp430-none-elf
     # no atomic load/store (32-bit)
     riscv32i-unknown-none-elf
@@ -62,6 +61,8 @@ rustc_target_list=$(rustc ${pre_args[@]+"${pre_args[@]}"} --print target-list)
 rustc_version=$(rustc ${pre_args[@]+"${pre_args[@]}"} -Vv | grep 'release: ' | sed 's/release: //')
 rustc_minor_version="${rustc_version#*.}"
 rustc_minor_version="${rustc_minor_version%%.*}"
+llvm_version=$(rustc ${pre_args[@]+"${pre_args[@]}"} -Vv | (grep 'LLVM version: ' || true) | (sed 's/LLVM version: //' || true))
+llvm_version="${llvm_version%%.*}"
 base_args=(${pre_args[@]+"${pre_args[@]}"} hack build)
 nightly=''
 if [[ "${rustc_version}" == *"nightly"* ]] || [[ "${rustc_version}" == *"dev"* ]]; then
@@ -93,9 +94,14 @@ build() {
         echo "target '${target}' requires nightly compiler (skipped all checks)"
         return 0
     fi
-    if [[ "${target}" == "avr-"* ]]; then
-        # https://github.com/rust-lang/rust/issues/88252
-        target_rustflags+=" -C opt-level=s"
+    if [[ "${target}" == "avr"* ]]; then
+        if [[ "${llvm_version}" -eq 16 ]]; then
+            # https://github.com/rust-lang/compiler-builtins/issues/523
+            target_rustflags+=" -C linker-plugin-lto -C codegen-units=1"
+        elif [[ "${llvm_version}" -le 15 ]]; then
+            # https://github.com/rust-lang/rust/issues/88252
+            target_rustflags+=" -C opt-level=s"
+        fi
     fi
 
     RUSTFLAGS="${target_rustflags}" \
