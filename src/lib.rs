@@ -205,7 +205,7 @@ pub unsafe fn atomic_store<T>(dst: *mut T, val: T, order: Ordering) {
     }
 }
 
-// https://github.com/rust-lang/rust/blob/1.69.0/library/core/src/sync/atomic.rs#L3156
+// https://github.com/rust-lang/rust/blob/1.70.0/library/core/src/sync/atomic.rs#L3155
 #[cfg_attr(feature = "inline-always", inline(always))]
 #[cfg_attr(not(feature = "inline-always"), inline)]
 fn assert_load_ordering(order: Ordering) {
@@ -217,7 +217,7 @@ fn assert_load_ordering(order: Ordering) {
     }
 }
 
-// https://github.com/rust-lang/rust/blob/1.69.0/library/core/src/sync/atomic.rs#L3141
+// https://github.com/rust-lang/rust/blob/1.70.0/library/core/src/sync/atomic.rs#L3140
 #[cfg_attr(feature = "inline-always", inline(always))]
 #[cfg_attr(not(feature = "inline-always"), inline)]
 fn assert_store_ordering(order: Ordering) {
