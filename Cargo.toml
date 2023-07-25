@@ -6,7 +6,7 @@ rust-version = "1.36"
 license = "Apache-2.0 OR MIT"
 repository = "https://github.com/taiki-e/atomic-memcpy"
 keywords = ["atomic"]
-categories = ["concurrency", "no-std"]
+categories = ["concurrency", "no-std", "no-std::no-alloc"]
 description = """
 Byte-wise atomic memcpy.
 """
