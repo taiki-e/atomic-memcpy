@@ -13,13 +13,13 @@ trap -- 'echo >&2 "$0: trapped SIGINT"; exit 1' SIGINT
 
 default_targets=(
     # no atomic load/store (16-bit)
-    avr-unknown-gnu-atmega328
     msp430-none-elf
     # no atomic load/store (32-bit)
     riscv32i-unknown-none-elf
-    riscv32imc-unknown-none-elf
 
-    # no atomic CAS
+    # no atomic CAS (16-bit)
+    avr-unknown-gnu-atmega328
+    # no atomic CAS (32-bit)
     thumbv6m-none-eabi
 
     # no-std
