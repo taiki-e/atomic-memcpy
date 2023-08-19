@@ -23,7 +23,8 @@ unsafe impl<T: Sync> Sync for SendSync<T> {}
 
 fn bench_load<T: Copy + Send + Sync>(v: &SendSync<T>, _val: T) {
     unsafe {
-        black_box(atomic_memcpy::atomic_load(v.0.get(), LOAD_ORDERING).assume_init());
+        // black_box(atomic_memcpy::atomic_load(v.0.get(), LOAD_ORDERING).assume_init());
+        black_box(atomic_memcpy::arch::atomic_load(v.0.get(), LOAD_ORDERING).assume_init());
     }
 }
 fn bench_store<T: Copy + Send + Sync>(v: &SendSync<T>, val: T) {
@@ -101,6 +102,9 @@ macro_rules! bg {
         g.bench_function("align8", |b| {
             b!(b, $bench_fn, Align8($v));
         });
+        g.bench_function("align16", |b| {
+            b!(b, $bench_fn, Align16($v));
+        });
     }};
 }
 
@@ -117,10 +121,10 @@ fn bench_atomic_copy(c: &mut Criterion) {
     bg!(c, "load_u8x64", bench_load, [0u8; 64]);
     bg!(c, "load_u8x256", bench_load, [0u8; 256]);
 
-    bg!(c, "store_u8x16", bench_store, [0u8; 16]);
-    bg!(c, "store_u8x32", bench_store, [0u8; 32]);
-    bg!(c, "store_u8x64", bench_store, [0u8; 64]);
-    bg!(c, "store_u8x256", bench_store, [0u8; 256]);
+    // bg!(c, "store_u8x16", bench_store, [0u8; 16]);
+    // bg!(c, "store_u8x32", bench_store, [0u8; 32]);
+    // bg!(c, "store_u8x64", bench_store, [0u8; 64]);
+    // bg!(c, "store_u8x256", bench_store, [0u8; 256]);
 
     // bg!(c, "concurrent_load_store_u8x16", bench_concurrent_load_store, [0u8; 16]);
     // bg!(c, "concurrent_load_store_u8x64", bench_concurrent_load_store, [0u8; 64]);

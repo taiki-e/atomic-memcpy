@@ -88,6 +88,10 @@ use core::sync::atomic::Ordering;
 #[cfg(target_os = "none")]
 use portable_atomic as atomic;
 
+#[allow(missing_docs)]
+#[cfg_attr(target_arch = "aarch64", path = "aarch64.rs")]
+pub mod arch;
+
 /// Byte-wise atomic load.
 ///
 /// # Safety

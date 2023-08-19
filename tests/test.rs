@@ -4,7 +4,7 @@ use std::{
     sync::atomic::{AtomicUsize, Ordering},
 };
 
-use atomic_memcpy::{atomic_load, atomic_store};
+use atomic_memcpy::arch::{atomic_load, atomic_store};
 
 macro_rules! test_int {
     ($test_name:ident, $ty:ident) => {
