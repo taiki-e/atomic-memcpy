@@ -93,10 +93,10 @@ jobs:
           RUSTDOCFLAGS: ${{ env.RUSTDOCFLAGS }} -Z randomize-layout
           RUSTFLAGS: ${{ env.RUSTFLAGS }} -Z randomize-layout
         if: startsWith(matrix.rust, 'nightly')
-      - run: cargo hack build -vv --workspace --ignore-private --feature-powerset --optional-deps --no-dev-deps
+      - run: cargo hack build -vv --workspace --no-private --feature-powerset --optional-deps --no-dev-deps
       - run: tools/build.sh
         if: matrix.target == ''
-      - run: cargo minimal-versions build -vv --workspace --all-features --ignore-private
+      - run: cargo minimal-versions build -vv --workspace --no-private --all-features
 
   miri:
     runs-on: ubuntu-latest
