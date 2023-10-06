@@ -3,6 +3,7 @@
 #![cfg(nightly)]
 #![no_std]
 #![warn(rust_2018_idioms, single_use_lifetimes, unsafe_op_in_unsafe_fn)]
+#![allow(internal_features)]
 #![allow(clippy::missing_safety_doc)]
 #![feature(cfg_target_has_atomic, core_intrinsics)]
 
