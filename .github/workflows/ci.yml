@@ -96,7 +96,7 @@ jobs:
       - run: cargo hack build -vv --workspace --no-private --feature-powerset --optional-deps --no-dev-deps
       - run: tools/build.sh
         if: matrix.target == ''
-      - run: cargo minimal-versions build -vv --workspace --no-private --all-features
+      - run: cargo minimal-versions build --workspace --no-private --detach-path-deps=skip-exact --all-features
 
   miri:
     runs-on: ubuntu-latest
