@@ -41,8 +41,7 @@ x_cargo() {
     if [[ -n "${RUSTFLAGS:-}" ]]; then
         echo "+ RUSTFLAGS='${RUSTFLAGS}' \\"
     fi
-    RUSTFLAGS="${RUSTFLAGS:-} ${check_cfg:-}" \
-        x cargo "$@"
+    x cargo "$@"
     echo
 }
 
@@ -69,21 +68,13 @@ nightly=''
 if [[ "${rustc_version}" == *"nightly"* ]] || [[ "${rustc_version}" == *"dev"* ]]; then
     nightly=1
     rustup ${pre_args[@]+"${pre_args[@]}"} component add rust-src &>/dev/null
-    # The latest syntax of -Z check-cfg requires 1.75.0-nightly.
-    # We only check this on the recent nightly to avoid old clippy bugs.
-    # shellcheck disable=SC2207
-    if [[ "${rustc_minor_version}" -ge 75 ]]; then
-        check_cfg='-Z unstable-options --check-cfg=cfg(feature,values("cargo-clippy"))'
-        rustup ${pre_args[@]+"${pre_args[@]}"} component add clippy &>/dev/null
-        base_args=(${pre_args[@]+"${pre_args[@]}"} hack clippy -Z check-cfg)
-    fi
 fi
 
 build() {
     local target="$1"
     shift
     local args=("${base_args[@]}" --target "${target}")
-    local target_rustflags="${RUSTFLAGS:-} ${check_cfg:-}"
+    local target_rustflags="${RUSTFLAGS:-}"
     if ! grep <<<"${rustc_target_list}" -Eq "^${target}$"; then
         echo "target '${target}' not available on ${rustc_version} (skipped all checks)"
         return 0
