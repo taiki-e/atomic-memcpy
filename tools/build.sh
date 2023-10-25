@@ -69,11 +69,13 @@ nightly=''
 if [[ "${rustc_version}" == *"nightly"* ]] || [[ "${rustc_version}" == *"dev"* ]]; then
     nightly=1
     rustup ${pre_args[@]+"${pre_args[@]}"} component add rust-src &>/dev/null
-    # -Z check-cfg requires 1.63.0-nightly
-    if [[ "${rustc_minor_version}" -ge 63 ]]; then
-        check_cfg="-Z unstable-options --check-cfg=names() --check-cfg=values(feature,\"cargo-clippy\")"
+    # The latest syntax of -Z check-cfg requires 1.75.0-nightly.
+    # We only check this on the recent nightly to avoid old clippy bugs.
+    # shellcheck disable=SC2207
+    if [[ "${rustc_minor_version}" -ge 75 ]]; then
+        check_cfg='-Z unstable-options --check-cfg=cfg(feature,values("cargo-clippy"))'
         rustup ${pre_args[@]+"${pre_args[@]}"} component add clippy &>/dev/null
-        base_args=(${pre_args[@]+"${pre_args[@]}"} hack clippy -Z check-cfg="names,values,output,features")
+        base_args=(${pre_args[@]+"${pre_args[@]}"} hack clippy -Z check-cfg)
     fi
 fi
 
