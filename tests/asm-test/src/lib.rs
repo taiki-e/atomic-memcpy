@@ -2,9 +2,8 @@
 
 #![cfg(nightly)]
 #![no_std]
-#![warn(rust_2018_idioms, single_use_lifetimes, unsafe_op_in_unsafe_fn)]
 #![allow(internal_features)]
-#![allow(clippy::missing_safety_doc)]
+#![allow(clippy::missing_safety_doc, clippy::undocumented_unsafe_blocks)]
 #![feature(cfg_target_has_atomic, core_intrinsics)]
 
 type Data = [u8; core::mem::size_of::<usize>() * 8];

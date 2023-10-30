@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-#![allow(dead_code)]
+#![allow(dead_code, clippy::undocumented_unsafe_blocks)]
 
 use std::{
     cell::UnsafeCell,

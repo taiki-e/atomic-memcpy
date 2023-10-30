@@ -13,3 +13,6 @@ criterion = { default-features = false, git = "https://github.com/taiki-e/criter
 [[bench]]
 name = "atomic_memcpy"
 harness = false
+
+[lints]
+workspace = true

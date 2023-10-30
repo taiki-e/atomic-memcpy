@@ -10,3 +10,6 @@ doc = false
 
 [dependencies]
 atomic-memcpy = { path = "../.." }
+
+[lints]
+workspace = true

@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
+#![allow(clippy::undocumented_unsafe_blocks)]
+
 use std::{
     cell::UnsafeCell,
     mem, ptr,
@@ -62,6 +64,7 @@ fn basic_unit() {
     }
 }
 
+#[allow(clippy::disallowed_methods)] // set_var/remove_var is fine as we run tests with RUST_TEST_THREADS=1
 #[track_caller]
 fn assert_panic<T: std::fmt::Debug>(f: impl FnOnce() -> T) -> std::string::String {
     let backtrace = std::env::var_os("RUST_BACKTRACE");

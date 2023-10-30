@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
 #![no_std]
-#![warn(rust_2018_idioms, single_use_lifetimes, unsafe_op_in_unsafe_fn)]
-#![allow(dead_code, unused_imports)]
+#![allow(dead_code, unused_imports, clippy::undocumented_unsafe_blocks)]
 
 use core::{cell::UnsafeCell, mem, sync::atomic::Ordering};
 
