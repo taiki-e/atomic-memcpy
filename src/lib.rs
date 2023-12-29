@@ -118,7 +118,7 @@ use portable_atomic as atomic;
 ///
 /// # Examples
 ///
-/// ```rust
+/// ```
 /// use std::{cell::UnsafeCell, sync::atomic::Ordering};
 ///
 /// let v = UnsafeCell::new([0_u8; 64]);
@@ -170,7 +170,7 @@ pub unsafe fn atomic_load<T>(src: *const T, order: Ordering) -> core::mem::Maybe
 ///
 /// # Examples
 ///
-/// ```rust
+/// ```
 /// use std::{cell::UnsafeCell, sync::atomic::Ordering};
 ///
 /// let v = UnsafeCell::new([0_u8; 64]);
