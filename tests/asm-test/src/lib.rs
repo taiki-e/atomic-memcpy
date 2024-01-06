@@ -1,7 +1,11 @@
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
 #![no_std]
-#![allow(clippy::missing_safety_doc, clippy::undocumented_unsafe_blocks)]
+#![allow(
+    missing_debug_implementations,
+    clippy::missing_safety_doc,
+    clippy::undocumented_unsafe_blocks
+)]
 
 type Data = [u8; core::mem::size_of::<usize>() * 8];
 

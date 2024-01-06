@@ -44,7 +44,6 @@ See [P1478][p1478] for more.
 #![cfg_attr(not(test), allow(unused_unsafe))]
 #![warn(
     // Lints that may help when writing public library.
-    missing_debug_implementations,
     missing_docs,
     clippy::alloc_instead_of_core,
     clippy::exhaustive_enums,
