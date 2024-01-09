@@ -102,6 +102,7 @@ jobs:
       - run: tools/build.sh
         if: matrix.target == ''
       - run: cargo minimal-versions build --workspace --no-private --detach-path-deps=skip-exact --all-features
+      - run: cargo minimal-versions build --workspace --no-private --detach-path-deps=skip-exact --all-features --direct
 
   san:
     strategy:
