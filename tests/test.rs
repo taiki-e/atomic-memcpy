@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-#![allow(clippy::incompatible_msrv, clippy::undocumented_unsafe_blocks)]
+#![allow(clippy::incompatible_msrv)] // https://github.com/rust-lang/rust-clippy/issues/12257
+#![allow(clippy::undocumented_unsafe_blocks)]
 
 use std::{
     cell::UnsafeCell,
