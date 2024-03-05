@@ -58,8 +58,8 @@ See [P1478][p1478] for more.
 
 // This crate should work on targets with power-of-two pointer widths,
 // but it is not clear how it will work on targets without them.
-// There are currently no 8-bit, 128-bit, or higher builtin targets.
-// Note that Rust (and C99) pointers must be at least 16-bits: https://github.com/rust-lang/rust/pull/49305
+// There are currently no 128-bit or higher builtin targets.
+// Note that Rust (and C99) pointers must be at least 16-bit (i.e., 8-bit targets are impossible): https://github.com/rust-lang/rust/pull/49305
 #[cfg(not(any(
     target_pointer_width = "16",
     target_pointer_width = "32",
