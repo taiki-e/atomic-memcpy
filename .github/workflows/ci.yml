@@ -117,7 +117,8 @@ jobs:
     steps:
       - uses: taiki-e/checkout-action@v1
       - name: Install Rust
-        run: rustup toolchain add nightly --no-self-update --component rust-src && rustup default nightly
+        # TODO: LLVM bug https://github.com/rust-lang/rust/issues/122476
+        run: rustup toolchain add nightly-2024-03-13 --no-self-update --component rust-src && rustup default nightly-2024-03-13
       - run: |
           echo "ASAN_OPTIONS=detect_stack_use_after_return=1" >>"${GITHUB_ENV}"
           echo "RUSTFLAGS=${RUSTFLAGS} -Z sanitizer=address" >>"${GITHUB_ENV}"
