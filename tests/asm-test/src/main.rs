@@ -5,7 +5,7 @@ use std::{env, path::Path};
 use anyhow::{bail, Result};
 use duct::cmd;
 use fs_err as fs;
-use indexmap::{IndexMap, IndexSet};
+use indexmap::IndexMap;
 use lexopt::prelude::*;
 
 const DEFAULT_TARGETS: &[&str] = &[
@@ -19,10 +19,11 @@ const DEFAULT_TARGETS: &[&str] = &[
     "armv7-unknown-linux-gnueabihf",
     "i586-unknown-linux-gnu",
     "i686-unknown-linux-gnu",
-    "mips-unknown-linux-gnu",
-    "mips64-unknown-linux-gnuabi64",
-    "mips64el-unknown-linux-gnuabi64",
-    "mipsel-unknown-linux-gnu",
+    // TODO: all MIPS targets have been downgraded to tier 3
+    // "mips-unknown-linux-gnu",
+    // "mips64-unknown-linux-gnuabi64",
+    // "mips64el-unknown-linux-gnuabi64",
+    // "mipsel-unknown-linux-gnu",
     "powerpc-unknown-linux-gnu",
     "powerpc64-unknown-linux-gnu",
     // "powerpc64le-unknown-linux-gnu", // TODO: cargo-asm panic "thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: ParseIntError { kind: InvalidDigit }', src/asm/ast.rs:172:44"
@@ -64,7 +65,7 @@ fn main() -> Result<()> {
     let file = &fs::read_to_string(manifest_dir.join("src/lib.rs"))?;
     let file = syn::parse_file(file)?;
     let crate_name = env!("CARGO_PKG_NAME").replace('-', "_");
-    let mut modules: IndexMap<_, IndexSet<_>> = IndexMap::new();
+    let mut modules: IndexMap<_, Vec<_>> = IndexMap::new();
     for item in file.items {
         match item {
             syn::Item::Fn(f) if matches!(f.vis, syn::Visibility::Public(..)) => {
@@ -80,9 +81,9 @@ fn main() -> Result<()> {
                         syn::Item::Fn(f) if matches!(f.vis, syn::Visibility::Public(..)) => {
                             let path = format!("{crate_name}::{mod_name}::{}", f.sig.ident);
                             if let Some(v) = modules.get_mut(&mod_name) {
-                                v.insert(path);
+                                v.push(path);
                             } else {
-                                modules.insert(mod_name.clone(), indexmap::indexset![path]);
+                                modules.insert(mod_name.clone(), vec![path]);
                             }
                         }
                         _ => {}

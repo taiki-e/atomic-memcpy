@@ -1,6 +1,5 @@
 cmpxchg
 demangling
-indexset
 outdir
 sched
 seqlock
