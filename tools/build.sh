@@ -100,12 +100,12 @@ build() {
     RUSTFLAGS="${target_rustflags}" \
         x_cargo "${args[@]}" --manifest-path tests/no-std/Cargo.toml
     RUSTFLAGS="${target_rustflags}" \
-        x_cargo "${args[@]}" --release --manifest-path tests/no-std/Cargo.toml
+        x_cargo "${args[@]}" --manifest-path tests/no-std/Cargo.toml --release
 
     RUSTFLAGS="${target_rustflags}" \
         x_cargo "${args[@]}" --feature-powerset --optional-deps --no-dev-deps --manifest-path Cargo.toml
     RUSTFLAGS="${target_rustflags}" \
-        x_cargo "${args[@]}" --release --feature-powerset --optional-deps --no-dev-deps --manifest-path Cargo.toml
+        x_cargo "${args[@]}" --feature-powerset --optional-deps --no-dev-deps --manifest-path Cargo.toml --release
 }
 
 for target in "${targets[@]}"; do
