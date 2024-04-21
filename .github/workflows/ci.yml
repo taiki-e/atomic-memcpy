@@ -135,11 +135,11 @@ jobs:
           echo "RUSTDOCFLAGS=${RUSTDOCFLAGS} -Z sanitizer=thread" >>"${GITHUB_ENV}"
         if: matrix.sanitizer == 'thread'
       - run: |
-          cargo -Z build-std test --workspace $EXCLUDE --target "$(rustc -Vv | grep host | sed 's/host: //')"
+          cargo -Z build-std test --workspace $EXCLUDE --target "$(rustc -vV | grep '^host:' | cut -d' ' -f2)"
       - run: |
-          cargo -Z build-std test --workspace $EXCLUDE --release --target "$(rustc -Vv | grep host | sed 's/host: //')"
+          cargo -Z build-std test --workspace $EXCLUDE --release --target "$(rustc -vV | grep '^host:' | cut -d' ' -f2)"
       - run: |
-          cargo -Z build-std test --workspace $EXCLUDE --release --target "$(rustc -Vv | grep host | sed 's/host: //')"
+          cargo -Z build-std test --workspace $EXCLUDE --release --target "$(rustc -vV | grep '^host:' | cut -d' ' -f2)"
         env:
           CARGO_PROFILE_RELEASE_CODEGEN_UNITS: 1
           CARGO_PROFILE_RELEASE_LTO: fat

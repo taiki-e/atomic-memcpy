@@ -55,12 +55,12 @@ else
     targets=("${default_targets[@]}")
 fi
 
-rustup_target_list=$(rustup ${pre_args[@]+"${pre_args[@]}"} target list | sed 's/ .*//g')
+rustup_target_list=$(rustup ${pre_args[@]+"${pre_args[@]}"} target list | cut -d' ' -f1)
 rustc_target_list=$(rustc ${pre_args[@]+"${pre_args[@]}"} --print target-list)
-rustc_version=$(rustc ${pre_args[@]+"${pre_args[@]}"} -Vv | grep 'release: ' | sed 's/release: //')
+rustc_version=$(rustc ${pre_args[@]+"${pre_args[@]}"} -vV | grep '^release:' | cut -d' ' -f2)
 rustc_minor_version="${rustc_version#*.}"
 rustc_minor_version="${rustc_minor_version%%.*}"
-llvm_version=$(rustc ${pre_args[@]+"${pre_args[@]}"} -Vv | (grep 'LLVM version: ' || true) | (sed 's/LLVM version: //' || true))
+llvm_version=$(rustc ${pre_args[@]+"${pre_args[@]}"} -vV | (grep '^LLVM version:' || true) | cut -d' ' -f3)
 llvm_version="${llvm_version%%.*}"
 base_args=(${pre_args[@]+"${pre_args[@]}"} hack build)
 nightly=''
