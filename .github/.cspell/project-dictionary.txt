@@ -1,5 +1,4 @@
 cmpxchg
 demangling
 outdir
-sched
 seqlock
