@@ -10,7 +10,7 @@ use lexopt::prelude::*;
 
 const DEFAULT_TARGETS: &[&str] = &[
     // All tier 1 or tier 2 linux (GNU) target
-    // rustup target list | grep -e '-linux-gnu' | sed 's/ .*$//g; s/^/"/g; s/$/",/g'
+    // rustup target list | cut -d' ' -f1 | grep -F -e '-linux-gnu' | sed -E 's/^/    "/g; s/$/",/g'
     "aarch64-unknown-linux-gnu",
     "arm-unknown-linux-gnueabi",
     "arm-unknown-linux-gnueabihf",

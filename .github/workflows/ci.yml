@@ -28,7 +28,7 @@ env:
 
 defaults:
   run:
-    shell: bash
+    shell: bash --noprofile --norc -CeEuxo pipefail {0}
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
@@ -75,7 +75,7 @@ jobs:
     steps:
       - uses: taiki-e/checkout-action@v1
       - name: Install Rust
-        run: rustup toolchain add ${{ matrix.rust }} --no-self-update && rustup default ${{ matrix.rust }}
+        run: rustup toolchain add "${{ matrix.rust }}" --no-self-update && rustup default "${{ matrix.rust }}"
       - run: rustup toolchain add nightly --no-self-update
       - uses: taiki-e/install-action@cargo-hack
       - uses: taiki-e/install-action@cargo-minimal-versions
@@ -85,15 +85,15 @@ jobs:
         with:
           target: ${{ matrix.target }}
         if: matrix.target != ''
-      - run: echo "TARGET=--target=${{ matrix.target }}" >>"${GITHUB_ENV}"
+      - run: printf '%s\n' "TARGET=--target=${{ matrix.target }}" >>"${GITHUB_ENV}"
         if: matrix.target != ''
-      - run: cargo test -v --workspace $EXCLUDE $DOCTEST_XCOMPILE
-      - run: cargo test -v --workspace $EXCLUDE --release $DOCTEST_XCOMPILE
-      - run: cargo test -v --workspace $EXCLUDE --release $DOCTEST_XCOMPILE
+      - run: cargo test -v --workspace ${EXCLUDE} ${DOCTEST_XCOMPILE:-}
+      - run: cargo test -v --workspace ${EXCLUDE} --release ${DOCTEST_XCOMPILE:-}
+      - run: cargo test -v --workspace ${EXCLUDE} --release ${DOCTEST_XCOMPILE:-}
         env:
           CARGO_PROFILE_RELEASE_CODEGEN_UNITS: 1
           CARGO_PROFILE_RELEASE_LTO: fat
-      - run: cargo careful test -v --workspace $EXCLUDE $TARGET $DOCTEST_XCOMPILE
+      - run: cargo careful test -v --workspace ${EXCLUDE} ${TARGET:-} ${DOCTEST_XCOMPILE:-}
         env:
           RUSTDOCFLAGS: ${{ env.RUSTDOCFLAGS }} -Z randomize-layout
           RUSTFLAGS: ${{ env.RUSTFLAGS }} -Z randomize-layout
@@ -121,25 +121,25 @@ jobs:
       # https://github.com/google/sanitizers/issues/1716 / https://github.com/actions/runner-images/issues/9491
       - run: sudo sysctl vm.mmap_rnd_bits=28
       - run: |
-          echo "ASAN_OPTIONS=detect_stack_use_after_return=1" >>"${GITHUB_ENV}"
-          echo "RUSTFLAGS=${RUSTFLAGS} -Z sanitizer=address" >>"${GITHUB_ENV}"
-          echo "RUSTDOCFLAGS=${RUSTDOCFLAGS} -Z sanitizer=address" >>"${GITHUB_ENV}"
+          printf 'ASAN_OPTIONS=detect_stack_use_after_return=1\n' >>"${GITHUB_ENV}"
+          printf '%s\n' "RUSTFLAGS=${RUSTFLAGS} -Z sanitizer=address" >>"${GITHUB_ENV}"
+          printf '%s\n' "RUSTDOCFLAGS=${RUSTDOCFLAGS} -Z sanitizer=address" >>"${GITHUB_ENV}"
         if: matrix.sanitizer == 'address'
       - run: |
-          echo "MSAN_OPTIONS=verbosity=2" >>"${GITHUB_ENV}"
-          echo "RUSTFLAGS=${RUSTFLAGS} -Z sanitizer=memory -Z sanitizer-memory-track-origins" >>"${GITHUB_ENV}"
-          echo "RUSTDOCFLAGS=${RUSTDOCFLAGS} -Z sanitizer=memory -Z sanitizer-memory-track-origins" >>"${GITHUB_ENV}"
+          printf 'MSAN_OPTIONS=verbosity=2\n' >>"${GITHUB_ENV}"
+          printf '%s\n' "RUSTFLAGS=${RUSTFLAGS} -Z sanitizer=memory -Z sanitizer-memory-track-origins" >>"${GITHUB_ENV}"
+          printf '%s\n' "RUSTDOCFLAGS=${RUSTDOCFLAGS} -Z sanitizer=memory -Z sanitizer-memory-track-origins" >>"${GITHUB_ENV}"
         if: matrix.sanitizer == 'memory'
       - run: |
-          echo "RUSTFLAGS=${RUSTFLAGS} -Z sanitizer=thread" >>"${GITHUB_ENV}"
-          echo "RUSTDOCFLAGS=${RUSTDOCFLAGS} -Z sanitizer=thread" >>"${GITHUB_ENV}"
+          printf '%s\n' "RUSTFLAGS=${RUSTFLAGS} -Z sanitizer=thread" >>"${GITHUB_ENV}"
+          printf '%s\n' "RUSTDOCFLAGS=${RUSTDOCFLAGS} -Z sanitizer=thread" >>"${GITHUB_ENV}"
         if: matrix.sanitizer == 'thread'
       - run: |
-          cargo -Z build-std test --workspace $EXCLUDE --target "$(rustc -vV | grep '^host:' | cut -d' ' -f2)"
+          cargo -Z build-std test --workspace ${EXCLUDE} --target "$(rustc -vV | grep -E '^host:' | cut -d' ' -f2)"
       - run: |
-          cargo -Z build-std test --workspace $EXCLUDE --release --target "$(rustc -vV | grep '^host:' | cut -d' ' -f2)"
+          cargo -Z build-std test --workspace ${EXCLUDE} --release --target "$(rustc -vV | grep -E '^host:' | cut -d' ' -f2)"
       - run: |
-          cargo -Z build-std test --workspace $EXCLUDE --release --target "$(rustc -vV | grep '^host:' | cut -d' ' -f2)"
+          cargo -Z build-std test --workspace ${EXCLUDE} --release --target "$(rustc -vV | grep -E '^host:' | cut -d' ' -f2)"
         env:
           CARGO_PROFILE_RELEASE_CODEGEN_UNITS: 1
           CARGO_PROFILE_RELEASE_LTO: fat
@@ -155,9 +155,9 @@ jobs:
         run: rustup toolchain add nightly --no-self-update && rustup default nightly
       - uses: taiki-e/install-action@valgrind
       # -Z doctest-xcompile is needed to apply CARGO_TARGET_*_RUNNER to doctest.
-      - run: cargo test -v --workspace $EXCLUDE -Z doctest-xcompile
-      - run: cargo test -v --workspace $EXCLUDE --release -Z doctest-xcompile
-      - run: cargo test -v --workspace $EXCLUDE --release -Z doctest-xcompile
+      - run: cargo test -v --workspace ${EXCLUDE} -Z doctest-xcompile
+      - run: cargo test -v --workspace ${EXCLUDE} --release -Z doctest-xcompile
+      - run: cargo test -v --workspace ${EXCLUDE} --release -Z doctest-xcompile
         env:
           CARGO_PROFILE_RELEASE_CODEGEN_UNITS: 1
           CARGO_PROFILE_RELEASE_LTO: fat
