@@ -2,7 +2,6 @@
 
 use std::{env, path::Path};
 
-use anyhow::{bail, Result};
 use duct::cmd;
 use fs_err as fs;
 use indexmap::IndexMap;
@@ -39,19 +38,19 @@ const DEFAULT_TARGETS: &[&str] = &[
     "riscv32imc-unknown-none-elf",
 ];
 
-fn main() -> Result<()> {
+fn main() {
     let mut parser = lexopt::Parser::from_env();
     let mut target_triples = vec![];
     let mut target_modules = vec![];
-    while let Some(arg) = parser.next()? {
+    while let Some(arg) = parser.next().unwrap() {
         match arg {
-            Short('m') => target_modules.push(parser.value()?.string()?),
-            Value(v) => target_triples.push(v.string()?),
+            Short('m') => target_modules.push(parser.value().unwrap().string().unwrap()),
+            Value(v) => target_triples.push(v.string().unwrap()),
             Short('h') | Long("help") => {
                 println!("Usage: cargo run -p asm-test -- [-m <module>]... [TARGET]...");
-                return Ok(());
+                return;
             }
-            arg => return Err(arg.unexpected().into()),
+            arg => panic!("{}", arg.unexpected()),
         }
     }
     let targets = if target_triples.is_empty() {
@@ -62,14 +61,14 @@ fn main() -> Result<()> {
     let manifest_dir = Path::new(env!("CARGO_MANIFEST_DIR"));
     let outdir = &manifest_dir.join("asm");
 
-    let file = &fs::read_to_string(manifest_dir.join("src/lib.rs"))?;
-    let file = syn::parse_file(file)?;
+    let file = &fs::read_to_string(manifest_dir.join("src/lib.rs")).unwrap();
+    let file = syn::parse_file(file).unwrap();
     let crate_name = env!("CARGO_PKG_NAME").replace('-', "_");
     let mut modules: IndexMap<_, Vec<_>> = IndexMap::new();
     for item in file.items {
         match item {
             syn::Item::Fn(f) if matches!(f.vis, syn::Visibility::Public(..)) => {
-                bail!("top-level public functions are not allowed; public functions must be in a module");
+                panic!("top-level public functions are not allowed; public functions must be in a module");
             }
             syn::Item::Mod(m) => {
                 let mod_name = m.ident.to_string();
@@ -96,11 +95,11 @@ fn main() -> Result<()> {
 
     for target in targets {
         println!("{target}");
-        cmd!("rustup", "target", "add", target).stderr_capture().stdout_capture().run()?;
-        let target_cfg = cmd!("rustc", "--print", "cfg", "--target", target).read()?;
+        cmd!("rustup", "target", "add", target).stderr_capture().stdout_capture().run().unwrap();
+        let target_cfg = cmd!("rustc", "--print", "cfg", "--target", target).read().unwrap();
         let target_cfg: Vec<_> = target_cfg.lines().collect();
         let outdir = &outdir.join(target);
-        fs::create_dir_all(outdir)?;
+        fs::create_dir_all(outdir).unwrap();
         for (m, functions) in &modules {
             if m.contains("atomic_u128")
                 && !target_cfg.contains(&"target_has_atomic_load_store=\"128\"")
@@ -136,7 +135,7 @@ fn main() -> Result<()> {
                     func
                 );
                 cmd = cmd.env("RUSTFLAGS", &rustflags);
-                let asm = &cmd.dir(manifest_dir).read()?;
+                let asm = &cmd.dir(manifest_dir).read().unwrap();
                 if target.starts_with("arm")
                     || target.starts_with("thumb")
                     || target.starts_with("riscv") && !target.contains("linux")
@@ -164,8 +163,7 @@ fn main() -> Result<()> {
                     out.push('\n');
                 }
             }
-            fs::write(outdir.join(m), out)?;
+            fs::write(outdir.join(m), out).unwrap();
         }
     }
-    Ok(())
 }

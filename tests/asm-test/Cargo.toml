@@ -7,12 +7,11 @@ doctest = false
 doc = false
 
 [features]
-default = ["anyhow", "duct", "fs-err", "indexmap", "lexopt", "rustc-demangle", "syn"]
+default = ["duct", "fs-err", "indexmap", "lexopt", "rustc-demangle", "syn"]
 
 [dependencies]
 atomic-memcpy = { path = "../..", features = ["inline-always"] }
 
-anyhow = { version = "1", optional = true }
 duct = { version = "0.13", optional = true }
 fs-err = { version = "2", optional = true }
 indexmap = { version = "2", optional = true }
