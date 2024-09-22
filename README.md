@@ -30,7 +30,7 @@ See [P1478][p1478] for more.
 [asm-test]: https://github.com/taiki-e/atomic-memcpy/tree/HEAD/tests/asm-test/asm
 [atomic-maybe-uninit]: https://github.com/taiki-e/atomic-maybe-uninit
 [implementation]: https://github.com/taiki-e/atomic-memcpy/blob/v0.2.0/src/lib.rs#L367-L427
-[p1478]: https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2022/p1478r7.html
+[p1478]: https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2022/p1478r8.html
 [portable-atomic]: https://github.com/taiki-e/portable-atomic
 [undefined-behavior]: https://doc.rust-lang.org/reference/behavior-considered-undefined.html
 

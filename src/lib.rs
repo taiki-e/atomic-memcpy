@@ -25,7 +25,7 @@ See [P1478][p1478] for more.
 [asm-test]: https://github.com/taiki-e/atomic-memcpy/tree/HEAD/tests/asm-test/asm
 [atomic-maybe-uninit]: https://github.com/taiki-e/atomic-maybe-uninit
 [implementation]: https://github.com/taiki-e/atomic-memcpy/blob/v0.2.0/src/lib.rs#L367-L427
-[p1478]: https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2022/p1478r7.html
+[p1478]: https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2022/p1478r8.html
 [portable-atomic]: https://github.com/taiki-e/portable-atomic
 [undefined-behavior]: https://doc.rust-lang.org/reference/behavior-considered-undefined.html
 
@@ -413,7 +413,7 @@ mod imp {
     Whether to choose Branch 1 or Branch 3/4/5 when `T` is small is currently
     based on a rough heuristic based on simple benchmarks on x86_64.
 
-    [p1478]: https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2022/p1478r7.html
+    [p1478]: https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2022/p1478r8.html
     */
     #[cfg_attr(feature = "inline-always", inline(always))]
     #[cfg_attr(not(feature = "inline-always"), inline)]
