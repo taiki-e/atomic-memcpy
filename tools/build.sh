@@ -39,6 +39,16 @@ x_cargo() {
     x cargo "$@"
     printf '\n'
 }
+retry() {
+    for i in {1..10}; do
+        if "$@"; then
+            return 0
+        else
+            sleep "${i}"
+        fi
+    done
+    "$@"
+}
 
 pre_args=()
 if [[ "${1:-}" == "+"* ]]; then
@@ -62,7 +72,7 @@ base_args=(${pre_args[@]+"${pre_args[@]}"} hack build)
 nightly=''
 if [[ "${rustc_version}" =~ nightly|dev ]]; then
     nightly=1
-    rustup ${pre_args[@]+"${pre_args[@]}"} component add rust-src &>/dev/null
+    retry rustup ${pre_args[@]+"${pre_args[@]}"} component add rust-src &>/dev/null
 fi
 
 build() {
@@ -75,7 +85,7 @@ build() {
         return 0
     fi
     if grep -Eq "^${target}$" <<<"${rustup_target_list}"; then
-        rustup ${pre_args[@]+"${pre_args[@]}"} target add "${target}" &>/dev/null
+        retry rustup ${pre_args[@]+"${pre_args[@]}"} target add "${target}" &>/dev/null
     elif [[ -n "${nightly}" ]]; then
         # Only build core because our library code doesn't depend on std.
         args+=(-Z build-std="core")
