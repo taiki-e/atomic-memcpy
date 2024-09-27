@@ -74,9 +74,9 @@ jobs:
     timeout-minutes: 60
     steps:
       - uses: taiki-e/checkout-action@v1
-      - name: Install Rust
-        run: rustup toolchain add "${{ matrix.rust }}" --no-self-update && rustup default "${{ matrix.rust }}"
-      - run: rustup toolchain add nightly --no-self-update
+      - uses: taiki-e/github-actions/install-rust@main
+        with:
+          toolchain: ${{ matrix.rust }}
       - uses: taiki-e/install-action@cargo-hack
       - uses: taiki-e/install-action@cargo-minimal-versions
       - uses: taiki-e/install-action@cargo-careful
@@ -116,8 +116,9 @@ jobs:
     timeout-minutes: 60
     steps:
       - uses: taiki-e/checkout-action@v1
-      - name: Install Rust
-        run: rustup toolchain add nightly --no-self-update --component rust-src && rustup default nightly
+      - uses: taiki-e/github-actions/install-rust@nightly
+        with:
+          component: rust-src
       # https://github.com/google/sanitizers/issues/1716 / https://github.com/actions/runner-images/issues/9491
       - run: sudo sysctl vm.mmap_rnd_bits=28
       - run: |
@@ -151,8 +152,7 @@ jobs:
     timeout-minutes: 60
     steps:
       - uses: taiki-e/checkout-action@v1
-      - name: Install Rust
-        run: rustup toolchain add nightly --no-self-update && rustup default nightly
+      - uses: taiki-e/github-actions/install-rust@nightly
       - uses: taiki-e/install-action@valgrind
       # -Z doctest-xcompile is needed to apply CARGO_TARGET_*_RUNNER to doctest.
       - run: cargo test -v --workspace ${EXCLUDE} -Z doctest-xcompile
