@@ -83,21 +83,17 @@ fn assert_panic<T: std::fmt::Debug>(f: impl FnOnce() -> T) -> std::string::Strin
         .cloned()
         .unwrap_or_else(|| msg.downcast_ref::<&'static str>().copied().unwrap().into())
 }
-fn load_orderings() -> [Ordering; 3] {
-    [Ordering::Relaxed, Ordering::Acquire, Ordering::SeqCst]
-}
-fn store_orderings() -> [Ordering; 3] {
-    [Ordering::Relaxed, Ordering::Release, Ordering::SeqCst]
-}
+const LOAD_ORDERINGS: [Ordering; 3] = [Ordering::Relaxed, Ordering::Acquire, Ordering::SeqCst];
+const STORE_ORDERINGS: [Ordering; 3] = [Ordering::Relaxed, Ordering::Release, Ordering::SeqCst];
 
 #[test]
 fn ordering() {
     let x = UnsafeCell::new(0u8);
     unsafe {
-        for &order in &load_orderings() {
+        for &order in &LOAD_ORDERINGS {
             atomic_load(x.get(), order);
         }
-        for &order in &store_orderings() {
+        for &order in &STORE_ORDERINGS {
             atomic_store(x.get(), 1, order);
         }
     }
