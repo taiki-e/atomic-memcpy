@@ -64,6 +64,17 @@ fn basic_unit() {
     }
 }
 
+#[test]
+fn basic_ptr() {
+    unsafe {
+        let a = &0u8;
+        let x = UnsafeCell::<*const u8>::new(a);
+        assert_eq!(0, *atomic_load(x.get(), Ordering::Relaxed).assume_init());
+        atomic_store(x.get(), ptr::null_mut(), Ordering::Relaxed);
+        atomic_load(x.get(), Ordering::Relaxed).assume_init();
+    }
+}
+
 #[track_caller]
 fn assert_panic<T: std::fmt::Debug>(f: impl FnOnce() -> T) -> std::string::String {
     let backtrace = std::env::var_os("RUST_BACKTRACE");

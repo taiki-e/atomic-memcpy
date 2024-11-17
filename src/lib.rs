@@ -14,7 +14,6 @@ See [P1478][p1478] for more.
 - If the alignment of the type being copied is the same as the pointer width, `atomic_load` is possible to produce an assembly roughly equivalent to the case of using volatile read + atomic fence on many platforms. (e.g., [aarch64](https://github.com/taiki-e/atomic-memcpy/blob/HEAD/tests/asm-test/asm/aarch64-unknown-linux-gnu/atomic_memcpy_load_align8), [riscv64](https://github.com/taiki-e/atomic-memcpy/blob/HEAD/tests/asm-test/asm/riscv64gc-unknown-linux-gnu/atomic_memcpy_load_align8). See [`tests/asm-test/asm`][asm-test] directory for more).
 - If the alignment of the type being copied is smaller than the pointer width, there will be some performance degradation. However, it is implemented in such a way that it does not cause extreme performance degradation at least on x86_64. (See [the implementation comments of `atomic_load`][implementation] for more.) It is possible that there is still room for improvement, especially on non-x86_64 platforms.
 - Optimization for the case where the alignment of the type being copied is larger than the pointer width has not yet been fully investigated. It is possible that there is still room for improvement.
-- If the type being copied contains pointers it is not compatible with strict provenance because the copy does ptr-to-int transmutes.
 - If the type being copied contains uninitialized bytes (e.g., padding) [it is undefined behavior because the copy goes through integers][undefined-behavior]. This problem will probably not be resolved until something like `AtomicMaybeUninit` is supported.
 
 ## Related Projects
@@ -227,7 +226,9 @@ mod imp {
 
     #[cfg(not(target_pointer_width = "16"))]
     use crate::atomic::AtomicU32;
-    use crate::atomic::{AtomicU16, AtomicUsize, Ordering};
+    use crate::atomic::{AtomicU16, Ordering};
+    type AtomicPtr = crate::atomic::AtomicPtr<u8>;
+    type Ptr = *mut u8;
 
     // Boundary to make the fields of LoadState private.
     //
@@ -238,7 +239,8 @@ mod imp {
     mod load {
         use core::mem;
 
-        use crate::atomic::{AtomicU8, AtomicUsize, Ordering};
+        use super::{AtomicPtr, Ptr};
+        use crate::atomic::{AtomicU8, Ordering};
 
         // Invariant: `src` and `result` will never change.
         // Invariant: Only the `advance` method can advance offset and counter.
@@ -318,29 +320,29 @@ mod imp {
                 }
             }
 
-            /// Note: The remaining bytes smaller than usize are ignored.
+            /// Note: The remaining bytes smaller than Ptr are ignored.
             ///
             /// # Safety
             ///
-            /// - `self.src` must be properly aligned for `usize`.
+            /// - `self.src` must be properly aligned for `Ptr`.
             ///
             /// There is no alignment requirement for `self.result`.
             #[cfg_attr(feature = "inline-always", inline(always))]
             #[cfg_attr(not(feature = "inline-always"), inline)]
-            pub(super) unsafe fn atomic_load_usize_to_end(&mut self) {
-                while self.remaining() >= mem::size_of::<usize>() {
+            pub(super) unsafe fn atomic_load_ptr_to_end(&mut self) {
+                while self.remaining() >= mem::size_of::<Ptr>() {
                     // SAFETY:
-                    // - the caller must guarantee that `src` is properly aligned for `usize`.
+                    // - the caller must guarantee that `src` is properly aligned for `Ptr`.
                     // - we've checked that the remaining bytes is greater than
-                    //   or equal to `size_of::<usize>()`.
+                    //   or equal to `size_of::<Ptr>()`.
                     // Therefore, due to `LoadState`'s invariant:
-                    // - `src` is valid to atomic read of `usize`.
-                    // - `result` is valid to *unaligned* write of `usize`.
+                    // - `src` is valid to atomic read of `Ptr`.
+                    // - `result` is valid to *unaligned* write of `Ptr`.
                     unsafe {
-                        let val = self.src::<AtomicUsize>().load(Ordering::Relaxed);
-                        self.result::<usize>().write_unaligned(val);
-                        // SAFETY: we've filled `size_of::<usize>()` bytes.
-                        self.advance(mem::size_of::<usize>());
+                        let val = self.src::<AtomicPtr>().load(Ordering::Relaxed);
+                        self.result::<Ptr>().write_unaligned(val);
+                        // SAFETY: we've filled `size_of::<Ptr>()` bytes.
+                        self.advance(mem::size_of::<Ptr>());
                     }
                 }
             }
@@ -436,29 +438,29 @@ mod imp {
             return result;
         }
 
-        // Branch 1: If the alignment of `T` is less than usize, but `T` can be read as
-        // at least one or more usize, compute the align offset and read it
-        // like `(&[AtomicU8], &[AtomicUsize], &[AtomicU8])`.
-        if mem::align_of::<T>() < mem::align_of::<AtomicUsize>()
-            && mem::size_of::<T>() >= mem::size_of::<usize>() * 4
+        // Branch 1: If the alignment of `T` is less than Ptr, but `T` can be read as
+        // at least one or more Ptr, compute the align offset and read it
+        // like `(&[AtomicU8], &[AtomicPtr], &[AtomicU8])`.
+        if mem::align_of::<T>() < mem::align_of::<AtomicPtr>()
+            && mem::size_of::<T>() >= mem::size_of::<Ptr>() * 4
         {
             let mut state = load::LoadState::new(result.as_mut_ptr(), src);
-            let offset = (src as *const u8).align_offset(mem::align_of::<AtomicUsize>());
+            let offset = (src as *const u8).align_offset(mem::align_of::<AtomicPtr>());
             // Note: align_offset may returns usize::MAX: https://github.com/rust-lang/rust/issues/62420
             if state.remaining() >= offset {
                 // Load `offset` bytes per byte to align `state.src`.
                 state.atomic_load_u8(offset);
-                debug_assert!(state.remaining() >= mem::size_of::<usize>());
+                debug_assert!(state.remaining() >= mem::size_of::<Ptr>());
                 // SAFETY:
                 // - align_offset succeeds and the `offset` bytes have been
                 //   filled, so now `state.src` is definitely aligned.
                 // - we've checked that the remaining bytes is greater than
-                //   or equal to `size_of::<usize>()`.
+                //   or equal to `size_of::<Ptr>()`.
                 //
                 // In this branch, the pointer to `state.result` is usually
-                // not properly aligned, so we use `atomic_load_usize_to_end`,
+                // not properly aligned, so we use `atomic_load_ptr_to_end`,
                 // which has no requirement for alignment of `state.result`.
-                unsafe { state.atomic_load_usize_to_end() }
+                unsafe { state.atomic_load_ptr_to_end() }
                 // Load remaining bytes per byte.
                 state.atomic_load_u8(state.remaining());
                 debug_assert_eq!(state.remaining(), 0);
@@ -466,18 +468,18 @@ mod imp {
             }
         }
 
-        // Branch 2: If the alignment of `T` is greater than or equal to usize,
-        // we can read it as a chunk of usize from the first byte.
-        if mem::align_of::<T>() >= mem::align_of::<AtomicUsize>() {
-            let src = src as *const AtomicUsize;
-            let dst = result.as_mut_ptr() as *mut usize;
-            for i in range(0..mem::size_of::<T>() / mem::size_of::<usize>()) {
+        // Branch 2: If the alignment of `T` is greater than or equal to Ptr,
+        // we can read it as a chunk of Ptr from the first byte.
+        if mem::align_of::<T>() >= mem::align_of::<AtomicPtr>() {
+            let src = src as *const AtomicPtr;
+            let dst = result.as_mut_ptr() as *mut Ptr;
+            for i in range(0..mem::size_of::<T>() / mem::size_of::<Ptr>()) {
                 // SAFETY:
                 // - the caller must guarantee that `src` is properly aligned for `T`.
-                // - `T` has an alignment greater than or equal to usize.
-                // - the remaining bytes is greater than or equal to `size_of::<usize>()`.
+                // - `T` has an alignment greater than or equal to Ptr.
+                // - the remaining bytes is greater than or equal to `size_of::<Ptr>()`.
                 unsafe {
-                    let val: usize = (*src.add(i)).load(Ordering::Relaxed);
+                    let val: Ptr = (*src.add(i)).load(Ordering::Relaxed);
                     dst.add(i).write(val);
                 }
             }
@@ -488,7 +490,7 @@ mod imp {
         {
             // Branch 3: If the alignment of `T` is greater than or equal to u32,
             // we can read it as a chunk of u32 from the first byte.
-            if mem::size_of::<usize>() > 4 && mem::align_of::<T>() >= mem::align_of::<AtomicU32>() {
+            if mem::size_of::<Ptr>() > 4 && mem::align_of::<T>() >= mem::align_of::<AtomicU32>() {
                 let src = src as *const AtomicU32;
                 let dst = result.as_mut_ptr() as *mut u32;
                 for i in range(0..mem::size_of::<T>() / mem::size_of::<u32>()) {
@@ -507,7 +509,7 @@ mod imp {
 
         // Branch 4: If the alignment of `T` is greater than or equal to u16,
         // we can read it as a chunk of u16 from the first byte.
-        if mem::size_of::<usize>() > 2 && mem::align_of::<T>() >= mem::align_of::<AtomicU16>() {
+        if mem::size_of::<Ptr>() > 2 && mem::align_of::<T>() >= mem::align_of::<AtomicU16>() {
             let src = src as *const AtomicU16;
             let dst = result.as_mut_ptr() as *mut u16;
             for i in range(0..mem::size_of::<T>() / mem::size_of::<u16>()) {
@@ -537,7 +539,8 @@ mod imp {
     mod store {
         use core::mem;
 
-        use crate::atomic::{AtomicU8, AtomicUsize, Ordering};
+        use super::{AtomicPtr, Ptr};
+        use crate::atomic::{AtomicU8, Ordering};
 
         // Invariant: `src` and `dst` will never change.
         // Invariant: Only the `advance` method can advance offset and counter.
@@ -616,29 +619,29 @@ mod imp {
                 }
             }
 
-            /// Note: The remaining bytes smaller than usize are ignored.
+            /// Note: The remaining bytes smaller than Ptr are ignored.
             ///
             /// # Safety
             ///
-            /// - `self.dst` must be properly aligned for `usize`.
+            /// - `self.dst` must be properly aligned for `Ptr`.
             ///
             /// There is no alignment requirement for `self.src`.
             #[cfg_attr(feature = "inline-always", inline(always))]
             #[cfg_attr(not(feature = "inline-always"), inline)]
-            pub(super) unsafe fn atomic_store_usize_to_end(&mut self) {
-                while self.remaining() >= mem::size_of::<usize>() {
+            pub(super) unsafe fn atomic_store_ptr_to_end(&mut self) {
+                while self.remaining() >= mem::size_of::<Ptr>() {
                     // SAFETY:
-                    // - the caller must guarantee that `dst` is properly aligned for `usize`.
+                    // - the caller must guarantee that `dst` is properly aligned for `Ptr`.
                     // - we've checked that the remaining bytes is greater than
-                    //   or equal to `size_of::<usize>()`.
+                    //   or equal to `size_of::<Ptr>()`.
                     // Therefore, due to `StoreState`'s invariant:
-                    // - `src` is valid to *unaligned* read of `usize`.
-                    // - `dst` is valid to atomic write of `usize`.
+                    // - `src` is valid to *unaligned* read of `Ptr`.
+                    // - `dst` is valid to atomic write of `Ptr`.
                     unsafe {
-                        let val = self.src::<usize>().read_unaligned();
-                        self.dst::<AtomicUsize>().store(val, Ordering::Relaxed);
-                        // SAFETY: we've filled `size_of::<usize>()` bytes.
-                        self.advance(mem::size_of::<usize>());
+                        let val = self.src::<Ptr>().read_unaligned();
+                        self.dst::<AtomicPtr>().store(val, Ordering::Relaxed);
+                        // SAFETY: we've filled `size_of::<Ptr>()` bytes.
+                        self.advance(mem::size_of::<Ptr>());
                     }
                 }
             }
@@ -689,30 +692,30 @@ mod imp {
             return;
         }
 
-        // Branch 1: If the alignment of `T` is less than usize, but `T` can be write as
-        // at least one or more usize, compute the align offset and write it
-        // like `(&[AtomicU8], &[AtomicUsize], &[AtomicU8])`.
-        if mem::align_of::<T>() < mem::align_of::<AtomicUsize>()
-            && mem::size_of::<T>() >= mem::size_of::<usize>() * 4
+        // Branch 1: If the alignment of `T` is less than Ptr, but `T` can be write as
+        // at least one or more Ptr, compute the align offset and write it
+        // like `(&[AtomicU8], &[AtomicPtr], &[AtomicU8])`.
+        if mem::align_of::<T>() < mem::align_of::<AtomicPtr>()
+            && mem::size_of::<T>() >= mem::size_of::<Ptr>() * 4
         {
             let mut state = store::StoreState::new(dst, &*val);
-            let offset = (dst as *mut u8).align_offset(mem::align_of::<AtomicUsize>());
+            let offset = (dst as *mut u8).align_offset(mem::align_of::<AtomicPtr>());
             // Note: align_offset may returns usize::MAX: https://github.com/rust-lang/rust/issues/62420
             if state.remaining() >= offset {
                 // Store `offset` bytes per byte to align `state.dst`.
                 state.atomic_store_u8(offset);
-                debug_assert!(state.remaining() >= mem::size_of::<usize>());
+                debug_assert!(state.remaining() >= mem::size_of::<Ptr>());
                 // SAFETY:
                 // - align_offset succeeds and the `offset` bytes have been
                 //   filled, so now `state.dst` is definitely aligned.
                 // - we've checked that the remaining bytes is greater than
-                //   or equal to `size_of::<usize>()`.
+                //   or equal to `size_of::<Ptr>()`.
                 //
                 // In this branch, the pointer to `state.src` is usually
-                // not properly aligned, so we use `atomic_store_usize_to_end`,
+                // not properly aligned, so we use `atomic_store_ptr_to_end`,
                 // which has no requirement for alignment of `state.src`.
                 unsafe {
-                    state.atomic_store_usize_to_end();
+                    state.atomic_store_ptr_to_end();
                 }
                 // Store remaining bytes per byte.
                 state.atomic_store_u8(state.remaining());
@@ -722,18 +725,18 @@ mod imp {
             }
         }
 
-        // Branch 2: If the alignment of `T` is greater than or equal to usize,
-        // we can write it as a chunk of usize from the first byte.
-        if mem::align_of::<T>() >= mem::align_of::<AtomicUsize>() {
-            let src = &*val as *const T as *const usize;
-            let dst = dst as *const AtomicUsize;
-            for i in range(0..mem::size_of::<T>() / mem::size_of::<usize>()) {
+        // Branch 2: If the alignment of `T` is greater than or equal to Ptr,
+        // we can write it as a chunk of Ptr from the first byte.
+        if mem::align_of::<T>() >= mem::align_of::<AtomicPtr>() {
+            let src = &*val as *const T as *const Ptr;
+            let dst = dst as *const AtomicPtr;
+            for i in range(0..mem::size_of::<T>() / mem::size_of::<Ptr>()) {
                 // SAFETY:
                 // - the caller must guarantee that `dst` is properly aligned for `T`.
-                // - `T` has an alignment greater than or equal to usize.
-                // - the remaining bytes is greater than or equal to `size_of::<usize>()`.
+                // - `T` has an alignment greater than or equal to Ptr.
+                // - the remaining bytes is greater than or equal to `size_of::<Ptr>()`.
                 unsafe {
-                    let val: usize = src.add(i).read();
+                    let val: Ptr = src.add(i).read();
                     (*dst.add(i)).store(val, Ordering::Relaxed);
                 }
             }
@@ -745,7 +748,7 @@ mod imp {
         {
             // Branch 3: If the alignment of `T` is greater than or equal to u32,
             // we can write it as a chunk of u32 from the first byte.
-            if mem::size_of::<usize>() > 4 && mem::align_of::<T>() >= mem::align_of::<AtomicU32>() {
+            if mem::size_of::<Ptr>() > 4 && mem::align_of::<T>() >= mem::align_of::<AtomicU32>() {
                 let src = &*val as *const T as *const u32;
                 let dst = dst as *const AtomicU32;
                 for i in range(0..mem::size_of::<T>() / mem::size_of::<u32>()) {
@@ -765,7 +768,7 @@ mod imp {
 
         // Branch 4: If the alignment of `T` is greater than or equal to u16,
         // we can write it as a chunk of u16 from the first byte.
-        if mem::size_of::<usize>() > 2 && mem::align_of::<T>() >= mem::align_of::<AtomicU16>() {
+        if mem::size_of::<Ptr>() > 2 && mem::align_of::<T>() >= mem::align_of::<AtomicU16>() {
             let src = &*val as *const T as *const u16;
             let dst = dst as *const AtomicU16;
             for i in range(0..mem::size_of::<T>() / mem::size_of::<u16>()) {
