@@ -148,12 +148,12 @@ fn main() {
                         if rustc_demangle::demangle(sym).to_string() == sym {
                             out.push_str(line);
                             out.push('\n');
-                            while lines.peek().map_or(false, |l| l.starts_with(' ')) {
+                            while lines.peek().is_some_and(|l| l.starts_with(' ')) {
                                 out.push_str(lines.next().unwrap());
                                 out.push('\n');
                             }
                         } else {
-                            while lines.peek().map_or(false, |l| l.starts_with(' ')) {
+                            while lines.peek().is_some_and(|l| l.starts_with(' ')) {
                                 lines.next().unwrap();
                             }
                         }
