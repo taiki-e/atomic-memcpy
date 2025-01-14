@@ -2,7 +2,7 @@
 name = "atomic-memcpy"
 version = "0.2.2" #publish:version
 edition = "2018"
-rust-version = "1.36"
+rust-version = "1.36" # For MaybeUninit
 license = "Apache-2.0 OR MIT"
 repository = "https://github.com/taiki-e/atomic-memcpy"
 keywords = ["atomic"]
