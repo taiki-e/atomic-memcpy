@@ -47,8 +47,5 @@
       "dictionaries": ["bash", "rust"]
     }
   ],
-  "ignorePaths": [
-    // Generated code
-    "**/asm-test/asm/**"
-  ]
+  "ignorePaths": ["tests/asm-test/asm/**"]
 }
