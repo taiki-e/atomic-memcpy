@@ -38,14 +38,11 @@ jobs:
   miri:
     uses: taiki-e/github-actions/.github/workflows/miri.yml@main
     with:
-      event_name: ${{ github.event_name }}
       # NB: sync with env.EXCLUDE
       args: --exclude asm-test
       all-features: false
   msrv:
     uses: taiki-e/github-actions/.github/workflows/msrv.yml@main
-    with:
-      event_name: ${{ github.event_name }}
   tidy:
     uses: taiki-e/github-actions/.github/workflows/tidy.yml@main
     permissions:
