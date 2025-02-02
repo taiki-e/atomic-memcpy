@@ -6,10 +6,11 @@ edition = "2018"
 atomic-memcpy = { path = "..", features = ["inline-always"] }
 
 [dev-dependencies]
-criterion = { default-features = false, git = "https://github.com/taiki-e/criterion.rs.git", branch = "dev" } # reduce deps
+criterion = { default-features = false, git = "https://github.com/taiki-e/criterion.rs.git", rev = "8617cd7" } # reduce deps
 
 [[bench]]
-name = "atomic_memcpy"
+name = "bench"
+path = "bench.rs"
 harness = false
 
 [lints]
