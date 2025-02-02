@@ -139,6 +139,8 @@ jobs:
         env:
           CARGO_PROFILE_RELEASE_CODEGEN_UNITS: 1
           CARGO_PROFILE_RELEASE_LTO: fat
+        # TODO: asan and msan are broken with fat LTO since nightly-2025-02-01.
+        if: matrix.sanitizer == 'thread'
 
   valgrind:
     env:
