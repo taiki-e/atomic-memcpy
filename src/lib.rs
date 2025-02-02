@@ -1,7 +1,10 @@
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
 /*!
-<!-- tidy:crate-doc:start -->
+<!-- Note: Document from sync-markdown-to-rustdoc:start through sync-markdown-to-rustdoc:end
+     is synchronized from README.md. Any changes to that range are not preserved. -->
+<!-- tidy:sync-markdown-to-rustdoc:start -->
+
 Byte-wise atomic memcpy.
 
 This is an attempt to implement equivalent of C++ ["P1478: Byte-wise atomic memcpy"][p1478] in Rust.
@@ -29,7 +32,7 @@ See [P1478][p1478] for more.
 [portable-atomic]: https://github.com/taiki-e/portable-atomic
 [undefined-behavior]: https://doc.rust-lang.org/reference/behavior-considered-undefined.html
 
-<!-- tidy:crate-doc:end -->
+<!-- tidy:sync-markdown-to-rustdoc:end -->
 */
 
 #![no_std]
