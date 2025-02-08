@@ -43,6 +43,11 @@ jobs:
       all-features: false
   msrv:
     uses: taiki-e/github-actions/.github/workflows/msrv.yml@main
+  test:
+    uses: taiki-e/github-actions/.github/workflows/test.yml@main
+    with:
+      target: x86_64-unknown-linux-gnu,aarch64-apple-darwin,x86_64-pc-windows-msvc,aarch64-unknown-linux-gnu,armv5te-unknown-linux-gnueabi,i686-unknown-linux-gnu,s390x-unknown-linux-gnu
+      test-fat-lto: true
   tidy:
     uses: taiki-e/github-actions/.github/workflows/tidy.yml@main
     permissions:
@@ -51,7 +56,7 @@ jobs:
       repository-projects: read # for gh pr edit --add-assignee
     secrets: inherit
 
-  test:
+  build:
     strategy:
       fail-fast: false
       matrix:
@@ -59,14 +64,6 @@ jobs:
           - rust: stable
           - rust: beta
           - rust: nightly
-          - rust: nightly
-            target: aarch64-unknown-linux-gnu
-          - rust: nightly
-            target: armv5te-unknown-linux-gnueabi
-          - rust: nightly
-            target: i686-unknown-linux-gnu
-          - rust: nightly
-            target: s390x-unknown-linux-gnu
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
@@ -75,31 +72,7 @@ jobs:
         with:
           toolchain: ${{ matrix.rust }}
       - uses: taiki-e/install-action@cargo-hack
-      - uses: taiki-e/install-action@cargo-minimal-versions
-      - uses: taiki-e/install-action@cargo-careful
-        if: startsWith(matrix.rust, 'nightly')
-      - uses: taiki-e/setup-cross-toolchain-action@v1
-        with:
-          target: ${{ matrix.target }}
-        if: matrix.target != ''
-      - run: printf '%s\n' "TARGET=--target=${{ matrix.target }}" >>"${GITHUB_ENV}"
-        if: matrix.target != ''
-      - run: cargo test -v --workspace ${EXCLUDE} ${DOCTEST_XCOMPILE:-}
-      - run: cargo test -v --workspace ${EXCLUDE} --release ${DOCTEST_XCOMPILE:-}
-      - run: cargo test -v --workspace ${EXCLUDE} --release ${DOCTEST_XCOMPILE:-}
-        env:
-          CARGO_PROFILE_RELEASE_CODEGEN_UNITS: 1
-          CARGO_PROFILE_RELEASE_LTO: fat
-      - run: cargo careful test -v --workspace ${EXCLUDE} ${TARGET:-} ${DOCTEST_XCOMPILE:-}
-        env:
-          RUSTDOCFLAGS: ${{ env.RUSTDOCFLAGS }} -Z randomize-layout
-          RUSTFLAGS: ${{ env.RUSTFLAGS }} -Z randomize-layout
-        if: startsWith(matrix.rust, 'nightly')
-      - run: cargo hack build -vv --workspace --no-private --feature-powerset --optional-deps --no-dev-deps
       - run: tools/build.sh
-        if: matrix.target == ''
-      - run: cargo minimal-versions build --workspace --no-private --detach-path-deps=skip-exact --all-features
-      - run: cargo minimal-versions build --workspace --no-private --detach-path-deps=skip-exact --all-features --direct
 
   san:
     strategy:
