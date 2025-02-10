@@ -235,9 +235,13 @@ mod imp {
         ops::Range,
     };
 
+    type AtomicUsize = AtomicMaybeUninit<usize>;
+    type AtomicU16 = AtomicMaybeUninit<u16>;
     #[cfg(not(target_pointer_width = "16"))]
-    use crate::atomic::AtomicU32;
-    use crate::atomic::{AtomicU16, AtomicUsize, Ordering};
+    type AtomicU32 = AtomicMaybeUninit<u32>;
+    use atomic_maybe_uninit::AtomicMaybeUninit;
+
+    use crate::atomic::Ordering;
 
     // Boundary to make the fields of LoadState private.
     //
@@ -246,9 +250,13 @@ mod imp {
     //
     // [1]: https://www.ralfj.de/blog/2016/01/09/the-scope-of-unsafe.html
     mod load {
-        use core::mem;
+        use core::mem::{self, MaybeUninit};
 
-        use crate::atomic::{AtomicU8, AtomicUsize, Ordering};
+        type AtomicUsize = AtomicMaybeUninit<usize>;
+        type AtomicU8 = AtomicMaybeUninit<u8>;
+        use atomic_maybe_uninit::AtomicMaybeUninit;
+
+        use crate::atomic::Ordering;
 
         // Invariant: `src` and `result` will never change.
         // Invariant: Only the `advance` method can advance offset and counter.
@@ -302,9 +310,9 @@ mod imp {
 
             #[cfg_attr(feature = "inline-always", inline(always))]
             #[cfg_attr(not(feature = "inline-always"), inline)]
-            unsafe fn result<T>(&self) -> *mut T {
+            unsafe fn result<T>(&self) -> *mut MaybeUninit<T> {
                 // SAFETY: the caller must uphold the safety contract.
-                unsafe { self.result.add(self.offset) as *mut T }
+                unsafe { self.result.add(self.offset) as *mut MaybeUninit<T> }
             }
 
             #[cfg_attr(feature = "inline-always", inline(always))]
@@ -480,14 +488,14 @@ mod imp {
         // we can read it as a chunk of usize from the first byte.
         if mem::align_of::<T>() >= mem::align_of::<AtomicUsize>() {
             let src = src as *const AtomicUsize;
-            let dst = result.as_mut_ptr() as *mut usize;
+            let dst = result.as_mut_ptr() as *mut MaybeUninit<usize>;
             for i in range(0..mem::size_of::<T>() / mem::size_of::<usize>()) {
                 // SAFETY:
                 // - the caller must guarantee that `src` is properly aligned for `T`.
                 // - `T` has an alignment greater than or equal to usize.
                 // - the remaining bytes is greater than or equal to `size_of::<usize>()`.
                 unsafe {
-                    let val: usize = (*src.add(i)).load(Ordering::Relaxed);
+                    let val: MaybeUninit<usize> = (*src.add(i)).load(Ordering::Relaxed);
                     dst.add(i).write(val);
                 }
             }
@@ -500,14 +508,14 @@ mod imp {
             // we can read it as a chunk of u32 from the first byte.
             if mem::size_of::<usize>() > 4 && mem::align_of::<T>() >= mem::align_of::<AtomicU32>() {
                 let src = src as *const AtomicU32;
-                let dst = result.as_mut_ptr() as *mut u32;
+                let dst = result.as_mut_ptr() as *mut MaybeUninit<u32>;
                 for i in range(0..mem::size_of::<T>() / mem::size_of::<u32>()) {
                     // SAFETY:
                     // - the caller must guarantee that `src` is properly aligned for `T`.
                     // - `T` has an alignment greater than or equal to u32.
                     // - the remaining bytes is greater than or equal to `size_of::<u32>()`.
                     unsafe {
-                        let val: u32 = (*src.add(i)).load(Ordering::Relaxed);
+                        let val: MaybeUninit<u32> = (*src.add(i)).load(Ordering::Relaxed);
                         dst.add(i).write(val);
                     }
                 }
@@ -519,14 +527,14 @@ mod imp {
         // we can read it as a chunk of u16 from the first byte.
         if mem::size_of::<usize>() > 2 && mem::align_of::<T>() >= mem::align_of::<AtomicU16>() {
             let src = src as *const AtomicU16;
-            let dst = result.as_mut_ptr() as *mut u16;
+            let dst = result.as_mut_ptr() as *mut MaybeUninit<u16>;
             for i in range(0..mem::size_of::<T>() / mem::size_of::<u16>()) {
                 // SAFETY:
                 // - the caller must guarantee that `src` is properly aligned for `T`.
                 // - `T` has an alignment greater than or equal to u16.
                 // - the remaining bytes is greater than or equal to `size_of::<u16>()`.
                 unsafe {
-                    let val: u16 = (*src.add(i)).load(Ordering::Relaxed);
+                    let val: MaybeUninit<u16> = (*src.add(i)).load(Ordering::Relaxed);
                     dst.add(i).write(val);
                 }
             }
@@ -545,9 +553,13 @@ mod imp {
     // Note that this is not a complete safe/unsafe boundary, since it is still
     // possible to pass an invalid pointer to the constructor.
     mod store {
-        use core::mem;
+        use core::mem::{self, MaybeUninit};
 
-        use crate::atomic::{AtomicU8, AtomicUsize, Ordering};
+        type AtomicUsize = AtomicMaybeUninit<usize>;
+        type AtomicU8 = AtomicMaybeUninit<u8>;
+        use atomic_maybe_uninit::AtomicMaybeUninit;
+
+        use crate::atomic::Ordering;
 
         // Invariant: `src` and `dst` will never change.
         // Invariant: Only the `advance` method can advance offset and counter.
@@ -618,7 +630,7 @@ mod imp {
                     // - `src` is valid to read of `count` of u8.
                     // - `dst` is valid to atomic write of `count` of u8.
                     unsafe {
-                        let val = self.src::<u8>().read();
+                        let val = self.src::<MaybeUninit<u8>>().read();
                         self.dst::<AtomicU8>().store(val, Ordering::Relaxed);
                         // SAFETY: we've filled 1 byte.
                         self.advance(1);
@@ -645,7 +657,7 @@ mod imp {
                     // - `src` is valid to *unaligned* read of `usize`.
                     // - `dst` is valid to atomic write of `usize`.
                     unsafe {
-                        let val = self.src::<usize>().read_unaligned();
+                        let val = self.src::<MaybeUninit<usize>>().read_unaligned();
                         self.dst::<AtomicUsize>().store(val, Ordering::Relaxed);
                         // SAFETY: we've filled `size_of::<usize>()` bytes.
                         self.advance(mem::size_of::<usize>());
@@ -735,7 +747,7 @@ mod imp {
         // Branch 2: If the alignment of `T` is greater than or equal to usize,
         // we can write it as a chunk of usize from the first byte.
         if mem::align_of::<T>() >= mem::align_of::<AtomicUsize>() {
-            let src = &*val as *const T as *const usize;
+            let src = &*val as *const T as *const MaybeUninit<usize>;
             let dst = dst as *const AtomicUsize;
             for i in range(0..mem::size_of::<T>() / mem::size_of::<usize>()) {
                 // SAFETY:
@@ -743,7 +755,7 @@ mod imp {
                 // - `T` has an alignment greater than or equal to usize.
                 // - the remaining bytes is greater than or equal to `size_of::<usize>()`.
                 unsafe {
-                    let val: usize = src.add(i).read();
+                    let val: MaybeUninit<usize> = src.add(i).read();
                     (*dst.add(i)).store(val, Ordering::Relaxed);
                 }
             }
@@ -756,7 +768,7 @@ mod imp {
             // Branch 3: If the alignment of `T` is greater than or equal to u32,
             // we can write it as a chunk of u32 from the first byte.
             if mem::size_of::<usize>() > 4 && mem::align_of::<T>() >= mem::align_of::<AtomicU32>() {
-                let src = &*val as *const T as *const u32;
+                let src = &*val as *const T as *const MaybeUninit<u32>;
                 let dst = dst as *const AtomicU32;
                 for i in range(0..mem::size_of::<T>() / mem::size_of::<u32>()) {
                     // SAFETY:
@@ -764,7 +776,7 @@ mod imp {
                     // - `T` has an alignment greater than or equal to u32.
                     // - the remaining bytes is greater than or equal to `size_of::<u32>()`.
                     unsafe {
-                        let val: u32 = src.add(i).read();
+                        let val: MaybeUninit<u32> = src.add(i).read();
                         (*dst.add(i)).store(val, Ordering::Relaxed);
                     }
                 }
@@ -776,7 +788,7 @@ mod imp {
         // Branch 4: If the alignment of `T` is greater than or equal to u16,
         // we can write it as a chunk of u16 from the first byte.
         if mem::size_of::<usize>() > 2 && mem::align_of::<T>() >= mem::align_of::<AtomicU16>() {
-            let src = &*val as *const T as *const u16;
+            let src = &*val as *const T as *const MaybeUninit<u16>;
             let dst = dst as *const AtomicU16;
             for i in range(0..mem::size_of::<T>() / mem::size_of::<u16>()) {
                 // SAFETY:
@@ -784,7 +796,7 @@ mod imp {
                 // - `T` has an alignment greater than or equal to u16.
                 // - the remaining bytes is greater than or equal to `size_of::<u16>()`.
                 unsafe {
-                    let val: u16 = src.add(i).read();
+                    let val: MaybeUninit<u16> = src.add(i).read();
                     (*dst.add(i)).store(val, Ordering::Relaxed);
                 }
             }

@@ -31,6 +31,9 @@ doc-scrape-examples = false
 # Note that it is useless to enable this in most cases.
 inline-always = []
 
+[dependencies]
+atomic-maybe-uninit = { path = "../atomic-maybe-uninit" }
+
 [target.'cfg(target_os = "none")'.dependencies]
 portable-atomic = { version = "1", default-features = false }
 
