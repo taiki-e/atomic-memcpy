@@ -68,7 +68,9 @@ fn main() {
     for item in file.items {
         match item {
             syn::Item::Fn(f) if matches!(f.vis, syn::Visibility::Public(..)) => {
-                panic!("top-level public functions are not allowed; public functions must be in a module");
+                panic!(
+                    "top-level public functions are not allowed; public functions must be in a module"
+                );
             }
             syn::Item::Mod(m) => {
                 let mod_name = m.ident.to_string();

@@ -6,11 +6,11 @@ use std::{
     cell::UnsafeCell,
     hint::black_box,
     mem,
-    sync::{atomic::Ordering, Barrier},
+    sync::{Barrier, atomic::Ordering},
     thread,
 };
 
-use criterion::{criterion_group, criterion_main, Criterion};
+use criterion::{Criterion, criterion_group, criterion_main};
 
 const WRITER_THREADS: usize = 1;
 const READER_THREADS: usize = 2;
