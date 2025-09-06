@@ -14,7 +14,7 @@ default_targets=(
   msp430-none-elf
 
   # no atomic CAS (16-bit)
-  avr-unknown-gnu-atmega328
+  avr-none
   # no atomic CAS (32-bit)
   thumbv6m-none-eabi
   riscv32i-unknown-none-elf
@@ -81,6 +81,9 @@ build() {
   local args=("${base_args[@]}" --target "${target}")
   local target_rustflags="${RUSTFLAGS:-}"
   if ! grep -Eq "^${target}$" <<<"${rustc_target_list}"; then
+    if [[ "${target}" == "avr-none" ]]; then
+      target=avr-unknown-gnu-atmega328 # before https://github.com/rust-lang/rust/pull/131651
+    fi
     printf '%s\n' "target '${target}' not available on ${rustc_version} (skipped all checks)"
     return 0
   fi
@@ -93,15 +96,21 @@ build() {
     printf '%s\n' "target '${target}' requires nightly compiler (skipped all checks)"
     return 0
   fi
-  if [[ "${target}" == "avr"* ]]; then
-    if [[ "${llvm_version}" -eq 16 ]]; then
-      # https://github.com/rust-lang/compiler-builtins/issues/523
-      target_rustflags+=" -C linker-plugin-lto -C codegen-units=1"
-    elif [[ "${llvm_version}" -ge 17 ]]; then
-      # https://github.com/rust-lang/rust/issues/88252
-      target_rustflags+=" -C opt-level=s"
-    fi
-  fi
+  case "${target}" in
+    avr*)
+      if [[ "${llvm_version}" -eq 16 ]]; then
+        # https://github.com/rust-lang/compiler-builtins/issues/523
+        target_rustflags+=" -C linker-plugin-lto -C codegen-units=1"
+      elif [[ "${llvm_version}" -ge 17 ]]; then
+        # https://github.com/rust-lang/rust/issues/88252
+        target_rustflags+=" -C opt-level=s"
+      fi
+      if [[ "${target}" == "avr-none" ]]; then
+        # "error: target requires explicitly specifying a cpu with `-C target-cpu`"
+        target_rustflags+=" -C target-cpu=atmega328p"
+      fi
+      ;;
+  esac
 
   RUSTFLAGS="${target_rustflags}" \
     x_cargo "${args[@]}" --manifest-path tests/no-std/Cargo.toml
