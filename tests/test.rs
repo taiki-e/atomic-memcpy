@@ -142,6 +142,7 @@ fn ordering() {
 
 // test for alignment smaller than usize
 #[test]
+#[cfg_attr(miri, ignore)] // TODO: Miri ICE
 fn small_alignment() {
     #[derive(Clone, Copy)]
     #[repr(C, align(8))]
