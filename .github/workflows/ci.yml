@@ -97,11 +97,11 @@ jobs:
       - run: |
           printf 'MSAN_OPTIONS=verbosity=2\n' >>"${GITHUB_ENV}"
           printf '%s\n' "RUSTFLAGS=${RUSTFLAGS} -Z sanitizer=memory -Z sanitizer-memory-track-origins" >>"${GITHUB_ENV}"
-          printf '%s\n' "RUSTDOCFLAGS=${RUSTDOCFLAGS} -Z sanitizer=memory -Z sanitizer-memory-track-origins -C unsafe-allow-abi-mismatch=sanitizer" >>"${GITHUB_ENV}"
+          printf '%s\n' "RUSTDOCFLAGS=${RUSTDOCFLAGS} -Z sanitizer=memory -Z sanitizer-memory-track-origins" >>"${GITHUB_ENV}"
         if: matrix.sanitizer == 'memory'
       - run: |
           printf '%s\n' "RUSTFLAGS=${RUSTFLAGS} -Z sanitizer=thread" >>"${GITHUB_ENV}"
-          printf '%s\n' "RUSTDOCFLAGS=${RUSTDOCFLAGS} -Z sanitizer=thread -C unsafe-allow-abi-mismatch=sanitizer" >>"${GITHUB_ENV}"
+          printf '%s\n' "RUSTDOCFLAGS=${RUSTDOCFLAGS} -Z sanitizer=thread" >>"${GITHUB_ENV}"
         if: matrix.sanitizer == 'thread'
       - run: |
           cargo -Z build-std test --workspace ${EXCLUDE} --target "$(rustc -vV | grep -E '^host:' | cut -d' ' -f2)"
