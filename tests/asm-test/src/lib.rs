@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
 #![no_std]
-#![allow(clippy::missing_safety_doc, clippy::undocumented_unsafe_blocks)]
+#![allow(unused, internal_features, unsafe_op_in_unsafe_fn)]
+#![cfg(feature = "atomic-memcpy")]
 
 type Data = [u8; core::mem::size_of::<usize>() * 8];
 
