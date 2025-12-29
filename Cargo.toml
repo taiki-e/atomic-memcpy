@@ -42,7 +42,6 @@ workspace = true
 [workspace]
 members = [
     "bench",
-    "tests/asm-test",
     "tests/no-std",
 ]
 
