@@ -112,16 +112,15 @@ jobs:
         if: matrix.sanitizer == 'thread'
 
   valgrind:
-    env:
-      CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUNNER: valgrind -v --error-exitcode=1 --error-limit=no --leak-check=full --track-origins=yes --fair-sched=yes --gen-suppressions=all
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    container:
-      image: ghcr.io/taiki-e/valgrind:amd64
-      options: --privileged
     steps:
       - uses: taiki-e/checkout-action@v1
       - uses: taiki-e/github-actions/install-rust@nightly
+      - uses: taiki-e/setup-cross-toolchain-action@v1
+        with:
+          target: host-tuple
+          runner: valgrind
       - run: cargo test -v --workspace
       - run: cargo test -v --workspace --release
       - run: cargo test -v --workspace --release
