@@ -69,6 +69,8 @@ jobs:
           toolchain: ${{ matrix.rust }}
       - uses: taiki-e/install-action@cargo-hack
       - run: tools/build.sh
+        env:
+          ALL_TARGETS_MUST_BE_AVAILABLE: ${{ matrix.rust == 'nightly' || '' }}
 
   san:
     strategy:

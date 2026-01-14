@@ -49,6 +49,13 @@ retry() {
   done
   "$@"
 }
+bail() {
+  printf >&2 'error: %s\n' "$*"
+  exit 1
+}
+info() {
+  printf >&2 'info: %s\n' "$*"
+}
 
 pre_args=()
 if [[ "${1:-}" == "+"* ]]; then
@@ -83,9 +90,13 @@ build() {
   if ! grep -Eq "^${target}$" <<<"${rustc_target_list}"; then
     if [[ "${target}" == "avr-none" ]]; then
       target=avr-unknown-gnu-atmega328 # before https://github.com/rust-lang/rust/pull/131651
+    else
+      if [[ -n "${ALL_TARGETS_MUST_BE_AVAILABLE:-}" ]]; then
+        bail "target '${target}' not available on ${rustc_version}"
+      fi
+      info "target '${target}' not available on ${rustc_version} (skipped all checks)"
+      return 0
     fi
-    printf '%s\n' "target '${target}' not available on ${rustc_version} (skipped all checks)"
-    return 0
   fi
   if grep -Eq "^${target}$" <<<"${rustup_target_list}"; then
     retry rustup ${pre_args[@]+"${pre_args[@]}"} target add "${target}" &>/dev/null
@@ -93,7 +104,7 @@ build() {
     # Only build core because our library code doesn't depend on std.
     args+=(-Z build-std="core")
   else
-    printf '%s\n' "target '${target}' requires nightly compiler (skipped all checks)"
+    info "target '${target}' requires nightly compiler (skipped all checks)"
     return 0
   fi
   case "${target}" in
