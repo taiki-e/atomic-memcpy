@@ -1,4 +1,4 @@
-.text.asm_test::atomic_memcpy_load_align1::read_volatile_acquire_fence:
+asm_test::atomic_memcpy_load_align1::read_volatile_acquire_fence:
         stdu              1, -352(1)
         std               14, 208(1)
         std               15, 216(1)
@@ -240,7 +240,7 @@
         addi              1, 1, 352
         blr
 
-.text.asm_test::atomic_memcpy_load_align1::acquire:
+asm_test::atomic_memcpy_load_align1::acquire:
         addi              5, 4, 7
         rldicr            7, 5, 0, 60
         cmpld             7, 4
@@ -318,7 +318,7 @@
         lwsync
         blr
 
-.text.asm_test::atomic_memcpy_load_align2::read_volatile_acquire_fence:
+asm_test::atomic_memcpy_load_align2::read_volatile_acquire_fence:
         std               14, -144(1)
         std               15, -136(1)
         std               16, -128(1)
@@ -430,7 +430,7 @@
         ld                14, -144(1)
         blr
 
-.text.asm_test::atomic_memcpy_load_align2::acquire:
+asm_test::atomic_memcpy_load_align2::acquire:
         addi              5, 4, 7
         rldicr            7, 5, 0, 60
         cmpld             7, 4
@@ -508,7 +508,7 @@
         lwsync
         blr
 
-.text.asm_test::atomic_memcpy_load_align4::read_volatile_acquire_fence:
+asm_test::atomic_memcpy_load_align4::read_volatile_acquire_fence:
         std               25, -56(1)
         std               26, -48(1)
         std               27, -40(1)
@@ -556,7 +556,7 @@
         ld                25, -56(1)
         blr
 
-.text.asm_test::atomic_memcpy_load_align4::acquire:
+asm_test::atomic_memcpy_load_align4::acquire:
         addi              5, 4, 7
         rldicr            7, 5, 0, 60
         cmpld             7, 4
@@ -634,7 +634,7 @@
         lwsync
         blr
 
-.text.asm_test::atomic_memcpy_load_align8::read_volatile_acquire_fence:
+asm_test::atomic_memcpy_load_align8::read_volatile_acquire_fence:
         ld                5, 56(4)
         ld                6, 48(4)
         ld                7, 40(4)
@@ -654,7 +654,7 @@
         lwsync
         blr
 
-.text.asm_test::atomic_memcpy_load_align8::acquire:
+asm_test::atomic_memcpy_load_align8::acquire:
         ld                5, 0(4)
         ld                6, 8(4)
         ld                7, 16(4)
@@ -674,7 +674,7 @@
         lwsync
         blr
 
-.text.asm_test::atomic_memcpy_load_align16::read_volatile_acquire_fence:
+asm_test::atomic_memcpy_load_align16::read_volatile_acquire_fence:
         ld                5, 56(4)
         ld                6, 48(4)
         ld                7, 40(4)
@@ -694,7 +694,7 @@
         lwsync
         blr
 
-.text.asm_test::atomic_memcpy_load_align16::acquire:
+asm_test::atomic_memcpy_load_align16::acquire:
         ld                5, 0(4)
         ld                6, 8(4)
         ld                7, 16(4)
@@ -714,7 +714,7 @@
         lwsync
         blr
 
-.text.asm_test::atomic_memcpy_store_align1::write_volatile_release_fence:
+asm_test::atomic_memcpy_store_align1::write_volatile_release_fence:
         lwsync
         ld                5, 56(4)
         std               5, 56(3)
@@ -734,7 +734,7 @@
         std               4, 0(3)
         blr
 
-.text.asm_test::atomic_memcpy_store_align1::release:
+asm_test::atomic_memcpy_store_align1::release:
         addi              5, 3, 7
         lwsync
         rldicr            6, 5, 0, 60
@@ -796,7 +796,7 @@
         bdnz              6b
         blr
 
-.text.asm_test::atomic_memcpy_store_align2::write_volatile_release_fence:
+asm_test::atomic_memcpy_store_align2::write_volatile_release_fence:
         lwsync
         ld                5, 56(4)
         std               5, 56(3)
@@ -816,7 +816,7 @@
         std               4, 0(3)
         blr
 
-.text.asm_test::atomic_memcpy_store_align2::release:
+asm_test::atomic_memcpy_store_align2::release:
         addi              5, 3, 7
         lwsync
         rldicr            6, 5, 0, 60
@@ -878,7 +878,7 @@
         bdnz              6b
         blr
 
-.text.asm_test::atomic_memcpy_store_align4::write_volatile_release_fence:
+asm_test::atomic_memcpy_store_align4::write_volatile_release_fence:
         lwsync
         ld                5, 56(4)
         std               5, 56(3)
@@ -898,7 +898,7 @@
         std               4, 0(3)
         blr
 
-.text.asm_test::atomic_memcpy_store_align4::release:
+asm_test::atomic_memcpy_store_align4::release:
         addi              5, 3, 7
         lwsync
         rldicr            6, 5, 0, 60
@@ -960,7 +960,7 @@
         bdnz              6b
         blr
 
-.text.asm_test::atomic_memcpy_store_align8::write_volatile_release_fence:
+asm_test::atomic_memcpy_store_align8::write_volatile_release_fence:
         lwsync
         ld                5, 56(4)
         std               5, 56(3)
@@ -980,7 +980,7 @@
         std               4, 0(3)
         blr
 
-.text.asm_test::atomic_memcpy_store_align8::release:
+asm_test::atomic_memcpy_store_align8::release:
         lwsync
         ld                5, 0(4)
         std               5, 0(3)
@@ -1000,7 +1000,7 @@
         std               4, 56(3)
         blr
 
-.text.asm_test::atomic_memcpy_store_align16::write_volatile_release_fence:
+asm_test::atomic_memcpy_store_align16::write_volatile_release_fence:
         lwsync
         li                5, 48
         lvx               2, 4, 5
@@ -1015,7 +1015,7 @@
         stvx              2, 0, 3
         blr
 
-.text.asm_test::atomic_memcpy_store_align16::release:
+asm_test::atomic_memcpy_store_align16::release:
         lwsync
         ld                5, 0(4)
         std               5, 0(3)
