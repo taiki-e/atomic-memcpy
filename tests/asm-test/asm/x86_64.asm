@@ -261,14 +261,12 @@ asm_test::atomic_memcpy_load_align1::acquire:
         jbe               1f
         mov               edx, 0x40
         xor               r8d, r8d
-        test              rdi, rdi
-        jne               3f
-        jmp               5f
+        jmp               3f
 1:
         mov               edx, ecx
         and               edx, 0x4
         xor               r8d, r8d
-        nop               word ptr [rax + rax]
+        nop               word ptr cs:[rax + rax]
 2:
         movzx             r9d, byte ptr [rsi + r8]
         mov               byte ptr [rsp + r8 - 0x40], r9b
@@ -487,14 +485,12 @@ asm_test::atomic_memcpy_load_align2::acquire:
         jbe               1f
         mov               edx, 0x40
         xor               r8d, r8d
-        test              rdi, rdi
-        jne               3f
-        jmp               5f
+        jmp               3f
 1:
         mov               edx, ecx
         and               edx, 0x4
         xor               r8d, r8d
-        nop               word ptr [rax + rax]
+        nop               word ptr cs:[rax + rax]
 2:
         movzx             r9d, byte ptr [rsi + r8]
         mov               byte ptr [rsp + r8 - 0x40], r9b
@@ -646,14 +642,12 @@ asm_test::atomic_memcpy_load_align4::acquire:
         jbe               1f
         mov               edx, 0x40
         xor               r8d, r8d
-        test              rdi, rdi
-        jne               3f
-        jmp               5f
+        jmp               3f
 1:
         mov               edx, ecx
         and               edx, 0x4
         xor               r8d, r8d
-        nop               word ptr [rax + rax]
+        nop               word ptr cs:[rax + rax]
 2:
         movzx             r9d, byte ptr [rsi + r8]
         mov               byte ptr [rsp + r8 - 0x40], r9b
@@ -843,14 +837,12 @@ asm_test::atomic_memcpy_store_align1::release:
         jbe               1f
         mov               ecx, 0x40
         xor               r8d, r8d
-        test              rdx, rdx
-        jne               3f
-        jmp               5f
+        jmp               3f
 1:
         mov               ecx, eax
         and               ecx, 0x4
         xor               r8d, r8d
-        nop               word ptr cs:[rax + rax]
+        nop
 2:
         movzx             r9d, byte ptr [rsi + r8]
         mov               byte ptr [rdi + r8], r9b
@@ -954,14 +946,12 @@ asm_test::atomic_memcpy_store_align2::release:
         jbe               1f
         mov               ecx, 0x40
         xor               r8d, r8d
-        test              rdx, rdx
-        jne               3f
-        jmp               5f
+        jmp               3f
 1:
         mov               ecx, eax
         and               ecx, 0x4
         xor               r8d, r8d
-        nop               word ptr cs:[rax + rax]
+        nop
 2:
         movzx             r9d, byte ptr [rsi + r8]
         mov               byte ptr [rdi + r8], r9b
@@ -1062,14 +1052,12 @@ asm_test::atomic_memcpy_store_align4::release:
         jbe               1f
         mov               ecx, 0x40
         xor               r8d, r8d
-        test              rdx, rdx
-        jne               3f
-        jmp               5f
+        jmp               3f
 1:
         mov               ecx, eax
         and               ecx, 0x4
         xor               r8d, r8d
-        nop               word ptr cs:[rax + rax]
+        nop
 2:
         movzx             r9d, byte ptr [rsi + r8]
         mov               byte ptr [rdi + r8], r9b

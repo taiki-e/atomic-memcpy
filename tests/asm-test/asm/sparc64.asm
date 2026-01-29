@@ -208,7 +208,7 @@ asm_test::atomic_memcpy_load_align1::read_volatile_acquire_fence:
         stb               %i1, [ %i0 + 0x3e ]
         ld                [ %fp + 0x7fb ], %i1
         stb               %i1, [ %i0 + 0x3f ]
-        membar            #StoreStore|#LoadStore|#StoreLoad|#LoadLoad
+        membar            #LoadStore|#LoadLoad
         ret
         restore
 
@@ -234,8 +234,7 @@ asm_test::atomic_memcpy_load_align1::acquire:
         inc               %i3
         inc               %i4
         movre             %i4, 1, %g3
-        and               %g3, 1, %g2
-        cmp               %g2, 0
+        btst              1, %g3
         be                %icc, 1b
         inc               %i5
         sub               %i1, %i2, %i2
@@ -285,7 +284,7 @@ asm_test::atomic_memcpy_load_align1::acquire:
 7:
         call              7f
         mov               0x40, %o2
-        membar            #StoreStore|#LoadStore|#StoreLoad|#LoadLoad
+        membar            #LoadStore|#LoadLoad
         ret
         restore
 
@@ -371,7 +370,7 @@ asm_test::atomic_memcpy_load_align2::read_volatile_acquire_fence:
         sth               %i1, [ %i0 + 0x3c ]
         ld                [ %fp + 0x7fb ], %i1
         sth               %i1, [ %i0 + 0x3e ]
-        membar            #StoreStore|#LoadStore|#StoreLoad|#LoadLoad
+        membar            #LoadStore|#LoadLoad
         ret
         restore
 
@@ -397,8 +396,7 @@ asm_test::atomic_memcpy_load_align2::acquire:
         inc               %i3
         inc               %i4
         movre             %i4, 1, %g3
-        and               %g3, 1, %g2
-        cmp               %g2, 0
+        btst              1, %g3
         be                %icc, 1b
         inc               %i5
         sub               %i1, %i2, %i2
@@ -448,7 +446,7 @@ asm_test::atomic_memcpy_load_align2::acquire:
 7:
         call              7f
         mov               0x40, %o2
-        membar            #StoreStore|#LoadStore|#StoreLoad|#LoadLoad
+        membar            #LoadStore|#LoadLoad
         ret
         restore
 
@@ -486,7 +484,7 @@ asm_test::atomic_memcpy_load_align4::read_volatile_acquire_fence:
         st                %i4, [ %i0 + 0x34 ]
         st                %i3, [ %i0 + 0x38 ]
         st                %i2, [ %i0 + 0x3c ]
-        membar            #StoreStore|#LoadStore|#StoreLoad|#LoadLoad
+        membar            #LoadStore|#LoadLoad
         ret
         restore
 
@@ -512,8 +510,7 @@ asm_test::atomic_memcpy_load_align4::acquire:
         inc               %i3
         inc               %i4
         movre             %i4, 1, %g3
-        and               %g3, 1, %g2
-        cmp               %g2, 0
+        btst              1, %g3
         be                %icc, 1b
         inc               %i5
         sub               %i1, %i2, %i2
@@ -563,7 +560,7 @@ asm_test::atomic_memcpy_load_align4::acquire:
 7:
         call              7f
         mov               0x40, %o2
-        membar            #StoreStore|#LoadStore|#StoreLoad|#LoadLoad
+        membar            #LoadStore|#LoadLoad
         ret
         restore
 
@@ -584,7 +581,7 @@ asm_test::atomic_memcpy_load_align8::read_volatile_acquire_fence:
         stx               %o4, [ %o0 + 0x28 ]
         stx               %o3, [ %o0 + 0x30 ]
         stx               %o2, [ %o0 + 0x38 ]
-        membar            #StoreStore|#LoadStore|#StoreLoad|#LoadLoad
+        membar            #LoadStore|#LoadLoad
         retl
         nop
 
@@ -605,7 +602,7 @@ asm_test::atomic_memcpy_load_align8::acquire:
         stx               %g3, [ %o0 + 0x28 ]
         stx               %g4, [ %o0 + 0x30 ]
         stx               %o1, [ %o0 + 0x38 ]
-        membar            #StoreStore|#LoadStore|#StoreLoad|#LoadLoad
+        membar            #LoadStore|#LoadLoad
         retl
         nop
 
@@ -626,7 +623,7 @@ asm_test::atomic_memcpy_load_align16::read_volatile_acquire_fence:
         stx               %o4, [ %o0 + 0x28 ]
         stx               %o3, [ %o0 + 0x30 ]
         stx               %o2, [ %o0 + 0x38 ]
-        membar            #StoreStore|#LoadStore|#StoreLoad|#LoadLoad
+        membar            #LoadStore|#LoadLoad
         retl
         nop
 
@@ -647,13 +644,13 @@ asm_test::atomic_memcpy_load_align16::acquire:
         stx               %g3, [ %o0 + 0x28 ]
         stx               %g4, [ %o0 + 0x30 ]
         stx               %o1, [ %o0 + 0x38 ]
-        membar            #StoreStore|#LoadStore|#StoreLoad|#LoadLoad
+        membar            #LoadStore|#LoadLoad
         retl
         nop
 
 asm_test::atomic_memcpy_store_align1::write_volatile_release_fence:
         mov               0x40, %o2
-        membar            #StoreStore|#LoadStore|#StoreLoad|#LoadLoad
+        membar            #StoreStore|#LoadStore
         mov               %o7, %g1
 0:
         call              0f
@@ -663,7 +660,7 @@ asm_test::atomic_memcpy_store_align1::release:
         add               %o0, 7, %o2
         and               %o2, -8, %o3
         cmp               %o3, %o0
-        membar            #StoreStore|#LoadStore|#StoreLoad|#LoadLoad
+        membar            #StoreStore|#LoadStore
         bne               %xcc, 0f
         nop
         mov               %g0, %o2
@@ -681,8 +678,7 @@ asm_test::atomic_memcpy_store_align1::release:
         inc               %g2
         inc               %o4
         movre             %o4, 1, %g4
-        and               %g4, 1, %g3
-        cmp               %g3, 0
+        btst              1, %g4
         be                %icc, 1b
         inc               %o5
         sub               %o0, %o3, %o3
@@ -737,7 +733,7 @@ asm_test::atomic_memcpy_store_align1::release:
 
 asm_test::atomic_memcpy_store_align2::write_volatile_release_fence:
         mov               0x40, %o2
-        membar            #StoreStore|#LoadStore|#StoreLoad|#LoadLoad
+        membar            #StoreStore|#LoadStore
         mov               %o7, %g1
 0:
         call              0f
@@ -747,7 +743,7 @@ asm_test::atomic_memcpy_store_align2::release:
         add               %o0, 7, %o2
         and               %o2, -8, %o3
         cmp               %o3, %o0
-        membar            #StoreStore|#LoadStore|#StoreLoad|#LoadLoad
+        membar            #StoreStore|#LoadStore
         bne               %xcc, 0f
         nop
         mov               %g0, %o2
@@ -765,8 +761,7 @@ asm_test::atomic_memcpy_store_align2::release:
         inc               %g2
         inc               %o4
         movre             %o4, 1, %g4
-        and               %g4, 1, %g3
-        cmp               %g3, 0
+        btst              1, %g4
         be                %icc, 1b
         inc               %o5
         sub               %o0, %o3, %o3
@@ -821,7 +816,7 @@ asm_test::atomic_memcpy_store_align2::release:
 
 asm_test::atomic_memcpy_store_align4::write_volatile_release_fence:
         mov               0x40, %o2
-        membar            #StoreStore|#LoadStore|#StoreLoad|#LoadLoad
+        membar            #StoreStore|#LoadStore
         mov               %o7, %g1
 0:
         call              0f
@@ -831,7 +826,7 @@ asm_test::atomic_memcpy_store_align4::release:
         add               %o0, 7, %o2
         and               %o2, -8, %o3
         cmp               %o3, %o0
-        membar            #StoreStore|#LoadStore|#StoreLoad|#LoadLoad
+        membar            #StoreStore|#LoadStore
         bne               %xcc, 0f
         nop
         mov               %g0, %o2
@@ -849,8 +844,7 @@ asm_test::atomic_memcpy_store_align4::release:
         inc               %g2
         inc               %o4
         movre             %o4, 1, %g4
-        and               %g4, 1, %g3
-        cmp               %g3, 0
+        btst              1, %g4
         be                %icc, 1b
         inc               %o5
         sub               %o0, %o3, %o3
@@ -904,7 +898,7 @@ asm_test::atomic_memcpy_store_align4::release:
         nop
 
 asm_test::atomic_memcpy_store_align8::write_volatile_release_fence:
-        membar            #StoreStore|#LoadStore|#StoreLoad|#LoadLoad
+        membar            #StoreStore|#LoadStore
         ldx               [ %o1 + 0x38 ], %o2
         stx               %o2, [ %o0 + 0x38 ]
         ldx               [ %o1 + 0x30 ], %o2
@@ -924,7 +918,7 @@ asm_test::atomic_memcpy_store_align8::write_volatile_release_fence:
         stx               %o1, [ %o0 ]
 
 asm_test::atomic_memcpy_store_align8::release:
-        membar            #StoreStore|#LoadStore|#StoreLoad|#LoadLoad
+        membar            #StoreStore|#LoadStore
         ldx               [ %o1 ], %o2
         stx               %o2, [ %o0 ]
         ldx               [ %o1 + 8 ], %o2
@@ -944,7 +938,7 @@ asm_test::atomic_memcpy_store_align8::release:
         stx               %o1, [ %o0 + 0x38 ]
 
 asm_test::atomic_memcpy_store_align16::write_volatile_release_fence:
-        membar            #StoreStore|#LoadStore|#StoreLoad|#LoadLoad
+        membar            #StoreStore|#LoadStore
         ldx               [ %o1 + 0x38 ], %o2
         stx               %o2, [ %o0 + 0x38 ]
         ldx               [ %o1 + 0x30 ], %o2
@@ -964,7 +958,7 @@ asm_test::atomic_memcpy_store_align16::write_volatile_release_fence:
         stx               %o1, [ %o0 ]
 
 asm_test::atomic_memcpy_store_align16::release:
-        membar            #StoreStore|#LoadStore|#StoreLoad|#LoadLoad
+        membar            #StoreStore|#LoadStore
         ldx               [ %o1 ], %o2
         stx               %o2, [ %o0 ]
         ldx               [ %o1 + 8 ], %o2

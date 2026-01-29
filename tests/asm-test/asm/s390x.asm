@@ -267,8 +267,8 @@ asm_test::atomic_memcpy_load_align1::acquire:
         la                %r12,4(%r12)
         la                %r13,4(%r13)
         cgrjne            %r14,%r5,1b
-2:
         cgije             %r0,0,4f
+2:
         la                %r14,160(%r5,%r15)
         agr               %r5,%r3
 3:
@@ -491,8 +491,8 @@ asm_test::atomic_memcpy_load_align2::acquire:
         la                %r12,4(%r12)
         la                %r13,4(%r13)
         cgrjne            %r14,%r5,1b
-2:
         cgije             %r0,0,4f
+2:
         la                %r14,160(%r5,%r15)
         agr               %r5,%r3
 3:
@@ -649,8 +649,8 @@ asm_test::atomic_memcpy_load_align4::acquire:
         la                %r12,4(%r12)
         la                %r13,4(%r13)
         cgrjne            %r14,%r5,1b
-2:
         cgije             %r0,0,4f
+2:
         la                %r14,160(%r5,%r15)
         agr               %r5,%r3
 3:
@@ -855,8 +855,8 @@ asm_test::atomic_memcpy_store_align1::release:
         la                %r12,4(%r12)
         la                %r13,4(%r13)
         cgrjne            %r14,%r5,1b
-2:
         cgije             %r0,0,4f
+2:
         lgr               %r14,%r2
         agr               %r14,%r5
         agr               %r5,%r3
@@ -977,8 +977,8 @@ asm_test::atomic_memcpy_store_align2::release:
         la                %r12,4(%r12)
         la                %r13,4(%r13)
         cgrjne            %r14,%r5,1b
-2:
         cgije             %r0,0,4f
+2:
         lgr               %r14,%r2
         agr               %r14,%r5
         agr               %r5,%r3
@@ -1099,8 +1099,8 @@ asm_test::atomic_memcpy_store_align4::release:
         la                %r12,4(%r12)
         la                %r13,4(%r13)
         cgrjne            %r14,%r5,1b
-2:
         cgije             %r0,0,4f
+2:
         lgr               %r14,%r2
         agr               %r14,%r5
         agr               %r5,%r3
