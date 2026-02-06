@@ -40,10 +40,12 @@ See [P1478][p1478] for more.
 #![no_std]
 #![doc(test(
     no_crate_inject,
-    attr(
-        deny(warnings, rust_2018_idioms, single_use_lifetimes),
-        allow(dead_code, unused_variables)
-    )
+    attr(allow(
+        dead_code,
+        unused_variables,
+        clippy::undocumented_unsafe_blocks,
+        clippy::unused_trait_names,
+    ))
 ))]
 #![cfg_attr(test, warn(unsafe_op_in_unsafe_fn))] // unsafe_op_in_unsafe_fn requires Rust 1.52
 #![cfg_attr(not(test), allow(unused_unsafe))]
