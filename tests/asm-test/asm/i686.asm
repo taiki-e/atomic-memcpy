@@ -769,4 +769,3 @@ asm_test::atomic_memcpy_store_align16::release:
         mov               ecx, dword ptr [ecx]
         mov               dword ptr [eax], ecx
         ret
-

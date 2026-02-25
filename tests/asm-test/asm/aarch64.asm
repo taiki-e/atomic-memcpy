@@ -817,4 +817,3 @@ asm_test::atomic_memcpy_store_align16::release:
         str               x9, [x0, #0x8]
         str               x8, [x0]
         ret
-

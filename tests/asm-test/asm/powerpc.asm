@@ -717,4 +717,3 @@ asm_test::atomic_memcpy_store_align16::release:
         lwz               4, 28(4)
         stw               4, 28(3)
         blr
-

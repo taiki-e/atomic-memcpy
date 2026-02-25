@@ -1023,4 +1023,3 @@ asm_test::atomic_memcpy_store_align16::release:
         ld                a1, 0x0(a1)
         sd                a1, 0x0(a0)
         ret
-

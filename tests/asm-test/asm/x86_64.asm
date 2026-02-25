@@ -1188,4 +1188,3 @@ asm_test::atomic_memcpy_store_align16::release:
         mov               rax, qword ptr [rsi]
         mov               qword ptr [rdi], rax
         ret
-

@@ -1034,4 +1034,3 @@ asm_test::atomic_memcpy_store_align16::release:
         ld                4, 56(4)
         std               4, 56(3)
         blr
-

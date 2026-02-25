@@ -1229,4 +1229,3 @@ asm_test::atomic_memcpy_store_align16::release:
         lg                %r0,56(%r3)
         stg               %r0,56(%r2)
         br                %r14
-

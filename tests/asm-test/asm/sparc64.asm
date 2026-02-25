@@ -976,4 +976,3 @@ asm_test::atomic_memcpy_store_align16::release:
         ldx               [ %o1 + 0x38 ], %o1
         retl
         stx               %o1, [ %o0 + 0x38 ]
-

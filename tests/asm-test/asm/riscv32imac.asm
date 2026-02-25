@@ -649,4 +649,3 @@ asm_test::atomic_memcpy_store_align16::release:
         lw                a1, 0x0(a1)
         sw                a1, 0x0(a0)
         ret
-

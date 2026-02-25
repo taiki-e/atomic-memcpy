@@ -927,4 +927,3 @@ asm_test::atomic_memcpy_store_align16::release:
         ld.d              $a1, $a1, 0
         st.d              $a1, $a0, 0
         ret
-

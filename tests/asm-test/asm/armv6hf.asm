@@ -591,4 +591,3 @@ asm_test::atomic_memcpy_store_align16::release:
         str               lr, [r0, #0x4]
         str               r12, [r0]
         pop               {r4, r5, r6, pc}
-
