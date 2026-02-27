@@ -1,6 +1,6 @@
 [package]
 name = "atomic-memcpy"
-version = "0.2.2" #publish:version
+version = "0.2.3" #publish:version
 edition = "2018"
 # NB: Sync with msrv badge in README.md
 rust-version = "1.36" # For MaybeUninit
