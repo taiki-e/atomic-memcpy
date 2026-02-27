@@ -57,9 +57,9 @@ See [P1478][p1478] for more.
     clippy::exhaustive_enums,
     clippy::exhaustive_structs,
     clippy::impl_trait_in_params,
-    clippy::missing_inline_in_public_items,
     clippy::std_instead_of_alloc,
     clippy::std_instead_of_core,
+    clippy::missing_inline_in_public_items,
 )]
 #![allow(clippy::doc_link_with_quotes, clippy::inline_always)]
 

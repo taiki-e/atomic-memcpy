@@ -3,8 +3,8 @@ name = "no-std"
 edition = "2018"
 
 [lib]
-doctest = false
 doc = false
+doctest = false
 
 [dependencies]
 atomic-memcpy = { path = "../.." }
