@@ -1,7 +1,6 @@
 name: CI
 
-permissions:
-  contents: read
+permissions: {}
 
 on:
   pull_request:
@@ -34,18 +33,18 @@ concurrency:
 
 jobs:
   miri:
-    uses: taiki-e/github-actions/.github/workflows/miri.yml@dec917193d835117a7238865adf83273d9fcd27a # main
+    uses: taiki-e/github-actions/.github/workflows/miri.yml@5f549ff6b21e9a853f5f613784d5db27746fd2bc # main
     with:
       all-features: false
   msrv:
-    uses: taiki-e/github-actions/.github/workflows/msrv.yml@dec917193d835117a7238865adf83273d9fcd27a # main
+    uses: taiki-e/github-actions/.github/workflows/msrv.yml@5f549ff6b21e9a853f5f613784d5db27746fd2bc # main
   test:
-    uses: taiki-e/github-actions/.github/workflows/test.yml@dec917193d835117a7238865adf83273d9fcd27a # main
+    uses: taiki-e/github-actions/.github/workflows/test.yml@5f549ff6b21e9a853f5f613784d5db27746fd2bc # main
     with:
       target: x86_64-unknown-linux-gnu,aarch64-apple-darwin,x86_64-pc-windows-msvc,aarch64-unknown-linux-gnu,armv5te-unknown-linux-gnueabi,i686-unknown-linux-gnu,s390x-unknown-linux-gnu
       test-fat-lto: true
   tidy:
-    uses: taiki-e/github-actions/.github/workflows/tidy.yml@dec917193d835117a7238865adf83273d9fcd27a # main
+    uses: taiki-e/github-actions/.github/workflows/tidy.yml@5f549ff6b21e9a853f5f613784d5db27746fd2bc # main
     permissions:
       contents: write # for creating branch for pr
       pull-requests: write # unused (used in `codegen-automerge: true` case)
@@ -61,11 +60,11 @@ jobs:
           - rust: stable
           - rust: beta
           - rust: nightly
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
       - uses: taiki-e/checkout-action@7d1e50e93dc4fb3bba58f85018fadf77898aee8b # v1.4.2
-      - uses: taiki-e/github-actions/install-rust@dec917193d835117a7238865adf83273d9fcd27a # main # zizmor: ignore[stale-action-refs]
+      - uses: taiki-e/github-actions/install-rust@5f549ff6b21e9a853f5f613784d5db27746fd2bc # main # zizmor: ignore[stale-action-refs]
         with:
           toolchain: ${{ matrix.rust }}
       - uses: taiki-e/install-action@b8be7f5e140177087325943c4a8e169d01c59b3d # v2.75.3
@@ -84,7 +83,7 @@ jobs:
           - address
           - memory
           - thread
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
       - uses: taiki-e/checkout-action@7d1e50e93dc4fb3bba58f85018fadf77898aee8b # v1.4.2
@@ -96,13 +95,13 @@ jobs:
           printf 'TARGET=x86_64-unknown-linux-gnumsan\n' >>"${GITHUB_ENV}"
           printf 'BUILD_STD=-Z''build-std\n' >>"${GITHUB_ENV}"
           printf 'MSAN_OPTIONS=verbosity=2\n' >>"${GITHUB_ENV}"
-          printf '%s\n' "RUSTFLAGS=${RUSTFLAGS} -Z sanitizer-memory-track-origins" >>"${GITHUB_ENV}"
-          printf '%s\n' "RUSTDOCFLAGS=${RUSTDOCFLAGS} -Z sanitizer-memory-track-origins" >>"${GITHUB_ENV}"
+          printf 'RUSTFLAGS=%s\n' "${RUSTFLAGS} -Z sanitizer-memory-track-origins" >>"${GITHUB_ENV}"
+          printf 'RUSTDOCFLAGS=%s\n' "${RUSTDOCFLAGS} -Z sanitizer-memory-track-origins" >>"${GITHUB_ENV}"
         if: matrix.sanitizer == 'memory'
       - run: |
           printf 'TARGET=x86_64-unknown-linux-gnutsan\n' >>"${GITHUB_ENV}"
         if: matrix.sanitizer == 'thread'
-      - uses: taiki-e/github-actions/install-rust@dec917193d835117a7238865adf83273d9fcd27a # main # zizmor: ignore[stale-action-refs]
+      - uses: taiki-e/github-actions/install-rust@5f549ff6b21e9a853f5f613784d5db27746fd2bc # main # zizmor: ignore[stale-action-refs]
         with:
           toolchain: nightly
           target: ${{ env.TARGET }}
@@ -115,11 +114,11 @@ jobs:
           CARGO_PROFILE_RELEASE_LTO: fat
 
   valgrind:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
       - uses: taiki-e/checkout-action@7d1e50e93dc4fb3bba58f85018fadf77898aee8b # v1.4.2
-      - uses: taiki-e/github-actions/install-rust@dec917193d835117a7238865adf83273d9fcd27a # main # zizmor: ignore[stale-action-refs]
+      - uses: taiki-e/github-actions/install-rust@5f549ff6b21e9a853f5f613784d5db27746fd2bc # main # zizmor: ignore[stale-action-refs]
         with:
           toolchain: nightly
       - uses: taiki-e/setup-cross-toolchain-action@d62f33b587e73b0004731caebc7d2d46b18a7567 # v1.39.2
@@ -134,11 +133,11 @@ jobs:
           CARGO_PROFILE_RELEASE_LTO: fat
 
   asm-test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
       - uses: taiki-e/checkout-action@7d1e50e93dc4fb3bba58f85018fadf77898aee8b # v1.4.2
-      - uses: taiki-e/github-actions/install-rust@dec917193d835117a7238865adf83273d9fcd27a # main # zizmor: ignore[stale-action-refs]
+      - uses: taiki-e/github-actions/install-rust@5f549ff6b21e9a853f5f613784d5db27746fd2bc # main # zizmor: ignore[stale-action-refs]
         with:
           toolchain: nightly
           component: rust-src
