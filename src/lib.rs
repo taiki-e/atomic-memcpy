@@ -61,7 +61,7 @@ See [P1478][p1478] for more.
     clippy::std_instead_of_core,
     clippy::missing_inline_in_public_items,
 )]
-#![allow(clippy::doc_link_with_quotes, clippy::inline_always)]
+#![allow(clippy::doc_link_with_quotes, clippy::inline_always, clippy::manual_assert_eq)]
 
 // This crate should work on targets with power-of-two pointer widths,
 // but it is not clear how it will work on targets without them.
