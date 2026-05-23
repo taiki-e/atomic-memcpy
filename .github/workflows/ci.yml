@@ -33,26 +33,26 @@ concurrency:
 
 jobs:
   miri:
-    uses: taiki-e/github-actions/.github/workflows/miri.yml@5f549ff6b21e9a853f5f613784d5db27746fd2bc # main
+    needs: tidy
+    uses: taiki-e/github-actions/.github/workflows/miri.yml@a57add62f2464b6791c594783f513e5194350ac9 # main
     with:
       all-features: false
   msrv:
-    uses: taiki-e/github-actions/.github/workflows/msrv.yml@5f549ff6b21e9a853f5f613784d5db27746fd2bc # main
+    needs: tidy
+    uses: taiki-e/github-actions/.github/workflows/msrv.yml@a57add62f2464b6791c594783f513e5194350ac9 # main
   test:
-    uses: taiki-e/github-actions/.github/workflows/test.yml@5f549ff6b21e9a853f5f613784d5db27746fd2bc # main
+    needs: tidy
+    uses: taiki-e/github-actions/.github/workflows/test.yml@a57add62f2464b6791c594783f513e5194350ac9 # main
     with:
       target: x86_64-unknown-linux-gnu,aarch64-apple-darwin,x86_64-pc-windows-msvc,aarch64-unknown-linux-gnu,armv5te-unknown-linux-gnueabi,i686-unknown-linux-gnu,s390x-unknown-linux-gnu
       test-fat-lto: true
   tidy:
-    uses: taiki-e/github-actions/.github/workflows/tidy.yml@5f549ff6b21e9a853f5f613784d5db27746fd2bc # main
+    uses: taiki-e/github-actions/.github/workflows/tidy.yml@a57add62f2464b6791c594783f513e5194350ac9 # main
     permissions:
-      contents: write # for creating branch for pr
-      pull-requests: write # unused (used in `codegen-automerge: true` case)
       security-events: write # for github/codeql-action/*
-    secrets:
-      PR_TOKEN_APP_PRIVATE_KEY: ${{ secrets.PR_TOKEN_APP_PRIVATE_KEY }}
 
   build:
+    needs: tidy
     strategy:
       fail-fast: false
       matrix:
@@ -64,18 +64,16 @@ jobs:
     timeout-minutes: 60
     steps:
       - uses: taiki-e/checkout-action@7d1e50e93dc4fb3bba58f85018fadf77898aee8b # v1.4.2
-      - uses: taiki-e/github-actions/install-rust@5f549ff6b21e9a853f5f613784d5db27746fd2bc # main # zizmor: ignore[stale-action-refs]
+      - uses: taiki-e/install-action@e3134ec54b36203e18f2d1e80652058bd078dd91 # v2.77.3
         with:
-          toolchain: ${{ matrix.rust }}
-      - uses: taiki-e/install-action@58e862542551f667fa44c8a2a4a1d64ad477c96a # v2.75.17
-        with:
-          tool: cargo-hack
+          tool: rust@${{ matrix.rust }},cargo-hack
           fallback: none
       - run: tools/build.sh
         env:
           ALL_TARGETS_MUST_BE_AVAILABLE: ${{ matrix.rust == 'nightly' || '' }}
 
   san:
+    needs: tidy
     strategy:
       fail-fast: false
       matrix:
@@ -101,11 +99,10 @@ jobs:
       - run: |
           printf 'TARGET=x86_64-unknown-linux-gnutsan\n' >>"${GITHUB_ENV}"
         if: matrix.sanitizer == 'thread'
-      - uses: taiki-e/github-actions/install-rust@5f549ff6b21e9a853f5f613784d5db27746fd2bc # main # zizmor: ignore[stale-action-refs]
+      - uses: taiki-e/install-action@e3134ec54b36203e18f2d1e80652058bd078dd91 # v2.77.3
         with:
-          toolchain: nightly
-          target: ${{ env.TARGET }}
-          component: ${{ matrix.sanitizer == 'memory' && 'rust-src' || '' }}
+          tool: rust@nightly+${{ env.TARGET }}${{ matrix.sanitizer == 'memory' && '+rust-src' || '' }}
+          fallback: none
       - run: cargo ${BUILD_STD:-} test --workspace --target "${TARGET}"
       - run: cargo ${BUILD_STD:-} test --workspace --release --target "${TARGET}"
       - run: cargo ${BUILD_STD:-} test --workspace --release --target "${TARGET}"
@@ -114,14 +111,16 @@ jobs:
           CARGO_PROFILE_RELEASE_LTO: fat
 
   valgrind:
+    needs: tidy
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
       - uses: taiki-e/checkout-action@7d1e50e93dc4fb3bba58f85018fadf77898aee8b # v1.4.2
-      - uses: taiki-e/github-actions/install-rust@5f549ff6b21e9a853f5f613784d5db27746fd2bc # main # zizmor: ignore[stale-action-refs]
+      - uses: taiki-e/install-action@e3134ec54b36203e18f2d1e80652058bd078dd91 # v2.77.3
         with:
-          toolchain: nightly
-      - uses: taiki-e/setup-cross-toolchain-action@d62f33b587e73b0004731caebc7d2d46b18a7567 # v1.39.2
+          tool: rust@nightly
+          fallback: none
+      - uses: taiki-e/setup-cross-toolchain-action@3d9770ce98eb7dbcf378563182a5e8031165f75b # v1.41.0
         with:
           target: host-tuple
           runner: valgrind
@@ -133,12 +132,13 @@ jobs:
           CARGO_PROFILE_RELEASE_LTO: fat
 
   asm-test:
+    needs: tidy
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
       - uses: taiki-e/checkout-action@7d1e50e93dc4fb3bba58f85018fadf77898aee8b # v1.4.2
-      - uses: taiki-e/github-actions/install-rust@5f549ff6b21e9a853f5f613784d5db27746fd2bc # main # zizmor: ignore[stale-action-refs]
+      - uses: taiki-e/install-action@e3134ec54b36203e18f2d1e80652058bd078dd91 # v2.77.3
         with:
-          toolchain: nightly
-          component: rust-src
+          tool: rust@nightly+rust-src
+          fallback: none
       - run: cargo test --manifest-path tests/asm-test/Cargo.toml
