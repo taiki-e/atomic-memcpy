@@ -32,24 +32,24 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  tidy:
+    uses: taiki-e/github-actions/.github/workflows/tidy.yml@3637cc7cf76d2ce698edc313bcd39bad8a92caa8 # main
+    permissions:
+      security-events: write # for github/codeql-action/*
   miri:
     needs: tidy
-    uses: taiki-e/github-actions/.github/workflows/miri.yml@a57add62f2464b6791c594783f513e5194350ac9 # main
+    uses: taiki-e/github-actions/.github/workflows/rust-miri.yml@3637cc7cf76d2ce698edc313bcd39bad8a92caa8 # main
     with:
       all-features: false
   msrv:
     needs: tidy
-    uses: taiki-e/github-actions/.github/workflows/msrv.yml@a57add62f2464b6791c594783f513e5194350ac9 # main
+    uses: taiki-e/github-actions/.github/workflows/rust-msrv.yml@3637cc7cf76d2ce698edc313bcd39bad8a92caa8 # main
   test:
     needs: tidy
-    uses: taiki-e/github-actions/.github/workflows/test.yml@a57add62f2464b6791c594783f513e5194350ac9 # main
+    uses: taiki-e/github-actions/.github/workflows/rust-test.yml@3637cc7cf76d2ce698edc313bcd39bad8a92caa8 # main
     with:
       target: x86_64-unknown-linux-gnu,aarch64-apple-darwin,x86_64-pc-windows-msvc,aarch64-unknown-linux-gnu,armv5te-unknown-linux-gnueabi,i686-unknown-linux-gnu,s390x-unknown-linux-gnu
       test-fat-lto: true
-  tidy:
-    uses: taiki-e/github-actions/.github/workflows/tidy.yml@a57add62f2464b6791c594783f513e5194350ac9 # main
-    permissions:
-      security-events: write # for github/codeql-action/*
 
   build:
     needs: tidy
