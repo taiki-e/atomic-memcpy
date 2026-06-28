@@ -1,117 +1,13 @@
 asm_test::atomic_memcpy_load_align1::read_volatile_acquire_fence:
-        push              rbp
-        push              r15
-        push              r14
-        push              r13
-        push              r12
-        push              rbx
         mov               rax, rdi
-        movzx             ecx, byte ptr [esi + 0x1f]
-        mov               byte ptr [esp - 0x1], cl
-        movzx             ecx, byte ptr [esi + 0x1e]
-        mov               byte ptr [esp - 0x2], cl
-        movzx             ecx, byte ptr [esi + 0x1d]
-        mov               byte ptr [esp - 0x3], cl
-        movzx             ecx, byte ptr [esi + 0x1c]
-        mov               byte ptr [esp - 0x4], cl
-        movzx             ecx, byte ptr [esi + 0x1b]
-        mov               byte ptr [esp - 0x5], cl
-        movzx             ecx, byte ptr [esi + 0x1a]
-        mov               byte ptr [esp - 0x6], cl
-        movzx             ecx, byte ptr [esi + 0x19]
-        mov               byte ptr [esp - 0x7], cl
-        movzx             ecx, byte ptr [esi + 0x18]
-        mov               byte ptr [esp - 0x8], cl
-        movzx             ecx, byte ptr [esi + 0x17]
-        mov               byte ptr [esp - 0x9], cl
-        movzx             ecx, byte ptr [esi + 0x16]
-        mov               byte ptr [esp - 0xa], cl
-        movzx             ecx, byte ptr [esi + 0x15]
-        mov               byte ptr [esp - 0xb], cl
-        movzx             ecx, byte ptr [esi + 0x14]
-        mov               byte ptr [esp - 0xc], cl
-        movzx             ecx, byte ptr [esi + 0x13]
-        mov               byte ptr [esp - 0xd], cl
-        movzx             ecx, byte ptr [esi + 0x12]
-        mov               byte ptr [esp - 0xe], cl
-        movzx             ecx, byte ptr [esi + 0x11]
-        mov               byte ptr [esp - 0xf], cl
-        movzx             ecx, byte ptr [esi + 0x10]
-        mov               byte ptr [esp - 0x10], cl
-        movzx             ecx, byte ptr [esi + 0xf]
-        mov               byte ptr [esp - 0x11], cl
-        movzx             ecx, byte ptr [esi + 0xe]
-        mov               byte ptr [esp - 0x12], cl
-        movzx             r13d, byte ptr [esi + 0xd]
-        movzx             r12d, byte ptr [esi + 0xc]
-        movzx             r15d, byte ptr [esi + 0xb]
-        movzx             r14d, byte ptr [esi + 0xa]
-        movzx             ebp, byte ptr [esi + 0x9]
-        movzx             ebx, byte ptr [esi + 0x8]
-        movzx             r11d, byte ptr [esi + 0x7]
-        movzx             r10d, byte ptr [esi + 0x6]
-        movzx             r9d, byte ptr [esi + 0x5]
-        movzx             r8d, byte ptr [esi + 0x4]
-        movzx             edi, byte ptr [esi + 0x3]
-        movzx             edx, byte ptr [esi + 0x2]
-        movzx             ecx, byte ptr [esi]
-        movzx             esi, byte ptr [esi + 0x1]
-        mov               byte ptr [eax], cl
-        mov               byte ptr [eax + 0x1], sil
-        mov               byte ptr [eax + 0x2], dl
-        mov               byte ptr [eax + 0x3], dil
-        mov               byte ptr [eax + 0x4], r8b
-        mov               byte ptr [eax + 0x5], r9b
-        mov               byte ptr [eax + 0x6], r10b
-        mov               byte ptr [eax + 0x7], r11b
-        mov               byte ptr [eax + 0x8], bl
-        mov               byte ptr [eax + 0x9], bpl
-        mov               byte ptr [eax + 0xa], r14b
-        mov               byte ptr [eax + 0xb], r15b
-        mov               byte ptr [eax + 0xc], r12b
-        mov               byte ptr [eax + 0xd], r13b
-        movzx             ecx, byte ptr [esp - 0x12]
-        mov               byte ptr [eax + 0xe], cl
-        movzx             ecx, byte ptr [esp - 0x11]
-        mov               byte ptr [eax + 0xf], cl
-        movzx             ecx, byte ptr [esp - 0x10]
-        mov               byte ptr [eax + 0x10], cl
-        movzx             ecx, byte ptr [esp - 0xf]
-        mov               byte ptr [eax + 0x11], cl
-        movzx             ecx, byte ptr [esp - 0xe]
-        mov               byte ptr [eax + 0x12], cl
-        movzx             ecx, byte ptr [esp - 0xd]
-        mov               byte ptr [eax + 0x13], cl
-        movzx             ecx, byte ptr [esp - 0xc]
-        mov               byte ptr [eax + 0x14], cl
-        movzx             ecx, byte ptr [esp - 0xb]
-        mov               byte ptr [eax + 0x15], cl
-        movzx             ecx, byte ptr [esp - 0xa]
-        mov               byte ptr [eax + 0x16], cl
-        movzx             ecx, byte ptr [esp - 0x9]
-        mov               byte ptr [eax + 0x17], cl
-        movzx             ecx, byte ptr [esp - 0x8]
-        mov               byte ptr [eax + 0x18], cl
-        movzx             ecx, byte ptr [esp - 0x7]
-        mov               byte ptr [eax + 0x19], cl
-        movzx             ecx, byte ptr [esp - 0x6]
-        mov               byte ptr [eax + 0x1a], cl
-        movzx             ecx, byte ptr [esp - 0x5]
-        mov               byte ptr [eax + 0x1b], cl
-        movzx             ecx, byte ptr [esp - 0x4]
-        mov               byte ptr [eax + 0x1c], cl
-        movzx             ecx, byte ptr [esp - 0x3]
-        mov               byte ptr [eax + 0x1d], cl
-        movzx             ecx, byte ptr [esp - 0x2]
-        mov               byte ptr [eax + 0x1e], cl
-        movzx             ecx, byte ptr [esp - 0x1]
-        mov               byte ptr [eax + 0x1f], cl
-        pop               rbx
-        pop               r12
-        pop               r13
-        pop               r14
-        pop               r15
-        pop               rbp
+        mov               rcx, qword ptr [esi]
+        mov               rdx, qword ptr [esi + 0x8]
+        mov               rdi, qword ptr [esi + 0x18]
+        mov               rsi, qword ptr [esi + 0x10]
+        mov               qword ptr [eax + 0x10], rsi
+        mov               qword ptr [eax + 0x18], rdi
+        mov               qword ptr [eax], rcx
+        mov               qword ptr [eax + 0x8], rdx
         ret
 
 asm_test::atomic_memcpy_load_align1::acquire:
@@ -209,55 +105,15 @@ asm_test::atomic_memcpy_load_align1::acquire:
         ret
 
 asm_test::atomic_memcpy_load_align2::read_volatile_acquire_fence:
-        push              rbp
-        push              r15
-        push              r14
-        push              r13
-        push              r12
-        push              rbx
         mov               rax, rdi
-        movzx             ecx, word ptr [esi + 0x1e]
-        mov               word ptr [esp - 0x2], cx
-        movzx             ecx, word ptr [esi + 0x1c]
-        mov               word ptr [esp - 0x4], cx
-        movzx             edi, word ptr [esi + 0x1a]
-        movzx             r8d, word ptr [esi + 0x18]
-        movzx             r9d, word ptr [esi + 0x16]
-        movzx             r10d, word ptr [esi + 0x14]
-        movzx             r11d, word ptr [esi + 0x12]
-        movzx             ebx, word ptr [esi + 0x10]
-        movzx             ebp, word ptr [esi + 0xe]
-        movzx             r14d, word ptr [esi + 0xc]
-        movzx             r15d, word ptr [esi + 0xa]
-        movzx             r12d, word ptr [esi + 0x8]
-        movzx             r13d, word ptr [esi + 0x6]
-        movzx             edx, word ptr [esi + 0x4]
-        movzx             ecx, word ptr [esi]
-        movzx             esi, word ptr [esi + 0x2]
-        mov               word ptr [eax], cx
-        mov               word ptr [eax + 0x2], si
-        mov               word ptr [eax + 0x4], dx
-        mov               word ptr [eax + 0x6], r13w
-        mov               word ptr [eax + 0x8], r12w
-        mov               word ptr [eax + 0xa], r15w
-        mov               word ptr [eax + 0xc], r14w
-        mov               word ptr [eax + 0xe], bp
-        mov               word ptr [eax + 0x10], bx
-        mov               word ptr [eax + 0x12], r11w
-        mov               word ptr [eax + 0x14], r10w
-        mov               word ptr [eax + 0x16], r9w
-        mov               word ptr [eax + 0x18], r8w
-        mov               word ptr [eax + 0x1a], di
-        movzx             ecx, word ptr [esp - 0x4]
-        mov               word ptr [eax + 0x1c], cx
-        movzx             ecx, word ptr [esp - 0x2]
-        mov               word ptr [eax + 0x1e], cx
-        pop               rbx
-        pop               r12
-        pop               r13
-        pop               r14
-        pop               r15
-        pop               rbp
+        mov               rcx, qword ptr [esi]
+        mov               rdx, qword ptr [esi + 0x8]
+        mov               rdi, qword ptr [esi + 0x18]
+        mov               rsi, qword ptr [esi + 0x10]
+        mov               qword ptr [eax + 0x10], rsi
+        mov               qword ptr [eax + 0x18], rdi
+        mov               qword ptr [eax], rcx
+        mov               qword ptr [eax + 0x8], rdx
         ret
 
 asm_test::atomic_memcpy_load_align2::acquire:
@@ -336,22 +192,14 @@ asm_test::atomic_memcpy_load_align2::acquire:
 
 asm_test::atomic_memcpy_load_align4::read_volatile_acquire_fence:
         mov               rax, rdi
-        mov               ecx, dword ptr [esi + 0x1c]
-        mov               edx, dword ptr [esi + 0x18]
-        mov               edi, dword ptr [esi + 0x14]
-        mov               r8d, dword ptr [esi + 0x10]
-        mov               r9d, dword ptr [esi + 0xc]
-        mov               r10d, dword ptr [esi + 0x8]
-        mov               r11d, dword ptr [esi]
-        mov               esi, dword ptr [esi + 0x4]
-        mov               dword ptr [eax], r11d
-        mov               dword ptr [eax + 0x4], esi
-        mov               dword ptr [eax + 0x8], r10d
-        mov               dword ptr [eax + 0xc], r9d
-        mov               dword ptr [eax + 0x10], r8d
-        mov               dword ptr [eax + 0x14], edi
-        mov               dword ptr [eax + 0x18], edx
-        mov               dword ptr [eax + 0x1c], ecx
+        mov               rcx, qword ptr [esi]
+        mov               rdx, qword ptr [esi + 0x8]
+        mov               rdi, qword ptr [esi + 0x18]
+        mov               rsi, qword ptr [esi + 0x10]
+        mov               qword ptr [eax + 0x10], rsi
+        mov               qword ptr [eax + 0x18], rdi
+        mov               qword ptr [eax], rcx
+        mov               qword ptr [eax + 0x8], rdx
         ret
 
 asm_test::atomic_memcpy_load_align4::acquire:
@@ -376,14 +224,14 @@ asm_test::atomic_memcpy_load_align4::acquire:
 
 asm_test::atomic_memcpy_load_align8::read_volatile_acquire_fence:
         mov               rax, rdi
-        mov               rcx, qword ptr [esi + 0x18]
-        mov               rdx, qword ptr [esi + 0x10]
-        mov               rdi, qword ptr [esi]
-        mov               rsi, qword ptr [esi + 0x8]
-        mov               qword ptr [eax], rdi
-        mov               qword ptr [eax + 0x8], rsi
-        mov               qword ptr [eax + 0x10], rdx
-        mov               qword ptr [eax + 0x18], rcx
+        mov               rcx, qword ptr [esi]
+        mov               rdx, qword ptr [esi + 0x8]
+        mov               rdi, qword ptr [esi + 0x18]
+        mov               rsi, qword ptr [esi + 0x10]
+        mov               qword ptr [eax + 0x10], rsi
+        mov               qword ptr [eax + 0x18], rdi
+        mov               qword ptr [eax], rcx
+        mov               qword ptr [eax + 0x8], rdx
         ret
 
 asm_test::atomic_memcpy_load_align8::acquire:
@@ -408,14 +256,14 @@ asm_test::atomic_memcpy_load_align8::acquire:
 
 asm_test::atomic_memcpy_load_align16::read_volatile_acquire_fence:
         mov               rax, rdi
-        mov               rcx, qword ptr [esi + 0x18]
-        mov               rdx, qword ptr [esi + 0x10]
-        mov               rdi, qword ptr [esi]
-        mov               rsi, qword ptr [esi + 0x8]
-        mov               qword ptr [eax], rdi
-        mov               qword ptr [eax + 0x8], rsi
-        mov               qword ptr [eax + 0x10], rdx
-        mov               qword ptr [eax + 0x18], rcx
+        mov               rcx, qword ptr [esi]
+        mov               rdx, qword ptr [esi + 0x8]
+        mov               rdi, qword ptr [esi + 0x18]
+        mov               rsi, qword ptr [esi + 0x10]
+        mov               qword ptr [eax + 0x10], rsi
+        mov               qword ptr [eax + 0x18], rdi
+        mov               qword ptr [eax], rcx
+        mov               qword ptr [eax + 0x8], rdx
         ret
 
 asm_test::atomic_memcpy_load_align16::acquire:
