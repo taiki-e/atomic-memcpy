@@ -85,25 +85,25 @@ asm_test::atomic_memcpy_load_align1::read_volatile_acquire_fence:
         pop               {r4, r5, r6, r7, r8, r9, r10, r11, pc}
 
 asm_test::atomic_memcpy_load_align1::acquire:
-        push              {r4, r5, r11, lr}
+        push              {r4, r5, r6, lr}
         sub               sp, sp, #32
         add               r2, r1, #3
         bic               r12, r2, #3
         cmp               r12, r1
         bne               0f
-        mov               lr, #0
+        mov               r6, #0
         mov               r3, #32
         b                 2f
 0:
-        sub               lr, r12, r1
-        sub               r3, r1, r12
-        mov               r2, sp
-        mov               r4, r1
+        sub               r6, r12, r1
+        sub               lr, r1, r12
+        mov               r3, sp
+        mov               r2, r1
 1:
-        ldrb              r5, [r4]
-        add               r4, r4, #1
-        strb              r5, [r2], #1
-        adds              r3, r3, #1
+        ldrb              r5, [r2]
+        add               r2, r2, #1
+        strb              r5, [r3], #1
+        adds              lr, lr, #1
         blo               1b
         sub               r2, r1, r12
         add               r3, r2, #32
@@ -112,25 +112,25 @@ asm_test::atomic_memcpy_load_align1::acquire:
 2:
         mov               r12, sp
 3:
-        ldr               r2, [r1, lr]
-        add               r4, r12, lr
+        ldr               r2, [r1, r6]
+        add               r5, r12, r6
         sub               r3, r3, #4
-        strb              r2, [r12, lr]
-        add               lr, lr, #4
+        strb              r2, [r12, r6]
+        add               r6, r6, #4
         cmp               r3, #3
-        lsr               r5, r2, #24
-        strb              r5, [r4, #0x3]
-        lsr               r5, r2, #16
+        lsr               r4, r2, #24
+        strb              r4, [r5, #0x3]
+        lsr               r4, r2, #16
         lsr               r2, r2, #8
-        strb              r5, [r4, #0x2]
-        strb              r2, [r4, #0x1]
+        strb              r4, [r5, #0x2]
+        strb              r2, [r5, #0x1]
         bhi               3b
 4:
         cmp               r3, #0
         beq               6f
         mov               r2, sp
-        add               r1, r1, lr
-        add               r2, r2, lr
+        add               r1, r1, r6
+        add               r2, r2, r6
 5:
         ldrb              r5, [r1]
         add               r1, r1, #1
@@ -145,7 +145,7 @@ asm_test::atomic_memcpy_load_align1::acquire:
         mov               r0, #0
         mcr               p15, #0x0, r0, c7, c10, #0x5
         add               sp, sp, #32
-        pop               {r4, r5, r11, pc}
+        pop               {r4, r5, r6, pc}
 
 asm_test::atomic_memcpy_load_align2::read_volatile_acquire_fence:
         push              {r4, r5, r11, lr}

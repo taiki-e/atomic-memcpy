@@ -26,37 +26,37 @@ asm_test::atomic_memcpy_load_align1::acquire:
         bic               r2, r2, #0x3
         cmp               r2, r1
         bne               0f
-        mov.w             r12, #0x0
+        mov.w             lr, #0x0
         movs              r3, #0x20
         b                 2f
 0:
-        sub.w             lr, r1, r2
-        sub.w             r12, r2, r1
-        mov               r2, sp
+        sub.w             r12, r1, r2
+        sub.w             lr, r2, r1
+        mov               r3, sp
         mov               r4, r1
-        mov               r3, lr
+        mov               r2, r12
 1:
         ldrb              r5, [r4], #1
-        adds              r3, #0x1
-        strb              r5, [r2], #1
+        adds              r2, #0x1
+        strb              r5, [r3], #1
         blo               1b
-        add.w             r3, lr, #0x20
+        add.w             r3, r12, #0x20
         cmp               r3, #0x4
         blo               4f
 2:
         mov               r2, sp
 3:
-        ldr.w             r5, [r1, r12]
+        ldr.w             r5, [r1, lr]
         subs              r3, #0x4
         cmp               r3, #0x3
-        str.w             r5, [r2, r12]
-        add.w             r12, r12, #0x4
+        str.w             r5, [r2, lr]
+        add.w             lr, lr, #0x4
         bhi               3b
 4:
         cbz               r3, 6f
         mov               r2, sp
-        add               r1, r12
-        add               r2, r12
+        add               r1, lr
+        add               r2, lr
 5:
         ldrb              r5, [r1], #1
         subs              r3, #0x1
