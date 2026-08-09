@@ -1,88 +1,72 @@
 asm_test::atomic_memcpy_load_align1::read_volatile_acquire_fence:
-        push              {r4, r5, r6, r7, r8, r9, r10, r11, lr}
-        sub               sp, sp, #4
-        mov               r4, r1
-        mov               r7, r1
-        ldrb              r2, [r1, #0x19]
-        ldrb              r8, [r1, #0x15]
-        ldrb              lr, [r4, #0x1c]!
+        push              {r4, r5, r6, r7, r11, lr}
+        ldrb              r2, [r1, #0x1e]
+        ldrb              r3, [r1, #0x1d]
+        ldrb              r12, [r1, #0x1c]
+        ldrb              lr, [r1, #0x1b]
+        ldrb              r7, [r1, #0x1a]
+        ldrb              r5, [r1, #0x1f]
+        strb              r5, [r0, #0x1f]
+        ldrb              r5, [r1, #0x19]
+        strb              r2, [r0, #0x1e]
+        ldrb              r2, [r1, #0x18]
+        strb              r3, [r0, #0x1d]
+        ldrb              r3, [r1, #0x17]
+        strb              r12, [r0, #0x1c]
+        ldrb              r4, [r1, #0x16]
+        strb              lr, [r0, #0x1b]
+        ldrb              r6, [r1, #0x15]
+        strb              r7, [r0, #0x1a]
+        ldrb              r7, [r1, #0x14]
+        strb              r5, [r0, #0x19]
+        ldrb              r5, [r1, #0x13]
+        strb              r2, [r0, #0x18]
+        ldrb              r2, [r1, #0x12]
+        strb              r3, [r0, #0x17]
         ldrb              r3, [r1, #0x11]
-        ldrb              r10, [r1, #0xd]
-        ldrb              r6, [r7, #0x18]!
-        str               r6, [sp]
-        ldrb              r5, [r1, #0x9]
-        ldrb              r9, [r1, #0x5]
-        ldrb              r6, [r1, #0x1d]
-        strb              r6, [r0, #0x1d]
-        strb              r2, [r0, #0x19]
-        ldrb              r11, [r1]
-        ldrb              r12, [r1, #0x1]
-        ldrb              r6, [r1, #0x2]
-        ldrb              r2, [r1, #0x3]
-        strb              r8, [r0, #0x15]
+        strb              r4, [r0, #0x16]
+        ldrb              r4, [r1, #0x10]
+        strb              r6, [r0, #0x15]
+        ldrb              r6, [r1, #0xf]
+        strb              r7, [r0, #0x14]
+        ldrb              r7, [r1, #0xe]
+        strb              r5, [r0, #0x13]
+        ldrb              r5, [r1, #0xd]
+        strb              r2, [r0, #0x12]
+        ldrb              r2, [r1, #0xc]
         strb              r3, [r0, #0x11]
-        ldrb              r3, [r4, #0x2]
-        ldrb              r4, [r4, #0x3]
-        strb              r5, [r0, #0x9]
-        mov               r5, r1
-        strb              r10, [r0, #0xd]
-        ldrb              r8, [r7, #0x2]
-        ldrb              r7, [r7, #0x3]
-        strb              r2, [r0, #0x3]
-        mov               r2, r1
-        strb              r9, [r0, #0x5]
-        ldrb              r9, [r2, #0x10]!
-        strb              r6, [r0, #0x2]
-        mov               r6, r0
-        strb              r12, [r0, #0x1]
-        ldrb              r12, [r5, #0xc]!
-        strb              lr, [r6, #0x1c]!
-        strb              r11, [r0]
-        strb              r4, [r6, #0x3]
-        mov               r4, r1
-        ldrb              lr, [r4, #0x8]!
-        strb              r3, [r6, #0x2]
-        mov               r6, r0
-        ldr               r3, [sp]
-        strb              r3, [r6, #0x18]!
-        mov               r3, r1
-        ldrb              r10, [r3, #0x4]!
-        strb              r7, [r6, #0x3]
-        ldrb              r7, [r1, #0x14]!
-        strb              r8, [r6, #0x2]
-        mov               r6, r0
-        strb              r7, [r6, #0x14]!
-        ldrb              r7, [r1, #0x2]
-        ldrb              r1, [r1, #0x3]
-        strb              r1, [r6, #0x3]
-        ldrb              r1, [r2, #0x2]
-        ldrb              r2, [r2, #0x3]
-        strb              r7, [r6, #0x2]
-        mov               r6, r0
-        strb              r9, [r6, #0x10]!
-        strb              r2, [r6, #0x3]
-        ldrb              r2, [r5, #0x2]
-        ldrb              r5, [r5, #0x3]
-        strb              r1, [r6, #0x2]
-        mov               r1, r0
-        strb              r12, [r1, #0xc]!
-        ldrb              r7, [r4, #0x2]
-        ldrb              r6, [r4, #0x3]
-        strb              r5, [r1, #0x3]
-        ldrb              r5, [r3, #0x2]
-        ldrb              r3, [r3, #0x3]
-        strb              r2, [r1, #0x2]
-        mov               r1, r0
-        strb              lr, [r1, #0x8]!
-        strb              r10, [r0, #0x4]!
-        strb              r6, [r1, #0x3]
-        strb              r7, [r1, #0x2]
-        strb              r3, [r0, #0x3]
+        ldrb              r3, [r1, #0xb]
+        strb              r4, [r0, #0x10]
+        ldrb              r4, [r1, #0xa]
+        strb              r6, [r0, #0xf]
+        ldrb              r6, [r1, #0x9]
+        strb              r7, [r0, #0xe]
+        ldrb              r7, [r1, #0x8]
+        strb              r5, [r0, #0xd]
+        ldrb              r5, [r1, #0x7]
+        strb              r2, [r0, #0xc]
+        ldrb              r2, [r1, #0x5]
+        strb              r3, [r0, #0xb]
+        ldrb              r3, [r1, #0x4]
+        strb              r4, [r0, #0xa]
+        strb              r6, [r0, #0x9]
+        strb              r7, [r0, #0x8]
+        strb              r5, [r0, #0x7]
+        ldrb              r7, [r1]
+        ldrb              r6, [r1, #0x1]
+        ldrb              r5, [r1, #0x2]
+        ldrb              r4, [r1, #0x3]
+        ldrb              r1, [r1, #0x6]
+        strb              r1, [r0, #0x6]
+        strb              r2, [r0, #0x5]
+        strb              r3, [r0, #0x4]
+        strb              r4, [r0, #0x3]
         strb              r5, [r0, #0x2]
+        strb              r6, [r0, #0x1]
+        strb              r7, [r0]
         mov               r0, #0
         mcr               p15, #0x0, r0, c7, c10, #0x5
-        add               sp, sp, #4
-        pop               {r4, r5, r6, r7, r8, r9, r10, r11, pc}
+        pop               {r4, r5, r6, r7, r11, pc}
 
 asm_test::atomic_memcpy_load_align1::acquire:
         push              {r4, r5, r6, lr}
@@ -373,46 +357,46 @@ asm_test::atomic_memcpy_store_align1::write_volatile_release_fence:
 
 asm_test::atomic_memcpy_store_align1::release:
         push              {r4, r5, r11, lr}
-        add               r2, r0, #3
-        mov               lr, #0
-        bic               r12, r2, #3
+        add               r3, r0, #3
+        mov               r2, #0
+        bic               r12, r3, #3
         mov               r3, #32
         cmp               r12, r0
-        mcr               p15, #0x0, lr, c7, c10, #0x5
+        mcr               p15, #0x0, r2, c7, c10, #0x5
         beq               1f
-        sub               lr, r12, r0
-        sub               r3, r0, r12
-        mov               r2, r1
+        sub               r2, r12, r0
+        sub               lr, r0, r12
+        mov               r3, r1
         mov               r4, r0
 0:
-        ldrb              r5, [r2], #1
-        adds              r3, r3, #1
+        ldrb              r5, [r3], #1
+        adds              lr, lr, #1
         strb              r5, [r4]
         add               r4, r4, #1
         blo               0b
-        sub               r2, r0, r12
-        add               r3, r2, #32
+        sub               r3, r0, r12
+        add               r3, r3, #32
         cmp               r3, #4
         blo               2f
 1:
-        mov               r2, r1
+        add               r4, r1, r2
+        ldrb              r12, [r1, r2]
         sub               r3, r3, #4
-        ldrb              r12, [r2, lr]!
+        ldrb              r5, [r4, #0x1]
         cmp               r3, #3
-        ldrb              r4, [r2, #0x1]
-        ldrb              r5, [r2, #0x2]
-        ldrb              r2, [r2, #0x3]
-        orr               r4, r12, r4, lsl #8
-        orr               r2, r5, r2, lsl #8
-        orr               r2, r4, r2, lsl #16
-        str               r2, [r0, lr]
-        add               lr, lr, #4
+        ldrb              lr, [r4, #0x2]
+        ldrb              r4, [r4, #0x3]
+        orr               r5, r12, r5, lsl #8
+        orr               r4, lr, r4, lsl #8
+        orr               r5, r5, r4, lsl #16
+        str               r5, [r0, r2]
+        add               r2, r2, #4
         bhi               1b
 2:
         cmp               r3, #0
         beq               4f
-        add               r0, r0, lr
-        add               r1, r1, lr
+        add               r0, r0, r2
+        add               r1, r1, r2
 3:
         ldrb              r2, [r1], #1
         subs              r3, r3, #1
@@ -453,15 +437,15 @@ asm_test::atomic_memcpy_store_align2::release:
         cmp               r3, #4
         blo               2f
 1:
-        mov               r2, r1
+        add               r5, r1, lr
+        ldrb              r12, [r1, lr]
         sub               r3, r3, #4
-        ldrb              r12, [r2, lr]!
+        ldrb              r4, [r5, #0x1]
         cmp               r3, #3
-        ldrb              r4, [r2, #0x1]
-        ldrb              r5, [r2, #0x2]
-        ldrb              r2, [r2, #0x3]
+        ldrb              r2, [r5, #0x2]
+        ldrb              r5, [r5, #0x3]
         orr               r4, r12, r4, lsl #8
-        orr               r2, r5, r2, lsl #8
+        orr               r2, r2, r5, lsl #8
         orr               r2, r4, r2, lsl #16
         str               r2, [r0, lr]
         add               lr, lr, #4

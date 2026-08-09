@@ -25,8 +25,9 @@ asm_test::atomic_memcpy_load_align1::acquire:
         mov               x13, x0
         mov               x12, x10
 1:
-        ldrb              w14, [x13], #0x1
+        ldrb              w14, [x13]
         adds              x12, x12, #0x1
+        add               x13, x13, #0x1
         strb              w14, [x11], #0x1
         b.lo              1b
         add               x10, x10, #0x40
@@ -47,8 +48,9 @@ asm_test::atomic_memcpy_load_align1::acquire:
         add               x11, x0, x9
         add               x9, x12, x9
 5:
-        ldrb              w12, [x11], #0x1
+        ldrb              w12, [x11]
         subs              x10, x10, #0x1
+        add               x11, x11, #0x1
         strb              w12, [x9], #0x1
         b.ne              5b
 6:
@@ -87,8 +89,9 @@ asm_test::atomic_memcpy_load_align2::acquire:
         mov               x13, x0
         mov               x12, x10
 1:
-        ldrb              w14, [x13], #0x1
+        ldrb              w14, [x13]
         adds              x12, x12, #0x1
+        add               x13, x13, #0x1
         strb              w14, [x11], #0x1
         b.lo              1b
         add               x10, x10, #0x40
@@ -174,8 +177,9 @@ asm_test::atomic_memcpy_load_align4::acquire:
         mov               x13, x0
         mov               x12, x10
 1:
-        ldrb              w14, [x13], #0x1
+        ldrb              w14, [x13]
         adds              x12, x12, #0x1
+        add               x13, x13, #0x1
         strb              w14, [x11], #0x1
         b.lo              1b
         add               x10, x10, #0x40
@@ -320,7 +324,8 @@ asm_test::atomic_memcpy_store_align1::release:
 1:
         ldrb              w13, [x11], #0x1
         adds              x10, x10, #0x1
-        strb              w13, [x12], #0x1
+        strb              w13, [x12]
+        add               x12, x12, #0x1
         b.lo              1b
         add               x9, x9, #0x40
         cmp               x9, #0x8
@@ -339,7 +344,8 @@ asm_test::atomic_memcpy_store_align1::release:
 4:
         ldrb              w11, [x10], #0x1
         subs              x9, x9, #0x1
-        strb              w11, [x8], #0x1
+        strb              w11, [x8]
+        add               x8, x8, #0x1
         b.ne              4b
 5:
         ret
@@ -372,7 +378,8 @@ asm_test::atomic_memcpy_store_align2::release:
 1:
         ldrb              w13, [x11], #0x1
         adds              x10, x10, #0x1
-        strb              w13, [x12], #0x1
+        strb              w13, [x12]
+        add               x12, x12, #0x1
         b.lo              1b
         add               x9, x9, #0x40
         cmp               x9, #0x8
@@ -449,7 +456,8 @@ asm_test::atomic_memcpy_store_align4::release:
 1:
         ldrb              w13, [x11], #0x1
         adds              x10, x10, #0x1
-        strb              w13, [x12], #0x1
+        strb              w13, [x12]
+        add               x12, x12, #0x1
         b.lo              1b
         add               x9, x9, #0x40
         cmp               x9, #0x8

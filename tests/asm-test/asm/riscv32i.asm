@@ -44,20 +44,20 @@ asm_test::atomic_memcpy_load_align1::read_volatile_acquire_fence:
         lbu               s10, 0x17(a1)
         lbu               s11, 0x18(a1)
         lbu               ra, 0x19(a1)
-        lbu               a5, 0x1a(a1)
-        lbu               a6, 0x1b(a1)
-        lbu               a2, 0x1c(a1)
-        lbu               a3, 0x1d(a1)
-        lbu               a4, 0x1e(a1)
+        lbu               a2, 0x1a(a1)
+        lbu               a3, 0x1b(a1)
+        lbu               a4, 0x1c(a1)
+        lbu               a5, 0x1d(a1)
+        lbu               a6, 0x1e(a1)
         lbu               a1, 0x1f(a1)
-        sb                a2, 0x1c(a0)
-        sb                a3, 0x1d(a0)
-        sb                a4, 0x1e(a0)
-        sb                a1, 0x1f(a0)
         sb                s11, 0x18(a0)
         sb                ra, 0x19(a0)
-        sb                a5, 0x1a(a0)
-        sb                a6, 0x1b(a0)
+        sb                a2, 0x1a(a0)
+        sb                a3, 0x1b(a0)
+        sb                a4, 0x1c(a0)
+        sb                a5, 0x1d(a0)
+        sb                a6, 0x1e(a0)
+        sb                a1, 0x1f(a0)
         sb                s7, 0x14(a0)
         sb                s8, 0x15(a0)
         sb                s9, 0x16(a0)
@@ -137,7 +137,6 @@ asm_test::atomic_memcpy_load_align1::acquire:
         lw                a7, 0x0(a4)
         addi              a3, a3, -0x4
         addi              a2, a2, 0x4
-        addi              a4, a4, 0x4
         srli              t0, a7, 0x18
         srli              t1, a7, 0x10
         srli              t2, a7, 0x8
@@ -145,18 +144,19 @@ asm_test::atomic_memcpy_load_align1::acquire:
         sb                t2, 0x1(a5)
         sb                t1, 0x2(a5)
         sb                t0, 0x3(a5)
+        addi              a4, a4, 0x4
         addi              a5, a5, 0x4
         bltu              a6, a3, 3b
 4:
         beqz              a3, 6f
-        add               a1, a1, a2
         addi              a4, sp, 0xc
+        add               a1, a1, a2
         add               a2, a4, a2
 5:
         lb                a4, 0x0(a1)
-        addi              a1, a1, 0x1
         addi              a3, a3, -0x1
         sb                a4, 0x0(a2)
+        addi              a1, a1, 0x1
         addi              a2, a2, 0x1
         bnez              a3, 5b
 6:
@@ -190,11 +190,11 @@ asm_test::atomic_memcpy_load_align2::read_volatile_acquire_fence:
         lhu               s0, 0x1a(a1)
         lhu               s1, 0x1c(a1)
         lhu               a1, 0x1e(a1)
+        sh                t2, 0x10(a0)
         sh                t6, 0x18(a0)
         sh                s0, 0x1a(a0)
         sh                s1, 0x1c(a0)
         sh                a1, 0x1e(a0)
-        sh                t2, 0x10(a0)
         sh                t3, 0x12(a0)
         sh                t4, 0x14(a0)
         sh                t5, 0x16(a0)
@@ -245,7 +245,6 @@ asm_test::atomic_memcpy_load_align2::acquire:
         lw                a7, 0x0(a4)
         addi              a3, a3, -0x4
         addi              a2, a2, 0x4
-        addi              a4, a4, 0x4
         srli              t0, a7, 0x18
         srli              t1, a7, 0x10
         srli              t2, a7, 0x8
@@ -253,6 +252,7 @@ asm_test::atomic_memcpy_load_align2::acquire:
         sb                t2, 0x1(a5)
         sb                t1, 0x2(a5)
         sb                t0, 0x3(a5)
+        addi              a4, a4, 0x4
         addi              a5, a5, 0x4
         bltu              a6, a3, 3b
 4:
@@ -288,11 +288,11 @@ asm_test::atomic_memcpy_load_align4::read_volatile_acquire_fence:
         lw                a7, 0x14(a1)
         lw                t0, 0x18(a1)
         lw                a1, 0x1c(a1)
+        sw                a2, 0x0(a0)
         sw                a6, 0x10(a0)
         sw                a7, 0x14(a0)
         sw                t0, 0x18(a0)
         sw                a1, 0x1c(a0)
-        sw                a2, 0x0(a0)
         sw                a3, 0x4(a0)
         sw                a4, 0x8(a0)
         sw                a5, 0xc(a0)
@@ -302,27 +302,27 @@ asm_test::atomic_memcpy_load_align4::read_volatile_acquire_fence:
 asm_test::atomic_memcpy_load_align4::acquire:
         addi              a2, a1, 0x1c
         addi              a3, a1, 0x18
-        addi              a4, a1, 0x14
-        addi              a5, a1, 0x10
-        addi              a6, a1, 0xc
-        addi              a7, a1, 0x8
-        addi              t0, a1, 0x4
         lw                a2, 0x0(a2)
+        addi              a4, a1, 0x14
         lw                a3, 0x0(a3)
+        addi              a5, a1, 0x10
         lw                a4, 0x0(a4)
+        addi              a6, a1, 0xc
         lw                a5, 0x0(a5)
+        addi              a7, a1, 0x8
         lw                a6, 0x0(a6)
+        addi              t0, a1, 0x4
         lw                a7, 0x0(a7)
         lw                t0, 0x0(t0)
         lw                a1, 0x0(a1)
-        sw                a5, 0x10(a0)
-        sw                a4, 0x14(a0)
-        sw                a3, 0x18(a0)
-        sw                a2, 0x1c(a0)
         sw                a1, 0x0(a0)
         sw                t0, 0x4(a0)
         sw                a7, 0x8(a0)
         sw                a6, 0xc(a0)
+        sw                a5, 0x10(a0)
+        sw                a4, 0x14(a0)
+        sw                a3, 0x18(a0)
+        sw                a2, 0x1c(a0)
         fence             r, rw
         ret
 
@@ -335,11 +335,11 @@ asm_test::atomic_memcpy_load_align8::read_volatile_acquire_fence:
         lw                a7, 0x14(a1)
         lw                t0, 0x18(a1)
         lw                a1, 0x1c(a1)
+        sw                a2, 0x0(a0)
         sw                a6, 0x10(a0)
         sw                a7, 0x14(a0)
         sw                t0, 0x18(a0)
         sw                a1, 0x1c(a0)
-        sw                a2, 0x0(a0)
         sw                a3, 0x4(a0)
         sw                a4, 0x8(a0)
         sw                a5, 0xc(a0)
@@ -349,27 +349,27 @@ asm_test::atomic_memcpy_load_align8::read_volatile_acquire_fence:
 asm_test::atomic_memcpy_load_align8::acquire:
         addi              a2, a1, 0x1c
         addi              a3, a1, 0x18
-        addi              a4, a1, 0x14
-        addi              a5, a1, 0x10
-        addi              a6, a1, 0xc
-        addi              a7, a1, 0x8
-        addi              t0, a1, 0x4
         lw                a2, 0x0(a2)
+        addi              a4, a1, 0x14
         lw                a3, 0x0(a3)
+        addi              a5, a1, 0x10
         lw                a4, 0x0(a4)
+        addi              a6, a1, 0xc
         lw                a5, 0x0(a5)
+        addi              a7, a1, 0x8
         lw                a6, 0x0(a6)
+        addi              t0, a1, 0x4
         lw                a7, 0x0(a7)
         lw                t0, 0x0(t0)
         lw                a1, 0x0(a1)
-        sw                a5, 0x10(a0)
-        sw                a4, 0x14(a0)
-        sw                a3, 0x18(a0)
-        sw                a2, 0x1c(a0)
         sw                a1, 0x0(a0)
         sw                t0, 0x4(a0)
         sw                a7, 0x8(a0)
         sw                a6, 0xc(a0)
+        sw                a5, 0x10(a0)
+        sw                a4, 0x14(a0)
+        sw                a3, 0x18(a0)
+        sw                a2, 0x1c(a0)
         fence             r, rw
         ret
 
@@ -382,11 +382,11 @@ asm_test::atomic_memcpy_load_align16::read_volatile_acquire_fence:
         lw                a7, 0x14(a1)
         lw                t0, 0x18(a1)
         lw                a1, 0x1c(a1)
+        sw                a2, 0x0(a0)
         sw                a6, 0x10(a0)
         sw                a7, 0x14(a0)
         sw                t0, 0x18(a0)
         sw                a1, 0x1c(a0)
-        sw                a2, 0x0(a0)
         sw                a3, 0x4(a0)
         sw                a4, 0x8(a0)
         sw                a5, 0xc(a0)
@@ -396,27 +396,27 @@ asm_test::atomic_memcpy_load_align16::read_volatile_acquire_fence:
 asm_test::atomic_memcpy_load_align16::acquire:
         addi              a2, a1, 0x1c
         addi              a3, a1, 0x18
-        addi              a4, a1, 0x14
-        addi              a5, a1, 0x10
-        addi              a6, a1, 0xc
-        addi              a7, a1, 0x8
-        addi              t0, a1, 0x4
         lw                a2, 0x0(a2)
+        addi              a4, a1, 0x14
         lw                a3, 0x0(a3)
+        addi              a5, a1, 0x10
         lw                a4, 0x0(a4)
+        addi              a6, a1, 0xc
         lw                a5, 0x0(a5)
+        addi              a7, a1, 0x8
         lw                a6, 0x0(a6)
+        addi              t0, a1, 0x4
         lw                a7, 0x0(a7)
         lw                t0, 0x0(t0)
         lw                a1, 0x0(a1)
-        sw                a5, 0x10(a0)
-        sw                a4, 0x14(a0)
-        sw                a3, 0x18(a0)
-        sw                a2, 0x1c(a0)
         sw                a1, 0x0(a0)
         sw                t0, 0x4(a0)
         sw                a7, 0x8(a0)
         sw                a6, 0xc(a0)
+        sw                a5, 0x10(a0)
+        sw                a4, 0x14(a0)
+        sw                a3, 0x18(a0)
+        sw                a2, 0x1c(a0)
         fence             r, rw
         ret
 
@@ -456,14 +456,14 @@ asm_test::atomic_memcpy_store_align1::release:
         li                a6, 0x3
 3:
         lbu               a7, 0x1(a4)
-        lbu               t0, 0x0(a4)
-        lbu               t1, 0x2(a4)
-        lbu               t2, 0x3(a4)
+        lbu               t0, 0x2(a4)
+        lbu               t1, 0x3(a4)
+        lbu               t2, 0x0(a4)
         slli              a7, a7, 0x8
-        or                a7, a7, t0
-        slli              t1, t1, 0x10
-        slli              t2, t2, 0x18
-        or                t0, t2, t1
+        slli              t0, t0, 0x10
+        slli              t1, t1, 0x18
+        or                a7, a7, t2
+        or                t0, t1, t0
         or                a7, t0, a7
         sw                a7, 0x0(a5)
         addi              a3, a3, -0x4
@@ -478,8 +478,8 @@ asm_test::atomic_memcpy_store_align1::release:
 5:
         lbu               a2, 0x0(a1)
         sb                a2, 0x0(a0)
-        addi              a1, a1, 0x1
         addi              a3, a3, -0x1
+        addi              a1, a1, 0x1
         addi              a0, a0, 0x1
         bnez              a3, 5b
 6:
@@ -521,14 +521,14 @@ asm_test::atomic_memcpy_store_align2::release:
         li                a6, 0x3
 3:
         lbu               a7, 0x1(a4)
-        lbu               t0, 0x0(a4)
-        lbu               t1, 0x2(a4)
-        lbu               t2, 0x3(a4)
+        lbu               t0, 0x2(a4)
+        lbu               t1, 0x3(a4)
+        lbu               t2, 0x0(a4)
         slli              a7, a7, 0x8
-        or                a7, a7, t0
-        slli              t1, t1, 0x10
-        slli              t2, t2, 0x18
-        or                t0, t2, t1
+        slli              t0, t0, 0x10
+        slli              t1, t1, 0x18
+        or                a7, a7, t2
+        or                t0, t1, t0
         or                a7, t0, a7
         sw                a7, 0x0(a5)
         addi              a3, a3, -0x4
@@ -539,9 +539,9 @@ asm_test::atomic_memcpy_store_align2::release:
 4:
         beqz              a3, 6f
         add               a4, a1, a2
+        add               a3, a3, a2
         add               a0, a0, a2
-        add               a2, a3, a2
-        add               a1, a1, a2
+        add               a1, a1, a3
 5:
         lbu               a2, 0x0(a4)
         sb                a2, 0x0(a0)

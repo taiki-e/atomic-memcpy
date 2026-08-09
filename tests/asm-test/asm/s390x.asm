@@ -75,10 +75,10 @@ asm_test::atomic_memcpy_load_align1::acquire:
         lghi              %r4,-8
 6:
         agr               %r4,%r0
-        tmll              %r4,24
-        jo                8f
         srlg              %r5,%r4,3
         la                %r5,1(%r5)
+        tmll              %r5,3
+        je                8f
         risbgz            %r5,%r5,62,63
         sllg              %r14,%r5,3
         sgr               %r0,%r14
@@ -214,10 +214,10 @@ asm_test::atomic_memcpy_load_align2::acquire:
         lghi              %r4,-8
 6:
         agr               %r4,%r0
-        tmll              %r4,24
-        jo                8f
         srlg              %r5,%r4,3
         la                %r5,1(%r5)
+        tmll              %r5,3
+        je                8f
         risbgz            %r5,%r5,62,63
         sllg              %r14,%r5,3
         sgr               %r0,%r14
@@ -353,10 +353,10 @@ asm_test::atomic_memcpy_load_align4::acquire:
         lghi              %r4,-8
 6:
         agr               %r4,%r0
-        tmll              %r4,24
-        jo                8f
         srlg              %r5,%r4,3
         la                %r5,1(%r5)
+        tmll              %r5,3
+        je                8f
         risbgz            %r5,%r5,62,63
         sllg              %r14,%r5,3
         sgr               %r0,%r14
@@ -560,10 +560,10 @@ asm_test::atomic_memcpy_store_align1::release:
         lghi              %r4,-8
 6:
         agr               %r4,%r0
-        tmll              %r4,24
-        jo                8f
         srlg              %r5,%r4,3
         la                %r5,1(%r5)
+        tmll              %r5,3
+        je                8f
         risbgz            %r5,%r5,62,63
         sllg              %r14,%r5,3
         sgr               %r0,%r14
@@ -682,10 +682,10 @@ asm_test::atomic_memcpy_store_align2::release:
         lghi              %r4,-8
 6:
         agr               %r4,%r0
-        tmll              %r4,24
-        jo                8f
         srlg              %r5,%r4,3
         la                %r5,1(%r5)
+        tmll              %r5,3
+        je                8f
         risbgz            %r5,%r5,62,63
         sllg              %r14,%r5,3
         sgr               %r0,%r14
@@ -804,10 +804,10 @@ asm_test::atomic_memcpy_store_align4::release:
         lghi              %r4,-8
 6:
         agr               %r4,%r0
-        tmll              %r4,24
-        jo                8f
         srlg              %r5,%r4,3
         la                %r5,1(%r5)
+        tmll              %r5,3
+        je                8f
         risbgz            %r5,%r5,62,63
         sllg              %r14,%r5,3
         sgr               %r0,%r14
